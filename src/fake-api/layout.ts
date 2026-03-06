@@ -66,72 +66,39 @@ export async function getHeaderData(): Promise<HeaderData> {
   // Mock data - in real implementation, this would fetch from API
   return {
     logo: {
-      text: 'Lamipak',
+      text: 'LAMIPAK',
+      image: '/logo.png',
       href: '/',
     },
     navigation: [
       {
         id: '1',
-        label: 'Home',
-        href: '/',
+        label: 'SOLUTIONS',
+        href: '/solutions',
       },
       {
         id: '2',
-        label: 'About',
-        href: '/about',
-        children: [
-          {
-            id: '2-1',
-            label: 'Our Story',
-            href: '/about#story',
-          },
-          {
-            id: '2-2',
-            label: 'Our Team',
-            href: '/about#team',
-          },
-          {
-            id: '2-3',
-            label: 'Careers',
-            href: '/careers',
-          },
-        ],
+        label: 'INDUSTRIES',
+        href: '/industries',
       },
       {
         id: '3',
-        label: 'Services',
-        href: '/services',
-        children: [
-          {
-            id: '3-1',
-            label: 'Web Development',
-            href: '/services/web-development',
-          },
-          {
-            id: '3-2',
-            label: 'Mobile Apps',
-            href: '/services/mobile-apps',
-          },
-          {
-            id: '3-3',
-            label: 'Cloud Solutions',
-            href: '/services/cloud',
-          },
-          {
-            id: '3-4',
-            label: 'Consulting',
-            href: '/services/consulting',
-          },
-        ],
+        label: 'SUSTAINABILITY',
+        href: '/sustainability',
       },
       {
         id: '4',
-        label: 'Contact',
-        href: '/contact',
+        label: 'INSIGHTS',
+        href: '/insights',
+      },
+      {
+        id: '5',
+        label: 'ABOUT',
+        href: '/about',
       },
     ],
     cta: {
-      text: 'Get Started',
+      text: 'CONTACT',
       href: '/contact',
     },
   };

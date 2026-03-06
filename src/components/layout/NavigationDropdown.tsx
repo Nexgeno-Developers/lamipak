@@ -16,10 +16,10 @@ export default function NavigationDropdown({ item }: NavigationDropdownProps) {
     return (
       <Link
         href={item.href}
-        className="text-gray-700 hover:text-blue-600 transition-colors font-medium relative group"
+        className="text-white hover:text-[#00d4ff] transition-colors font-medium uppercase text-sm tracking-wider relative group"
       >
         {item.label}
-        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full" />
+        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#00d4ff] transition-all group-hover:w-full" />
       </Link>
     );
   }
@@ -28,7 +28,7 @@ export default function NavigationDropdown({ item }: NavigationDropdownProps) {
     <div className="relative group">
       <Link
         href={item.href}
-        className="text-gray-700 hover:text-blue-600 transition-colors font-medium flex items-center space-x-1 relative py-2"
+        className="text-white hover:text-[#00d4ff] transition-colors font-medium uppercase text-sm tracking-wider flex items-center space-x-1 relative py-2"
       >
         <span>{item.label}</span>
         <svg
@@ -44,7 +44,7 @@ export default function NavigationDropdown({ item }: NavigationDropdownProps) {
             d="M19 9l-7 7-7-7"
           />
         </svg>
-        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full" />
+        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#00d4ff] transition-all group-hover:w-full" />
       </Link>
 
       {/* Invisible bridge to prevent gap */}

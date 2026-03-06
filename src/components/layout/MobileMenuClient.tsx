@@ -20,7 +20,7 @@ function MobileNavItem({ item, onClose }: MobileNavItemProps) {
     return (
       <Link
         href={item.href}
-        className="block text-gray-700 hover:text-blue-600 transition-colors py-3 border-b border-gray-200"
+        className="block text-white hover:text-[#00d4ff] transition-colors py-3 border-b border-[#00d4ff] border-opacity-20 uppercase text-sm tracking-wider"
         onClick={onClose}
       >
         {item.label}
@@ -29,10 +29,10 @@ function MobileNavItem({ item, onClose }: MobileNavItemProps) {
   }
 
   return (
-    <div className="border-b border-gray-200">
+    <div className="border-b border-[#00d4ff] border-opacity-20">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between text-gray-700 hover:text-blue-600 transition-colors py-3"
+        className="w-full flex items-center justify-between text-white hover:text-[#00d4ff] transition-colors py-3 uppercase text-sm tracking-wider"
       >
         <span>{item.label}</span>
         <svg
@@ -55,7 +55,7 @@ function MobileNavItem({ item, onClose }: MobileNavItemProps) {
             <Link
               key={child.id}
               href={child.href}
-              className="block text-gray-600 hover:text-blue-600 transition-colors py-2"
+              className="block text-gray-300 hover:text-[#00d4ff] transition-colors py-2 text-sm"
               onClick={onClose}
             >
               {child.label}
@@ -90,7 +90,7 @@ export default function MobileMenuClient({ navigation }: MobileMenuClientProps) 
   return (
     <>
       <button
-        className="md:hidden p-2 text-gray-700 hover:text-blue-600"
+        className="md:hidden p-2 text-white hover:text-[#00d4ff]"
         aria-label="Toggle menu"
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -135,17 +135,17 @@ export default function MobileMenuClient({ navigation }: MobileMenuClientProps) 
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
+        className={`fixed top-0 right-0 h-full w-80 bg-[#0a1a3a] shadow-xl z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         <div className="flex flex-col h-full">
           {/* Sidebar Header */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900">Menu</h2>
+          <div className="flex items-center justify-between p-4 border-b border-[#00d4ff] border-opacity-20">
+            <h2 className="text-xl font-bold text-white uppercase tracking-wider">Menu</h2>
             <button
               onClick={handleClose}
-              className="p-2 text-gray-700 hover:text-blue-600"
+              className="p-2 text-white hover:text-[#00d4ff]"
               aria-label="Close menu"
             >
               <svg

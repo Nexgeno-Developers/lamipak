@@ -12,26 +12,31 @@ export default async function Header() {
   const headerData = await fetchHeaderData();
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
+    <header className="bg-[#0a1a3a] sticky top-0 z-50 border-b border-[#00d4ff] border-opacity-20">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20 relative">
           {/* Logo */}
           <Link href={headerData.logo.href} className="flex items-center">
             {headerData.logo.image ? (
-              <img
-                src={headerData.logo.image}
-                alt={headerData.logo.text || 'Logo'}
-                className="h-8 md:h-10"
-              />
+              <div className="flex items-center gap-3">
+                <img
+                  src={headerData.logo.image}
+                  alt={headerData.logo.text || 'Logo'}
+                  className="h-8 md:h-10 w-auto"
+                />
+                <span className="text-white text-xl md:text-2xl font-bold hidden md:block">
+                  {headerData.logo.text}
+                </span>
+              </div>
             ) : (
-              <span className="text-2xl md:text-3xl font-bold text-blue-600">
+              <span className="text-white text-xl md:text-2xl font-bold">
                 {headerData.logo.text}
               </span>
             )}
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
             {headerData.navigation.map((item) => (
               <NavigationDropdown key={item.id} item={item} />
             ))}
@@ -42,7 +47,7 @@ export default async function Header() {
             {headerData.cta && (
               <Link
                 href={headerData.cta.href}
-                className="hidden md:inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                className="hidden md:inline-block border-2 border-[#00d4ff] text-[#00d4ff] px-6 py-2 rounded hover:bg-[#00d4ff] hover:text-[#0a1a3a] transition-all font-medium text-sm uppercase tracking-wider"
               >
                 {headerData.cta.text}
               </Link>

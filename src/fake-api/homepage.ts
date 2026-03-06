@@ -6,12 +6,24 @@
  * with actual fetch calls to the API_CONFIG endpoints.
  */
 
-export interface Hero {
+export interface HeroSlide {
+  id: string;
+  category: string;
   title: string;
-  subtitle: string;
+  titleHighlight: string;
   ctaText: string;
   ctaLink: string;
-  image?: string;
+  backgroundImage: string;
+}
+
+export interface Hero {
+  slides: HeroSlide[];
+  categories: Array<{
+    id: string;
+    label: string;
+    href: string;
+    slideIndex: number; // Index of the slide this category corresponds to
+  }>;
 }
 
 export interface Service {
@@ -72,10 +84,85 @@ export async function getHomepageData(): Promise<HomepageData> {
   // Mock data
   return {
     hero: {
-      title: 'Welcome to Our Platform',
-      subtitle: 'Building the future with innovative solutions',
-      ctaText: 'Get Started',
-      ctaLink: '/contact',
+      slides: [
+        {
+          id: '1',
+          category: 'ASEPTIC PACKAGING ENGINEERING',
+          title: 'IN A STERILE WORLD,',
+          titleHighlight: 'PRECISION STILL WINS.',
+          ctaText: 'EXPLORE SOLUTIONS',
+          ctaLink: '/solutions',
+          backgroundImage: '/banner-slider1.jpg',
+        },
+        {
+          id: '2',
+          category: 'INNOVATION IN PACKAGING',
+          title: 'ADVANCED TECHNOLOGY,',
+          titleHighlight: 'SUSTAINABLE FUTURE.',
+          ctaText: 'DISCOVER MORE',
+          ctaLink: '/solutions',
+          backgroundImage: '/banner-slider2.jpg',
+        },
+        {
+          id: '3',
+          category: 'INDUSTRIAL EXCELLENCE',
+          title: 'WHERE QUALITY MEETS,',
+          titleHighlight: 'PERFECTION.',
+          ctaText: 'LEARN MORE',
+          ctaLink: '/solutions',
+          backgroundImage: '/banner-slider3.jpg',
+        },
+        {
+          id: '4',
+          category: 'GLOBAL LEADERSHIP',
+          title: 'WORLDWIDE EXPERTISE,',
+          titleHighlight: 'LOCAL SOLUTIONS.',
+          ctaText: 'GET STARTED',
+          ctaLink: '/contact',
+          backgroundImage: '/banner-slider4.jpg',
+        },
+        {
+          id: '5',
+          category: 'CUTTING-EDGE SOLUTIONS',
+          title: 'NEXT GENERATION,',
+          titleHighlight: 'PACKAGING TECHNOLOGY.',
+          ctaText: 'EXPLORE NOW',
+          ctaLink: '/solutions',
+          backgroundImage: '/banner-slider5.jpg',
+        },
+      ],
+      categories: [
+        {
+          id: '1',
+          label: 'DAIRY SYSTEMS',
+          href: '/solutions/dairy',
+          slideIndex: 0, // First slide
+        },
+        {
+          id: '2',
+          label: 'PLANT-BASED BEVERAGES',
+          href: '/solutions/plant-based',
+          slideIndex: 1, // Second slide
+        },
+        {
+          id: '3',
+          label: 'LIQUID FOODS',
+          href: '/solutions/liquid-foods',
+          slideIndex: 2, // Third slide
+        },
+        {
+          id: '4',
+          label: 'NUTRITIONAL',
+          href: '/solutions/nutritional',
+          slideIndex: 3, // Fourth slide
+        },
+        {
+          id: '5',
+          label: 'PHARMA LIQUIDS',
+          href: '/solutions/pharma',
+          slideIndex: 4, // Fifth slide
+        },
+      ],
     },
     seo: {
       meta_title: 'Lamipak - Building the Future with Innovative Solutions1',
