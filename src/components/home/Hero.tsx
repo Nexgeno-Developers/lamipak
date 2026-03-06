@@ -108,71 +108,75 @@ export default function Hero({ data }: HeroProps) {
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col">
-        <div className="container mx-auto flex-1 flex flex-col justify-center">
-          {/* Category Label */}
-          <div className="mb-4">
-            <span className="text-white text-sm md:text-base font-medium tracking-wider uppercase">
-              {currentSlideData.category}
-            </span>
-          </div>
+        <div className="container mx-auto flex-1 flex flex-col">
+          {/* Push hero text to the bottom */}
+          <div className="mt-auto pb-10 md:pb-14">
+            {/* Category Label */}
+            <div className="mb-3">
+              <span className="text-white text-sm md:text-base font-medium tracking-wider uppercase">
+                {currentSlideData.category}
+              </span>
+            </div>
 
-          {/* Main Headline */}
-          <div className="mb-8 max-w-4xl">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-2">
-              <span className="text-white">{currentSlideData.title}</span>
-              <br />
-              <span className="text-[#009FE8]">{currentSlideData.titleHighlight}</span>
-            </h1>
-          </div>
+            {/* Main Headline */}
+            <div className="mb-6 max-w-5xl">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
+                <span className="text-white">{currentSlideData.title}</span>
+                <br />
+                <span className="text-[#009FE8]">{currentSlideData.titleHighlight}</span>
+              </h1>
+            </div>
 
-          {/* CTA Link */}
-          <div className="mb-12">
-            <Link
-              href={currentSlideData.ctaLink}
-              className="inline-flex items-center text-white text-lg font-medium hover:text-[#00d4ff] transition-colors group"
-            >
-              {currentSlideData.ctaText}
-              <svg
-                className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            {/* CTA Link */}
+            <div className="mb-10">
+              <Link
+                href={currentSlideData.ctaLink}
+                className="inline-flex items-center text-white text-base md:text-lg font-semibold hover:text-[#009FE8] transition-colors group uppercase tracking-wider"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </Link>
-          </div>
-
-          {/* Product Categories */}
-          <div className="mt-auto pb-8 md:pb-12">
-            <div className="flex items-center gap-4 md:gap-6 overflow-x-auto pb-2 scrollbar-hide">
-              {data.categories.map((category) => (
-                <button
-                  key={category.id}
-                  onClick={(e) => handleCategoryClick(category.slideIndex, e)}
-                  className={`flex-shrink-0 px-4 py-2 rounded-full text-sm md:text-base font-thin transition-all whitespace-nowrap cursor-pointer ${
-                    currentSlide === category.slideIndex
-                      ? 'border-[#009FE8] text-white border bg-opacity-10 !font-semibold'
-                      : 'text-white'
-                  }`}
+                {currentSlideData.ctaText}
+                <svg
+                  className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  {category.label}
-                </button>
-              ))}
-              {/* Navigation Arrows - Right Side Only */}
-              <div className="flex items-center gap-2 ml-4 flex-shrink-0">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </Link>
+            </div>
+
+            {/* Categories + Right-side arrows */}
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 md:gap-6 overflow-x-auto pb-2 scrollbar-hide flex-1">
+                {data.categories.map((category) => (
+                  <button
+                    key={category.id}
+                    onClick={(e) => handleCategoryClick(category.slideIndex, e)}
+                    className={`flex-shrink-0 px-4 py-2 rounded-full border text-sm md:text-base font-light transition-all whitespace-nowrap cursor-pointer ${
+                      currentSlide === category.slideIndex
+                        ? 'border border-[#009FE8] text-white bg-[#009FE8] font-semibold'
+                        : 'text-white/90 hover:text-white '
+                    }`}
+                  >
+                    {category.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Navigation Arrows - pinned on the right */}
+              <div className="flex items-center gap-2 flex-shrink-0">
                 <button
                   onClick={prevSlide}
-                  className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#00d4ff] bg-transparent hover:bg-[#00d4ff] hover:bg-opacity-20 flex items-center justify-center transition-all group"
+                  className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-[#009FE8] bg-transparent hover:bg-[#009FE8]/20 flex items-center justify-center transition-all group"
                   aria-label="Previous slide"
                 >
                   <svg
-                    className="w-5 h-5 md:w-6 md:h-6 text-[#00d4ff] group-hover:scale-110 transition-transform"
+                    className="w-5 h-5 md:w-6 md:h-6 text-[#009FE8] group-hover:scale-110 transition-transform"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -188,11 +192,11 @@ export default function Hero({ data }: HeroProps) {
 
                 <button
                   onClick={nextSlide}
-                  className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#00d4ff] bg-transparent hover:bg-[#00d4ff] hover:bg-opacity-20 flex items-center justify-center transition-all group"
+                  className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-[#009FE8] bg-transparent hover:bg-[#009FE8]/20 flex items-center justify-center transition-all group"
                   aria-label="Next slide"
                 >
                   <svg
-                    className="w-5 h-5 md:w-6 md:h-6 text-[#00d4ff] group-hover:scale-110 transition-transform"
+                    className="w-5 h-5 md:w-6 md:h-6 text-[#009FE8] group-hover:scale-110 transition-transform"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -210,22 +214,6 @@ export default function Hero({ data }: HeroProps) {
           </div>
         </div>
 
-
-        {/* Slide Indicators */}
-        <div className="absolute bottom-20 md:bottom-24 left-1/2 transform -translate-x-1/2 flex gap-2 z-20">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                index === currentSlide
-                  ? 'bg-[#00d4ff] w-8'
-                  : 'bg-white bg-opacity-50 hover:bg-opacity-75'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
-        </div>
       </div>
     </section>
   );

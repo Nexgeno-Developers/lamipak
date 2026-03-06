@@ -12,7 +12,7 @@ export default async function Header() {
   const headerData = await fetchHeaderData();
 
   return (
-    <header className="absolute w-full top-0 z-50">
+    <header className="absolute w-full top-[30px] z-50">
       <div className="container mx-auto">
         <div className="flex items-center justify-between h-16 md:h-20 relative">
           {/* Logo */}
@@ -33,23 +33,26 @@ export default async function Header() {
             )}
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
-            {headerData.navigation.map((item) => (
-              <NavigationDropdown key={item.id} item={item} />
-            ))}
-          </nav>
+          {/* Desktop Navigation + CTA (Right side) */}
+          <div className="hidden md:flex items-center gap-6 lg:gap-8 ml-auto">
+            <nav className="flex items-center space-x-6 lg:space-x-12">
+              {headerData.navigation.map((item) => (
+                <NavigationDropdown key={item.id} item={item} />
+              ))}
+            </nav>
 
-          {/* CTA Button & Mobile Menu */}
-          <div className="flex items-center space-x-4">
             {headerData.cta && (
               <Link
                 href={headerData.cta.href}
-                className="hidden md:inline-block border-2 border-[#00d4ff] text-[#00d4ff] px-6 py-2 rounded hover:bg-[#00d4ff] hover:text-[#0a1a3a] transition-all font-medium text-sm uppercase tracking-wider"
+                className="border border-[#00d4ff] text-white px-6 py-2 rounded-full hover:bg-[#00d4ff] hover:text-[#0a1a3a] transition-all font-medium text-sm uppercase tracking-wider"
               >
                 {headerData.cta.text}
               </Link>
             )}
+          </div>
+
+          {/* Mobile Menu */}
+          <div className="md:hidden">
             <MobileMenu />
           </div>
         </div>
