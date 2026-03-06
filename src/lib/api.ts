@@ -9,6 +9,8 @@
 import { API_CONFIG } from '@/config/api';
 import { getHomepageData as fakeGetHomepageData, type HomepageData } from '@/fake-api/homepage';
 import { getPageData as fakeGetPageData, type PageData } from '@/fake-api/pages';
+import { getHeaderData as fakeGetHeaderData, type HeaderData } from '@/fake-api/layout';
+import { getFooterData as fakeGetFooterData, type FooterData } from '@/fake-api/layout';
 
 /**
  * Checks if we should use the real API or fake API
@@ -53,4 +55,38 @@ export async function fetchPageData(slug: string): Promise<PageData | null> {
   }
   
   return fakeGetPageData(slug);
+}
+
+/**
+ * Fetches header data
+ * 
+ * @returns Promise<HeaderData>
+ */
+export async function fetchHeaderData(): Promise<HeaderData> {
+  if (useRealAPI()) {
+    // TODO: Replace with real API call when Laravel backend is ready
+    // const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.header}`);
+    // if (!response.ok) throw new Error('Failed to fetch header data');
+    // return response.json();
+    throw new Error('Real API not yet implemented');
+  }
+  
+  return fakeGetHeaderData();
+}
+
+/**
+ * Fetches footer data
+ * 
+ * @returns Promise<FooterData>
+ */
+export async function fetchFooterData(): Promise<FooterData> {
+  if (useRealAPI()) {
+    // TODO: Replace with real API call when Laravel backend is ready
+    // const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.footer}`);
+    // if (!response.ok) throw new Error('Failed to fetch footer data');
+    // return response.json();
+    throw new Error('Real API not yet implemented');
+  }
+  
+  return fakeGetFooterData();
 }
