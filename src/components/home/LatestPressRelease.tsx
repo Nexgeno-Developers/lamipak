@@ -22,14 +22,14 @@ export default async function LatestPressRelease() {
         <div className="mb-12 md:mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
             <span className="text-gray-900">Latest</span>{' '}
-            <span className="text-[#009FE8] underline">Press Release</span>
+            <span className="text-[#009FE8]">Press Release</span>
           </h2>
         </div>
 
         {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-          {visibleCards.map((card) => (
-            <PressReleaseCard key={card.id} card={card} />
+          {visibleCards.map((card, index) => (
+            <PressReleaseCard key={card.id} card={card} imagePosition={index % 2 === 1 ? 'top' : 'bottom'} />
           ))}
         </div>
       </div>
@@ -40,22 +40,24 @@ export default async function LatestPressRelease() {
 /**
  * Press Release Card Component
  */
-function PressReleaseCard({ card }: { card: PressReleaseCard }) {
+function PressReleaseCard({ card, imagePosition }: { card: PressReleaseCard; imagePosition: 'top' | 'bottom' }) {
   return (
-    <div className="bg-white rounded-[25px] overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
-      {/* Image */}
-      <div className="relative h-48 md:h-56 overflow-hidden">
-        <Image
-          src={card.image}
-          alt={card.imageAlt}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, 33vw"
-        />
-      </div>
+    <div className="bg-white rounded-[50px] overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
+      {/* Image - Top Section (for 2nd card) */}
+      {imagePosition === 'top' && (
+        <div className="relative h-48 rounded-[50px] md:h-56 overflow-hidden">
+          <Image
+            src={card.image}
+            alt={card.imageAlt}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 33vw"
+          />
+        </div>
+      )}
 
-      {/* Content */}
-      <div className="p-6 md:p-8 flex-1 flex flex-col">
+      {/* Content Section */}
+      <div className="p-4 md:p-6 flex-1 flex flex-col">
         {/* Category */}
         <div className="mb-3">
           <span className="text-sm md:text-base font-medium text-[#009FE8]">
@@ -71,7 +73,7 @@ function PressReleaseCard({ card }: { card: PressReleaseCard }) {
         {/* CTA Link */}
         <Link
           href={card.link}
-          className="inline-flex items-center text-[#009FE8] text-base md:text-lg font-medium hover:opacity-80 transition-opacity group mt-auto"
+          className="inline-flex items-center text-[#009FE8] text-base md:text-lg font-medium hover:opacity-80 transition-opacity group"
         >
           Learn More
           <svg
@@ -89,6 +91,19 @@ function PressReleaseCard({ card }: { card: PressReleaseCard }) {
           </svg>
         </Link>
       </div>
+
+      {/* Image - Bottom Section (for 1st and 3rd cards) */}
+      {imagePosition === 'bottom' && (
+        <div className="relative h-48 md:h-56 rounded-[50px] overflow-hidden">
+          <Image
+            src={card.image}
+            alt={card.imageAlt}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 33vw"
+          />
+        </div>
+      )}
     </div>
   );
 }
