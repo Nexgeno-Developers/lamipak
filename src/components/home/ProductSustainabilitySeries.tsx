@@ -15,7 +15,7 @@ export default async function ProductSustainabilitySeries() {
   const visibleCards = data.products.slice(0, cardsPerView);
 
   return (
-    <section className="py-16 md:py-24">
+    <section className="bg-gray-50">
       <div className="container mx-auto px-4">
         {/* Blue Gradient Container */}
         <div className="rounded-[25px] bg-gradient-to-b from-[#009FE8] to-[#0077B6] p-8 md:p-12 lg:p-16">

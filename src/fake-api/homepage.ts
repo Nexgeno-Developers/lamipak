@@ -367,7 +367,7 @@ export async function getHomepageData(): Promise<HomepageData> {
     videoBanner: {
       title: 'Innovation in Aseptic Packaging',
       videoUrl: '/video2.mp4', // or .gif for GIF files
-      ctaText: 'WATCH OUR STORY',
+      ctaText: 'View how we help global brands',
       ctaLink: '/about',
     },
     commercialServices: {
@@ -376,7 +376,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           id: '1',
           title: 'Technical Services',
           description: 'Dedicated to top-notch aseptic packaging, we launch our technical support services with customizable solutions to maximize your production line\'s efficiency.',
-          image: '/banner-slider1.jpg', // Replace with actual technical services image
+          image: '/services_image_1.jpg', // Replace with actual technical services image
           imageAlt: 'Technical Services - Production line with aseptic packaging',
           ctaText: 'Read More',
           ctaLink: '/services/technical',
@@ -386,7 +386,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           id: '2',
           title: 'Marketing Service',
           description: 'Discover Lamipak Market Support Service, Your comprehensive marketing partner offering business intelligence, recipe support, and sales distribution.',
-          image: '/banner-slider2.jpg', // Replace with actual marketing service image
+          image: '/services_image_2.jpg', // Replace with actual marketing service image
           imageAlt: 'Marketing Service - Digital marketing and business intelligence',
           ctaText: 'Read More',
           ctaLink: '/services/marketing',
@@ -401,7 +401,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'Global Dairy Market Outlook',
           category: 'INDUSTRY',
           date: 'NOV 2025',
-          image: '/banner-slider1.jpg', // Replace with actual insight image
+          image: '/latest_insite_image_1.jpg', // Replace with actual insight image
           imageAlt: 'Global Dairy Market Outlook - White carton packages with green leaf design',
           link: '/insights/global-dairy-market-outlook',
         },
@@ -410,7 +410,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'Smart Packaging & Traceability',
           category: 'INDUSTRY',
           date: 'NOV 2025',
-          image: '/banner-slider2.jpg', // Replace with actual insight image
+          image: '/latest_insite_image_2.jpg', // Replace with actual insight image
           imageAlt: 'Smart Packaging & Traceability - Laboratory with blue liquid containers',
           link: '/insights/smart-packaging-traceability',
         },
@@ -419,28 +419,11 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'Circular Economy in Packaging',
           category: 'INDUSTRY',
           date: 'NOV 2025',
-          image: '/banner-slider3.jpg', // Replace with actual insight image
+          image: '/latest_insite_image_3.jpg', // Replace with actual insight image
           imageAlt: 'Circular Economy in Packaging - Person examining plastic pouch in laboratory',
           link: '/insights/circular-economy-packaging',
         },
-        {
-          id: '4',
-          title: 'Sustainable Packaging Solutions',
-          category: 'SUSTAINABILITY',
-          date: 'OCT 2025',
-          image: '/banner-slider4.jpg',
-          imageAlt: 'Sustainable Packaging Solutions',
-          link: '/insights/sustainable-packaging-solutions',
-        },
-        {
-          id: '5',
-          title: 'Future of Aseptic Technology',
-          category: 'TECHNOLOGY',
-          date: 'OCT 2025',
-          image: '/banner-slider5.jpg',
-          imageAlt: 'Future of Aseptic Technology',
-          link: '/insights/future-aseptic-technology',
-        },
+       
       ],
     },
     productSustainability: {
@@ -450,7 +433,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'LamiNatural',
           label: 'Bio-Based Materials',
           description: 'Plant-derived polymer packaging with full aseptic barrier performance and reduced carbon footprint.',
-          image: '/banner-slider1.jpg', // Replace with actual LamiNatural product image
+          image: '/product_image_1.jpg', // Replace with actual LamiNatural product image
           imageAlt: 'LamiNatural - Green carton package with leaf design',
           link: '/products/laminatural',
           ctaText: 'Read More',
@@ -460,7 +443,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'LamiPure',
           label: 'Bio-Based Materials',
           description: 'Plant-derived polymer packaging with full aseptic barrier performance and reduced carbon footprint.',
-          image: '/banner-slider2.jpg', // Replace with actual LamiPure product image
+          image: '/product_image_2.jpg', // Replace with actual LamiPure product image
           imageAlt: 'LamiPure - White carton package with blue water pattern',
           link: '/products/lamipure',
           ctaText: 'Read More',
@@ -470,31 +453,12 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'Papers',
           label: 'Bio-Based Materials',
           description: 'Plant-derived polymer packaging with full aseptic barrier performance and reduced carbon footprint.',
-          image: '/banner-slider3.jpg', // Replace with actual Papers product image
+          image: '/product_image_3.jpg', // Replace with actual Papers product image
           imageAlt: 'Papers - Paper straws in blue liquid',
           link: '/products/papers',
           ctaText: 'Read More',
         },
-        {
-          id: '4',
-          title: 'EcoFlex',
-          label: 'Recyclable Materials',
-          description: 'Fully recyclable packaging solution with enhanced barrier properties and sustainable sourcing.',
-          image: '/banner-slider4.jpg',
-          imageAlt: 'EcoFlex - Recyclable packaging solution',
-          link: '/products/ecoflex',
-          ctaText: 'Read More',
-        },
-        {
-          id: '5',
-          title: 'GreenWrap',
-          label: 'Sustainable Materials',
-          description: 'Biodegradable wrapping solution designed for optimal product protection and environmental impact.',
-          image: '/banner-slider5.jpg',
-          imageAlt: 'GreenWrap - Biodegradable wrapping solution',
-          link: '/products/greenwrap',
-          ctaText: 'Read More',
-        },
+        
       ],
     },
     workInSustainability: {
@@ -651,7 +615,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           id: '1',
           category: 'Dairy Systems',
           title: 'Lamipak Showcases Expanded End-to-End Packaging Solutions at Gulfood Manufacturing 2025',
-          image: '/press-release-1.jpg',
+          image: '/latest_press_1.jpg',
           imageAlt: 'Lamipak exhibition booth at Gulfood Manufacturing 2025',
           link: '/press-release/gulfood-manufacturing-2025',
         },
@@ -659,7 +623,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           id: '2',
           category: 'Dairy Systems',
           title: 'Lamipak Introduces New Fresh Milk Packaging Solutions',
-          image: '/press-release-2.jpg',
+          image: '/latest_press_2.jpg',
           imageAlt: 'Fresh milk packaging solutions',
           link: '/press-release/fresh-milk-packaging',
         },
@@ -667,26 +631,11 @@ export async function getHomepageData(): Promise<HomepageData> {
           id: '3',
           category: 'Dairy Systems',
           title: 'Lamipak Receives Certificate of Appreciation from PT. Lami Packaging Indonesia',
-          image: '/press-release-3.jpg',
+          image: '/latest_press_3.jpg',
           imageAlt: 'Certificate of appreciation',
           link: '/press-release/certificate-appreciation',
         },
-        {
-          id: '4',
-          category: 'Sustainability',
-          title: 'Lamipak Launches New Eco-Friendly Packaging Initiative',
-          image: '/press-release-4.jpg',
-          imageAlt: 'Eco-friendly packaging initiative',
-          link: '/press-release/eco-friendly-initiative',
-        },
-        {
-          id: '5',
-          category: 'Innovation',
-          title: 'Breakthrough Technology in Aseptic Packaging Solutions',
-          image: '/press-release-5.jpg',
-          imageAlt: 'Aseptic packaging technology',
-          link: '/press-release/aseptic-packaging-technology',
-        },
+        
       ],
     },
     callToAction: {
