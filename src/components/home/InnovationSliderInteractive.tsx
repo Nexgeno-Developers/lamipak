@@ -43,10 +43,10 @@ function InnovationCard({ card }: { card: InnovationCard }) {
   const linkColorClass = isHighlighted ? 'text-white' : 'text-[#009FE8]';
 
   return (
-    <div className={`${cardBgClass} rounded-[25px] overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col`}>
+    <div className={`${cardBgClass} rounded-[50px] overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col p-[15px]`}>
       {/* Image - Position depends on card type */}
       {card.imagePosition === 'top' ? (
-        <div className="relative h-48 md:h-56 overflow-hidden">
+        <div className="relative h-48 md:h-56 overflow-hidden rounded-[50px]">
           <Image
             src={card.image}
             alt={card.imageAlt}
@@ -58,7 +58,7 @@ function InnovationCard({ card }: { card: InnovationCard }) {
       ) : null}
 
       {/* Content */}
-      <div className={`p-6 md:p-8 flex-1 flex flex-col ${card.imagePosition === 'bottom' ? 'order-1' : ''}`}>
+      <div className={`p-4 md:p-6 flex-1 flex flex-col ${card.imagePosition === 'bottom' ? 'order-1' : ''}`}>
         {/* Time and Date */}
         <div className={`flex items-center gap-4 mb-4 ${textColorClass}`}>
           <div className="flex items-center gap-2">
@@ -104,7 +104,7 @@ function InnovationCard({ card }: { card: InnovationCard }) {
 
       {/* Image - Bottom position */}
       {card.imagePosition === 'bottom' ? (
-        <div className="relative h-48 md:h-56 overflow-hidden order-2">
+        <div className="relative rounded-[50px] h-48 md:h-56 overflow-hidden order-2">
           <Image
             src={card.image}
             alt={card.imageAlt}
