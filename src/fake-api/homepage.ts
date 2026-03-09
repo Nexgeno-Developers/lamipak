@@ -94,10 +94,26 @@ export interface VideoBannerData {
   ctaLink: string;
 }
 
+export interface CommercialServiceCard {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  ctaText: string;
+  ctaLink: string;
+  icon: 'gear' | 'megaphone'; // Icon type
+}
+
+export interface CommercialServicesData {
+  cards: CommercialServiceCard[];
+}
+
 export interface HomepageData {
   hero: Hero;
   approach: ApproachData;
   videoBanner: VideoBannerData;
+  commercialServices: CommercialServicesData;
   services: Service[];
   products: Product[];
   testimonials: Testimonial[];
@@ -245,6 +261,30 @@ export async function getHomepageData(): Promise<HomepageData> {
       videoUrl: '/video2.mp4', // or .gif for GIF files
       ctaText: 'WATCH OUR STORY',
       ctaLink: '/about',
+    },
+    commercialServices: {
+      cards: [
+        {
+          id: '1',
+          title: 'Technical Services',
+          description: 'Dedicated to top-notch aseptic packaging, we launch our technical support services with customizable solutions to maximize your production line\'s efficiency.',
+          image: '/banner-slider1.jpg', // Replace with actual technical services image
+          imageAlt: 'Technical Services - Production line with aseptic packaging',
+          ctaText: 'Read More',
+          ctaLink: '/services/technical',
+          icon: 'gear', // Gear icon
+        },
+        {
+          id: '2',
+          title: 'Marketing Service',
+          description: 'Discover Lamipak Market Support Service, Your comprehensive marketing partner offering business intelligence, recipe support, and sales distribution.',
+          image: '/banner-slider2.jpg', // Replace with actual marketing service image
+          imageAlt: 'Marketing Service - Digital marketing and business intelligence',
+          ctaText: 'Read More',
+          ctaLink: '/services/marketing',
+          icon: 'megaphone', // Megaphone icon
+        },
+      ],
     },
     seo: {
       meta_title: 'Lamipak - Building the Future with Innovative Solutions1',

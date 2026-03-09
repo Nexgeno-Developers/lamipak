@@ -4,6 +4,7 @@ import { getCanonicalUrl } from '@/config/site';
 import Hero from '@/components/home/Hero';
 import VideoBanner from '@/components/home/VideoBanner';
 import Approach from '@/components/home/Approach';
+import CommercialServices from '@/components/home/CommercialServices';
 import Services from '@/components/home/Services';
 import Products from '@/components/home/Products';
 import Testimonials from '@/components/home/Testimonials';
@@ -63,6 +64,7 @@ export default async function HomePage() {
         
         <Approach />
         <VideoBanner />
+        <CommercialServices />
         <Services services={homepageData.services} />
         <Products products={homepageData.products} />
         <Testimonials testimonials={homepageData.testimonials} />
