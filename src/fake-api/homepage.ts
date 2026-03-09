@@ -324,7 +324,7 @@ export async function getHomepageData(): Promise<HomepageData> {
       title: 'We engineer the future of',
       titleHighlight: 'aseptic packaging.',
       subtitle: 'Answer three questions and discover your optimal packaging system.',
-      image: '/our-approch-image.webp',
+      image: '/our-approch-image1.webp',
       imageAlt: 'Professional examining aseptic packaging in laboratory',
       questions: [
         {

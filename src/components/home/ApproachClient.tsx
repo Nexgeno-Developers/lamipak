@@ -11,12 +11,19 @@ interface ApproachClientProps {
 
 export default function ApproachClient({ data }: ApproachClientProps) {
   const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   const handleOptionSelect = (questionId: string, value: string) => {
     setAnswers((prev) => ({ ...prev, [questionId]: value }));
+    
+    // Move to next question if not the last one
+    if (currentQuestionIndex < data.questions.length - 1) {
+      setCurrentQuestionIndex((prev) => prev + 1);
+    }
   };
 
   const allQuestionsAnswered = Object.keys(answers).length === data.questions.length;
+  const currentQuestion = data.questions[currentQuestionIndex];
 
   return (
     <section className="bg-white">
@@ -41,7 +48,7 @@ export default function ApproachClient({ data }: ApproachClientProps) {
           </div>
 
           {/* Right Side - Content */}
-          <div className="pe-[200px] ps-[30px]">
+          <div className="pe-[50px] ps-[20px]">
             {/* Subtitle */}
             <div className="mb-2">
               <span className="text-sm text-gray-600 uppercase tracking-wider">
@@ -51,9 +58,9 @@ export default function ApproachClient({ data }: ApproachClientProps) {
 
             {/* Title */}
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-              <span className="text-gray-900">{data.title}</span>
-              <br />
-              <span className="text-[#009FE8]">{data.titleHighlight}</span>
+              <span className="text-gray-900">{data.title}</span> 
+             
+               <span className="text-[#009FE8]"> {data.titleHighlight}</span>
             </h2>
 
             {/* Subtitle */}
@@ -65,12 +72,17 @@ export default function ApproachClient({ data }: ApproachClientProps) {
             <div className="flex items-center mb-8">
               {data.questions.map((question, index) => {
                 const isAnswered = Boolean(answers[question.id]);
+                const isActive = index === currentQuestionIndex;
+                const isCompleted = index < currentQuestionIndex;
+                
                 return (
                   <div key={question.id} className="flex items-center">
                     <div
                       className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all ${
-                        isAnswered
+                        isAnswered || isCompleted
                           ? 'bg-[#009FE8] text-white'
+                          : isActive
+                          ? 'bg-[#009FE8] text-white ring-2 ring-[#009FE8] ring-offset-2'
                           : 'bg-gray-200 text-gray-500'
                       }`}
                     >
@@ -79,7 +91,7 @@ export default function ApproachClient({ data }: ApproachClientProps) {
                     {index < data.questions.length - 1 && (
                       <div
                         className={`h-1 w-12 md:w-16 transition-all ${
-                          isAnswered ? 'bg-[#009FE8]' : 'bg-gray-200'
+                          isAnswered || isCompleted ? 'bg-[#009FE8]' : 'bg-gray-200'
                         }`}
                       />
                     )}
@@ -88,34 +100,32 @@ export default function ApproachClient({ data }: ApproachClientProps) {
               })}
             </div>
 
-            {/* Questions - Show All */}
-            <div className="space-y-8">
-              {data.questions.map((question) => (
-                <div key={question.id}>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                    {question.question}
-                  </h3>
-                  <div className="flex flex-wrap gap-3">
-                    {question.options.map((option) => {
-                      const isSelected = answers[question.id] === option.value;
-                      return (
-                        <button
-                          key={option.id}
-                          onClick={() => handleOptionSelect(question.id, option.value)}
-                          className={`px-4 py-2  rounded-full text-[14px] font-medium transition-all ${
-                            isSelected
-                              ? 'bg-[#009FE8] text-white shadow-md'
-                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                          }`}
-                        >
-                          {option.label}
-                        </button>
-                      );
-                    })}
-                  </div>
+            {/* Current Question - Show Only One */}
+            {currentQuestion && (
+              <div className="mb-8">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                  {currentQuestionIndex + 1}. {currentQuestion.question} Question {currentQuestionIndex + 1} of {data.questions.length}
+                </h3>
+                <div className="flex flex-wrap gap-3">
+                  {currentQuestion.options.map((option) => {
+                    const isSelected = answers[currentQuestion.id] === option.value;
+                    return (
+                      <button
+                        key={option.id}
+                        onClick={() => handleOptionSelect(currentQuestion.id, option.value)}
+                        className={`px-4 py-2 rounded-full text-[14px] font-medium transition-all ${
+                          isSelected
+                            ? 'bg-[#009FE8] text-white shadow-md'
+                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        }`}
+                      >
+                        {option.label}
+                      </button>
+                    );
+                  })}
                 </div>
-              ))}
-            </div>
+              </div>
+            )}
 
             {/* CTA Button */}
             <div className="mt-8">
