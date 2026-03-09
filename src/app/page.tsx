@@ -5,6 +5,7 @@ import Hero from '@/components/home/Hero';
 import VideoBanner from '@/components/home/VideoBanner';
 import Approach from '@/components/home/Approach';
 import CommercialServices from '@/components/home/CommercialServices';
+import LatestInsights from '@/components/home/LatestInsights';
 import Services from '@/components/home/Services';
 import Products from '@/components/home/Products';
 import Testimonials from '@/components/home/Testimonials';
@@ -65,6 +66,7 @@ export default async function HomePage() {
         <Approach />
         <VideoBanner />
         <CommercialServices />
+        <LatestInsights />
         <Services services={homepageData.services} />
         <Products products={homepageData.products} />
         <Testimonials testimonials={homepageData.testimonials} />

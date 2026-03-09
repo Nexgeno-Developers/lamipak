@@ -109,11 +109,26 @@ export interface CommercialServicesData {
   cards: CommercialServiceCard[];
 }
 
+export interface InsightCard {
+  id: string;
+  title: string;
+  category: string;
+  date: string;
+  image: string;
+  imageAlt: string;
+  link: string;
+}
+
+export interface LatestInsightsData {
+  cards: InsightCard[];
+}
+
 export interface HomepageData {
   hero: Hero;
   approach: ApproachData;
   videoBanner: VideoBannerData;
   commercialServices: CommercialServicesData;
+  latestInsights: LatestInsightsData;
   services: Service[];
   products: Product[];
   testimonials: Testimonial[];
@@ -283,6 +298,55 @@ export async function getHomepageData(): Promise<HomepageData> {
           ctaText: 'Read More',
           ctaLink: '/services/marketing',
           icon: 'megaphone', // Megaphone icon
+        },
+      ],
+    },
+    latestInsights: {
+      cards: [
+        {
+          id: '1',
+          title: 'Global Dairy Market Outlook',
+          category: 'INDUSTRY',
+          date: 'NOV 2025',
+          image: '/banner-slider1.jpg', // Replace with actual insight image
+          imageAlt: 'Global Dairy Market Outlook - White carton packages with green leaf design',
+          link: '/insights/global-dairy-market-outlook',
+        },
+        {
+          id: '2',
+          title: 'Smart Packaging & Traceability',
+          category: 'INDUSTRY',
+          date: 'NOV 2025',
+          image: '/banner-slider2.jpg', // Replace with actual insight image
+          imageAlt: 'Smart Packaging & Traceability - Laboratory with blue liquid containers',
+          link: '/insights/smart-packaging-traceability',
+        },
+        {
+          id: '3',
+          title: 'Circular Economy in Packaging',
+          category: 'INDUSTRY',
+          date: 'NOV 2025',
+          image: '/banner-slider3.jpg', // Replace with actual insight image
+          imageAlt: 'Circular Economy in Packaging - Person examining plastic pouch in laboratory',
+          link: '/insights/circular-economy-packaging',
+        },
+        {
+          id: '4',
+          title: 'Sustainable Packaging Solutions',
+          category: 'SUSTAINABILITY',
+          date: 'OCT 2025',
+          image: '/banner-slider4.jpg',
+          imageAlt: 'Sustainable Packaging Solutions',
+          link: '/insights/sustainable-packaging-solutions',
+        },
+        {
+          id: '5',
+          title: 'Future of Aseptic Technology',
+          category: 'TECHNOLOGY',
+          date: 'OCT 2025',
+          image: '/banner-slider5.jpg',
+          imageAlt: 'Future of Aseptic Technology',
+          link: '/insights/future-aseptic-technology',
         },
       ],
     },
