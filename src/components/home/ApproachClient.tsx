@@ -82,7 +82,7 @@ export default function ApproachClient({ data }: ApproachClientProps) {
                         isAnswered || isCompleted
                           ? 'bg-[#009FE8] text-white'
                           : isActive
-                          ? 'bg-[#009FE8] text-white ring-2 ring-[#009FE8] ring-offset-2'
+                          ? 'bg-[#009FE8] text-white'
                           : 'bg-gray-200 text-gray-500'
                       }`}
                     >
@@ -104,7 +104,8 @@ export default function ApproachClient({ data }: ApproachClientProps) {
             {currentQuestion && (
               <div className="mb-8">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                  {currentQuestionIndex + 1}. {currentQuestion.question} Question {currentQuestionIndex + 1} of {data.questions.length}
+                  {currentQuestionIndex + 1}. {currentQuestion.question}{' '}
+                  <span className="text-sm font-thin">Question {currentQuestionIndex + 1} of {data.questions.length}</span>
                 </h3>
                 <div className="flex flex-wrap gap-3">
                   {currentQuestion.options.map((option) => {
@@ -113,7 +114,7 @@ export default function ApproachClient({ data }: ApproachClientProps) {
                       <button
                         key={option.id}
                         onClick={() => handleOptionSelect(currentQuestion.id, option.value)}
-                        className={`px-4 py-2 rounded-full text-[14px] font-medium transition-all ${
+                        className={`cursor-pointer px-4 py-2 rounded-full text-[14px] font-medium transition-all ${
                           isSelected
                             ? 'bg-[#009FE8] text-white shadow-md'
                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
