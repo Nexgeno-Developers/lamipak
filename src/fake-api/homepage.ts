@@ -152,6 +152,16 @@ export interface WorkInSustainabilityData {
   cards: SustainabilityWorkCard[];
 }
 
+export interface FAQItem {
+  id: string;
+  question: string;
+  answer: string;
+}
+
+export interface FAQData {
+  items: FAQItem[];
+}
+
 export interface HomepageData {
   hero: Hero;
   approach: ApproachData;
@@ -160,6 +170,7 @@ export interface HomepageData {
   latestInsights: LatestInsightsData;
   productSustainability: ProductSustainabilityData;
   workInSustainability: WorkInSustainabilityData;
+  faq: FAQData;
   services: Service[];
   products: Product[];
   testimonials: Testimonial[];
@@ -481,6 +492,40 @@ export async function getHomepageData(): Promise<HomepageData> {
           iconShape: 'square',
           link: '/sustainability/zero-waste',
           ctaText: 'Learn More',
+        },
+      ],
+    },
+    faq: {
+      items: [
+        {
+          id: '1',
+          question: 'What is aseptic packaging and why does it matter?',
+          answer: 'Aseptic packaging is a process where a product and its package are sterilized separately and then combined in a sterile environment. This method preserves the product\'s quality, flavor, and nutritional value without refrigeration, extending shelf life significantly. It matters because it reduces food waste, lowers energy consumption, and provides consumers with safe, high-quality products that can be stored at room temperature.',
+        },
+        {
+          id: '2',
+          question: 'How long does it take to implement a new aseptic filling line?',
+          answer: 'The implementation timeline for a new aseptic filling line typically ranges from 6 to 12 months, depending on the complexity of the system, facility preparation requirements, and regulatory approvals. This includes site assessment, equipment manufacturing, installation, validation testing, and staff training. Our team works closely with clients to ensure minimal disruption to existing operations.',
+        },
+        {
+          id: '3',
+          question: 'Can Lamipak systems integrate with our existing production infrastructure?',
+          answer: 'Yes, Lamipak systems are designed with flexibility and integration in mind. Our engineering team conducts a thorough assessment of your existing infrastructure to ensure seamless integration. We provide custom solutions that can connect with your current production lines, control systems, and quality management processes while maintaining optimal efficiency and performance.',
+        },
+        {
+          id: '4',
+          question: 'What sterility assurance level (SAL) do your systems achieve?',
+          answer: 'Our aseptic packaging systems achieve a Sterility Assurance Level (SAL) of 10^-6, which means there is less than one chance in a million that a non-sterile unit could be produced. This is the highest standard in the industry and ensures maximum product safety and quality. Our systems undergo rigorous validation and testing to maintain this level consistently.',
+        },
+        {
+          id: '5',
+          question: 'Do you offer ongoing maintenance and service contracts?',
+          answer: 'Yes, we offer comprehensive maintenance and service contracts tailored to your operational needs. Our service packages include preventive maintenance, 24/7 technical support, spare parts management, remote monitoring, and on-site service visits. We also provide training programs for your staff to ensure optimal system performance and minimize downtime.',
+        },
+        {
+          id: '6',
+          question: 'What support do you provide for regulatory compliance?',
+          answer: 'We provide extensive support for regulatory compliance, including documentation for FDA, EU, and other international standards. Our team assists with validation protocols, quality documentation, and regulatory submissions. We stay updated with the latest regulations and ensure our systems meet all applicable food safety and packaging standards worldwide.',
         },
       ],
     },
