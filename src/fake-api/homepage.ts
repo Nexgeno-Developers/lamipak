@@ -193,6 +193,14 @@ export interface LatestPressReleaseData {
   cards: PressReleaseCard[];
 }
 
+export interface CallToActionData {
+  heading: string;
+  headingHighlight: string;
+  description: string;
+  ctaText: string;
+  ctaLink: string;
+}
+
 export interface HomepageData {
   hero: Hero;
   approach: ApproachData;
@@ -203,6 +211,7 @@ export interface HomepageData {
   workInSustainability: WorkInSustainabilityData;
   innovationInPackaging: InnovationInPackagingData;
   latestPressRelease: LatestPressReleaseData;
+  callToAction: CallToActionData;
   faq: FAQData;
   services: Service[];
   products: Product[];
@@ -670,6 +679,13 @@ export async function getHomepageData(): Promise<HomepageData> {
           link: '/press-release/aseptic-packaging-technology',
         },
       ],
+    },
+    callToAction: {
+      heading: 'Still have',
+      headingHighlight: 'questions?',
+      description: 'Our engineering team is ready to walk you through any technical details.',
+      ctaText: 'TALK TO AN ENGINEER',
+      ctaLink: '/contact',
     },
     seo: {
       meta_title: 'Lamipak - Building the Future with Innovative Solutions1',
