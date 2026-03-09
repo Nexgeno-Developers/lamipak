@@ -180,6 +180,19 @@ export interface InnovationInPackagingData {
   exploreMoreLink: string;
 }
 
+export interface PressReleaseCard {
+  id: string;
+  category: string;
+  title: string;
+  image: string;
+  imageAlt: string;
+  link: string;
+}
+
+export interface LatestPressReleaseData {
+  cards: PressReleaseCard[];
+}
+
 export interface HomepageData {
   hero: Hero;
   approach: ApproachData;
@@ -189,6 +202,7 @@ export interface HomepageData {
   productSustainability: ProductSustainabilityData;
   workInSustainability: WorkInSustainabilityData;
   innovationInPackaging: InnovationInPackagingData;
+  latestPressRelease: LatestPressReleaseData;
   faq: FAQData;
   services: Service[];
   products: Product[];
@@ -610,6 +624,50 @@ export async function getHomepageData(): Promise<HomepageData> {
           isHighlighted: true,
           link: '/innovation/smart-packaging',
           ctaText: 'Learn More',
+        },
+      ],
+    },
+    latestPressRelease: {
+      cards: [
+        {
+          id: '1',
+          category: 'Dairy Systems',
+          title: 'Lamipak Showcases Expanded End-to-End Packaging Solutions at Gulfood Manufacturing 2025',
+          image: '/press-release-1.jpg',
+          imageAlt: 'Lamipak exhibition booth at Gulfood Manufacturing 2025',
+          link: '/press-release/gulfood-manufacturing-2025',
+        },
+        {
+          id: '2',
+          category: 'Dairy Systems',
+          title: 'Lamipak Introduces New Fresh Milk Packaging Solutions',
+          image: '/press-release-2.jpg',
+          imageAlt: 'Fresh milk packaging solutions',
+          link: '/press-release/fresh-milk-packaging',
+        },
+        {
+          id: '3',
+          category: 'Dairy Systems',
+          title: 'Lamipak Receives Certificate of Appreciation from PT. Lami Packaging Indonesia',
+          image: '/press-release-3.jpg',
+          imageAlt: 'Certificate of appreciation',
+          link: '/press-release/certificate-appreciation',
+        },
+        {
+          id: '4',
+          category: 'Sustainability',
+          title: 'Lamipak Launches New Eco-Friendly Packaging Initiative',
+          image: '/press-release-4.jpg',
+          imageAlt: 'Eco-friendly packaging initiative',
+          link: '/press-release/eco-friendly-initiative',
+        },
+        {
+          id: '5',
+          category: 'Innovation',
+          title: 'Breakthrough Technology in Aseptic Packaging Solutions',
+          image: '/press-release-5.jpg',
+          imageAlt: 'Aseptic packaging technology',
+          link: '/press-release/aseptic-packaging-technology',
         },
       ],
     },
