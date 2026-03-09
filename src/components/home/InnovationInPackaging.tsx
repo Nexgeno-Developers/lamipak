@@ -16,7 +16,7 @@ export default async function InnovationInPackaging() {
       <div className="container mx-auto px-4">
         <InnovationSliderInteractive cards={data.cards}>
           {/* Header with Title and Explore More Button */}
-          <div className="flex items-center justify-between mb-12 md:mb-16 flex-wrap gap-4">
+          <div className="flex items-center justify-between mb-8 md:mb-12 flex-wrap gap-4">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
               <span className="text-[#009FE8]">Innovation</span>{' '}
               <span className="text-gray-900">in Packaging</span>

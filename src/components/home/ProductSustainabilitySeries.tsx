@@ -18,7 +18,7 @@ export default async function ProductSustainabilitySeries() {
     <section className="bg-gray-50">
       <div className="container mx-auto px-4">
         {/* Blue Gradient Container */}
-        <div className="rounded-[25px] bg-gradient-to-b from-[#009FE8] to-[#0077B6] p-8 md:p-12 lg:p-16">
+        <div className="rounded-[50px] bg-gradient-to-b from-[#009FE8] to-[#0077B6] p-8 md:p-12 lg:p-16">
           {/* Section Title */}
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-white mb-12 md:mb-16">
             Product Sustainability Series
@@ -41,9 +41,9 @@ export default async function ProductSustainabilitySeries() {
  */
 function ProductCard({ product }: { product: SustainabilityProductCard }) {
   return (
-    <div className="bg-white rounded-[25px] overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
+    <div className="bg-white rounded-[50px] overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-full p-[15px]">
       {/* Image */}
-      <div className="relative h-64 md:h-72 overflow-hidden rounded-t-[25px]">
+      <div className="relative h-64 md:h-72 overflow-hidden rounded-[50px]">
         <Image
           src={product.image}
           alt={product.imageAlt}
@@ -54,7 +54,7 @@ function ProductCard({ product }: { product: SustainabilityProductCard }) {
       </div>
 
       {/* Content */}
-      <div className="p-6 md:p-8">
+      <div className="p-4 md:p-6">
         {/* Label */}
         <span className="inline-block text-[#009FE8] text-sm md:text-base font-medium mb-3">
           {product.label}

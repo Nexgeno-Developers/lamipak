@@ -7,10 +7,10 @@ interface FAQClientProps {
 
 export default function FAQClient({ data }: FAQClientProps) {
   return (
-    <section className="pb-16 md:pb-24 bg-gray-50">
+    <section className="bg-gray-50">
       <div className="container mx-auto px-4">
         {/* Section Title */}
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12 md:mb-16">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-start mb-8 md:mb-12">
           <span className="text-gray-900">Frequently Asked</span>{' '}
           <span className="text-[#009FE8]">Questions</span>
         </h2>

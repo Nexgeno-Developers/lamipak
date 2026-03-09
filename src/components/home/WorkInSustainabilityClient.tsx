@@ -13,7 +13,7 @@ export default function WorkInSustainabilityClient({ data }: WorkInSustainabilit
     <section className="py-16 md:py-24 bg-gray-50">
       <div className="container mx-auto px-4">
         {/* Header with Title */}
-        <div className="flex items-center justify-between mb-12 md:mb-16">
+        <div className="flex items-center justify-between mb-8 md:mb-12">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
             <span className="text-gray-900">Work in</span>{' '}
             <span className="text-[#009FE8]">Sustainability</span>
@@ -36,7 +36,7 @@ export default function WorkInSustainabilityClient({ data }: WorkInSustainabilit
  */
 function WorkCard({ card }: { card: SustainabilityWorkCard }) {
   return (
-    <div className="bg-gray-100 rounded-[25px] p-6 md:p-8 hover:shadow-lg transition-shadow duration-300 h-full">
+    <div className="bg-gray-100 rounded-[50px] px-6 py-[60px] md:px-8 md:py-[80px] hover:shadow-lg transition-shadow duration-300 h-full">
       {/* Icon */}
       <div className="mb-6">
         <div className={`w-16 h-16 ${card.iconShape === 'square' ? 'rounded-lg' : card.iconShape === 'circle' ? 'rounded-full' : 'rounded-t-lg rounded-b-sm'} bg-[#009FE8] flex items-center justify-center`}>

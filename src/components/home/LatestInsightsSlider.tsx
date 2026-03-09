@@ -140,9 +140,9 @@ function InsightCard({ card }: { card: InsightCard }) {
       href={card.link}
       className="block group h-full"
     >
-      <div className="bg-white rounded-[25px] overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 h-full">
+      <div className="rounded-[50px] overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 h-full bg-[#009FE8] p-[15px]">
         {/* Image */}
-        <div className="relative h-64 md:h-72 overflow-hidden rounded-t-[25px]">
+        <div className="relative h-64 md:h-72 overflow-hidden rounded-t-[50px]">
           <Image
             src={card.image}
             alt={card.imageAlt}
@@ -153,7 +153,7 @@ function InsightCard({ card }: { card: InsightCard }) {
         </div>
 
         {/* Content - Blue Background */}
-        <div className="bg-[#009FE8] p-6 md:p-8">
+        <div className="bg-[#009FE8] p-4 md:p-6">
           {/* Category and Date */}
           <div className="flex items-center justify-between mb-3">
             <span className="text-white text-sm md:text-base font-medium uppercase tracking-wide">
