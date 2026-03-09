@@ -123,12 +123,28 @@ export interface LatestInsightsData {
   cards: InsightCard[];
 }
 
+export interface SustainabilityProductCard {
+  id: string;
+  title: string;
+  label: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  link: string;
+  ctaText: string;
+}
+
+export interface ProductSustainabilityData {
+  products: SustainabilityProductCard[];
+}
+
 export interface HomepageData {
   hero: Hero;
   approach: ApproachData;
   videoBanner: VideoBannerData;
   commercialServices: CommercialServicesData;
   latestInsights: LatestInsightsData;
+  productSustainability: ProductSustainabilityData;
   services: Service[];
   products: Product[];
   testimonials: Testimonial[];
@@ -347,6 +363,60 @@ export async function getHomepageData(): Promise<HomepageData> {
           image: '/banner-slider5.jpg',
           imageAlt: 'Future of Aseptic Technology',
           link: '/insights/future-aseptic-technology',
+        },
+      ],
+    },
+    productSustainability: {
+      products: [
+        {
+          id: '1',
+          title: 'LamiNatural',
+          label: 'Bio-Based Materials',
+          description: 'Plant-derived polymer packaging with full aseptic barrier performance and reduced carbon footprint.',
+          image: '/banner-slider1.jpg', // Replace with actual LamiNatural product image
+          imageAlt: 'LamiNatural - Green carton package with leaf design',
+          link: '/products/laminatural',
+          ctaText: 'Read More',
+        },
+        {
+          id: '2',
+          title: 'LamiPure',
+          label: 'Bio-Based Materials',
+          description: 'Plant-derived polymer packaging with full aseptic barrier performance and reduced carbon footprint.',
+          image: '/banner-slider2.jpg', // Replace with actual LamiPure product image
+          imageAlt: 'LamiPure - White carton package with blue water pattern',
+          link: '/products/lamipure',
+          ctaText: 'Read More',
+        },
+        {
+          id: '3',
+          title: 'Papers',
+          label: 'Bio-Based Materials',
+          description: 'Plant-derived polymer packaging with full aseptic barrier performance and reduced carbon footprint.',
+          image: '/banner-slider3.jpg', // Replace with actual Papers product image
+          imageAlt: 'Papers - Paper straws in blue liquid',
+          link: '/products/papers',
+          ctaText: 'Read More',
+        },
+        {
+          id: '4',
+          title: 'EcoFlex',
+          label: 'Recyclable Materials',
+          description: 'Fully recyclable packaging solution with enhanced barrier properties and sustainable sourcing.',
+          image: '/banner-slider4.jpg',
+          imageAlt: 'EcoFlex - Recyclable packaging solution',
+          link: '/products/ecoflex',
+          ctaText: 'Read More',
+        },
+        {
+          id: '5',
+          title: 'GreenWrap',
+          label: 'Sustainable Materials',
+          description: 'Biodegradable wrapping solution designed for optimal product protection and environmental impact.',
+          image: '/banner-slider5.jpg',
+          imageAlt: 'GreenWrap - Biodegradable wrapping solution',
+          link: '/products/greenwrap',
+          ctaText: 'Read More',
         },
       ],
     },
