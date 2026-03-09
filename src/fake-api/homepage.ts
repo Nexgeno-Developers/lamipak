@@ -87,9 +87,17 @@ export interface ApproachData {
   ctaLink: string;
 }
 
+export interface VideoBannerData {
+  title: string;
+  videoUrl?: string;
+  ctaText: string;
+  ctaLink: string;
+}
+
 export interface HomepageData {
   hero: Hero;
   approach: ApproachData;
+  videoBanner: VideoBannerData;
   services: Service[];
   products: Product[];
   testimonials: Testimonial[];
@@ -231,6 +239,12 @@ export async function getHomepageData(): Promise<HomepageData> {
       ],
       ctaText: 'DISCOVER YOUR SYSTEM',
       ctaLink: '/solutions',
+    },
+    videoBanner: {
+      title: 'Innovation in Aseptic Packaging',
+      videoUrl: '/video2.mp4', // or .gif for GIF files
+      ctaText: 'WATCH OUR STORY',
+      ctaLink: '/about',
     },
     seo: {
       meta_title: 'Lamipak - Building the Future with Innovative Solutions1',
