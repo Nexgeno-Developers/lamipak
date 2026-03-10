@@ -102,39 +102,63 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
       <main className="min-h-screen bg-gray-50">
         {/* Hero Section */}
-        <section className="bg-white border-b border-gray-200">
-          <div className="container mx-auto px-4 py-12 md:py-16">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
-              {/* Product Image */}
-              <div className="relative aspect-square rounded-[25px] overflow-hidden bg-gray-100">
-                <Image
-                  src={productData.image}
-                  alt={productData.imageAlt}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  priority
-                />
-              </div>
+        <section className="relative h-[70vh] min-h-[500px] overflow-hidden">
+          {/* Background Image with Overlay */}
+          <div className="absolute inset-0">
+            {productData.heroBackgroundImage ? (
+              <img
+                src={productData.heroBackgroundImage}
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            ) : (
+              <div className="absolute inset-0 bg-gray-800" />
+            )}
+            {/* Dark Blue Overlay */}
+            <div className="absolute inset-0 bg-[#0e233ce8] opacity-90" />
+            {/* Blur Effect */}
+            <div className="absolute inset-0 backdrop-blur-sm" />
+          </div>
 
-              {/* Product Info */}
-              <div>
-                {productData.category && (
-                  <span className="inline-block text-[#009FE8] text-sm md:text-base font-medium mb-4">
-                    {productData.category}
-                  </span>
-                )}
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
+          {/* Hero Content */}
+          <div className="relative z-10 h-full flex flex-col">
+            <div className="container mx-auto flex-1 flex flex-col justify-center px-4">
+              <div className="text-center">
+                {/* Product Title */}
+                <h1 className="pt-[160px] text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white mb-6 uppercase tracking-tight">
                   {productData.title}
                 </h1>
+
+                {/* Description */}
                 {productData.shortDescription && (
-                  <p className="text-xl md:text-2xl text-gray-700 mb-6">
+                  <p className="text-center text-lg md:text-xl lg:text-2xl text-white mb-8 leading-relaxed max-w-3xl mx-auto">
                     {productData.shortDescription}
                   </p>
                 )}
-                <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                  {productData.description}
-                </p>
+
+                {/* CTA Button */}
+                {productData.technicalSheetUrl && (
+                  <a
+                    href={productData.technicalSheetUrl}
+                    download
+                    className="inline-flex items-center text-[#009FE8] text-lg md:text-xl font-bold uppercase tracking-wider hover:text-white transition-colors group"
+                  >
+                    {productData.technicalSheetText || 'DOWNLOAD TECHNICAL SHEET'}
+                    <svg
+                      className="w-6 h-6 ml-3 transform group-hover:translate-x-2 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </a>
+                )}
               </div>
             </div>
           </div>

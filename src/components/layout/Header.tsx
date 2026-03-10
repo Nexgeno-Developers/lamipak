@@ -34,7 +34,7 @@ export default async function Header() {
           </Link>
 
           {/* Desktop Navigation + CTA (Right side) */}
-          <div className="hidden md:flex items-center gap-6 lg:gap-8 ml-auto">
+          <div className="hidden md:flex items-center gap-6 lg:gap-12 ml-auto">
             <nav className="flex items-center space-x-[30px] lg:space-x-[70px]">
               {headerData.navigation.map((item) => (
                 <NavigationDropdown key={item.id} item={item} />
@@ -44,7 +44,7 @@ export default async function Header() {
             {headerData.cta && (
               <Link
                 href={headerData.cta.href}
-                className="border border-[#00d4ff] text-white px-6 py-2 rounded-full hover:bg-[#00d4ff] hover:text-[#0a1a3a] transition-all font-medium text-sm uppercase tracking-wider"
+                className="border border-[#00d4ff] text-white px-6 py-2 rounded-full hover:bg-[#00d4ff] hover:text-[#0a1a3a] transition-all font-medium text-[18px] uppercase tracking-wider"
               >
                 {headerData.cta.text}
               </Link>

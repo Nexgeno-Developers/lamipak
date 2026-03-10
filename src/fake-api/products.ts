@@ -45,6 +45,9 @@ export interface ProductData {
   shortDescription?: string;
   image: string;
   imageAlt: string;
+  heroBackgroundImage?: string;
+  technicalSheetUrl?: string;
+  technicalSheetText?: string;
   gallery?: Array<{
     id: string;
     image: string;
@@ -69,11 +72,14 @@ const products: ProductData[] = [
   {
     id: '1',
     slug: 'lamisleeve-aseptic-packaging',
-    title: 'LamiSleeve Aseptic Packaging',
+    title: 'LAMISLEEVE',
     description: 'Advanced aseptic packaging solution for liquid products with superior barrier properties and extended shelf life.',
-    shortDescription: 'Premium aseptic packaging solution',
+    shortDescription: 'Precision-engineered aseptic carton for high-speed filling and extended shelf life.',
     image: '/product_image_1.jpg',
     imageAlt: 'LamiSleeve Aseptic Packaging',
+    heroBackgroundImage: '/banner-slider1.jpg',
+    technicalSheetUrl: '/technical-sheets/lamisleeve.pdf',
+    technicalSheetText: 'DOWNLOAD TECHNICAL SHEET',
     gallery: [
       {
         id: '1',
@@ -148,11 +154,14 @@ const products: ProductData[] = [
   {
     id: '2',
     slug: 'lamipure-sterile-packaging',
-    title: 'LamiPure Sterile Packaging',
+    title: 'LAMIPURE',
     description: 'Ultra-clean sterile packaging system ensuring maximum product safety and quality for pharmaceutical and sensitive liquid applications.',
-    shortDescription: 'Ultra-clean sterile packaging system',
+    shortDescription: 'Precision-engineered sterile packaging for pharmaceutical and sensitive liquid applications.',
     image: '/product_image_2.jpg',
     imageAlt: 'LamiPure Sterile Packaging',
+    heroBackgroundImage: '/banner-slider2.jpg',
+    technicalSheetUrl: '/technical-sheets/lamipure.pdf',
+    technicalSheetText: 'DOWNLOAD TECHNICAL SHEET',
     category: 'Sterile Packaging',
     specifications: [
       { label: 'Sterility Level', value: 'Class A (ISO 14644)' },
@@ -200,11 +209,14 @@ const products: ProductData[] = [
   {
     id: '3',
     slug: 'caps-etc-closure-solutions',
-    title: 'Caps ETC Closure Solutions',
+    title: 'CAPS ETC',
     description: 'Innovative closure systems providing secure sealing, easy opening, and tamper-evident features for various packaging formats.',
-    shortDescription: 'Innovative closure systems',
+    shortDescription: 'Precision-engineered closure systems for secure sealing and easy opening.',
     image: '/product_image_3.jpg',
     imageAlt: 'Caps ETC Closure Solutions',
+    heroBackgroundImage: '/banner-slider3.jpg',
+    technicalSheetUrl: '/technical-sheets/caps-etc.pdf',
+    technicalSheetText: 'DOWNLOAD TECHNICAL SHEET',
     category: 'Closure Systems',
     specifications: [
       { label: 'Types', value: 'Screw cap, Snap cap, Pull-tab' },
@@ -242,6 +254,79 @@ const products: ProductData[] = [
         name: 'Caps ETC Closure Solutions',
         description: 'Innovative closure systems for various packaging formats',
         image: '/product_image_3.jpg',
+        brand: {
+          '@type': 'Brand',
+          name: 'Lamipak',
+        },
+      },
+    },
+  },
+  {
+    id: '4',
+    slug: 'brick-slim',
+    title: 'BRICK SLIM',
+    description: 'Precision-engineered aseptic carton for high-speed filling and extended shelf life. Designed for optimal performance in modern production environments.',
+    shortDescription: 'Precision-engineered aseptic carton for high-speed filling and extended shelf life.',
+    image: '/product_image_1.jpg',
+    imageAlt: 'Brick Slim Aseptic Carton',
+    heroBackgroundImage: '/banner-slider2.jpg',
+    technicalSheetUrl: '/technical-sheets/brick-slim.pdf',
+    technicalSheetText: 'DOWNLOAD TECHNICAL SHEET',
+    category: 'Aseptic Packaging',
+    specifications: [
+      { label: 'Material', value: 'Multi-layer aseptic carton' },
+      { label: 'Capacity', value: '200ml - 1L' },
+      { label: 'Shelf Life', value: 'Up to 12 months' },
+      { label: 'Filling Speed', value: 'High-speed compatible' },
+    ],
+    features: [
+      'High-speed filling capability',
+      'Extended shelf life without refrigeration',
+      'Superior barrier protection',
+      'Slim profile design',
+      'Easy to handle and stack',
+    ],
+    benefits: [
+      'Increased production efficiency',
+      'Reduced storage space requirements',
+      'Maintains product quality',
+      'Sustainable packaging solution',
+      'Consumer-friendly design',
+    ],
+    content: `
+      <h2>About Brick Slim Aseptic Carton</h2>
+      <p>Brick Slim is our precision-engineered aseptic carton solution designed specifically for high-speed filling operations. With its slim profile and advanced barrier technology, it offers extended shelf life while maintaining optimal product quality.</p>
+      
+      <h3>Key Advantages</h3>
+      <ul>
+        <li>High-speed filling compatible</li>
+        <li>Extended shelf life up to 12 months</li>
+        <li>Slim profile reduces storage space</li>
+        <li>Superior barrier against oxygen and light</li>
+        <li>Easy to handle and stack</li>
+      </ul>
+      
+      <h3>Applications</h3>
+      <p>Ideal for dairy products, plant-based beverages, liquid foods, and nutritional drinks requiring high-speed production lines.</p>
+    `,
+    relatedProducts: ['lamisleeve-aseptic-packaging', 'lamipure-sterile-packaging'],
+    seo: {
+      meta_title: 'Brick Slim Aseptic Carton | Lamipak - High-Speed Packaging Solutions',
+      meta_description: 'Discover Brick Slim - precision-engineered aseptic carton for high-speed filling and extended shelf life. Perfect for modern production environments.',
+      canonical_url: '/products/brick-slim',
+      og_title: 'Brick Slim Aseptic Carton | Lamipak',
+      og_description: 'Precision-engineered aseptic carton for high-speed filling and extended shelf life',
+      og_image: '/product_image_1.jpg',
+      twitter_card: 'summary_large_image',
+      twitter_title: 'Brick Slim Aseptic Carton',
+      twitter_description: 'High-speed aseptic carton with extended shelf life',
+      twitter_image: '/product_image_1.jpg',
+      schema: {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: 'Brick Slim Aseptic Carton',
+        description: 'Precision-engineered aseptic carton for high-speed filling and extended shelf life',
+        image: '/product_image_1.jpg',
         brand: {
           '@type': 'Brand',
           name: 'Lamipak',
