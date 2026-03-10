@@ -11,7 +11,7 @@ export default async function Footer() {
 
   return (
     <footer className="bg-[#009FE8] text-white">
-      <div className="container mx-auto px-4 py-12 md:py-16">
+      <div className="container mx-auto px-4 pt-12 md:pt-16 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-12">
           {/* Left Section - Logo, Description, and Social Icons */}
           <div className="lg:col-span-1">
@@ -98,7 +98,7 @@ export default async function Footer() {
         {/* Bottom Section - Copyright */}
         <div className="border-t border-white/20 pt-8 mt-12">
           <div className="text-center">
-            <p className="text-white text-sm md:text-base">
+            <p className="text-white text-sm md:text-[14px] font-thin">
               {footerData.copyright}
             </p>
           </div>
