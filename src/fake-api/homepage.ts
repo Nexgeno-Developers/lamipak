@@ -319,6 +319,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           slideIndex: 4, // Fifth slide
         },
       ],
+      videoUrl: '/video2.mp4',
     },
     approach: {
       title: 'We engineer the future of',
