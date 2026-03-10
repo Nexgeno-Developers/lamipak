@@ -83,7 +83,7 @@ export default function VideoBanner() {
           <div className="flex-1 flex items-center justify-center">
             <button
               onClick={() => setIsVideoPlaying(true)}
-              className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white bg-opacity-90 hover:bg-opacity-100 flex items-center justify-center transition-all group shadow-lg"
+              className="cursor-pointer w-20 h-20 md:w-24 md:h-24 rounded-full bg-white bg-opacity-90 hover:bg-opacity-100 flex items-center justify-center transition-all group shadow-lg"
               aria-label="Play video"
             >
               <svg
