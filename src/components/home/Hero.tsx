@@ -172,11 +172,11 @@ export default function Hero({ data }: HeroProps) {
               <div className="flex items-center gap-2 flex-shrink-0">
                 <button
                   onClick={prevSlide}
-                  className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-[#009FE8] bg-transparent hover:bg-[#009FE8]/20 flex items-center justify-center transition-all group"
+                  className="cursor-pointer w-10 h-10 md:w-12 md:h-12 rounded-full border border-white bg-transparent hover:bg-white/20 flex items-center justify-center transition-all group"
                   aria-label="Previous slide"
                 >
                   <svg
-                    className="w-5 h-5 md:w-6 md:h-6 text-[#009FE8] group-hover:scale-110 transition-transform"
+                    className="cursor-pointer w-5 h-5 md:w-6 md:h-6 text-white group-hover:scale-110 transition-transform"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -192,11 +192,11 @@ export default function Hero({ data }: HeroProps) {
 
                 <button
                   onClick={nextSlide}
-                  className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-[#009FE8] bg-transparent hover:bg-[#009FE8]/20 flex items-center justify-center transition-all group"
+                  className="cursor-pointer w-10 h-10 md:w-12 md:h-12 rounded-full border border-white bg-transparent hover:bg-white/20 flex items-center justify-center transition-all group"
                   aria-label="Next slide"
                 >
                   <svg
-                    className="w-5 h-5 md:w-6 md:h-6 text-[#009FE8] group-hover:scale-110 transition-transform"
+                    className="cursor-pointer w-5 h-5 md:w-6 md:h-6 text-white group-hover:scale-110 transition-transform"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"

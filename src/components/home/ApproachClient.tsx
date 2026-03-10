@@ -26,7 +26,7 @@ export default function ApproachClient({ data }: ApproachClientProps) {
   const currentQuestion = data.questions[currentQuestionIndex];
 
   return (
-    <section className="bg-white">
+    <section className="bg-[#f8f8f8]">
       <div className="">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Side - Image */}
