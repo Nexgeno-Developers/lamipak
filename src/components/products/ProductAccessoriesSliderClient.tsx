@@ -4,13 +4,12 @@ import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { Autoplay, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import type { ProductData } from '@/fake-api/products';
 
 // Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 type Accessory = NonNullable<ProductData['accessories']>[number];
@@ -43,13 +42,25 @@ export default function ProductAccessoriesSliderClient({
   // Enable loop for smooth infinite scrolling (need at least as many slides as visible)
   const shouldLoop = accessories.length > 3;
 
+  const handlePrev = () => {
+    if (swiperRef.current) {
+      swiperRef.current.slidePrev();
+    }
+  };
+
+  const handleNext = () => {
+    if (swiperRef.current) {
+      swiperRef.current.slideNext();
+    }
+  };
+
   return (
     <div className="relative">
       {/* Navigation Arrows */}
       {accessories.length > 1 && (
         <>
           <button
-            onClick={() => swiperRef.current?.slidePrev()}
+            onClick={handlePrev}
             className="swiper-button-prev-custom w-12 h-12 rounded-full border-2 border-[#009FE8] bg-white hover:bg-[#009FE8] flex items-center justify-center transition-all group shadow-lg"
             aria-label="Previous accessories"
           >
@@ -69,7 +80,7 @@ export default function ProductAccessoriesSliderClient({
           </button>
 
           <button
-            onClick={() => swiperRef.current?.slideNext()}
+            onClick={handleNext}
             className="swiper-button-next-custom w-12 h-12 rounded-full border-2 border-[#009FE8] bg-white hover:bg-[#009FE8] flex items-center justify-center transition-all group shadow-lg"
             aria-label="Next accessories"
           >
@@ -98,7 +109,7 @@ export default function ProductAccessoriesSliderClient({
           setIsEnd(swiper.isEnd);
         }}
         onSlideChange={handleSlideChange}
-        modules={[Autoplay, Pagination, Navigation]}
+        modules={[Autoplay, Pagination]}
         spaceBetween={24}
         slidesPerView={1}
         slidesPerGroup={1}
@@ -108,18 +119,14 @@ export default function ProductAccessoriesSliderClient({
           pauseOnMouseEnter: true,
         }}
         loop={shouldLoop}
-        loopAdditionalSlides={shouldLoop ? 2 : 0}
-        navigation={{
-          prevEl: '.swiper-button-prev-custom',
-          nextEl: '.swiper-button-next-custom',
-        }}
+        watchSlidesProgress={true}
+        speed={500}
         breakpoints={{
           768: {
             slidesPerView: 3,
             slidesPerGroup: 1,
             spaceBetween: 32,
             loop: shouldLoop,
-            loopAdditionalSlides: shouldLoop ? 2 : 0,
           },
         }}
         pagination={{
