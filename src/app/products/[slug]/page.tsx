@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { fetchProductData, getAllProductSlugs } from '@/lib/api';
 import { getCanonicalUrl } from '@/config/site';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
+import ProductSpecifications from '@/components/products/ProductSpecifications';
 
 interface ProductPageProps {
   params: Promise<{
@@ -177,6 +178,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
             />
           </div>
         </section>
+
+        {/* Product Specifications Section */}
+        <ProductSpecifications product={productData} />
 
         {/* Content Section */}
         <section className="container mx-auto px-4 py-12 md:py-16">

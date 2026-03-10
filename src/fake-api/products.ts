@@ -48,6 +48,15 @@ export interface ProductData {
   heroBackgroundImage?: string;
   technicalSheetUrl?: string;
   technicalSheetText?: string;
+  productImage3D?: string; // 3D product visualization image
+  applicationImages?: Record<string, string>; // Images for each application (e.g., { 'DAIRY': '/image1.jpg', 'JUICE': '/image2.jpg' })
+  sizes?: string[]; // Available sizes (e.g., ['200ml', '250ml', '500ml', '1000ml'])
+  quickSpecifications?: Array<{
+    label: string;
+    value: string;
+  }>;
+  compatibleWith?: string[]; // Compatible systems/equipment
+  applications?: string[]; // Application categories (e.g., ['DAIRY', 'JUICE', 'PLANT-BASED', 'LIQUID FOODS'])
   gallery?: Array<{
     id: string;
     image: string;
@@ -265,13 +274,33 @@ const products: ProductData[] = [
     id: '4',
     slug: 'brick-slim',
     title: 'BRICK SLIM',
-    description: 'Precision-engineered aseptic carton for high-speed filling and extended shelf life. Designed for optimal performance in modern production environments.',
+    description: 'Optimized for milk and dairy beverages requiring sterile integrity, structural durability, and cold-chain reliability.',
     shortDescription: 'Precision-engineered aseptic carton for high-speed filling and extended shelf life.',
     image: '/product_image_1.jpg',
     imageAlt: 'Brick Slim Aseptic Carton',
     heroBackgroundImage: '/banner-slider2.jpg',
     technicalSheetUrl: '/technical-sheets/brick-slim.pdf',
     technicalSheetText: 'DOWNLOAD TECHNICAL SHEET',
+    productImage3D: '/product_image_1.jpg',
+    applicationImages: {
+      'DAIRY': '/product_image_1.jpg',
+      'JUICE': '/product_image_2.jpg',
+      'PLANT-BASED': '/product_image_3.jpg',
+      'LIQUID FOODS': '/product_image_1.jpg',
+    },
+    sizes: ['200ml', '250ml', '500ml', '1000ml'],
+    quickSpecifications: [
+      { label: 'Filling Speed', value: 'Up to 24,000 packs/hour' },
+      { label: 'Shelf Life', value: 'Up to 12 months' },
+      { label: 'Barrier Structure', value: 'Multi-layer composite' },
+      { label: 'Material Efficiency', value: 'Optimized weight ratio' },
+    ],
+    compatibleWith: [
+      'High-speed filling lines',
+      'Standard aseptic systems',
+      'Modular integration lines',
+    ],
+    applications: ['DAIRY', 'JUICE', 'PLANT-BASED', 'LIQUID FOODS'],
     category: 'Aseptic Packaging',
     specifications: [
       { label: 'Material', value: 'Multi-layer aseptic carton' },
