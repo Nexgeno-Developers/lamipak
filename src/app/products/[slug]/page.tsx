@@ -6,6 +6,7 @@ import { fetchProductData, getAllProductSlugs } from '@/lib/api';
 import { getCanonicalUrl } from '@/config/site';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import ProductSpecifications from '@/components/products/ProductSpecifications';
+import ProductFeatures from '@/components/products/ProductFeatures';
 
 interface ProductPageProps {
   params: Promise<{
@@ -206,6 +207,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </div>
             </div>
           </section>
+        )}
+
+        {/* Product Features Section */}
+        {productData.productFeatures && productData.productFeatures.length > 0 && (
+          <ProductFeatures features={productData.productFeatures} />
         )}
 
         {/* Content Section */}

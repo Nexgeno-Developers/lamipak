@@ -58,6 +58,13 @@ export interface ProductData {
   }>;
   compatibleWith?: string[]; // Compatible systems/equipment
   applications?: string[]; // Application categories (e.g., ['DAIRY', 'JUICE', 'PLANT-BASED', 'LIQUID FOODS'])
+  productFeatures?: Array<{
+    id: string;
+    title: string;
+    description: string;
+    image: string;
+    imageAlt: string;
+  }>;
   gallery?: Array<{
     id: string;
     image: string;
@@ -290,6 +297,29 @@ const products: ProductData[] = [
       'LIQUID FOODS': '/product_image_1.jpg',
     },
     productVideo: '/product-dt-video-new.gif',
+    productFeatures: [
+      {
+        id: '1',
+        title: 'Metallic Ink',
+        description: 'Premium print finish',
+        image: '/product_image_1.jpg',
+        imageAlt: 'Metallic Ink product feature',
+      },
+      {
+        id: '2',
+        title: 'LamiNatural',
+        description: 'Sustainable material',
+        image: '/product_image_2.jpg',
+        imageAlt: 'LamiNatural product feature',
+      },
+      {
+        id: '3',
+        title: 'WaterPak',
+        description: 'Water-resistant coating',
+        image: '/product_image_3.jpg',
+        imageAlt: 'WaterPak product feature',
+      },
+    ],
     sizes: ['200ml', '250ml', '500ml', '1000ml'],
     quickSpecifications: [
       { label: 'Filling Speed', value: 'Up to 24,000 packs/hour' },
