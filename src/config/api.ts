@@ -11,6 +11,8 @@ export const API_CONFIG = {
   endpoints: {
     homepage: '/homepage',
     page: (slug: string) => `/page/${slug}`,
+    product: (slug: string) => `/products/${slug}`,
+    products: '/products',
     header: '/header',
     footer: '/footer',
     approach: '/approach',

@@ -1,0 +1,278 @@
+/**
+ * Fake API for Product Data
+ * 
+ * This file contains mock data for product details pages.
+ * When the Laravel API is ready, replace the implementation
+ * with actual fetch calls to the API_CONFIG endpoints.
+ */
+
+export interface ProductSEO {
+  meta_title: string;
+  meta_description: string;
+  canonical_url?: string;
+  og_title?: string;
+  og_description?: string;
+  og_image?: string;
+  twitter_card?: string;
+  twitter_title?: string;
+  twitter_description?: string;
+  twitter_image?: string;
+  schema?: {
+    '@context': string;
+    '@type': string;
+    name?: string;
+    description?: string;
+    image?: string;
+    brand?: {
+      '@type': string;
+      name: string;
+    };
+    offers?: {
+      '@type': string;
+      priceCurrency: string;
+      price: string;
+      availability: string;
+    };
+    [key: string]: unknown;
+  };
+}
+
+export interface ProductData {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  shortDescription?: string;
+  image: string;
+  imageAlt: string;
+  gallery?: Array<{
+    id: string;
+    image: string;
+    imageAlt: string;
+  }>;
+  category?: string;
+  specifications?: Array<{
+    label: string;
+    value: string;
+  }>;
+  features?: string[];
+  benefits?: string[];
+  content?: string; // HTML content
+  relatedProducts?: string[]; // Array of product slugs
+  seo: ProductSEO;
+}
+
+/**
+ * Mock product data
+ */
+const products: ProductData[] = [
+  {
+    id: '1',
+    slug: 'lamisleeve-aseptic-packaging',
+    title: 'LamiSleeve Aseptic Packaging',
+    description: 'Advanced aseptic packaging solution for liquid products with superior barrier properties and extended shelf life.',
+    shortDescription: 'Premium aseptic packaging solution',
+    image: '/product_image_1.jpg',
+    imageAlt: 'LamiSleeve Aseptic Packaging',
+    gallery: [
+      {
+        id: '1',
+        image: '/product_image_1.jpg',
+        imageAlt: 'LamiSleeve packaging front view',
+      },
+      {
+        id: '2',
+        image: '/product_image_2.jpg',
+        imageAlt: 'LamiSleeve packaging side view',
+      },
+    ],
+    category: 'Aseptic Packaging',
+    specifications: [
+      { label: 'Material', value: 'Multi-layer barrier film' },
+      { label: 'Capacity', value: '250ml - 1L' },
+      { label: 'Shelf Life', value: 'Up to 12 months' },
+      { label: 'Barrier Properties', value: 'Oxygen & Light resistant' },
+    ],
+    features: [
+      'Extended shelf life without refrigeration',
+      'Superior barrier protection',
+      'Lightweight and eco-friendly',
+      'Easy to open and pour',
+    ],
+    benefits: [
+      'Reduces food waste',
+      'Lower transportation costs',
+      'Maintains product quality',
+      'Sustainable packaging solution',
+    ],
+    content: `
+      <h2>About LamiSleeve Aseptic Packaging</h2>
+      <p>LamiSleeve is our flagship aseptic packaging solution designed for liquid products that require extended shelf life without refrigeration. Our advanced multi-layer barrier technology ensures optimal product protection while maintaining freshness and nutritional value.</p>
+      
+      <h3>Key Advantages</h3>
+      <ul>
+        <li>Extended shelf life up to 12 months</li>
+        <li>Superior barrier against oxygen and light</li>
+        <li>Lightweight design reduces environmental impact</li>
+        <li>Easy-to-open convenience for consumers</li>
+      </ul>
+      
+      <h3>Applications</h3>
+      <p>Ideal for dairy products, plant-based beverages, liquid foods, and nutritional drinks.</p>
+    `,
+    relatedProducts: ['lamipure-sterile-packaging', 'caps-etc-closure-solutions'],
+    seo: {
+      meta_title: 'LamiSleeve Aseptic Packaging | Lamipak - Premium Packaging Solutions',
+      meta_description: 'Discover LamiSleeve aseptic packaging - advanced barrier technology for extended shelf life. Perfect for dairy, beverages, and liquid foods.',
+      canonical_url: '/products/lamisleeve-aseptic-packaging',
+      og_title: 'LamiSleeve Aseptic Packaging | Lamipak',
+      og_description: 'Premium aseptic packaging solution with superior barrier properties',
+      og_image: '/product_image_1.jpg',
+      twitter_card: 'summary_large_image',
+      twitter_title: 'LamiSleeve Aseptic Packaging',
+      twitter_description: 'Advanced aseptic packaging for extended shelf life',
+      twitter_image: '/product_image_1.jpg',
+      schema: {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: 'LamiSleeve Aseptic Packaging',
+        description: 'Advanced aseptic packaging solution for liquid products',
+        image: '/product_image_1.jpg',
+        brand: {
+          '@type': 'Brand',
+          name: 'Lamipak',
+        },
+      },
+    },
+  },
+  {
+    id: '2',
+    slug: 'lamipure-sterile-packaging',
+    title: 'LamiPure Sterile Packaging',
+    description: 'Ultra-clean sterile packaging system ensuring maximum product safety and quality for pharmaceutical and sensitive liquid applications.',
+    shortDescription: 'Ultra-clean sterile packaging system',
+    image: '/product_image_2.jpg',
+    imageAlt: 'LamiPure Sterile Packaging',
+    category: 'Sterile Packaging',
+    specifications: [
+      { label: 'Sterility Level', value: 'Class A (ISO 14644)' },
+      { label: 'Capacity', value: '100ml - 500ml' },
+      { label: 'Applications', value: 'Pharmaceutical & Sensitive liquids' },
+      { label: 'Certification', value: 'FDA approved' },
+    ],
+    features: [
+      'Ultra-clean manufacturing process',
+      'Pharmaceutical-grade materials',
+      'Tamper-evident design',
+      'Precision dosing capabilities',
+    ],
+    benefits: [
+      'Maximum product safety',
+      'Regulatory compliance',
+      'Extended product stability',
+      'Consumer confidence',
+    ],
+    relatedProducts: ['lamisleeve-aseptic-packaging', 'caps-etc-closure-solutions'],
+    seo: {
+      meta_title: 'LamiPure Sterile Packaging | Lamipak - Pharmaceutical Grade Solutions',
+      meta_description: 'Ultra-clean sterile packaging for pharmaceutical and sensitive liquid products. FDA approved with Class A sterility standards.',
+      canonical_url: '/products/lamipure-sterile-packaging',
+      og_title: 'LamiPure Sterile Packaging | Lamipak',
+      og_description: 'Pharmaceutical-grade sterile packaging solutions',
+      og_image: '/product_image_2.jpg',
+      twitter_card: 'summary_large_image',
+      twitter_title: 'LamiPure Sterile Packaging',
+      twitter_description: 'Ultra-clean sterile packaging for pharmaceutical applications',
+      twitter_image: '/product_image_2.jpg',
+      schema: {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: 'LamiPure Sterile Packaging',
+        description: 'Ultra-clean sterile packaging system for pharmaceutical applications',
+        image: '/product_image_2.jpg',
+        brand: {
+          '@type': 'Brand',
+          name: 'Lamipak',
+        },
+      },
+    },
+  },
+  {
+    id: '3',
+    slug: 'caps-etc-closure-solutions',
+    title: 'Caps ETC Closure Solutions',
+    description: 'Innovative closure systems providing secure sealing, easy opening, and tamper-evident features for various packaging formats.',
+    shortDescription: 'Innovative closure systems',
+    image: '/product_image_3.jpg',
+    imageAlt: 'Caps ETC Closure Solutions',
+    category: 'Closure Systems',
+    specifications: [
+      { label: 'Types', value: 'Screw cap, Snap cap, Pull-tab' },
+      { label: 'Materials', value: 'PP, PE, Aluminum' },
+      { label: 'Sizes', value: '28mm - 63mm' },
+      { label: 'Features', value: 'Tamper-evident, Resealable' },
+    ],
+    features: [
+      'Multiple closure types available',
+      'Tamper-evident technology',
+      'Resealable options',
+      'Customizable designs',
+    ],
+    benefits: [
+      'Enhanced product protection',
+      'Consumer convenience',
+      'Brand differentiation',
+      'Extended product freshness',
+    ],
+    relatedProducts: ['lamisleeve-aseptic-packaging', 'lamipure-sterile-packaging'],
+    seo: {
+      meta_title: 'Caps ETC Closure Solutions | Lamipak - Secure Packaging Closures',
+      meta_description: 'Innovative closure systems with tamper-evident features. Screw caps, snap caps, and pull-tab solutions for all packaging needs.',
+      canonical_url: '/products/caps-etc-closure-solutions',
+      og_title: 'Caps ETC Closure Solutions | Lamipak',
+      og_description: 'Innovative closure systems for secure packaging',
+      og_image: '/product_image_3.jpg',
+      twitter_card: 'summary_large_image',
+      twitter_title: 'Caps ETC Closure Solutions',
+      twitter_description: 'Secure closure systems with tamper-evident features',
+      twitter_image: '/product_image_3.jpg',
+      schema: {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: 'Caps ETC Closure Solutions',
+        description: 'Innovative closure systems for various packaging formats',
+        image: '/product_image_3.jpg',
+        brand: {
+          '@type': 'Brand',
+          name: 'Lamipak',
+        },
+      },
+    },
+  },
+];
+
+/**
+ * Fetches product data by slug
+ * 
+ * @param slug - The product slug
+ * @returns Promise<ProductData | null>
+ */
+export async function getProductData(slug: string): Promise<ProductData | null> {
+  // Simulate API delay
+  await new Promise((resolve) => setTimeout(resolve, 100));
+
+  const product = products.find((p) => p.slug === slug);
+  return product || null;
+}
+
+/**
+ * Gets all product slugs (for static generation)
+ * 
+ * @returns Promise<string[]>
+ */
+export async function getAllProductSlugs(): Promise<string[]> {
+  // Simulate API delay
+  await new Promise((resolve) => setTimeout(resolve, 50));
+
+  return products.map((p) => p.slug);
+}

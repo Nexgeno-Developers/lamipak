@@ -9,6 +9,7 @@
 import { API_CONFIG } from '@/config/api';
 import { getHomepageData as fakeGetHomepageData, type HomepageData } from '@/fake-api/homepage';
 import { getPageData as fakeGetPageData, type PageData } from '@/fake-api/pages';
+import { getProductData as fakeGetProductData, getAllProductSlugs as fakeGetAllProductSlugs, type ProductData } from '@/fake-api/products';
 import { getHeaderData as fakeGetHeaderData, type HeaderData } from '@/fake-api/layout';
 import { getFooterData as fakeGetFooterData, type FooterData } from '@/fake-api/layout';
 
@@ -89,4 +90,43 @@ export async function fetchFooterData(): Promise<FooterData> {
   }
   
   return fakeGetFooterData();
+}
+
+/**
+ * Fetches product data by slug
+ * 
+ * @param slug - The product slug
+ * @returns Promise<ProductData | null>
+ */
+export async function fetchProductData(slug: string): Promise<ProductData | null> {
+  if (useRealAPI()) {
+    // TODO: Replace with real API call when Laravel backend is ready
+    // const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.product(slug)}`);
+    // if (!response.ok) {
+    //   if (response.status === 404) return null;
+    //   throw new Error('Failed to fetch product data');
+    // }
+    // return response.json();
+    throw new Error('Real API not yet implemented');
+  }
+  
+  return fakeGetProductData(slug);
+}
+
+/**
+ * Gets all product slugs (for static generation)
+ * 
+ * @returns Promise<string[]>
+ */
+export async function getAllProductSlugs(): Promise<string[]> {
+  if (useRealAPI()) {
+    // TODO: Replace with real API call when Laravel backend is ready
+    // const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.products}`);
+    // if (!response.ok) throw new Error('Failed to fetch products');
+    // const data = await response.json();
+    // return data.map((product: ProductData) => product.slug);
+    throw new Error('Real API not yet implemented');
+  }
+  
+  return fakeGetAllProductSlugs();
 }
