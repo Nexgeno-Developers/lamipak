@@ -222,9 +222,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         )}
 
         {/* Similar Products Section */}
-        {productData.relatedProducts && productData.relatedProducts.length > 0 && (
-          <SimilarProducts relatedProductSlugs={productData.relatedProducts} />
-        )}
+        <SimilarProducts currentProductSlug={productData.slug} />
 
         {/* Content Section */}
         <section className="container mx-auto px-4 py-12 md:py-16">

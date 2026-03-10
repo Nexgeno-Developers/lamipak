@@ -1,25 +1,33 @@
-import { fetchProductData } from '@/lib/api';
+import { fetchProductData, getAllProductSlugs } from '@/lib/api';
 import SimilarProductsSliderClient from './SimilarProductsSliderClient';
 import type { ProductData } from '@/fake-api/products';
 
 interface SimilarProductsProps {
-  relatedProductSlugs: string[];
+  currentProductSlug?: string;
 }
 
 /**
  * Similar Products Component (Server Component)
  * 
- * Fetches product data for related products and displays them in a slider.
+ * Fetches all products and displays them in a slider, excluding the current product.
  * All data is fetched server-side from the API.
  */
-export default async function SimilarProducts({ relatedProductSlugs }: SimilarProductsProps) {
-  if (!relatedProductSlugs || relatedProductSlugs.length === 0) {
+export default async function SimilarProducts({ currentProductSlug }: SimilarProductsProps) {
+  // Fetch all product slugs
+  const slugs = await getAllProductSlugs();
+  
+  // Filter out current product if provided
+  const productSlugs = currentProductSlug 
+    ? slugs.filter(slug => slug !== currentProductSlug)
+    : slugs;
+
+  if (productSlugs.length === 0) {
     return null;
   }
 
-  // Fetch product data for all related products
+  // Fetch product data for all products
   const products = await Promise.all(
-    relatedProductSlugs.map(async (slug) => {
+    productSlugs.map(async (slug) => {
       const product = await fetchProductData(slug);
       return product;
     })
