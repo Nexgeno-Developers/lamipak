@@ -12,9 +12,9 @@ export default async function Footer() {
   return (
     <footer className="bg-[#009FE8] text-white">
       <div className="container mx-auto px-4 pt-12 md:pt-16 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-12">
+        <div className="flex flex-col md:flex-row gap-8 md:gap-8">
           {/* Left Section - Logo, Description, and Social Icons */}
-          <div className="lg:col-span-1">
+          <div className="w-full md:w-[40%] pr-[100px]">
             {/* Logo */}
             <Link href={footerData.logo.href} className="block mb-4">
               {footerData.logo.image ? (
@@ -75,7 +75,7 @@ export default async function Footer() {
 
           {/* Middle Section - Four Columns */}
           {footerData.columns.map((column) => (
-            <div key={column.id}>
+            <div key={column.id} className="w-full md:w-[15%]">
               <h3 className="text-white font-bold mb-4 text-base md:text-lg">
                 {column.title}
               </h3>
