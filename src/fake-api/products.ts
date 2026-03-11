@@ -101,7 +101,7 @@ const products: ProductData[] = [
   {
     id: '1',
     slug: 'lamisleeve-aseptic-packaging',
-    title: 'LAMISLEEVE',
+    title: 'LamiSleeve',
     description: 'Advanced aseptic packaging solution for liquid products with superior barrier properties and extended shelf life.',
     shortDescription: 'Precision-engineered aseptic carton for high-speed filling and extended shelf life.',
     image: '/simimalr_product_1.jpg',
@@ -122,6 +122,7 @@ const products: ProductData[] = [
       },
     ],
     category: 'Aseptic Packaging',
+    sizes: ['250ml', '500ml', '750ml', '1000ml'],
     specifications: [
       { label: 'Material', value: 'Multi-layer barrier film' },
       { label: 'Capacity', value: '250ml - 1L' },
@@ -188,7 +189,7 @@ const products: ProductData[] = [
   {
     id: '2',
     slug: 'lamipure-sterile-packaging',
-    title: 'LAMIPURE',
+    title: 'LamiPure',
     description: 'Ultra-clean sterile packaging system ensuring maximum product safety and quality for pharmaceutical and sensitive liquid applications.',
     shortDescription: 'Precision-engineered sterile packaging for pharmaceutical and sensitive liquid applications.',
     image: '/simimalr_product_2.jpg',
@@ -197,6 +198,7 @@ const products: ProductData[] = [
     technicalSheetUrl: '/technical-sheets/lamipure.pdf',
     technicalSheetText: 'DOWNLOAD TECHNICAL SHEET',
     category: 'Sterile Packaging',
+    sizes: ['100ml', '250ml', '500ml'],
     specifications: [
       { label: 'Sterility Level', value: 'Class A (ISO 14644)' },
       { label: 'Capacity', value: '100ml - 500ml' },
@@ -249,7 +251,7 @@ const products: ProductData[] = [
   {
     id: '3',
     slug: 'lamipure-sterile-packaging',
-    title: 'LAMIPURE',
+    title: 'LamiPure',
     description: 'Ultra-clean sterile packaging system ensuring maximum product safety and quality for pharmaceutical and sensitive liquid applications.',
     shortDescription: 'Precision-engineered sterile packaging for pharmaceutical and sensitive liquid applications.',
     image: '/simimalr_product_3.jpg',
@@ -258,6 +260,7 @@ const products: ProductData[] = [
     technicalSheetUrl: '/technical-sheets/lamipure.pdf',
     technicalSheetText: 'DOWNLOAD TECHNICAL SHEET',
     category: 'Sterile Packaging',
+    sizes: ['100ml', '250ml', '500ml'],
     specifications: [
       { label: 'Sterility Level', value: 'Class A (ISO 14644)' },
       { label: 'Capacity', value: '100ml - 500ml' },
@@ -309,7 +312,7 @@ const products: ProductData[] = [
   {
     id: '4',
     slug: 'caps-etc-closure-solutions',
-    title: 'CAPS ETC',
+    title: 'Caps ETC',
     description: 'Innovative closure systems providing secure sealing, easy opening, and tamper-evident features for various packaging formats.',
     shortDescription: 'Precision-engineered closure systems for secure sealing and easy opening.',
     image: '/simimalr_product_4.jpg',
@@ -318,6 +321,7 @@ const products: ProductData[] = [
     technicalSheetUrl: '/technical-sheets/caps-etc.pdf',
     technicalSheetText: 'DOWNLOAD TECHNICAL SHEET',
     category: 'Closure Systems',
+    sizes: ['200ml', '250ml', '500ml', '1000ml'],
     specifications: [
       { label: 'Types', value: 'Screw cap, Snap cap, Pull-tab' },
       { label: 'Materials', value: 'PP, PE, Aluminum' },
@@ -369,7 +373,7 @@ const products: ProductData[] = [
   {
     id: '5',
     slug: 'brick-slim',
-    title: 'BRICK SLIM',
+    title: 'Brick Slim',
     description: 'Optimized for milk and dairy beverages requiring sterile integrity, structural durability, and cold-chain reliability.',
     shortDescription: 'Precision-engineered aseptic carton for high-speed filling and extended shelf life.',
     image: '/simimalr_product_2.jpg',

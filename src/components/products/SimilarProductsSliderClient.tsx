@@ -142,36 +142,50 @@ export default function SimilarProductsSliderClient({
       >
         {products.map((product) => (
           <SwiperSlide key={product.id}>
-            <div className="bg-gray-100 rounded-[25px] p-4 h-full">
+            <div className="bg-[#EDF0F1] rounded-[50px] p-[15px] h-full">
               {/* Product Image Container */}
-              <div className="bg-white rounded-[25px] p-6 mb-4 aspect-square flex items-center justify-center">
-                <div className="relative w-full h-full">
+              <div className="mb-4 aspect-square flex items-center justify-center">
+                <div className="relative w-full h-full rounded-[67px]">
                   <Image
                     src={product.image}
                     alt={product.imageAlt}
                     fill
-                    className="object-contain"
+                    className="object-contain rounded-[67px]"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
                 </div>
               </div>
 
               {/* Product Info */}
-              <div className="space-y-2">
+              <div className="p-4 md:p-4 flex-1 flex flex-col">
                 {/* Product Name */}
-                <h3 className="text-lg font-bold text-gray-900">
+                <h3 className="text-2xl md:text-[24px] font-bold text-gray-900 mb-1">
                   {product.title}
                 </h3>
 
                 {/* Volume Range */}
                 {product.sizes && product.sizes.length > 0 && (
-                  <p className="text-sm text-gray-600">
-                    {product.sizes[0]} - {product.sizes[product.sizes.length - 1]}
+                  <p className="text-sm text-gray-600 flex items-center gap-2">
+                    <span>{product.sizes[0].includes('ml') ? product.sizes[0] : `${product.sizes[0]}ml`}</span>
+                    <svg
+                      className="w-4 h-4 text-gray-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                    <span>{product.sizes[product.sizes.length - 1].includes('ml') ? product.sizes[product.sizes.length - 1] : `${product.sizes[product.sizes.length - 1]}ml`}</span>
                   </p>
                 )}
 
                 {/* Action Links */}
-                <div className="flex items-center gap-4 pt-2">
+                <div className="flex items-center gap-4 pt-2 justify-between pt-3">
                   <Link
                     href={`/products/${product.slug}`}
                     className="text-sm font-medium text-[#009FE8] hover:text-[#0077B6] transition-colors"

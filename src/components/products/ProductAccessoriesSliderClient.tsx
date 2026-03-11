@@ -79,7 +79,7 @@ export default function ProductAccessoriesSliderClient({
 
               {/* Accessory Footer */}
               <div className="bg-[#009FE8] px-6 py-4">
-                <h3 className="text-lg md:text-xl font-semibold text-white text-center">
+                <h3 className="text-lg md:text-[24px] font-semibold text-white text-center">
                   {accessory.name}
                 </h3>
               </div>
