@@ -176,27 +176,6 @@ export default async function CategoryProductsPage({ params }: CategoryPageProps
             </div>
           </section>
         )}
-
-        {/* Products Grid */}
-        <section className="container mx-auto px-4 py-12 md:py-16">
-        {products.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-xl text-gray-600">No products available in this category at the moment.</p>
-            <Link
-              href="/products"
-              className="inline-block mt-4 text-[#009FE8] hover:text-[#0077B6] transition-colors"
-            >
-              View All Products →
-            </Link>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        )}
-      </section>
       </main>
     </>
   );
