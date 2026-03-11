@@ -1,11 +1,9 @@
 'use client';
 
-import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
-import type { Swiper as SwiperType } from 'swiper';
 import type { ProductData } from '@/fake-api/products';
 
 // Import Swiper styles
@@ -26,89 +24,17 @@ interface ProductAccessoriesSliderClientProps {
 export default function ProductAccessoriesSliderClient({
   accessories,
 }: ProductAccessoriesSliderClientProps) {
-  const swiperRef = useRef<SwiperType | null>(null);
-  const [isBeginning, setIsBeginning] = useState(true);
-  const [isEnd, setIsEnd] = useState(false);
-
   if (!accessories || accessories.length === 0) {
     return null;
   }
 
-  const handleSlideChange = (swiper: SwiperType) => {
-    setIsBeginning(swiper.isBeginning);
-    setIsEnd(swiper.isEnd);
-  };
-
   // Enable loop for smooth infinite scrolling (need at least as many slides as visible)
   const shouldLoop = accessories.length > 3;
 
-  const handlePrev = () => {
-    if (swiperRef.current) {
-      swiperRef.current.slidePrev();
-    }
-  };
-
-  const handleNext = () => {
-    if (swiperRef.current) {
-      swiperRef.current.slideNext();
-    }
-  };
-
   return (
     <div className="relative">
-      {/* Navigation Arrows */}
-      {accessories.length > 1 && (
-        <>
-          <button
-            onClick={handlePrev}
-            className="swiper-button-prev-custom w-12 h-12 rounded-full border-2 border-[#009FE8] bg-white hover:bg-[#009FE8] flex items-center justify-center transition-all group shadow-lg"
-            aria-label="Previous accessories"
-          >
-            <svg
-              className="w-6 h-6 text-[#009FE8] group-hover:text-white transition-colors"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
-
-          <button
-            onClick={handleNext}
-            className="swiper-button-next-custom w-12 h-12 rounded-full border-2 border-[#009FE8] bg-white hover:bg-[#009FE8] flex items-center justify-center transition-all group shadow-lg"
-            aria-label="Next accessories"
-          >
-            <svg
-              className="w-6 h-6 text-[#009FE8] group-hover:text-white transition-colors"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
-        </>
-      )}
-
       {/* Swiper Slider */}
       <Swiper
-        onSwiper={(swiper) => {
-          swiperRef.current = swiper;
-          setIsBeginning(swiper.isBeginning);
-          setIsEnd(swiper.isEnd);
-        }}
-        onSlideChange={handleSlideChange}
         modules={[Autoplay, Pagination]}
         spaceBetween={24}
         slidesPerView={1}
@@ -138,14 +64,15 @@ export default function ProductAccessoriesSliderClient({
       >
         {accessories.map((accessory) => {
           const content = (
-            <div className="bg-white rounded-[25px] border-2 border-[#009FE8] overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
+            <div className="bg-[#009FE8] rounded-[50px] overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col h-full p-[15px]">
               {/* Accessory Image */}
-              <div className="relative h-64 md:h-72 overflow-hidden bg-white p-6">
+              <div className="relative w-full overflow-hidden rounded-[67px]">
                 <Image
                   src={accessory.image}
                   alt={accessory.imageAlt}
-                  fill
-                  className="object-contain"
+                  width={400}
+                  height={400}
+                  className="object-contain w-full h-auto rounded-[67px]"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
@@ -200,32 +127,6 @@ export default function ProductAccessoriesSliderClient({
           .product-accessories-swiper .swiper-pagination-bullet-active-custom {
             width: 2rem;
             background: #009FE8;
-          }
-
-          .swiper-button-prev-custom,
-          .swiper-button-next-custom {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 10;
-          }
-
-          .swiper-button-prev-custom {
-            left: -1rem;
-          }
-
-          .swiper-button-next-custom {
-            right: -1rem;
-          }
-
-          @media (max-width: 768px) {
-            .swiper-button-prev-custom {
-              left: 0.5rem;
-            }
-
-            .swiper-button-next-custom {
-              right: 0.5rem;
-            }
           }
 
         `
