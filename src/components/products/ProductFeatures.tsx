@@ -32,15 +32,15 @@ export default function ProductFeatures({ features }: ProductFeaturesProps) {
           {visibleFeatures.map((feature) => (
             <div
               key={feature.id}
-              className="bg-white rounded-[25px] overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col"
+              className="bg-white rounded-[50px] overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col"
             >
               {/* Feature Image */}
-              <div className="relative h-64 md:h-72 overflow-hidden bg-gray-100">
+              <div className="relative h-64 md:h-72 overflow-hidden bg-gray-100 ">
                 <Image
                   src={feature.image}
                   alt={feature.imageAlt}
                   fill
-                  className="object-contain"
+                  className="rounded-[50px]  object-contain"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>

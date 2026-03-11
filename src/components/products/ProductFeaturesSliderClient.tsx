@@ -75,7 +75,7 @@ export default function ProductFeaturesSliderClient({
           <SwiperSlide key={feature.id}>
             <div className="bg-white rounded-[25px] overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
               {/* Feature Image */}
-              <div className="relative h-64 md:h-72 overflow-hidden bg-gray-100">
+              <div className="relative h-64 md:h-72 overflow-hidden bg-gray-100 rounded-[50px] ">
                 <Image
                   src={feature.image}
                   alt={feature.imageAlt}
