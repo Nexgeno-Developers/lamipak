@@ -32,23 +32,24 @@ export default function ProductFeatures({ features }: ProductFeaturesProps) {
           {visibleFeatures.map((feature) => (
             <div
               key={feature.id}
-              className="bg-white rounded-[50px] overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col"
+              className="bg-[#EDF0F1] rounded-[50px] overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col p-[15px]"
             >
               {/* Feature Image */}
-              <div className="relative h-64 md:h-72 overflow-hidden bg-gray-100 ">
+              <div className="relative w-full overflow-hidden bg-gray-100 rounded-[67px]">
                 <Image
                   src={feature.image}
                   alt={feature.imageAlt}
-                  fill
-                  className="rounded-[50px]  object-contain"
+                  width={400}
+                  height={400}
+                  className="rounded-[67px] object-contain w-full h-auto"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
 
               {/* Feature Content */}
-              <div className="p-6 md:p-8 flex-1 flex flex-col">
+              <div className="p-4 md:p-6 flex-1 flex flex-col">
                 {/* Title */}
-                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1 mt-3">
                   {feature.title}
                 </h3>
 
