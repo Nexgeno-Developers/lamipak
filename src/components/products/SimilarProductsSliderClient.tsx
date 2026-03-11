@@ -145,12 +145,12 @@ export default function SimilarProductsSliderClient({
             <div className="bg-[#EDF0F1] rounded-[50px] p-[15px] h-full">
               {/* Product Image Container */}
               <div className="mb-4 aspect-square flex items-center justify-center">
-                <div className="relative w-full h-full rounded-[67px]">
+                <div className="relative w-full h-full rounded-[50px]">
                   <Image
                     src={product.image}
                     alt={product.imageAlt}
                     fill
-                    className="object-contain rounded-[67px]"
+                    className="object-contain rounded-[50px]"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
                 </div>

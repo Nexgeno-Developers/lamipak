@@ -425,6 +425,15 @@ export async function getHomepageData(): Promise<HomepageData> {
           imageAlt: 'Circular Economy in Packaging - Person examining plastic pouch in laboratory',
           link: '/insights/circular-economy-packaging',
         },
+         {
+          id: '4',
+          title: 'Smart Packaging & Traceability',
+          category: 'INDUSTRY',
+          date: 'NOV 2025',
+          image: '/latest_insite_image_2.jpg', // Replace with actual insight image
+          imageAlt: 'Smart Packaging & Traceability - Laboratory with blue liquid containers',
+          link: '/insights/smart-packaging-traceability',
+        },
        
       ],
     },
