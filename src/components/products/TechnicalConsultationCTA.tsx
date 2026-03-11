@@ -20,7 +20,7 @@ export default function TechnicalConsultationCTA({ data }: TechnicalConsultation
   return (
     <section className="bg-white py-12 md:py-16">
       <div className="container mx-auto px-4">
-        <div className="relative rounded-[50px] overflow-hidden h-[450px]">
+        <div className="relative rounded-[50px] overflow-hidden">
           {/* Background Image */}
           <div className="absolute inset-0">
             <Image
