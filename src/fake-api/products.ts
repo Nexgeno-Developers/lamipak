@@ -407,6 +407,14 @@ const products: ProductData[] = [
         image: '/features_product_3.jpg',
         imageAlt: 'WaterPak product feature',
       },
+
+      {
+        id: '4',
+        title: 'WaterPak',
+        description: 'Water-resistant coating',
+        image: '/features_product_3.jpg',
+        imageAlt: 'WaterPak product feature',
+      },
     ],
     sizes: ['200ml', '250ml', '500ml', '1000ml'],
     quickSpecifications: [
