@@ -11,6 +11,7 @@ import { getCanonicalUrl } from '@/config/site';
 import TechnicalConsultationCTA from '@/components/products/TechnicalConsultationCTA';
 import CategoryGlobalImpact from '@/components/products/CategoryGlobalImpact';
 import LatestInsights from '@/components/home/LatestInsights';
+import SimilarProducts from '@/components/products/SimilarProducts';
 
 interface CategoryPageProps {
   params: Promise<{
@@ -194,6 +195,9 @@ export default async function CategoryProductsPage({ params }: CategoryPageProps
 
         {/* Latest Insights Section */}
         <LatestInsights />
+
+        {/* Similar Products Section */}
+        <SimilarProducts />
         
       </main>
     </>
