@@ -53,7 +53,7 @@ export default function NavigationDropdown({ item }: NavigationDropdownProps) {
       {/* Dropdown Menu - CSS hover based */}
       <div className="absolute top-full left-0 mt-0 pt-3 min-w-[220px] bg-transparent z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto">
         {/* Arrow indicator */}
-        <div className="absolute top-0 left-6 w-4 h-4 bg-white border-l border-t border-gray-100 rotate-45" />
+        {/* <div className="absolute top-0 left-6 w-4 h-4 bg-white border-l border-t border-gray-100 rotate-45" /> */}
         
         {/* Dropdown content */}
         <div className="relative bg-white rounded-xl shadow-2xl border border-gray-100 py-2 mt-2">
@@ -65,7 +65,7 @@ export default function NavigationDropdown({ item }: NavigationDropdownProps) {
             >
               <span className="relative z-10 flex items-center">
                 {child.label}
-                <svg
+                {/* <svg
                   className="w-4 h-4 ml-auto opacity-0 group-hover/item:opacity-100 transition-opacity transform group-hover/item:translate-x-1"
                   fill="none"
                   stroke="currentColor"
@@ -77,7 +77,7 @@ export default function NavigationDropdown({ item }: NavigationDropdownProps) {
                     strokeWidth={2}
                     d="M9 5l7 7-7 7"
                   />
-                </svg>
+                </svg> */}
               </span>
               {index < item.children!.length - 1 && (
                 <div className="absolute bottom-0 left-5 right-5 h-px bg-gray-100" />
