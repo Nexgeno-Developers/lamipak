@@ -156,7 +156,7 @@ export default async function CategoryProductsPage({ params }: CategoryPageProps
             <div className="container mx-auto px-4">
               <div className="text-center">
                 {/* Section Label */}
-                <p className="text-sm md:text-base text-gray-500 uppercase tracking-wide mb-2">
+                <p className="text-sm md:text-base text-[#009FE8] uppercase tracking-wide mb-2">
                   WHAT WE SUPPORT
                 </p>
 
@@ -229,21 +229,21 @@ function ProductSupportCard({ product }: { product: NonNullable<Awaited<ReturnTy
       </div>
 
       {/* Product Info */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col pl-3 pr-3">
         {/* Title */}
-        <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2 group-hover:text-[#009FE8] transition-colors">
+        <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2 group-hover:text-[#009FE8] transition-colors pt-3">
           {product.title}
         </h3>
 
         {/* Short Description */}
         {product.shortDescription && (
-          <p className="text-sm md:text-base text-gray-600 mb-4 flex-1 line-clamp-2">
+          <p className="text-sm md:text-base text-gray-600 mb-2 flex-1 line-clamp-2">
             {product.shortDescription}
           </p>
         )}
 
         {/* Explore Link */}
-        <div className="flex items-center text-[#009FE8] text-sm md:text-base font-medium group-hover:text-[#0077B6] transition-colors">
+        <div className="flex items-center text-[#009FE8] text-sm md:text-base font-medium group-hover:text-[#0077B6] transition-colors mb-4">
           Explore
           <svg
             className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform"

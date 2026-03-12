@@ -76,9 +76,9 @@ const categories: ProductCategory[] = [
       ],
     },
     pilotPlant: {
-      label: 'PILOT PLANT',
-      heading: 'TEST YOUR PRODUCT ON PILOT LINES BEFORE FULL-SCALE COMMITMENT',
-      ctaText: 'REQUEST PILOT ACCESS',
+      label: 'Pilot Plant',
+      heading: 'Test Your Product on Pilot Lines Before Full-Scale Commitment',
+      ctaText: 'Request Pilot Access',
       ctaLink: '/contact',
       backgroundImage: '/pilot-plant-bg',
     },

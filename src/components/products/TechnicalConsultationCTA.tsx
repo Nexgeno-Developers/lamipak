@@ -59,14 +59,14 @@ export default function TechnicalConsultationCTA({ data }: TechnicalConsultation
               )}
 
               {/* Main Heading/Question Text */}
-              <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight text-center whitespace-pre-line pb-[50px] uppercase tracking-tight">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight text-center whitespace-pre-line pb-[50px] tracking-tight">
                 {mainText}
               </h2>
 
               {/* CTA Link */}
               <Link
                 href={data.ctaLink}
-                className="inline-flex items-center text-white text-base md:text-lg lg:text-xl font-bold uppercase tracking-wider hover:text-[#009FE8] transition-colors group whitespace-nowrap"
+                className="inline-flex items-center text-white text-base md:text-lg lg:text-xl font-bold tracking-wider hover:text-[#009FE8] transition-colors group whitespace-nowrap"
               >
                 {data.ctaText}
                 <svg
