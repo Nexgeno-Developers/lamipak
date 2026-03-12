@@ -152,7 +152,7 @@ export default async function CategoryProductsPage({ params }: CategoryPageProps
 
         {/* Products We Support Section */}
         {products.length > 0 && (
-          <section className="bg-gray-50 py-12 md:py-16">
+          <section className="bg-gray-50 py-12 md:pt-24 md:pb-12 pb-8">
             <div className="container mx-auto px-4">
               <div className="text-center">
                 {/* Section Label */}

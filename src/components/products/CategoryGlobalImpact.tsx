@@ -18,7 +18,7 @@ export default function CategoryGlobalImpact({ data }: CategoryGlobalImpactProps
   }
 
   return (
-    <section className="bg-gray-50">
+    <section className="bg-gray-50 py-8 md:py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Side - Image */}

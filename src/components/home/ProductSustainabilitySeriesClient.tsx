@@ -30,8 +30,18 @@ export default function ProductSustainabilitySeriesClient({ data }: ProductSusta
   return (
     <section className="bg-gray-50 py-8 md:py-12">
       <div className="container mx-auto px-4">
-        {/* Blue Gradient Container */}
-        <div className="rounded-[50px] bg-gradient-to-b from-[#009FE8] to-[#0077B6] p-8 md:p-12 lg:p-16">
+        {/* Background Image Container */}
+        <div className="relative rounded-[50px] overflow-hidden p-8 md:p-12 lg:p-16">
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <img
+              src="/product_section_bg_home.jpg"
+              alt="Product Section Background"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </div>
+          {/* Content Wrapper */}
+          <div className="relative z-10">
           {/* Section Title and Navigation */}
           <div className="flex items-center justify-between mb-8 md:mb-12">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
@@ -151,6 +161,7 @@ export default function ProductSustainabilitySeriesClient({ data }: ProductSusta
               }
             `
           }} />
+          </div>
         </div>
       </div>
     </section>

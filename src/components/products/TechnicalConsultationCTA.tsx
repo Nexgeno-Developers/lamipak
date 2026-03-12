@@ -34,8 +34,8 @@ export default function TechnicalConsultationCTA({ data }: TechnicalConsultation
   const mainText = heading || question || '';
 
   return (
-    <section className="bg-gray-50 py-8 md:py-8">
-      <div className="container mx-auto px-4 pb-12">
+    <section className="bg-gray-50 py-8 md:py-12">
+      <div className="container mx-auto px-4">
         <div className="relative rounded-[50px] overflow-hidden ">
           {/* Background Image (same for all) */}
           <div className="absolute inset-0">
