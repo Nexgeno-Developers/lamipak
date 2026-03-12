@@ -32,11 +32,11 @@ export default function ContactSustainability() {
   };
 
   return (
-    <section className="bg-white py-12 md:py-16 lg:py-20">
+    <section className="bg-gray-50 pt-4 md:pt-8 lg:pt-8 pb-24">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
           {/* Left Panel - Contact Us Form */}
-          <div className="bg-[#F5F5F5] rounded-[50px] p-8 md:p-10 lg:p-12">
+          <div className="bg-[#EDF0F1] rounded-[50px] p-8 md:p-10 lg:p-12">
             {/* Heading */}
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
               Contact Us

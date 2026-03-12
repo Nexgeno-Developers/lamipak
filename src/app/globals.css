@@ -43,3 +43,11 @@ body {
 #video-modal:target {
   display: flex;
 }
+
+/* Hide Swiper pagination everywhere */
+.swiper-pagination,
+.swiper-pagination-clickable,
+.swiper-pagination-bullets,
+.swiper-pagination-horizontal {
+  display: none !important;
+}
