@@ -9,6 +9,7 @@ import {
 } from '@/lib/api';
 import { getCanonicalUrl } from '@/config/site';
 import TechnicalConsultationCTA from '@/components/products/TechnicalConsultationCTA';
+import CategoryGlobalImpact from '@/components/products/CategoryGlobalImpact';
 
 interface CategoryPageProps {
   params: Promise<{
@@ -144,6 +145,8 @@ export default async function CategoryProductsPage({ params }: CategoryPageProps
           </div>
         </section>
 
+      
+
         {/* Products We Support Section */}
         {products.length > 0 && (
           <section className="bg-gray-50 py-12 md:py-16">
@@ -182,6 +185,12 @@ export default async function CategoryProductsPage({ params }: CategoryPageProps
         {category.pilotPlant && (
           <TechnicalConsultationCTA data={category.pilotPlant} />
         )}
+
+          {/* Global Impact Section */}
+        {category.globalImpact && (
+          <CategoryGlobalImpact data={category.globalImpact} />
+        )}
+        
       </main>
     </>
   );

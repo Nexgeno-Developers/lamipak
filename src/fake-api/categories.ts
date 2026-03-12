@@ -34,6 +34,13 @@ export interface ProductCategory {
   image?: string;
   heroBackgroundImage?: string; // Background image for hero section
   heroSubtitle?: string; // Subtitle text for hero section (e.g., "PURE DAIRY, SAFELY PACKED FOR YOU")
+  globalImpact?: {
+    image: string;
+    imageAlt: string;
+    label: string; // Small label text (e.g., "GLOBAL IMPACT")
+    heading: string; // Main heading (e.g., "LEADING THE DAIRY PACKAGING INDUSTRY")
+    features: string[]; // List of features with checkmarks
+  };
   pilotPlant?: {
     label: string;
     heading: string;
@@ -56,6 +63,18 @@ const categories: ProductCategory[] = [
     image: '/category-aseptic.jpg',
     heroBackgroundImage: '/banner-slider1.jpg',
     heroSubtitle: 'Extended shelf life, superior barrier protection',
+    globalImpact: {
+      image: '/leading_dairy_img.jpg',
+      imageAlt: 'Industrial dairy packaging line with bottles on conveyor belt',
+      label: 'GLOBAL IMPACT',
+      heading: 'LEADING THE DAIRY PACKAGING INDUSTRY',
+      features: [
+        'Advanced Aseptic Systems',
+        'Designed for UHT & Flavored Dairy',
+        'Serving 7/10 Top Dairy Brands',
+        'Global Quality Compliance',
+      ],
+    },
     pilotPlant: {
       label: 'PILOT PLANT',
       heading: 'TEST YOUR PRODUCT ON PILOT LINES BEFORE FULL-SCALE COMMITMENT',
@@ -90,6 +109,18 @@ const categories: ProductCategory[] = [
     image: '/category-sterile.jpg',
     heroBackgroundImage: '/banner-slider2.jpg',
     heroSubtitle: 'Pharmaceutical-grade sterile packaging solutions',
+    globalImpact: {
+      image: '/leading_dairy_img.jpg',
+      imageAlt: 'Sterile packaging production line',
+      label: 'GLOBAL IMPACT',
+      heading: 'SETTING THE STANDARD FOR STERILE PACKAGING',
+      features: [
+        'FDA Approved Class A Sterility',
+        'Pharmaceutical-Grade Solutions',
+        'Trusted by Leading Pharma Companies',
+        'ISO Certified Quality Systems',
+      ],
+    },
     seo: {
       meta_title: 'Sterile Packaging Solutions | Lamipak - Pharmaceutical Grade Packaging',
       meta_description: 'Ultra-clean sterile packaging systems for pharmaceutical and sensitive liquid products. FDA approved with Class A sterility standards and maximum product safety.',
@@ -117,6 +148,18 @@ const categories: ProductCategory[] = [
     image: '/category-closure.jpg',
     heroBackgroundImage: '/banner-slider3.jpg',
     heroSubtitle: 'Secure sealing, easy opening, tamper-evident',
+    globalImpact: {
+      image: '/leading_dairy_img.jpg',
+      imageAlt: 'Closure systems manufacturing',
+      label: 'GLOBAL IMPACT',
+      heading: 'INNOVATIVE CLOSURE SOLUTIONS WORLDWIDE',
+      features: [
+        'Secure Sealing Technology',
+        'Tamper-Evident Features',
+        'Easy Opening Mechanisms',
+        'Global Manufacturing Network',
+      ],
+    },
     seo: {
       meta_title: 'Closure Systems | Lamipak - Secure Packaging Closures',
       meta_description: 'Innovative closure systems for secure sealing, easy opening, and tamper-evident features. Multiple closure types including screw cap, snap cap, and pull-tab.',
@@ -144,6 +187,18 @@ const categories: ProductCategory[] = [
     image: '/category-sustainable.jpg',
     heroBackgroundImage: '/banner-slider4.jpg',
     heroSubtitle: 'Eco-friendly packaging for a sustainable future',
+    globalImpact: {
+      image: '/leading_dairy_img.jpg',
+      imageAlt: 'Sustainable packaging solutions',
+      label: 'GLOBAL IMPACT',
+      heading: 'DRIVING SUSTAINABILITY IN PACKAGING',
+      features: [
+        'Plant-Derived Materials',
+        'Recyclable Packaging Options',
+        'Reduced Carbon Footprint',
+        'Certified Sustainable Practices',
+      ],
+    },
     seo: {
       meta_title: 'Sustainable Packaging Solutions | Lamipak - Eco-Friendly Packaging',
       meta_description: 'Eco-friendly packaging solutions for sustainability. Plant-derived materials, recyclable options, and reduced carbon footprint packaging.',
@@ -171,6 +226,18 @@ const categories: ProductCategory[] = [
     image: '/category-specialty.jpg',
     heroBackgroundImage: '/banner-slider5.jpg',
     heroSubtitle: 'Custom packaging tailored to your needs',
+    globalImpact: {
+      image: '/leading_dairy_img.jpg',
+      imageAlt: 'Specialty packaging solutions',
+      label: 'GLOBAL IMPACT',
+      heading: 'CUSTOM SOLUTIONS FOR SPECIALIZED NEEDS',
+      features: [
+        'Tailored Packaging Designs',
+        'Industry-Specific Solutions',
+        'Global Customization Capabilities',
+        'Expert Technical Support',
+      ],
+    },
     seo: {
       meta_title: 'Specialty Packaging Solutions | Lamipak - Custom Packaging',
       meta_description: 'Custom packaging solutions for specialized applications. Tailored solutions designed for unique industry requirements and specific needs.',
