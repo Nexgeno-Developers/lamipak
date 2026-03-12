@@ -67,7 +67,7 @@ const categories: ProductCategory[] = [
       image: '/leading_dairy_img.jpg',
       imageAlt: 'Industrial dairy packaging line with bottles on conveyor belt',
       label: 'GLOBAL IMPACT',
-      heading: 'LEADING THE DAIRY PACKAGING INDUSTRY',
+      heading: 'Leading the Dairy Packaging Industry',
       features: [
         'Advanced Aseptic Systems',
         'Designed for UHT & Flavored Dairy',
@@ -113,7 +113,7 @@ const categories: ProductCategory[] = [
       image: '/leading_dairy_img.jpg',
       imageAlt: 'Sterile packaging production line',
       label: 'GLOBAL IMPACT',
-      heading: 'SETTING THE STANDARD FOR STERILE PACKAGING',
+      heading: 'Setting the Standard for Sterile Packaging',
       features: [
         'FDA Approved Class A Sterility',
         'Pharmaceutical-Grade Solutions',
@@ -152,7 +152,7 @@ const categories: ProductCategory[] = [
       image: '/leading_dairy_img.jpg',
       imageAlt: 'Closure systems manufacturing',
       label: 'GLOBAL IMPACT',
-      heading: 'INNOVATIVE CLOSURE SOLUTIONS WORLDWIDE',
+      heading: 'Innovative Closure Solutions Worldwide',
       features: [
         'Secure Sealing Technology',
         'Tamper-Evident Features',
@@ -191,7 +191,7 @@ const categories: ProductCategory[] = [
       image: '/leading_dairy_img.jpg',
       imageAlt: 'Sustainable packaging solutions',
       label: 'GLOBAL IMPACT',
-      heading: 'DRIVING SUSTAINABILITY IN PACKAGING',
+      heading: 'Driving Sustainability in Packaging',
       features: [
         'Plant-Derived Materials',
         'Recyclable Packaging Options',
@@ -230,7 +230,7 @@ const categories: ProductCategory[] = [
       image: '/leading_dairy_img.jpg',
       imageAlt: 'Specialty packaging solutions',
       label: 'GLOBAL IMPACT',
-      heading: 'CUSTOM SOLUTIONS FOR SPECIALIZED NEEDS',
+      heading: 'Custom Solutions for Specialized Needs',
       features: [
         'Tailored Packaging Designs',
         'Industry-Specific Solutions',

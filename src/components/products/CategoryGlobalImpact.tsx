@@ -34,14 +34,14 @@ export default function CategoryGlobalImpact({ data }: CategoryGlobalImpactProps
           </div>
 
           {/* Right Side - Content */}
-          <div className="space-y-6 md:space-y-8">
+          <div className="space-y-4 md:space-y-6">
             {/* Label */}
             <p className="text-sm md:text-base lg:text-lg text-[#009FE8] uppercase tracking-wider font-medium">
               {data.label}
             </p>
 
             {/* Main Heading */}
-            <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-[#124a97] leading-tight">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-[#009FE8] leading-tight">
               {data.heading}
             </h2>
 

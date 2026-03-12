@@ -73,7 +73,7 @@ export default function VideoBanner() {
       {!isVideoPlaying && (
         <div className="relative z-10 h-full flex flex-col items-center px-4">
           {/* Main Title - Top */}
-          <div className="pt-8 md:pt-24 lg:pt-16">
+          <div className="pt-8 md:pt-20 lg:pt-20">
             <h2 className="text-3xl md:text-4xl lg:text-[50px] font-bold text-white text-center">
               {data.title}
             </h2>
@@ -97,7 +97,7 @@ export default function VideoBanner() {
           </div>
 
           {/* CTA Link - Bottom */}
-          <div className="pb-10 md:pb-14">
+          <div className="pb-10 md:pb-20">
             <Link
               href={data.ctaLink}
               className="inline-flex items-center text-white text-lg md:text-[32px] font-medium hover:text-[#009FE8] transition-colors group"

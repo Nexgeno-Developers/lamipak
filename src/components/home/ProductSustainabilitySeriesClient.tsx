@@ -28,7 +28,7 @@ export default function ProductSustainabilitySeriesClient({ data }: ProductSusta
   const shouldLoop = data.products.length > 3;
 
   return (
-    <section className="bg-gray-50">
+    <section className="bg-gray-50 py-8 md:py-12">
       <div className="container mx-auto px-4">
         {/* Blue Gradient Container */}
         <div className="rounded-[50px] bg-gradient-to-b from-[#009FE8] to-[#0077B6] p-8 md:p-12 lg:p-16">

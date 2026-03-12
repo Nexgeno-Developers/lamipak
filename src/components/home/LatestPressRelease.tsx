@@ -16,7 +16,7 @@ export default async function LatestPressRelease() {
   const visibleCards = data.cards.slice(0, cardsPerView);
 
   return (
-    <section className="pb-16 md:pb-24 bg-gray-50">
+    <section className=" bg-gray-50 py-8 md:py-12">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="mb-8 md:mb-12">

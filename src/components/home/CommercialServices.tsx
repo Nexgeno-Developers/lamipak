@@ -14,7 +14,7 @@ export default async function CommercialServices() {
   const data = homepageData.commercialServices;
 
   return (
-    <section className="bg-[#f8f8f8] pt-16 md:pt-24">
+    <section className="bg-[#f8f8f8] pt-16 md:pt-24 pb-12">
       <div className="container mx-auto px-4">
         {/* Section Title */}
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8 md:mb-12">
