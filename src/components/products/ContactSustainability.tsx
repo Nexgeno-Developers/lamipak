@@ -58,7 +58,7 @@ export default function ContactSustainability() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-6 py-4 bg-white rounded-[25px] border-none shadow-sm focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
+                  className="w-full px-6 py-4 bg-white rounded-[50px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
                 />
               </div>
 
@@ -71,7 +71,7 @@ export default function ContactSustainability() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-6 py-4 bg-white rounded-[25px] border-none shadow-sm focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
+                  className="w-full px-6 py-4 bg-white rounded-[50px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
                 />
               </div>
 
