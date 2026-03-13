@@ -44,6 +44,13 @@ export interface TechnicalServiceData {
     detailedDescription?: string; // Longer description paragraph
   };
   features?: string[];
+  detailedFeatures?: {
+    id: string;
+    title: string;
+    description: string;
+    image: string;
+    imageAlt: string;
+  }[];
   benefits?: string[];
   process?: {
     title: string;
@@ -88,6 +95,50 @@ const technicalServices: TechnicalServiceData[] = [
       'Overall Assessment',
       'Spare Parts',
       'Training'
+    ],
+    detailedFeatures: [
+      {
+        id: '1',
+        title: 'Preventive Maintenance',
+        description: 'Proactive maintenance services designed to enhance equipment reliability, extend operational lifespan, and ensure consistent performance of aseptic packaging systems and solutions.',
+        image: '/images/technical-services/preventive-maintenance.jpg',
+        imageAlt: 'Preventive Maintenance Team'
+      },
+      {
+        id: '2',
+        title: 'Corrective Maintenance',
+        description: 'Rapid response maintenance services to address equipment issues, minimize downtime, and restore optimal performance of your aseptic packaging systems.',
+        image: '/images/technical-services/corrective-maintenance.jpg',
+        imageAlt: 'Corrective Maintenance Service'
+      },
+      {
+        id: '3',
+        title: 'Remote Technical Support',
+        description: 'Expert remote assistance and troubleshooting services to resolve technical issues quickly, reduce on-site visits, and maintain continuous production operations.',
+        image: '/images/technical-services/remote-support.jpg',
+        imageAlt: 'Remote Technical Support'
+      },
+      {
+        id: '4',
+        title: 'Overall Line Assessment',
+        description: 'Comprehensive evaluation of your entire production line to identify optimization opportunities, improve efficiency, and ensure peak performance across all systems.',
+        image: '/images/technical-services/line-assessment.jpg',
+        imageAlt: 'Overall Line Assessment'
+      },
+      {
+        id: '5',
+        title: 'Spare Parts Supply',
+        description: 'Reliable access to genuine spare parts and components to maintain equipment performance, reduce downtime, and ensure long-term operational reliability.',
+        image: '/images/technical-services/spare-parts.jpg',
+        imageAlt: 'Spare Parts Supply'
+      },
+      {
+        id: '6',
+        title: 'Training & Capability Building',
+        description: 'Comprehensive training programs to build your team\'s technical capabilities, enhance operational knowledge, and ensure optimal use of aseptic packaging systems.',
+        image: '/images/technical-services/training.jpg',
+        imageAlt: 'Training & Capability Building'
+      }
     ],
     benefits: [
       'Foundational operational support',

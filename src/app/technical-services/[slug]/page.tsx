@@ -7,6 +7,7 @@ import { getCanonicalUrl } from '@/config/site';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import TechnicalConsultationCTA from '@/components/products/TechnicalConsultationCTA';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
+import VerticalTabsFeatures from '@/components/technical-services/VerticalTabsFeatures';
 
 interface TechnicalServicePageProps {
   params: Promise<{
@@ -219,8 +220,13 @@ export default async function TechnicalServicePage({ params }: TechnicalServiceP
           </section>
         )}
 
-        {/* Features Section */}
-        {serviceData.features && serviceData.features.length > 0 && (
+        {/* Vertical Tabs Features Section */}
+        {serviceData.detailedFeatures && serviceData.detailedFeatures.length > 0 && (
+          <VerticalTabsFeatures features={serviceData.detailedFeatures} />
+        )}
+
+        {/* Features Section (Fallback if no detailedFeatures) */}
+        {!serviceData.detailedFeatures && serviceData.features && serviceData.features.length > 0 && (
           <section className="bg-gray-50 py-12 md:py-16">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
