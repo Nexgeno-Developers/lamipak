@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { fetchTechnicalServicesListingData } from '@/lib/api';
+import ConnectTechnicalExperts from '@/components/technical-services/ConnectTechnicalExperts';
 import { getCanonicalUrl } from '@/config/site';
 
 /**
@@ -309,6 +310,15 @@ export default async function TechnicalServicesPage() {
           </div>
         </div>
       </section>
+
+      {/* Connect with Technical Experts Section */}
+      <ConnectTechnicalExperts
+        heading={listingData.connectSection.heading}
+        headingHighlight={listingData.connectSection.headingHighlight}
+        formTitle={listingData.connectSection.formTitle}
+        illustrationImage={listingData.connectSection.illustrationImage}
+        illustrationAlt={listingData.connectSection.illustrationAlt}
+      />
 
     </main>
   );

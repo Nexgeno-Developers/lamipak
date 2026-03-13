@@ -80,6 +80,13 @@ export interface TechnicalServicesListingData {
     headingHighlight: string; // Part of heading to highlight (e.g., "Driving Operational")
     cards: OperationalSuccessCard[];
   };
+  connectSection: {
+    heading: string;
+    headingHighlight: string; // Part of heading to highlight (e.g., "Technical Experts")
+    formTitle: string;
+    illustrationImage: string;
+    illustrationAlt: string;
+  };
 }
 
 /**
@@ -210,6 +217,13 @@ export function getTechnicalServicesListingData(): TechnicalServicesListingData 
           ctaLink: '/technical-services/pilot-plan'
         }
       ]
+    },
+    connectSection: {
+      heading: 'Connect with Our Technical Experts',
+      headingHighlight: 'Technical Experts',
+      formTitle: 'Send Us A Message',
+      illustrationImage: '/images/technical-services/connect-experts-illustration.jpg',
+      illustrationAlt: 'Connect with Technical Experts'
     }
   };
 }
