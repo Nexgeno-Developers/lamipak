@@ -38,6 +38,11 @@ export interface TechnicalServiceData {
   heroBackgroundImage?: string;
   icon?: string;
   category?: string;
+  introSection?: {
+    tagline: string; // e.g., "Ensuring Operational Excellence"
+    icon?: string; // Star icon or other icon
+    detailedDescription?: string; // Longer description paragraph
+  };
   features?: string[];
   benefits?: string[];
   process?: {
@@ -71,6 +76,11 @@ const technicalServices: TechnicalServiceData[] = [
     imageAlt: 'Lami Care Service',
     heroBackgroundImage: '/technical_bg.jpg',
     category: 'Service Tier',
+    introSection: {
+      tagline: 'Ensuring Operational Excellence',
+      icon: '/images/icons/star.svg',
+      detailedDescription: 'LamiCare is Lamipak\'s foundational technical service program designed to ensure stable, reliable, and efficient performance across your aseptic carton packaging and aseptic liquid packaging production lines. As part of Lamipak\'s integrated aseptic packaging solutions, LamiCare helps customers maintain production stability while supporting long-term efficiency and sustainable packaging solutions objectives.'
+    },
     features: [
       'Preventative Maintenance',
       'Corrective Maintenance',
@@ -122,6 +132,11 @@ const technicalServices: TechnicalServiceData[] = [
     imageAlt: 'LamiPremium Service',
     heroBackgroundImage: '/technical_bg.jpg',
     category: 'Service Tier',
+    introSection: {
+      tagline: 'Enhanced Performance & Efficiency',
+      icon: '/images/icons/star.svg',
+      detailedDescription: 'LamiPremium is Lamipak\'s advanced technical service program designed to deliver enhanced performance commitments and operational excellence. This tier provides comprehensive maintenance management, machine optimization, and customized solutions to maximize your production efficiency and equipment value.'
+    },
     features: [
       'Performance Commitment',
       'Maintenance Management',
@@ -173,6 +188,11 @@ const technicalServices: TechnicalServiceData[] = [
     imageAlt: 'LamiPartner Service',
     heroBackgroundImage: '/technical_bg.jpg',
     category: 'Service Tier',
+    introSection: {
+      tagline: 'Strategic Partnership & Transformation',
+      icon: '/images/icons/star.svg',
+      detailedDescription: 'LamiPartner is Lamipak\'s premier technical service program offering strategic partnership and complete operational transformation. This tier includes operational cost commitment, advanced digital solutions, automation services, and comprehensive support to drive your business growth and innovation.'
+    },
     features: [
       'Operational cost commitment',
       'Digital Solution (31 Smart Version)',
