@@ -27,13 +27,13 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} font-sans antialiased`}
       >
-        <Suspense fallback={null}>
+        
           <NavigationProgressProvider>
             <Header />
             {children}
             <Footer />
           </NavigationProgressProvider>
-        </Suspense>
+        
       </body>
     </html>
   );
