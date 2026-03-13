@@ -402,3 +402,4 @@ export function getAllTechnicalServices(): TechnicalServiceData[] {
 export function getAllTechnicalServiceSlugs(): string[] {
   return technicalServices.map(service => service.slug);
 }
+

@@ -18,6 +18,7 @@ export const API_CONFIG = {
     productsByCategory: (categorySlug: string) => `/products/category/${categorySlug}`,
     technicalServices: '/technical-services',
     technicalService: (slug: string) => `/technical-services/${slug}`,
+    technicalServicesListing: '/technical-services/listing',
     header: '/header',
     footer: '/footer',
     approach: '/approach',

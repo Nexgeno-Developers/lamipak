@@ -27,10 +27,14 @@ import {
   getAllTechnicalServiceSlugs as fakeGetAllTechnicalServiceSlugs,
   type TechnicalServiceData
 } from '@/fake-api/technical-services';
+import {
+  getTechnicalServicesListingData as fakeGetTechnicalServicesListingData,
+  type TechnicalServicesListingData
+} from '@/fake-api/technical-services-listing';
 import { getCanonicalUrl } from '@/config/site';
 
 // Re-export types for convenience
-export type { ProductData, ProductCategory, TechnicalServiceData };
+export type { ProductData, ProductCategory, TechnicalServiceData, TechnicalServicesListingData };
 import { getHeaderData as fakeGetHeaderData, type HeaderData } from '@/fake-api/layout';
 import { getFooterData as fakeGetFooterData, type FooterData } from '@/fake-api/layout';
 
@@ -280,4 +284,21 @@ export async function getAllTechnicalServiceSlugs(): Promise<string[]> {
   }
   
   return fakeGetAllTechnicalServiceSlugs();
+}
+
+/**
+ * Fetches technical services listing page data
+ * 
+ * @returns Promise<TechnicalServicesListingData>
+ */
+export async function fetchTechnicalServicesListingData(): Promise<TechnicalServicesListingData> {
+  if (useRealAPI()) {
+    // TODO: Replace with real API call when Laravel backend is ready
+    // const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.technicalServicesListing}`);
+    // if (!response.ok) throw new Error('Failed to fetch technical services listing data');
+    // return response.json();
+    throw new Error('Real API not yet implemented');
+  }
+  
+  return fakeGetTechnicalServicesListingData();
 }

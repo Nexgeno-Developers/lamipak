@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getAllTechnicalServices } from '@/lib/api';
+import { getAllTechnicalServices, fetchTechnicalServicesListingData } from '@/lib/api';
 import { getCanonicalUrl } from '@/config/site';
 
 /**
@@ -31,6 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
  */
 export default async function TechnicalServicesPage() {
   const services = await getAllTechnicalServices();
+  const listingData = await fetchTechnicalServicesListingData();
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -38,13 +39,15 @@ export default async function TechnicalServicesPage() {
       <section className="relative pt-[220px] pb-[150px] overflow-hidden">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
-          <img
-            src="/technical_bg.jpg"
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          {/* Fallback dark background */}
-          <div className="absolute inset-0 bg-gray-800" />
+          {listingData.heroBackgroundImage ? (
+            <img
+              src={listingData.heroBackgroundImage}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          ) : (
+            <div className="absolute inset-0 bg-gray-800" />
+          )}
           {/* Dark Blue Overlay */}
           <div className="absolute inset-0 bg-[#0e233ce8] opacity-90" />
           {/* Blur Effect */}
@@ -57,7 +60,7 @@ export default async function TechnicalServicesPage() {
             <div className="text-center">
               {/* Service Title */}
               <h1 className="text-3xl md:text-5xl lg:text-6xl xl:text-6xl font-bold text-white tracking-tight">
-                TECHNICAL SERVICE
+                {listingData.heroTitle}
               </h1>
             </div>
           </div>
@@ -65,49 +68,27 @@ export default async function TechnicalServicesPage() {
       </section>
 
       {/* Technical Support Service Section */}
-      <section className="bg-white py-12 md:py-16 lg:py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Column - Text Content */}
-            <div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#0e233c] mb-6">
-                Technical Support Service
-              </h2>
-              <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-4">
-                As one of the leading aseptic packaging manufacturers, Lamipak delivers comprehensive Technical Support Services designed to maximize efficiency across carton packaging and aseptic liquid packaging operations.
+      <section className="bg-gray-50">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-center">
+          {/* Left Column - Text Content */}
+          <div className="container mx-auto px-4 lg:px-16 xl:px-24">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#0e233c] mb-6">
+              {listingData.introSection.heading}
+            </h2>
+            {listingData.introSection.paragraphs.map((paragraph, index) => (
+              <p key={index} className={`text-lg md:text-xl text-gray-700 leading-relaxed ${index < listingData.introSection.paragraphs.length - 1 ? 'mb-4' : ''}`}>
+                {paragraph}
               </p>
-              <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-                Our expert team provides strategic guidance, technical expertise, and innovative solutions to help you optimize your packaging processes, improve product quality, and achieve operational excellence.
-              </p>
-            </div>
+            ))}
+          </div>
 
-            {/* Right Column - Image */}
-            <div className="relative aspect-[4/3] rounded-[25px] overflow-hidden bg-gray-100">
-              <img
-                src="/images/technical-services/support-team.jpg"
-                alt="Technical Support Team"
-                className="w-full h-full object-cover"
-              />
-              {/* Placeholder overlay - shown if image doesn't load */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#009FE8] to-[#0077B6] flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                <div className="text-white text-center p-8">
-                  <svg
-                    className="w-24 h-24 mx-auto mb-4 opacity-50"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"
-                    />
-                  </svg>
-                  <p className="text-lg font-medium">Technical Support</p>
-                </div>
-              </div>
-            </div>
+          {/* Right Column - Image (Full Width) */}
+          <div className="relative w-full h-full min-h-[400px] lg:min-h-[600px]">
+            <img
+              src={listingData.introSection.image}
+              alt={listingData.introSection.imageAlt}
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
       </section>
