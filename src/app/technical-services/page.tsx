@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { fetchTechnicalServicesListingData } from '@/lib/api';
 import ConnectTechnicalExperts from '@/components/technical-services/ConnectTechnicalExperts';
+import CallToAction from '@/components/home/CallToAction';
 import { getCanonicalUrl } from '@/config/site';
 
 /**
@@ -319,6 +320,9 @@ export default async function TechnicalServicesPage() {
         illustrationImage={listingData.connectSection.illustrationImage}
         illustrationAlt={listingData.connectSection.illustrationAlt}
       />
+
+      {/* Call to Action Section */}
+      <CallToAction />
 
     </main>
   );
