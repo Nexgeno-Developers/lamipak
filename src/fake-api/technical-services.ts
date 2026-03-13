@@ -59,317 +59,158 @@ export interface TechnicalServiceData {
   seo: TechnicalServiceSEO;
 }
 
-// Mock Technical Services Data
+// Mock Technical Services Data - Only 3 services (Lami Care, LamiPremium, LamiPartner)
 const technicalServices: TechnicalServiceData[] = [
   {
     id: '1',
-    slug: 'product-development',
-    title: 'Product Development',
-    description: 'Our comprehensive product development services help you bring innovative packaging solutions to market. We work closely with your team to design, develop, and optimize products that meet your specific requirements.',
-    shortDescription: 'Comprehensive product development services for innovative packaging solutions.',
-    image: '/images/technical-services/product-development.jpg',
-    imageAlt: 'Product Development Services',
-    heroBackgroundImage: '/images/technical-services/product-development-hero.jpg',
-    icon: '/images/icons/product-development.svg',
-    category: 'Development',
+    slug: 'lami-care',
+    title: 'Lami Care',
+    description: 'Focused on foundational operational support, this tier includes Preventative Maintenance, Corrective Maintenance, Remote Support, Overall Assessment, Spare Parts, Training.',
+    shortDescription: 'Focused on foundational operational support, this tier includes Preventative Maintenance, Corrective Maintenance, Remote Support, Overall Assessment, Spare Parts, Training.',
+    image: '/images/technical-services/lami-care-thumbnail.jpg',
+    imageAlt: 'Lami Care Service',
+    heroBackgroundImage: '/technical_bg.jpg',
+    category: 'Service Tier',
     features: [
-      'Custom product design and engineering',
-      'Rapid prototyping and testing',
-      'Material selection and optimization',
-      'Quality assurance and validation',
-      'Regulatory compliance support',
-      'Scale-up and manufacturing support'
+      'Preventative Maintenance',
+      'Corrective Maintenance',
+      'Remote Support',
+      'Overall Assessment',
+      'Spare Parts',
+      'Training'
     ],
     benefits: [
-      'Faster time to market',
-      'Reduced development costs',
-      'Improved product quality',
-      'Enhanced market competitiveness'
+      'Foundational operational support',
+      'Reduced downtime',
+      'Extended equipment life',
+      'Improved operational efficiency'
     ],
-    process: {
-      title: 'Our Development Process',
-      description: 'We follow a structured approach to ensure successful product development.',
-      steps: [
-        {
-          title: 'Discovery & Planning',
-          description: 'Understanding your requirements and market needs',
-          icon: '/images/icons/discovery.svg'
-        },
-        {
-          title: 'Design & Prototyping',
-          description: 'Creating initial designs and prototypes for testing',
-          icon: '/images/icons/design.svg'
-        },
-        {
-          title: 'Testing & Validation',
-          description: 'Rigorous testing to ensure quality and performance',
-          icon: '/images/icons/testing.svg'
-        },
-        {
-          title: 'Production & Launch',
-          description: 'Scaling up and launching your product to market',
-          icon: '/images/icons/production.svg'
-        }
-      ]
-    },
     cta: {
       label: 'GET STARTED',
-      heading: 'Ready to Develop Your Next Product?',
-      description: 'Contact our team to discuss your product development needs.',
+      heading: 'Ready to Get Started with Lami Care?',
+      description: 'Contact our team to learn more about our foundational operational support services.',
       ctaText: 'Contact Us',
       ctaLink: '/contact'
     },
     seo: {
-      meta_title: 'Product Development Services | Lamipak',
-      meta_description: 'Comprehensive product development services for innovative packaging solutions. Custom design, rapid prototyping, and manufacturing support.',
-      canonical_url: '/technical-services/product-development',
-      og_title: 'Product Development Services | Lamipak',
-      og_description: 'Comprehensive product development services for innovative packaging solutions.',
-      og_image: '/images/technical-services/product-development.jpg',
+      meta_title: 'Lami Care - Foundational Operational Support | Lamipak',
+      meta_description: 'Focused on foundational operational support, Lami Care includes Preventative Maintenance, Corrective Maintenance, Remote Support, Overall Assessment, Spare Parts, Training.',
+      canonical_url: '/technical-services/lami-care',
+      og_title: 'Lami Care - Foundational Operational Support | Lamipak',
+      og_description: 'Focused on foundational operational support, Lami Care includes Preventative Maintenance, Corrective Maintenance, Remote Support, Overall Assessment, Spare Parts, Training.',
+      og_image: '/images/technical-services/lami-care-thumbnail.jpg',
       twitter_card: 'summary_large_image',
-      twitter_title: 'Product Development Services | Lamipak',
-      twitter_description: 'Comprehensive product development services for innovative packaging solutions.',
-      twitter_image: '/images/technical-services/product-development.jpg',
+      twitter_title: 'Lami Care - Foundational Operational Support | Lamipak',
+      twitter_description: 'Focused on foundational operational support, Lami Care includes Preventative Maintenance, Corrective Maintenance, Remote Support, Overall Assessment, Spare Parts, Training.',
+      twitter_image: '/images/technical-services/lami-care-thumbnail.jpg',
       schema: {
         '@context': 'https://schema.org',
         '@type': 'Service',
-        name: 'Product Development Services',
-        description: 'Comprehensive product development services for innovative packaging solutions.',
-        image: '/images/technical-services/product-development.jpg'
+        name: 'Lami Care',
+        description: 'Focused on foundational operational support, this tier includes Preventative Maintenance, Corrective Maintenance, Remote Support, Overall Assessment, Spare Parts, Training.',
+        image: '/images/technical-services/lami-care-thumbnail.jpg'
       }
     }
   },
   {
     id: '2',
-    slug: 'technical-consultation',
-    title: 'Technical Consultation',
-    description: 'Expert technical consultation services to help you solve complex packaging challenges. Our experienced team provides strategic guidance, technical expertise, and innovative solutions tailored to your business needs.',
-    shortDescription: 'Expert technical consultation for complex packaging challenges.',
-    image: '/images/technical-services/technical-consultation.jpg',
-    imageAlt: 'Technical Consultation Services',
-    heroBackgroundImage: '/images/technical-services/technical-consultation-hero.jpg',
-    icon: '/images/icons/consultation.svg',
-    category: 'Consultation',
+    slug: 'lami-premium',
+    title: 'LamiPremium',
+    description: 'This tier include Performance Commitment, Maintenance Management, Machine Volume Conversion, Machine Refurbish & Reconditioning, Machine Installation & Commissioning, Package Volume Customization.',
+    shortDescription: 'This tier include Performance Commitment, Maintenance Management, Machine Volume Conversion, Machine Refurbish & Reconditioning, Machine Installation & Commissioning, Package Volume Customization.',
+    image: '/images/technical-services/lami-premium-thumbnail.jpg',
+    imageAlt: 'LamiPremium Service',
+    heroBackgroundImage: '/technical_bg.jpg',
+    category: 'Service Tier',
     features: [
-      'Expert technical guidance',
-      'Problem-solving and troubleshooting',
-      'Process optimization',
-      'Material recommendations',
-      'Quality improvement strategies',
-      'Cost reduction solutions'
+      'Performance Commitment',
+      'Maintenance Management',
+      'Machine Volume Conversion',
+      'Machine Refurbish & Reconditioning',
+      'Machine Installation & Commissioning',
+      'Package Volume Customization'
     ],
     benefits: [
-      'Access to industry expertise',
-      'Faster problem resolution',
-      'Optimized processes',
-      'Reduced operational costs'
+      'Enhanced performance guarantees',
+      'Optimized machine operations',
+      'Customized solutions',
+      'Extended equipment value'
     ],
-    process: {
-      title: 'Consultation Process',
-      description: 'Our structured approach ensures effective consultation and solutions.',
-      steps: [
-        {
-          title: 'Initial Assessment',
-          description: 'Understanding your challenges and requirements',
-          icon: '/images/icons/assessment.svg'
-        },
-        {
-          title: 'Analysis & Planning',
-          description: 'Analyzing issues and developing strategic solutions',
-          icon: '/images/icons/analysis.svg'
-        },
-        {
-          title: 'Implementation Support',
-          description: 'Guiding you through solution implementation',
-          icon: '/images/icons/implementation.svg'
-        },
-        {
-          title: 'Ongoing Support',
-          description: 'Continuous monitoring and optimization',
-          icon: '/images/icons/support.svg'
-        }
-      ]
-    },
     cta: {
       label: 'GET STARTED',
-      heading: 'Need Technical Consultation?',
-      description: 'Schedule a consultation with our experts today.',
-      ctaText: 'Schedule Consultation',
+      heading: 'Upgrade to LamiPremium?',
+      description: 'Contact our team to learn more about our premium service tier.',
+      ctaText: 'Contact Us',
       ctaLink: '/contact'
     },
     seo: {
-      meta_title: 'Technical Consultation Services | Lamipak',
-      meta_description: 'Expert technical consultation services for complex packaging challenges. Strategic guidance and innovative solutions.',
-      canonical_url: '/technical-services/technical-consultation',
-      og_title: 'Technical Consultation Services | Lamipak',
-      og_description: 'Expert technical consultation services for complex packaging challenges.',
-      og_image: '/images/technical-services/technical-consultation.jpg',
+      meta_title: 'LamiPremium - Premium Service Tier | Lamipak',
+      meta_description: 'LamiPremium includes Performance Commitment, Maintenance Management, Machine Volume Conversion, Machine Refurbish & Reconditioning, Machine Installation & Commissioning, Package Volume Customization.',
+      canonical_url: '/technical-services/lami-premium',
+      og_title: 'LamiPremium - Premium Service Tier | Lamipak',
+      og_description: 'LamiPremium includes Performance Commitment, Maintenance Management, Machine Volume Conversion, Machine Refurbish & Reconditioning, Machine Installation & Commissioning, Package Volume Customization.',
+      og_image: '/images/technical-services/lami-premium-thumbnail.jpg',
       twitter_card: 'summary_large_image',
-      twitter_title: 'Technical Consultation Services | Lamipak',
-      twitter_description: 'Expert technical consultation services for complex packaging challenges.',
-      twitter_image: '/images/technical-services/technical-consultation.jpg',
+      twitter_title: 'LamiPremium - Premium Service Tier | Lamipak',
+      twitter_description: 'LamiPremium includes Performance Commitment, Maintenance Management, Machine Volume Conversion, Machine Refurbish & Reconditioning, Machine Installation & Commissioning, Package Volume Customization.',
+      twitter_image: '/images/technical-services/lami-premium-thumbnail.jpg',
       schema: {
         '@context': 'https://schema.org',
         '@type': 'Service',
-        name: 'Technical Consultation Services',
-        description: 'Expert technical consultation services for complex packaging challenges.',
-        image: '/images/technical-services/technical-consultation.jpg'
+        name: 'LamiPremium',
+        description: 'This tier include Performance Commitment, Maintenance Management, Machine Volume Conversion, Machine Refurbish & Reconditioning, Machine Installation & Commissioning, Package Volume Customization.',
+        image: '/images/technical-services/lami-premium-thumbnail.jpg'
       }
     }
   },
   {
     id: '3',
-    slug: 'quality-assurance',
-    title: 'Quality Assurance & Testing',
-    description: 'Comprehensive quality assurance and testing services to ensure your packaging meets the highest standards. We provide rigorous testing, validation, and certification services to guarantee product quality and compliance.',
-    shortDescription: 'Comprehensive quality assurance and testing services for packaging.',
-    image: '/images/technical-services/quality-assurance.jpg',
-    imageAlt: 'Quality Assurance Services',
-    heroBackgroundImage: '/images/technical-services/quality-assurance-hero.jpg',
-    icon: '/images/icons/quality.svg',
-    category: 'Quality',
+    slug: 'lami-partner',
+    title: 'LamiPartner',
+    description: 'It includes Operational cost commitment, Digital Solution (31 Smart Version), Automation Service, New Format Customization, Machine Start-up, Plant Components.',
+    shortDescription: 'It includes Operational cost commitment, Digital Solution (31 Smart Version), Automation Service, New Format Customization, Machine Start-up, Plant Components.',
+    image: '/images/technical-services/lami-partner-thumbnail.jpg',
+    imageAlt: 'LamiPartner Service',
+    heroBackgroundImage: '/technical_bg.jpg',
+    category: 'Service Tier',
     features: [
-      'Comprehensive testing protocols',
-      'Material quality validation',
-      'Performance testing',
-      'Regulatory compliance testing',
-      'Certification support',
-      'Quality management systems'
+      'Operational cost commitment',
+      'Digital Solution (31 Smart Version)',
+      'Automation Service',
+      'New Format Customization',
+      'Machine Start-up',
+      'Plant Components'
     ],
     benefits: [
-      'Ensured product quality',
-      'Regulatory compliance',
-      'Reduced risk of defects',
-      'Enhanced customer confidence'
+      'Cost optimization',
+      'Digital transformation',
+      'Advanced automation',
+      'Complete partnership support'
     ],
-    process: {
-      title: 'Quality Assurance Process',
-      description: 'Our systematic approach ensures consistent quality and compliance.',
-      steps: [
-        {
-          title: 'Test Planning',
-          description: 'Developing comprehensive test plans and protocols',
-          icon: '/images/icons/planning.svg'
-        },
-        {
-          title: 'Testing & Analysis',
-          description: 'Conducting rigorous tests and analyzing results',
-          icon: '/images/icons/testing.svg'
-        },
-        {
-          title: 'Validation & Certification',
-          description: 'Validating results and obtaining certifications',
-          icon: '/images/icons/certification.svg'
-        },
-        {
-          title: 'Continuous Monitoring',
-          description: 'Ongoing quality monitoring and improvement',
-          icon: '/images/icons/monitoring.svg'
-        }
-      ]
-    },
     cta: {
       label: 'GET STARTED',
-      heading: 'Ensure Quality & Compliance',
-      description: 'Partner with us for comprehensive quality assurance services.',
-      ctaText: 'Request Testing',
+      heading: 'Become a LamiPartner?',
+      description: 'Contact our team to learn more about our partner service tier.',
+      ctaText: 'Contact Us',
       ctaLink: '/contact'
     },
     seo: {
-      meta_title: 'Quality Assurance & Testing Services | Lamipak',
-      meta_description: 'Comprehensive quality assurance and testing services for packaging. Rigorous testing, validation, and certification.',
-      canonical_url: '/technical-services/quality-assurance',
-      og_title: 'Quality Assurance & Testing Services | Lamipak',
-      og_description: 'Comprehensive quality assurance and testing services for packaging.',
-      og_image: '/images/technical-services/quality-assurance.jpg',
+      meta_title: 'LamiPartner - Partner Service Tier | Lamipak',
+      meta_description: 'LamiPartner includes Operational cost commitment, Digital Solution (31 Smart Version), Automation Service, New Format Customization, Machine Start-up, Plant Components.',
+      canonical_url: '/technical-services/lami-partner',
+      og_title: 'LamiPartner - Partner Service Tier | Lamipak',
+      og_description: 'LamiPartner includes Operational cost commitment, Digital Solution (31 Smart Version), Automation Service, New Format Customization, Machine Start-up, Plant Components.',
+      og_image: '/images/technical-services/lami-partner-thumbnail.jpg',
       twitter_card: 'summary_large_image',
-      twitter_title: 'Quality Assurance & Testing Services | Lamipak',
-      twitter_description: 'Comprehensive quality assurance and testing services for packaging.',
-      twitter_image: '/images/technical-services/quality-assurance.jpg',
+      twitter_title: 'LamiPartner - Partner Service Tier | Lamipak',
+      twitter_description: 'LamiPartner includes Operational cost commitment, Digital Solution (31 Smart Version), Automation Service, New Format Customization, Machine Start-up, Plant Components.',
+      twitter_image: '/images/technical-services/lami-partner-thumbnail.jpg',
       schema: {
         '@context': 'https://schema.org',
         '@type': 'Service',
-        name: 'Quality Assurance & Testing Services',
-        description: 'Comprehensive quality assurance and testing services for packaging.',
-        image: '/images/technical-services/quality-assurance.jpg'
-      }
-    }
-  },
-  {
-    id: '4',
-    slug: 'pilot-plant-services',
-    title: 'Pilot Plant Services',
-    description: 'State-of-the-art pilot plant services for testing and validating your packaging solutions at scale. Our pilot facilities allow you to test production processes, optimize parameters, and validate solutions before full-scale implementation.',
-    shortDescription: 'Pilot plant services for testing and validating packaging solutions at scale.',
-    image: '/images/technical-services/pilot-plant.jpg',
-    imageAlt: 'Pilot Plant Services',
-    heroBackgroundImage: '/images/technical-services/pilot-plant-hero.jpg',
-    icon: '/images/icons/pilot-plant.svg',
-    category: 'Testing',
-    features: [
-      'Scale-up testing',
-      'Process optimization',
-      'Production validation',
-      'Parameter fine-tuning',
-      'Performance evaluation',
-      'Cost analysis'
-    ],
-    benefits: [
-      'Reduced scale-up risk',
-      'Optimized production parameters',
-      'Validated solutions',
-      'Cost-effective testing'
-    ],
-    process: {
-      title: 'Pilot Plant Process',
-      description: 'Our structured approach ensures successful pilot testing and validation.',
-      steps: [
-        {
-          title: 'Planning & Setup',
-          description: 'Planning test parameters and setting up pilot equipment',
-          icon: '/images/icons/setup.svg'
-        },
-        {
-          title: 'Testing & Monitoring',
-          description: 'Conducting tests and monitoring performance metrics',
-          icon: '/images/icons/monitoring.svg'
-        },
-        {
-          title: 'Analysis & Optimization',
-          description: 'Analyzing results and optimizing processes',
-          icon: '/images/icons/optimization.svg'
-        },
-        {
-          title: 'Scale-up Support',
-          description: 'Supporting transition to full-scale production',
-          icon: '/images/icons/scale-up.svg'
-        }
-      ]
-    },
-    cta: {
-      label: 'GET STARTED',
-      heading: 'Test Your Solutions at Scale',
-      description: 'Book our pilot plant facilities for your testing needs.',
-      ctaText: 'Book Pilot Plant',
-      ctaLink: '/contact'
-    },
-    seo: {
-      meta_title: 'Pilot Plant Services | Lamipak',
-      meta_description: 'Pilot plant services for testing and validating packaging solutions at scale. Scale-up testing and process optimization.',
-      canonical_url: '/technical-services/pilot-plant-services',
-      og_title: 'Pilot Plant Services | Lamipak',
-      og_description: 'Pilot plant services for testing and validating packaging solutions at scale.',
-      og_image: '/images/technical-services/pilot-plant.jpg',
-      twitter_card: 'summary_large_image',
-      twitter_title: 'Pilot Plant Services | Lamipak',
-      twitter_description: 'Pilot plant services for testing and validating packaging solutions at scale.',
-      twitter_image: '/images/technical-services/pilot-plant.jpg',
-      schema: {
-        '@context': 'https://schema.org',
-        '@type': 'Service',
-        name: 'Pilot Plant Services',
-        description: 'Pilot plant services for testing and validating packaging solutions at scale.',
-        image: '/images/technical-services/pilot-plant.jpg'
+        name: 'LamiPartner',
+        description: 'It includes Operational cost commitment, Digital Solution (31 Smart Version), Automation Service, New Format Customization, Machine Start-up, Plant Components.',
+        image: '/images/technical-services/lami-partner-thumbnail.jpg'
       }
     }
   }
@@ -402,4 +243,3 @@ export function getAllTechnicalServices(): TechnicalServiceData[] {
 export function getAllTechnicalServiceSlugs(): string[] {
   return technicalServices.map(service => service.slug);
 }
-

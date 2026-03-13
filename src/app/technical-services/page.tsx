@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getAllTechnicalServices, fetchTechnicalServicesListingData } from '@/lib/api';
+import { fetchTechnicalServicesListingData } from '@/lib/api';
 import { getCanonicalUrl } from '@/config/site';
 
 /**
@@ -30,7 +30,6 @@ export async function generateMetadata(): Promise<Metadata> {
  * All data is fetched server-side from the API.
  */
 export default async function TechnicalServicesPage() {
-  const services = await getAllTechnicalServices();
   const listingData = await fetchTechnicalServicesListingData();
 
   return (
@@ -93,81 +92,224 @@ export default async function TechnicalServicesPage() {
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="container mx-auto px-4 py-12 md:py-16">
-        {services.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-xl text-gray-600">No technical services available at the moment.</p>
+      {/* Upgrade & Expand Section */}
+      <section className="bg-gray-50 py-12 md:py-16 lg:py-20">
+        <div className="container mx-auto px-4">
+          {/* Section Heading */}
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
+              <span className="text-[#009FE8]">{listingData.upgradeSection.headingHighlight}</span>{' '}
+              {listingData.upgradeSection.heading.replace(listingData.upgradeSection.headingHighlight, '').trim()}
+            </h2>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-            {services.map((service) => (
-              <ServiceCard key={service.id} service={service} />
+
+          {/* Service Tier Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {listingData.upgradeSection.cards.map((card) => (
+              <div
+                key={card.id}
+                className="bg-white rounded-[25px] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col"
+              >
+                {/* Video Thumbnail */}
+                <div className="relative aspect-video bg-gray-100 overflow-hidden">
+                  <img
+                    src={card.thumbnail}
+                    alt={card.thumbnailAlt}
+                    className="w-full h-full object-cover"
+                  />
+                  {/* Play Button Overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20 hover:bg-opacity-30 transition-opacity">
+                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg">
+                      <svg
+                        className="w-8 h-8 text-[#009FE8] ml-1"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Card Content */}
+                <div className="p-6 md:p-8 flex-1 flex flex-col">
+                  {/* Title */}
+                  <h3 className="text-2xl md:text-3xl font-bold text-[#009FE8] mb-4">
+                    {card.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-gray-700 mb-6 flex-1 leading-relaxed">
+                    {card.description}
+                  </p>
+
+                  {/* CTA */}
+                  <Link
+                    href={card.ctaLink}
+                    className="inline-flex items-center text-[#009FE8] font-medium hover:text-[#0077B6] transition-colors group"
+                  >
+                    {card.ctaText}
+                    <svg
+                      className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
             ))}
           </div>
-        )}
-      </section>
-    </main>
-  );
-}
-
-/**
- * Service Card Component
- */
-function ServiceCard({ service }: { service: Awaited<ReturnType<typeof getAllTechnicalServices>>[number] }) {
-  return (
-    <Link
-      href={`/technical-services/${service.slug}`}
-      className="group bg-white rounded-[25px] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full"
-    >
-      {/* Service Image */}
-      <div className="relative aspect-square overflow-hidden bg-gray-100">
-        <Image
-          src={service.image}
-          alt={service.imageAlt}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        />
-      </div>
-
-      {/* Service Info */}
-      <div className="p-6 md:p-8 flex-1 flex flex-col">
-        {/* Category */}
-        {service.category && (
-          <span className="inline-block text-[#009FE8] text-sm md:text-base font-medium mb-3">
-            {service.category}
-          </span>
-        )}
-
-        {/* Title */}
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 group-hover:text-[#009FE8] transition-colors">
-          {service.title}
-        </h2>
-
-        {/* Short Description or Description */}
-        <p className="text-gray-600 mb-6 flex-1 line-clamp-3">
-          {service.shortDescription || service.description}
-        </p>
-
-        {/* CTA */}
-        <div className="flex items-center text-[#009FE8] font-medium group-hover:text-[#0077B6] transition-colors">
-          Learn More
-          <svg
-            className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M17 8l4 4m0 0l-4 4m4-4H3"
-            />
-          </svg>
         </div>
-      </div>
-    </Link>
+      </section>
+
+      {/* Service Differentiation Section */}
+      <section className="bg-gray-50 py-12 md:py-16 lg:py-20">
+        <div className="container mx-auto px-4">
+          <div className="bg-[#009FE8] rounded-[50px] p-8 md:p-12 lg:p-16">
+            {/* Section Title */}
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 md:mb-12">
+              {listingData.serviceDifferentiation.heading}
+            </h2>
+
+            {/* Comparison Table */}
+            <div className="overflow-x-auto">
+              <table className="w-full text-white">
+                {/* Header Row 1 */}
+                <thead>
+                  <tr className="border-b border-white border-opacity-30">
+                    <th className="text-left py-4 px-4 md:px-6 font-semibold text-lg md:text-xl">
+                      {listingData.serviceDifferentiation.headerRow1.empty}
+                    </th>
+                    <th className="text-center py-4 px-4 md:px-6 font-bold text-lg md:text-xl uppercase">
+                      {listingData.serviceDifferentiation.headerRow1.lamiCare}
+                    </th>
+                    <th className="text-center py-4 px-4 md:px-6 font-bold text-lg md:text-xl uppercase">
+                      {listingData.serviceDifferentiation.headerRow1.lamiPremium}
+                    </th>
+                    <th className="text-center py-4 px-4 md:px-6 font-bold text-lg md:text-xl uppercase">
+                      {listingData.serviceDifferentiation.headerRow1.lamiPartner}
+                    </th>
+                  </tr>
+                  {/* Header Row 2 */}
+                  <tr className="border-b border-white border-opacity-30">
+                    <th className="text-left py-4 px-4 md:px-6 font-semibold text-base md:text-lg">
+                      {listingData.serviceDifferentiation.headerRow2.focus}
+                    </th>
+                    <th className="text-center py-4 px-4 md:px-6 font-semibold text-base md:text-lg">
+                      {listingData.serviceDifferentiation.headerRow2.stability}
+                    </th>
+                    <th className="text-center py-4 px-4 md:px-6 font-semibold text-base md:text-lg">
+                      {listingData.serviceDifferentiation.headerRow2.performance}
+                    </th>
+                    <th className="text-center py-4 px-4 md:px-6 font-semibold text-base md:text-lg">
+                      {listingData.serviceDifferentiation.headerRow2.transformation}
+                    </th>
+                  </tr>
+                </thead>
+                {/* Data Rows */}
+                <tbody>
+                  {listingData.serviceDifferentiation.rows.map((row, index) => (
+                    <tr
+                      key={index}
+                      className={`border-b border-white border-opacity-20 ${index === listingData.serviceDifferentiation.rows.length - 1 ? '' : ''}`}
+                    >
+                      <td className="py-4 px-4 md:px-6 font-bold text-base md:text-lg uppercase">
+                        {row.category}
+                      </td>
+                      <td className="py-4 px-4 md:px-6 text-center text-base md:text-lg">
+                        {row.lamiCare}
+                      </td>
+                      <td className="py-4 px-4 md:px-6 text-center text-base md:text-lg">
+                        {row.lamiPremium}
+                      </td>
+                      <td className="py-4 px-4 md:px-6 text-center text-base md:text-lg">
+                        {row.lamiPartner}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Driving Operational Success Section */}
+      <section className="bg-white py-12 md:py-16 lg:py-20">
+        <div className="container mx-auto px-4">
+          {/* Section Heading */}
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
+              <span className="text-[#009FE8]">{listingData.operationalSuccess.headingHighlight}</span>{' '}
+              {listingData.operationalSuccess.heading.replace(listingData.operationalSuccess.headingHighlight, '').trim()}
+            </h2>
+          </div>
+
+          {/* Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            {listingData.operationalSuccess.cards.map((card) => (
+              <div
+                key={card.id}
+                className="bg-white rounded-[25px] overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full"
+              >
+                {/* Card Image */}
+                <div className="relative aspect-square overflow-hidden bg-gray-100 rounded-t-[25px]">
+                  <Image
+                    src={card.image}
+                    alt={card.imageAlt}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  />
+                </div>
+
+                {/* Card Content */}
+                <div className="p-6 md:p-8 flex-1 flex flex-col">
+                  {/* Title */}
+                  <h3 className="text-xl md:text-2xl font-bold text-[#009FE8] mb-4">
+                    {card.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-gray-700 mb-6 flex-1 leading-relaxed">
+                    {card.description}
+                  </p>
+
+                  {/* CTA */}
+                  <Link
+                    href={card.ctaLink}
+                    className="inline-flex items-center text-[#009FE8] font-medium hover:text-[#0077B6] transition-colors group"
+                  >
+                    {card.ctaText}
+                    <svg
+                      className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+    </main>
   );
 }
