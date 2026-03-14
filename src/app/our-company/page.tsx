@@ -80,7 +80,7 @@ export default async function OurCompanyPage() {
 
 <VideoBanner />
         {/* Navigation Section */}
-        <CompanyNavigationServer />
+        <CompanyNavigationServer activePath="/our-company" />
 
         <CallToAction />
         <NewsletterSubscription />

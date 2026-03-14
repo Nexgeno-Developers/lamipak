@@ -3,6 +3,7 @@ import type { CompanyNavigation as CompanyNavigationType } from '@/fake-api/comp
 
 interface CompanyNavigationProps {
   data: CompanyNavigationType;
+  activePath?: string;
 }
 
 /**
@@ -10,8 +11,9 @@ interface CompanyNavigationProps {
  * 
  * Displays circular icon cards with labels in a horizontal row.
  * Each card is clickable and links to a specific page.
+ * Highlights the active item based on the current pathname.
  */
-export default function CompanyNavigation({ data }: CompanyNavigationProps) {
+export default function CompanyNavigation({ data, activePath }: CompanyNavigationProps) {
   const getIcon = (iconType: string) => {
     switch (iconType) {
       case 'info':
@@ -53,25 +55,37 @@ export default function CompanyNavigation({ data }: CompanyNavigationProps) {
     <section className="py-12 md:py-16 bg-white">
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-10">
-          {data.items.map((item) => (
-            <Link
-              key={item.id}
-              href={item.href}
-              className="flex flex-col items-center group transition-transform hover:scale-105"
-            >
-              {/* Circular Icon Container */}
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center mb-3 group-hover:bg-gray-100 transition-colors">
-                <div className="text-[#009FE8]">
-                  {getIcon(item.icon)}
+          {data.items.map((item) => {
+            // Check if current path matches item href, or if on /about-us and item is "About us" (/our-company)
+            const isActive = activePath === item.href || 
+              (activePath === '/about-us' && item.href === '/our-company') ||
+              (activePath === '/our-company' && item.href === '/our-company');
+            return (
+              <Link
+                key={item.id}
+                href={item.href}
+                className="flex flex-col items-center group transition-transform hover:scale-105"
+              >
+                {/* Circular Icon Container */}
+                <div className={`w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center mb-3 transition-colors ${
+                  isActive
+                    ? 'bg-[#009FE8] border-2 border-[#009FE8] shadow-md'
+                    : 'bg-gray-50 border border-gray-200 group-hover:bg-gray-100'
+                }`}>
+                  <div className={isActive ? 'text-white' : 'text-[#009FE8]'}>
+                    {getIcon(item.icon)}
+                  </div>
                 </div>
-              </div>
-              
-              {/* Label */}
-              <span className="text-sm md:text-base font-medium text-gray-900 text-center">
-                {item.label}
-              </span>
-            </Link>
-          ))}
+                
+                {/* Label */}
+                <span className={`text-sm md:text-base font-medium text-center transition-colors ${
+                  isActive ? 'text-[#009FE8] font-semibold' : 'text-gray-900'
+                }`}>
+                  {item.label}
+                </span>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

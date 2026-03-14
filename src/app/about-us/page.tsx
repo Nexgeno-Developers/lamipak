@@ -70,7 +70,7 @@ export default async function AboutUsPage() {
         {/* Hero Section */}
         <CompanyHero data={companyData.hero} />
   {/* Navigation Section */}
-        <CompanyNavigationServer />
+        <CompanyNavigationServer activePath="/about-us" />
         {/* Quadrant Section - Full Width */}
         <AboutUsQuadrantServer />
         
