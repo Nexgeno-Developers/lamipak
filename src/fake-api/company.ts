@@ -76,12 +76,45 @@ export interface AboutUsQuadrantSection {
   };
 }
 
+export interface VisionMissionSection {
+  backgroundImage: string;
+  backgroundImageAlt: string;
+  tagline: string;
+  description: string;
+  vision: {
+    icon: string; // 'eye' or 'vision'
+    heading: string;
+    text: string;
+  };
+  mission: {
+    icon: string; // 'target' or 'mission'
+    heading: string;
+    text: string;
+  };
+}
+
+export interface CompanyValue {
+  id: string;
+  title: string;
+  image: string;
+  imageAlt: string;
+  caption: string;
+}
+
+export interface OurValuesSection {
+  heading: string;
+  description: string;
+  values: CompanyValue[];
+}
+
 export interface CompanyData {
   hero: CompanyHero;
   statistics: CompanyStatistic[];
   journey: JourneyData;
   navigation: CompanyNavigation;
   aboutUsQuadrant?: AboutUsQuadrantSection;
+  visionMission?: VisionMissionSection;
+  ourValues?: OurValuesSection;
   seo: CompanySEO;
 }
 
@@ -256,6 +289,70 @@ export async function getCompanyData(): Promise<CompanyData> {
           'Lamipak continuously innovates in aseptic packaging materials and systems, supporting various brands in dairy, juice, plant-based, and functional beverages with reliable, scalable, and sustainable solutions. We are committed to delivering packaging solutions that combine quality, efficiency, and environmental responsibility.',
         ],
       },
+    },
+    visionMission: {
+      backgroundImage: '/images/company/vision-mission-bg.jpg',
+      backgroundImageAlt: 'Lamipak team meeting',
+      tagline: 'Protecting Freshness in Every Pack',
+      description: 'Our milk packaging ensures hygiene, freshness and quality, using advanced systems to deliver safe and pure milk to customers.',
+      vision: {
+        icon: 'eye',
+        heading: 'Our Vision',
+        text: 'To lead the advancement of sustainable aseptic carton packaging by combining innovative manufacturing excellence, and environmental responsibility.',
+      },
+      mission: {
+        icon: 'target',
+        heading: 'Our Mission',
+        text: 'To Develop And Deliver High-Quality Aseptic Packaging Materials And Aseptic Liquid Packaging System That Protect Product Integrity, Safeguard Consumer Health, And Support A More Sustainable Global Food Supply Chain. As Strategic Partners, We Work Closely With Customers To Create Practical Customised Packaging Solutions That Address Real Industry Challenges And Enable Sustainable Growth.',
+      },
+    },
+    ourValues: {
+      heading: 'OUR VALUES',
+      description: 'We Are Committed To Quality, Innovation, Collaboration, And Sustainable Growth In Everything We Do.',
+      values: [
+        {
+          id: '1',
+          title: 'Enriching Customers',
+          image: '/images/company/values/enriching-customers.jpg',
+          imageAlt: 'Business meeting handshake',
+          caption: 'We Focus On Delivering Dependable Aseptic Packaging Solutions That Create Measurable Value For Food And Beverage Packaging Companies.',
+        },
+        {
+          id: '2',
+          title: 'Taking Ownership',
+          image: '/images/company/values/taking-ownership.jpg',
+          imageAlt: 'Team collaboration',
+          caption: 'We take full responsibility for our actions and decisions, ensuring accountability and excellence in everything we do.',
+        },
+        {
+          id: '3',
+          title: 'Embracing Diversity',
+          image: '/images/company/values/embracing-diversity.jpg',
+          imageAlt: 'Diverse team',
+          caption: 'We celebrate and leverage the unique perspectives and talents of our diverse workforce to drive innovation.',
+        },
+        {
+          id: '4',
+          title: 'Collaborating Together',
+          image: '/images/company/values/collaborating-together.jpg',
+          imageAlt: 'Team collaboration',
+          caption: 'We believe in the power of teamwork and collaboration to achieve greater results than any individual could alone.',
+        },
+        {
+          id: '5',
+          title: 'Striving For Knowledge',
+          image: '/images/company/values/striving-for-knowledge.jpg',
+          imageAlt: 'Learning and development',
+          caption: 'We continuously seek to learn, grow, and improve, staying at the forefront of industry knowledge and innovation.',
+        },
+        {
+          id: '6',
+          title: 'Daring To Explore',
+          image: '/images/company/values/daring-to-explore.jpg',
+          imageAlt: 'Innovation and exploration',
+          caption: 'We embrace challenges and explore new possibilities, pushing boundaries to create breakthrough solutions.',
+        },
+      ],
     },
     seo: {
       meta_title: 'About Us - Lamipak',

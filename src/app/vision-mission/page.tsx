@@ -2,11 +2,9 @@ import type { Metadata } from 'next';
 import { fetchCompanyData } from '@/lib/api';
 import { getCanonicalUrl } from '@/config/site';
 import CompanyHero from '@/components/company/CompanyHero';
-import CompanyStatistics from '@/components/company/CompanyStatistics';
-import Journey from '@/components/company/Journey';
 import CompanyNavigationServer from '@/components/company/CompanyNavigationServer';
-import AboutUsQuadrantServer from '@/components/company/AboutUsQuadrantServer';
-import VideoBanner from '@/components/home/VideoBanner';
+import VisionMissionServer from '@/components/company/VisionMissionServer';
+import OurValuesServer from '@/components/company/OurValuesServer';
 import CallToAction from '@/components/home/CallToAction';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
 
@@ -73,8 +71,11 @@ export default async function VisionMissionPage() {
         {/* Navigation Section */}
         <CompanyNavigationServer activePath="/vision-mission" />
         
-        {/* Quadrant Section - Full Width */}
-        <AboutUsQuadrantServer />
+        {/* Vision & Mission Section */}
+        <VisionMissionServer />
+        
+        {/* Our Values Section */}
+        <OurValuesServer />
         
         <CallToAction />
         <NewsletterSubscription />
