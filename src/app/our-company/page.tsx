@@ -3,6 +3,7 @@ import { fetchCompanyData } from '@/lib/api';
 import { getCanonicalUrl } from '@/config/site';
 import CompanyHero from '@/components/company/CompanyHero';
 import CompanyStatistics from '@/components/company/CompanyStatistics';
+import Journey from '@/components/company/Journey';
 
 /**
  * Generate metadata for Our Company page
@@ -69,6 +70,9 @@ export default async function OurCompanyPage() {
 
         {/* Statistics Section */}
         <CompanyStatistics statistics={companyData.statistics} />
+
+        {/* Journey Section */}
+        <Journey />
       </main>
     </>
   );

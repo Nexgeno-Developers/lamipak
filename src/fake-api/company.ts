@@ -31,9 +31,23 @@ export interface CompanyStatistic {
   label: string; // e.g., "Employees", "Coverage By Country"
 }
 
+export interface JourneyMilestone {
+  year: string; // e.g., "2007", "2015"
+  image: string; // Image path
+  imageAlt: string; // Alt text for image
+  caption: string; // Caption text displayed on image overlay
+}
+
+export interface JourneyData {
+  title: string;
+  titleHighlight: string; // Part of title to highlight (e.g., "LamiPak")
+  milestones: JourneyMilestone[];
+}
+
 export interface CompanyData {
   hero: CompanyHero;
   statistics: CompanyStatistic[];
+  journey: JourneyData;
   seo: CompanySEO;
 }
 
@@ -89,6 +103,66 @@ export async function getCompanyData(): Promise<CompanyData> {
         label: 'Dual Factory Strength China + India',
       },
     ],
+    journey: {
+      title: 'LamiPak Journey',
+      titleHighlight: 'LamiPak',
+      milestones: [
+        {
+          year: '2007',
+          image: '/images/company/journey/2007.jpg',
+          imageAlt: 'LamiPak was established',
+          caption: 'LamiPak was established',
+        },
+        {
+          year: '2015',
+          image: '/images/company/journey/2015.jpg',
+          imageAlt: 'Major expansion milestone',
+          caption: 'Major expansion milestone',
+        },
+        {
+          year: '2018',
+          image: '/images/company/journey/2018.jpg',
+          imageAlt: 'International market entry',
+          caption: 'International market entry',
+        },
+        {
+          year: '2019',
+          image: '/images/company/journey/2019.jpg',
+          imageAlt: 'New product line launch',
+          caption: 'New product line launch',
+        },
+        {
+          year: '2020',
+          image: '/images/company/journey/2020.jpg',
+          imageAlt: 'Digital transformation initiative',
+          caption: 'Digital transformation initiative',
+        },
+        {
+          year: '2021',
+          image: '/images/company/journey/2021.jpg',
+          imageAlt: 'Sustainability commitment',
+          caption: 'Sustainability commitment',
+        },
+        {
+          year: '2022',
+          image: '/images/company/journey/2022.jpg',
+          imageAlt: 'Global expansion',
+          caption: 'Global expansion',
+        },
+        {
+          year: '2023',
+          image: '/images/company/journey/2023.jpg',
+          imageAlt: 'Innovation center opening',
+          caption: 'Innovation center opening',
+        },
+        {
+          year: '2024',
+          image: '/images/company/journey/2024.jpg',
+          imageAlt: 'Future vision',
+          caption: 'Future vision',
+        },
+      ],
+    },
     seo: {
       meta_title: 'About Us - Lamipak',
       meta_description: 'Learn about Lamipak, a leading company with 1900+ employees, serving 340+ customers across 80+ countries with innovative solutions.',
