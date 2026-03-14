@@ -44,10 +44,22 @@ export interface JourneyData {
   milestones: JourneyMilestone[];
 }
 
+export interface CompanyNavigationItem {
+  id: string;
+  icon: string; // Icon type: 'info' | 'globe' | 'building' | 'document' | 'heart'
+  label: string;
+  href: string;
+}
+
+export interface CompanyNavigation {
+  items: CompanyNavigationItem[];
+}
+
 export interface CompanyData {
   hero: CompanyHero;
   statistics: CompanyStatistic[];
   journey: JourneyData;
+  navigation: CompanyNavigation;
   seo: CompanySEO;
 }
 
@@ -160,6 +172,40 @@ export async function getCompanyData(): Promise<CompanyData> {
           image: '/images/company/journey/2024.jpg',
           imageAlt: 'Future vision',
           caption: 'Future vision',
+        },
+      ],
+    },
+    navigation: {
+      items: [
+        {
+          id: '1',
+          icon: 'info',
+          label: 'About us',
+          href: '/our-company',
+        },
+        {
+          id: '2',
+          icon: 'globe',
+          label: 'Vision & Mission',
+          href: '/our-company/vision-mission',
+        },
+        {
+          id: '3',
+          icon: 'building',
+          label: 'Government',
+          href: '/our-company/government',
+        },
+        {
+          id: '4',
+          icon: 'document',
+          label: 'Media Kit',
+          href: '/our-company/media-kit',
+        },
+        {
+          id: '5',
+          icon: 'heart',
+          label: 'Responsibility',
+          href: '/our-company/responsibility',
         },
       ],
     },
