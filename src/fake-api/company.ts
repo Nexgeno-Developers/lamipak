@@ -209,7 +209,7 @@ export async function getCompanyData(): Promise<CompanyData> {
           id: '2',
           icon: 'globe',
           label: 'Vision & Mission',
-          href: '/our-company/vision-mission',
+          href: '/vision-mission',
         },
         {
           id: '3',
