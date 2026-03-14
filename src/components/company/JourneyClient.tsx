@@ -53,45 +53,36 @@ export default function JourneyClient({ data }: JourneyClientProps) {
             <div className="flex items-start gap-4 lg:gap-6 w-full">
               {/* Timeline Line */}
               <div className="relative flex-shrink-0">
-                <div className="w-0.5 bg-[#009FE8] min-h-[500px] md:min-h-[600px] relative">
-                  {/* Timeline Dot for Selected Year */}
-                  {data.milestones.map((milestone, index) => {
-                    const isSelected = milestone.year === selectedYear;
-                    if (!isSelected) return null;
-                    
-                    // Calculate position based on index
-                    const totalItems = data.milestones.length;
-                    const positionPercent = (index / (totalItems - 1)) * 100;
-                    
-                    return (
-                      <div
-                        key={`dot-${milestone.year}`}
-                        className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-                        style={{ top: `${positionPercent}%` }}
-                      >
-                        <div className="w-4 h-4 rounded-full bg-[#009FE8] border-2 border-white shadow-md" />
-                      </div>
-                    );
-                  })}
-                </div>
+                <div className="w-0.5 bg-[#009FE8] min-h-[500px] md:min-h-[600px]" />
               </div>
 
-              {/* Years List */}
-              <div className="flex flex-col gap-2 md:gap-3 flex-1">
+              {/* Years List with Dots */}
+              <div className="flex flex-col gap-2 md:gap-3 flex-1 relative">
                 {data.milestones.map((milestone) => {
                   const isSelected = milestone.year === selectedYear;
                   return (
-                    <button
-                      key={milestone.year}
-                      onClick={() => setSelectedYear(milestone.year)}
-                      className={`text-left transition-colors ${
-                        isSelected
-                          ? 'text-[#009FE8] font-semibold'
-                          : 'text-gray-600 hover:text-gray-900'
-                      }`}
-                    >
-                      <span className="text-base md:text-lg lg:text-xl">{milestone.year}</span>
-                    </button>
+                    <div key={milestone.year} className="relative flex items-center">
+                      {/* Dot - Positioned between timeline and year text, center-aligned */}
+                      <div className="absolute -left-6 md:-left-7 top-1/2 -translate-y-1/2 flex items-center justify-center">
+                        <div
+                          className={`w-3 h-3 rounded-full transition-all ${
+                            isSelected
+                              ? 'bg-[#009FE8] border-2 border-white shadow-md'
+                              : 'bg-transparent'
+                          }`}
+                        />
+                      </div>
+                      <button
+                        onClick={() => setSelectedYear(milestone.year)}
+                        className={`text-left transition-colors flex items-center ${
+                          isSelected
+                            ? 'text-[#009FE8] font-semibold'
+                            : 'text-gray-600 hover:text-gray-900'
+                        }`}
+                      >
+                        <span className="text-base md:text-lg lg:text-xl leading-tight">{milestone.year}</span>
+                      </button>
+                    </div>
                   );
                 })}
               </div>
