@@ -47,7 +47,7 @@ export default function JourneyClient({ data }: JourneyClientProps) {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-8 lg:gap-12 items-start">
           {/* Left Side - Timeline */}
           <div className="flex flex-col">
             <div className="flex items-start gap-4 lg:gap-6 w-full">
@@ -88,7 +88,7 @@ export default function JourneyClient({ data }: JourneyClientProps) {
               </div>
 
               {/* Large Year Display */}
-              <div className="hidden lg:flex flex-col items-start justify-start  flex-shrink-0 absolute ml-[190px]">
+              <div className="hidden lg:flex flex-col items-start justify-start  flex-shrink-0 absolute ml-[220px]">
                 <div className="text-[#009FE8] font-bold leading-none">
                   <div className="text-7xl md:text-8xl lg:text-9xl xl:text-[10rem]">{yearParts.first}</div>
                   <div className="text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] ml-[70px]">{yearParts.second}</div>
@@ -107,27 +107,29 @@ export default function JourneyClient({ data }: JourneyClientProps) {
 
           {/* Right Side - Image */}
           <div className="relative w-full">
-            <div className="relative aspect-[4/3] rounded-[50px] overflow-hidden shadow-lg">
+            <div className="relative rounded-[50px]">
               {selectedMilestone.image ? (
-                <Image
-                  src={selectedMilestone.image}
-                  alt={selectedMilestone.imageAlt}
-                  fill
-                  className="object-cover transition-opacity duration-300"
-                  priority={selectedYear === data.milestones[0]?.year}
-                />
-              ) : (
-                <div className="w-full h-full bg-gray-200" />
-              )}
-
-              {/* Caption Overlay */}
-              <div className="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6">
-                <div className="bg-gray-100 bg-opacity-90 backdrop-blur-sm rounded-lg p-4 md:p-5">
-                  <p className="text-gray-900 text-base md:text-lg font-medium">
-                    {selectedMilestone.caption}
-                  </p>
+                <div className="relative w-full">
+                  <Image
+                    src={selectedMilestone.image}
+                    alt={selectedMilestone.imageAlt}
+                    width={1200}
+                    height={800}
+                    className="w-full h-auto object-cover transition-opacity duration-300 rounded-[50px]"
+                    priority={selectedYear === data.milestones[0]?.year}
+                  />
+                  {/* Caption Overlay */}
+                  <div className="absolute bottom-4 left-4 right-4 md:bottom-[-30px] md:left-6 md:right-6">
+                    <div className="bg-gray-100 bg-opacity-90 backdrop-blur-sm rounded-[15px] text-center p-4 md:p-5 w-[70%] mx-auto">
+                      <p className="text-gray-900 text-base md:text-lg font-medium">
+                        {selectedMilestone.caption}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="w-full h-auto bg-gray-200 rounded-[50px]" style={{ aspectRatio: '4/3' }} />
+              )}
             </div>
           </div>
         </div>
