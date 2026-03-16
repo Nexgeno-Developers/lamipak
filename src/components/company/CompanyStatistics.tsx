@@ -15,7 +15,7 @@ interface CompanyStatisticsProps {
  * Cards are arranged in a 2x3 grid on desktop, stacked on mobile.
  */
 export default function CompanyStatistics({ statistics }: CompanyStatisticsProps) {
-  const [counters, setCounters] = useState<Record<string, number>>({});
+  const [counters, setCounters] = useState<Record<string, number | string>>({});
   const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
