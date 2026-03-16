@@ -63,7 +63,7 @@ export default function CompanyNavigation({ data, activePath }: CompanyNavigatio
                     ? 'bg-[#009FE8]'
                     : 'bg-[#EDF0F1] '
                 }`}>
-                  <div className={isActive ? 'text-white' : 'text-[#009FE8]'}>
+                  <div className={`transition-all ${isActive ? 'brightness-0 invert-[1]' : ''}`}>
                     {getIcon(item.icon)}
                   </div>
                 </div>
