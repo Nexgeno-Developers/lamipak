@@ -62,7 +62,7 @@ export async function getPageData(slug: string): Promise<PageData | null> {
       seo: {
         meta_title: 'About Us - Learn More About Our Company',
         meta_description: 'Discover our story, mission, and the team behind our innovative solutions.',
-        canonical_url: '/about',
+        canonical_url: '/about-us',
         schema: {
           '@context': 'https://schema.org',
           '@type': 'AboutPage',

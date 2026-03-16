@@ -370,7 +370,7 @@ export async function getHomepageData(): Promise<HomepageData> {
       title: 'Innovation in aseptic packaging',
       videoUrl: '/video2.mp4', // or .gif for GIF files
       ctaText: 'View how we help global brands',
-      ctaLink: '/about',
+      ctaLink: '/about-us',
     },
     commercialServices: {
       cards: [
