@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import type { CompanyHero as CompanyHeroType } from '@/fake-api/company';
 
 interface CompanyHeroProps {
@@ -9,34 +8,38 @@ interface CompanyHeroProps {
  * Company Hero Component (Server Component)
  * 
  * Displays a hero section with background image and dark blue overlay,
- * featuring the "ABOUT US" title centered in white.
+ * featuring the title centered in white.
  */
 export default function CompanyHero({ data }: CompanyHeroProps) {
   return (
-    <section className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden">
-      {/* Background Image */}
+    <section className="relative pt-[220px] pb-[150px] overflow-hidden">
+      {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         {data.backgroundImage ? (
-          <Image
+          <img
             src={data.backgroundImage}
-            alt="About Us Background"
-            fill
-            className="object-cover"
-            priority
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
           />
         ) : (
-          <div className="w-full h-full bg-gray-300" />
+          <div className="absolute inset-0 bg-gray-800" />
         )}
+        {/* Dark Blue Overlay */}
+        <div className="absolute inset-0 bg-[#0e233ce8] opacity-90" />
+        {/* Blur Effect */}
+        {/* <div className="absolute inset-0 backdrop-blur-sm" /> */}
       </div>
 
-      {/* Dark Blue Overlay */}
-      <div className="absolute inset-0 bg-[#003366] bg-opacity-70" />
-
-      {/* Content */}
-      <div className="relative z-10 h-full flex items-center justify-center">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white uppercase tracking-wide">
-          {data.title}
-        </h1>
+      {/* Hero Content */}
+      <div className="relative z-10 h-full flex flex-col">
+        <div className="container mx-auto flex-1 flex flex-col justify-center px-4">
+          <div className="text-center">
+            {/* Title */}
+            <h1 className="text-3xl md:text-5xl lg:text-6xl xl:text-6xl font-bold text-white  tracking-tight">
+              {data.title}
+            </h1>
+          </div>
+        </div>
       </div>
     </section>
   );

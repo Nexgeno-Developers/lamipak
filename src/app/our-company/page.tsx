@@ -68,7 +68,7 @@ export default async function OurCompanyPage() {
         />
       )}
 
-      <main className="min-h-screen bg-white">
+      <main className="min-h-screen bg-gray-50">
         {/* Hero Section */}
         <CompanyHero data={companyData.hero} />
 

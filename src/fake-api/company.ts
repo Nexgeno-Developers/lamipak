@@ -129,8 +129,8 @@ export async function getCompanyData(): Promise<CompanyData> {
 
   return {
     hero: {
-      title: 'ABOUT US',
-      backgroundImage: '/images/company/about-hero-bg.jpg', // You'll need to add this image
+      title: 'Our Company',
+      backgroundImage: '/about_banner.jpg', // You'll need to add this image
     },
     statistics: [
       {
