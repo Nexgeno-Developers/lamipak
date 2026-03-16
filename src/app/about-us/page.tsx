@@ -68,7 +68,7 @@ export default async function AboutUsPage() {
 
       <main className="min-h-screen bg-gray-50">
         {/* Hero Section */}
-        <CompanyHero data={companyData.hero} />
+        <CompanyHero data={{ ...companyData.hero, title: 'About Us' }} />
   {/* Navigation Section */}
         <CompanyNavigationServer activePath="/about-us" />
         {/* Quadrant Section - Full Width */}

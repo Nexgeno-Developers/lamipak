@@ -48,7 +48,7 @@ export default function VisionMission({ data }: VisionMissionProps) {
             src={data.backgroundImage}
             alt={data.backgroundImageAlt}
             fill
-            className="object-cover"
+            className="object-cover position-top "
             priority
           />
         ) : (
@@ -56,17 +56,16 @@ export default function VisionMission({ data }: VisionMissionProps) {
         )}
       </div>
 
-      {/* Blue Gradient Overlay - Bottom Half */}
-      <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-r from-[#003366] via-[#0066CC] to-[#009FE8] opacity-95" />
-
+      Blue Gradient Overlay - Bottom Half
+      
       {/* Content */}
-      <div className="relative z-10 h-full min-h-[800px] md:min-h-[900px] flex flex-col">
+      <div className="relative z-10 h-full pt-[800px] flex flex-col">
         {/* Upper Section - Empty space for image visibility */}
         <div className="flex-1" />
 
         {/* Lower Section - Content Overlay */}
         <div className="relative pb-8 md:pb-12 lg:pb-16 pt-8 md:pt-12 lg:pt-16">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto bg-[#009FE8CC] p-[60px] rounded-[50px] backdrop-blur-[35px]">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
               {/* Left Column - Tagline and Description */}
               <div className="lg:col-span-1 flex flex-col justify-center">
@@ -80,18 +79,18 @@ export default function VisionMission({ data }: VisionMissionProps) {
 
               {/* Middle Column - Vision Box */}
               <div className="lg:col-span-1">
-                <div className="bg-white rounded-2xl p-6 md:p-8 shadow-lg h-full">
+                <div className="bg-[#ffffffde] rounded-2xl p-6 md:p-8 shadow-lg h-full">
                   {/* Icon */}
                   <div className="mb-4 md:mb-6 flex items-center">
                     <div className="text-[#009FE8] mr-3">
                       {getIcon(data.vision.icon)}
                     </div>
                     {/* Blue drop shape */}
-                    <div className="w-3 h-3 bg-[#009FE8] rounded-full" />
+                    {/* <div className="w-3 h-3 bg-[#009FE8] rounded-full" /> */}
                   </div>
                   
                   {/* Heading */}
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">
+                  <h3 className="text-xl md:text-2xl font-bold text-[#009FE8] mb-3 md:mb-4">
                     {data.vision.heading}
                   </h3>
                   
@@ -104,18 +103,18 @@ export default function VisionMission({ data }: VisionMissionProps) {
 
               {/* Right Column - Mission Box */}
               <div className="lg:col-span-1">
-                <div className="bg-white rounded-2xl p-6 md:p-8 shadow-lg h-full">
+                <div className="bg-[#ffffffde]  rounded-2xl p-6 md:p-8 shadow-lg h-full">
                   {/* Icon */}
                   <div className="mb-4 md:mb-6 flex items-center">
                     <div className="text-[#009FE8] mr-3">
                       {getIcon(data.mission.icon)}
                     </div>
                     {/* Blue drop shape */}
-                    <div className="w-3 h-3 bg-[#009FE8] rounded-full" />
+                    {/* <div className="w-3 h-3 bg-[#009FE8] rounded-full" /> */}
                   </div>
                   
                   {/* Heading */}
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">
+                  <h3 className="text-xl md:text-2xl font-bold text-[#009FE8] mb-3 md:mb-4">
                     {data.mission.heading}
                   </h3>
                   

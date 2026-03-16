@@ -291,7 +291,7 @@ export async function getCompanyData(): Promise<CompanyData> {
       },
     },
     visionMission: {
-      backgroundImage: '/images/company/vision-mission-bg.jpg',
+      backgroundImage: '/vission_mission_bg.jpg',
       backgroundImageAlt: 'Lamipak team meeting',
       tagline: 'Protecting Freshness in Every Pack',
       description: 'Our milk packaging ensures hygiene, freshness and quality, using advanced systems to deliver safe and pure milk to customers.',
