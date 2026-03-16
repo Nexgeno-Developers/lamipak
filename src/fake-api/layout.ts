@@ -107,8 +107,35 @@ export async function getHeaderData(): Promise<HeaderData> {
       },
       {
         id: '5',
-        label: 'About Us',
-        href: '/about',
+        label: 'Our Company',
+        href: '/our-company',
+        children: [
+          {
+            id: '5-1',
+            label: 'About Us',
+            href: '/about-us',
+          },
+          {
+            id: '5-2',
+            label: 'Vision & Mission',
+            href: '/vision-mission',
+          },
+          {
+            id: '5-3',
+            label: 'Government',
+            href: '/our-company/government',
+          },
+          {
+            id: '5-4',
+            label: 'Media Kit',
+            href: '/our-company/media-kit',
+          },
+          {
+            id: '5-5',
+            label: 'Responsibility',
+            href: '/our-company/responsibility',
+          },
+        ],
       },
     ],
     cta: {

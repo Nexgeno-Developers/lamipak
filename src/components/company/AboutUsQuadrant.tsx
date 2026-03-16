@@ -18,13 +18,13 @@ interface AboutUsQuadrantProps {
  */
 export default function AboutUsQuadrant({ data }: AboutUsQuadrantProps) {
   return (
-    <section className="w-full bg-white">
+    <section className="w-full bg-gray-50">
       {/* Four Quadrant Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2">
         {/* Top Left - Text Content */}
-        <div className="flex items-center justify-center p-8 md:p-12 lg:p-16 xl:p-20 bg-white">
+        <div className="flex items-center justify-center p-8 md:p-12 lg:p-16 xl:p-16">
           <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 leading-[70px]">
               <span className="text-[#009FE8]">{data.topLeft.titleHighlight}</span>
               <span className="text-gray-900">
                 {data.topLeft.title.replace(data.topLeft.titleHighlight, '').trim()}
@@ -44,39 +44,45 @@ export default function AboutUsQuadrant({ data }: AboutUsQuadrantProps) {
         </div>
 
         {/* Top Right - Image */}
-        <div className="relative w-full aspect-square lg:aspect-auto lg:h-full min-h-[400px] lg:min-h-[500px]">
+        <div className="relative w-full">
           {data.topRight.image ? (
-            <Image
-              src={data.topRight.image}
-              alt={data.topRight.imageAlt}
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
+            <div className="relative w-full">
+              <Image
+                src={data.topRight.image}
+                alt={data.topRight.imageAlt}
+                width={1200}
+                height={800}
+                className="w-full h-auto object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
           ) : (
-            <div className="w-full h-full bg-gray-200" />
+            <div className="w-full h-auto bg-gray-200" style={{ aspectRatio: '4/3' }} />
           )}
         </div>
 
         {/* Bottom Left - Image */}
-        <div className="relative w-full aspect-square lg:aspect-auto lg:h-full min-h-[400px] lg:min-h-[500px] order-3 lg:order-3">
+        <div className="relative w-full order-3 lg:order-3">
           {data.bottomLeft.image ? (
-            <Image
-              src={data.bottomLeft.image}
-              alt={data.bottomLeft.imageAlt}
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
+            <div className="relative w-full">
+              <Image
+                src={data.bottomLeft.image}
+                alt={data.bottomLeft.imageAlt}
+                width={1200}
+                height={800}
+                className="w-full h-auto object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
           ) : (
-            <div className="w-full h-full bg-gray-200" />
+            <div className="w-full h-auto bg-gray-200" style={{ aspectRatio: '4/3' }} />
           )}
         </div>
 
         {/* Bottom Right - Text Content */}
-        <div className="flex items-center justify-center p-8 md:p-12 lg:p-16 xl:p-20 bg-white order-4 lg:order-4">
+        <div className="flex items-center justify-center p-8 md:p-12 lg:p-16 xl:p-16 order-4 lg:order-4">
           <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 leading-[70px]">
               <span className="text-gray-900">
                 {data.bottomRight.title.split(data.bottomRight.titleHighlight)[0]}
               </span>
