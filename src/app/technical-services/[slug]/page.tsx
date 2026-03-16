@@ -157,7 +157,7 @@ export default async function TechnicalServicePage({ params }: TechnicalServiceP
         {serviceData.introSection && (
           <section className="bg-gray-50 py-12 pt-12 pb-4 md:pt-20 pb-8">
             <div className="container mx-auto px-4">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-[30%_70%] gap-8 lg:gap-12 items-center">
                 {/* Left Column - Circular Graphic */}
                 <div className="flex justify-center lg:justify-start">
                   <div className="relative w-64 h-64 md:w-80 md:h-80">
