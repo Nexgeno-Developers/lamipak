@@ -78,7 +78,8 @@ export default async function OurCompanyPage() {
         {/* Journey Section */}
         <Journey />
 
-<VideoBanner />
+
+<VideoBanner videoOnly={true} />
         {/* Navigation Section */}
         <CompanyNavigationServer activePath="/our-company" />
 
