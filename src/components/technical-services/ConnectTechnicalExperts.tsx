@@ -65,7 +65,7 @@ export default function ConnectTechnicalExperts({
 
         {/* Main Card */}
         <div className="bg-white rounded-[50px] overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+          <div className="grid grid-cols-1 lg:grid-cols-[65%_35%] gap-0">
             {/* Left Section - Contact Form */}
             <div className="p-8 md:p-10 lg:p-12">
               {/* Form Title */}
@@ -143,7 +143,7 @@ export default function ConnectTechnicalExperts({
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className="cursor-pointer inline-flex items-center text-[#009FE8] text-base md:text-lg font-bold uppercase tracking-wider hover:text-[#0077B6] transition-colors group"
+                  className="w-full cursor-pointer justify-center inline-flex items-center text-[#009FE8] text-base md:text-lg font-bold uppercase tracking-wider hover:text-[#0077B6] transition-colors group"
                 >
                   SEND MESSAGE
                   <svg
