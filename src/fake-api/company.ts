@@ -135,37 +135,37 @@ export async function getCompanyData(): Promise<CompanyData> {
     statistics: [
       {
         id: '1',
-        icon: '/images/icons/employees.svg', // Two people icon
+        icon: '/employee.svg', // Two people icon
         value: '1900+',
         label: 'Employees',
       },
       {
         id: '2',
-        icon: '/images/icons/globe.svg', // Globe icon
+        icon: '/globe_icon.svg', // Globe icon
         value: '80+',
         label: 'Coverage By Country',
       },
       {
         id: '3',
-        icon: '/images/icons/customers.svg', // Customers icon
+        icon: '/customer.svg', // Customers icon
         value: '340+',
         label: 'Customers',
       },
       {
         id: '4',
-        icon: '/images/icons/growth.svg', // Growth arrow icon
+        icon: '/growth_icon.svg', // Growth arrow icon
         value: '8%',
         label: 'Annual Growth Rate',
       },
       {
         id: '5',
-        icon: '/images/icons/sku.svg', // Document/paper icon
+        icon: '/sku_icon.svg', // Document/paper icon
         value: '60+',
         label: 'Total SKU',
       },
       {
         id: '6',
-        icon: '/images/icons/factory.svg', // Factory icon
+        icon: '/factory_icon.svg', // Factory icon
         value: '2',
         label: 'Dual Factory Strength China + India',
       },
@@ -176,55 +176,55 @@ export async function getCompanyData(): Promise<CompanyData> {
       milestones: [
         {
           year: '2007',
-          image: '/images/company/journey/2007.jpg',
+          image: '/journey_images.jpg',
           imageAlt: 'LamiPak was established',
           caption: 'LamiPak was established',
         },
         {
           year: '2015',
-          image: '/images/company/journey/2015.jpg',
+          image: '/journey_images.jpg',
           imageAlt: 'Major expansion milestone',
           caption: 'Major expansion milestone',
         },
         {
           year: '2018',
-          image: '/images/company/journey/2018.jpg',
+          image: '/journey_images.jpg',
           imageAlt: 'International market entry',
           caption: 'International market entry',
         },
         {
           year: '2019',
-          image: '/images/company/journey/2019.jpg',
+          image: '/journey_images.jpg',
           imageAlt: 'New product line launch',
           caption: 'New product line launch',
         },
         {
           year: '2020',
-          image: '/images/company/journey/2020.jpg',
+          image: '/journey_images.jpg',
           imageAlt: 'Digital transformation initiative',
           caption: 'Digital transformation initiative',
         },
         {
           year: '2021',
-          image: '/images/company/journey/2021.jpg',
+          image: '/journey_images.jpg',
           imageAlt: 'Sustainability commitment',
           caption: 'Sustainability commitment',
         },
         {
           year: '2022',
-          image: '/images/company/journey/2022.jpg',
+          image: '/journey_images.jpg',
           imageAlt: 'Global expansion',
           caption: 'Global expansion',
         },
         {
           year: '2023',
-          image: '/images/company/journey/2023.jpg',
+          image: '/journey_images.jpg',
           imageAlt: 'Innovation center opening',
           caption: 'Innovation center opening',
         },
         {
           year: '2024',
-          image: '/images/company/journey/2024.jpg',
+          image: '/journey_images.jpg',
           imageAlt: 'Future vision',
           caption: 'Future vision',
         },

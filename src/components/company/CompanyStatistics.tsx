@@ -113,10 +113,10 @@ export default function CompanyStatistics({ statistics }: CompanyStatisticsProps
           {statistics.map((stat) => (
             <div
               key={stat.id}
-              className="bg-gray-100 rounded-lg p-8 md:p-10 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col items-center text-center"
+              className="bg-[#EDF0F1] rounded-[50px] p-8 md:p-10  duration-300 flex flex-col text-start"
             >
               {/* Icon */}
-              <div className="mb-6 w-16 h-16 flex items-center justify-center">
+              <div className="mb-6 w-12 h-12 flex items-center justify-start">
                 {stat.icon ? (
                   <Image
                     src={stat.icon}
@@ -134,14 +134,14 @@ export default function CompanyStatistics({ statistics }: CompanyStatisticsProps
 
               {/* Value */}
               <div className="mb-4">
-                <span className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#009FE8]">
+                <span className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#000]">
                   {formatValue(stat)}
                 </span>
               </div>
 
               {/* Label */}
               <div>
-                <p className="text-lg md:text-xl text-gray-700 font-medium">
+                <p className="text-lg md:text-xl text-black font-medium">
                   {stat.label}
                 </p>
               </div>

@@ -35,7 +35,7 @@ export default function JourneyClient({ data }: JourneyClientProps) {
   const yearParts = splitYear(selectedYear);
 
   return (
-    <section className="py-16 md:py-24 bg-white">
+    <section className="py-16 md:py-24 bg-gray-50">
       <div className="container mx-auto px-4">
         {/* Section Title */}
         <div className="text-center mb-12 md:mb-16">
@@ -57,7 +57,7 @@ export default function JourneyClient({ data }: JourneyClientProps) {
               </div>
 
               {/* Years List with Dots */}
-              <div className="flex flex-col gap-2 md:gap-3 flex-1 relative">
+              <div className="flex flex-col gap-2 md:gap-3 flex-1 relative ">
                 {data.milestones.map((milestone) => {
                   const isSelected = milestone.year === selectedYear;
                   return (
@@ -74,13 +74,13 @@ export default function JourneyClient({ data }: JourneyClientProps) {
                       </div>
                       <button
                         onClick={() => setSelectedYear(milestone.year)}
-                        className={`text-left transition-colors flex items-center ${
+                        className={`text-left transition-colors flex items-center pb-5 ${
                           isSelected
                             ? 'text-[#009FE8] font-semibold'
                             : 'text-gray-600 hover:text-gray-900'
                         }`}
                       >
-                        <span className="text-base md:text-lg lg:text-xl leading-tight">{milestone.year}</span>
+                        <span className="text-base md:text-lg lg:text-[24px] font-bold  leading-tight">{milestone.year}</span>
                       </button>
                     </div>
                   );
@@ -107,7 +107,7 @@ export default function JourneyClient({ data }: JourneyClientProps) {
 
           {/* Right Side - Image */}
           <div className="relative w-full">
-            <div className="relative aspect-[4/3] rounded-lg overflow-hidden shadow-lg">
+            <div className="relative aspect-[4/3] rounded-[50px] overflow-hidden shadow-lg">
               {selectedMilestone.image ? (
                 <Image
                   src={selectedMilestone.image}
