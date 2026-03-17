@@ -180,6 +180,10 @@ export default async function MarketingServiceDetailsPage(
         </section>
       )}
 
+<VideoBanner videoOnly={true} />
+       
+
+
       {/* Brand Journey Section – five cards row */}
       {serviceData.brandJourney && serviceData.brandJourney.items.length > 0 && (
         <section className="bg-gray-50 py-10 md:py-16">
@@ -220,9 +224,7 @@ export default async function MarketingServiceDetailsPage(
 
       {/* Connect with Marketing Experts – reuse shared component */}
 
-          <VideoBanner videoOnly={true} />
        
-
       <section className="bg-gray-50 py-10 md:py-16">
         <div className="container mx-auto px-4">
           <ConnectTechnicalExperts
