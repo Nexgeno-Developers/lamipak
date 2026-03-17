@@ -15,6 +15,7 @@ export interface MarketingServiceHighlight {
   id: string;
   title: string;
   description: string;
+  icon?: string;
 }
 
 export interface MarketingServiceData {
@@ -35,6 +36,16 @@ export interface MarketingServiceData {
     imageAlt: string;
     ctaText: string;
     ctaLink: string;
+  };
+  brandJourney?: {
+    heading: string;
+    headingHighlight: string;
+    items: Array<{
+      id: string;
+      title: string;
+      subtitle: string;
+      icon: string;
+    }>;
   };
   seo: MarketingServiceSEO;
   highlights: MarketingServiceHighlight[];
@@ -66,6 +77,42 @@ const MARKETING_SERVICES: MarketingServiceData[] = [
       ctaText: 'Explore market insight',
       ctaLink: '/insights/smart-packaging-traceability',
     },
+    brandJourney: {
+      heading: 'Elevate Your',
+      headingHighlight: 'Brand Journey',
+      items: [
+        {
+          id: 'tailored-report',
+          title: 'Tailored Market',
+          subtitle: 'Intelligence Report',
+          icon: '/icons/marketing/tailored-report.svg',
+        },
+        {
+          id: 'market-share',
+          title: 'Market Share',
+          subtitle: 'Analysis',
+          icon: '/icons/marketing/market-share.svg',
+        },
+        {
+          id: 'consumer-behavior',
+          title: 'Consumer Behavior',
+          subtitle: 'Insights',
+          icon: '/icons/marketing/consumer-behavior.svg',
+        },
+        {
+          id: 'industry',
+          title: 'Industry',
+          subtitle: 'Industry',
+          icon: '/icons/marketing/industry.svg',
+        },
+        {
+          id: 'product-performance',
+          title: 'Product Performance',
+          subtitle: 'Insights',
+          icon: '/icons/marketing/product-performance.svg',
+        },
+      ],
+    },
     seo: {
       meta_title: 'Market Intelligence | Marketing Services',
       meta_description:
@@ -75,21 +122,31 @@ const MARKETING_SERVICES: MarketingServiceData[] = [
     highlights: [
       {
         id: 'category-trends',
-        title: 'Category & Trend Mapping',
+        title: 'Market Trends',
         description:
-          'Understand how your category is evolving and where new demand spaces are emerging.',
+          'Identify emerging opportunities in aseptic packaging and RTD beverage markets.',
+        icon: '/icons/marketing/market-trends.svg',
       },
       {
         id: 'shopper-insights',
-        title: 'Shopper & Channel Insights',
+        title: 'Competitor Analysis',
         description:
-          'Decode how shoppers choose in‑store and online, and what influences their decisions.',
+          'Benchmark against key players to understand positioning, innovation, and pricing dynamics.',
+        icon: '/icons/marketing/competitor-analysis.svg',
       },
       {
         id: 'growth-platforms',
-        title: 'Growth Platforms',
+        title: 'Consumer Insights',
         description:
-          'Translate findings into clear growth platforms that connect innovation, pricing, and activation.',
+          'Decode consumer motivations, usage occasions, and preferences across segments.',
+        icon: '/icons/marketing/consumer-insights.svg',
+      },
+      {
+        id: 'strategic-planning',
+        title: 'Strategic Planning',
+        description:
+          'Translate intelligence into practical roadmaps for portfolio, channel, and activation.',
+        icon: '/icons/marketing/strategic-planning.svg',
       },
     ],
   },

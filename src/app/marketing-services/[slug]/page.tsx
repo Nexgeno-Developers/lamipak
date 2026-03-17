@@ -1,12 +1,14 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { fetchMarketingServiceData, getAllMarketingServiceSlugs } from '@/lib/api';
+import { fetchMarketingServiceData, getAllMarketingServiceSlugs, fetchMarketingServicesOverviewData } from '@/lib/api';
 import { getCanonicalUrl } from '@/config/site';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import CallToAction from '@/components/home/CallToAction';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
 import CompanyHero from '@/components/company/CompanyHero';
+import VideoBanner from '@/components/home/VideoBanner';
+import ConnectTechnicalExperts from '@/components/technical-services/ConnectTechnicalExperts';
 
 interface MarketingServicePageProps {
   params: Promise<{
@@ -55,7 +57,10 @@ export default async function MarketingServiceDetailsPage(
   { params }: MarketingServicePageProps,
 ) {
   const { slug } = await params;
-  const serviceData = await fetchMarketingServiceData(slug);
+  const [serviceData, overview] = await Promise.all([
+    fetchMarketingServiceData(slug),
+    fetchMarketingServicesOverviewData(),
+  ]);
 
   if (!serviceData) {
     notFound();
@@ -142,63 +147,91 @@ export default async function MarketingServiceDetailsPage(
         </div>
       </section>
 
-      {/* Highlights Section – inspired by 360 layout */}
+      {/* Highlights Section – four cards with icons */}
       {serviceData.highlights.length > 0 && (
-        <section className="bg-gray-50 py-10 md:py-16">
+        <section className="bg-white py-10 md:py-16">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-[32%_68%] gap-8 items-start">
-              <div className="rounded-[32px] bg-[#0E233C] text-white p-6 md:p-8 shadow-lg">
-                <h3 className="text-xl md:text-2xl font-bold mb-2">
-                  360° Service View
-                </h3>
-                <p className="text-sm md:text-base text-gray-200">
-                  Each service is designed to connect brand, commercial, and technical teams so
-                  that every activation contributes to long‑term growth.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {serviceData.highlights.map((highlight) => (
-                  <div
-                    key={highlight.id}
-                    className="bg-white rounded-[28px] border border-gray-100 shadow-sm p-6 flex flex-col"
-                  >
-                    <h4 className="text-lg font-semibold text-[#0E233C] mb-2">
-                      {highlight.title}
-                    </h4>
-                    <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                      {highlight.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+              {serviceData.highlights.map((highlight) => (
+                <div
+                  key={highlight.id}
+                  className="bg-[#F7F9FB] rounded-[24px] px-6 py-6 md:px-7 md:py-7 shadow-sm flex flex-col h-full"
+                >
+                  {highlight.icon && (
+                    <div className="mb-4 inline-flex items-center justify-center w-10 h-10 rounded-2xl bg-[#E7F4FF]">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={highlight.icon}
+                        alt=""
+                        className="w-5 h-5 object-contain"
+                      />
+                    </div>
+                  )}
+                  <h4 className="text-base md:text-lg font-semibold text-[#0E233C] mb-2">
+                    {highlight.title}
+                  </h4>
+                  <p className="text-xs md:text-sm text-gray-600 leading-relaxed">
+                    {highlight.description}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
       )}
 
-      {/* Simple back link and CTA */}
-      <section className="bg-white py-8">
-        <div className="container mx-auto px-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <Link
-            href="/marketing-services"
-            className="inline-flex items-center text-sm md:text-base text-[#009FE8] font-semibold hover:text-[#0077B6] transition-colors"
-          >
-            <svg
-              className="w-4 h-4 mr-2"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M7 16l-4-4m0 0l4-4m-4 4h18"
-              />
-            </svg>
-            Back to all marketing services
-          </Link>
+      {/* Brand Journey Section – five cards row */}
+      {serviceData.brandJourney && serviceData.brandJourney.items.length > 0 && (
+        <section className="bg-gray-50 py-10 md:py-16">
+          <div className="container mx-auto px-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-10">
+              Elevate Your{' '}
+              <span className="text-[#009FE8]">
+                {serviceData.brandJourney.headingHighlight}
+              </span>
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5">
+              {serviceData.brandJourney.items.map((item) => (
+                <div
+                  key={item.id}
+                  className="bg-white rounded-[24px] px-5 py-6 shadow-sm flex flex-col items-start"
+                >
+                  <div className="mb-4 inline-flex items-center justify-center w-10 h-10 rounded-2xl bg-[#E7F4FF]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={item.icon}
+                      alt=""
+                      className="w-5 h-5 object-contain"
+                    />
+                  </div>
+                  <h3 className="text-sm md:text-base font-semibold text-[#0E233C] leading-snug">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs md:text-sm text-gray-600 mt-1">
+                    {item.subtitle}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Connect with Marketing Experts – reuse shared component */}
+
+          <VideoBanner videoOnly={true} />
+       
+
+      <section className="bg-gray-50 py-10 md:py-16">
+        <div className="container mx-auto px-4">
+          <ConnectTechnicalExperts
+            heading={overview.connectSection.heading}
+            headingHighlight={overview.connectSection.headingHighlight}
+            formTitle={overview.connectSection.formTitle}
+            illustrationImage={overview.connectSection.illustrationImage}
+            illustrationAlt={overview.connectSection.illustrationAlt}
+          />
         </div>
       </section>
 
