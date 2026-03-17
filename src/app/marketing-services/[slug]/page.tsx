@@ -83,19 +83,61 @@ export default async function MarketingServiceDetailsPage(
         </div>
       </section>
 
-      {/* Intro Section */}
-      <section className="bg-white py-10 md:py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl">
-            <p className="text-sm font-semibold tracking-[0.16em] text-[#009FE8] uppercase mb-3">
-              Marketing Service
-            </p>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#0E233C] mb-4">
-              {serviceData.title}
-            </h2>
-            <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-6">
-              {serviceData.description}
-            </p>
+      {/* Intro Section – two-column layout like reference design */}
+      <section className="bg-gray-50">
+        <div className="">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Left: Text content */}
+            <div className="flex items-center justify-center p-8 md:p-12 lg:p-16 xl:p-16">
+              <div className="max-w-xl">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#0E233C] mb-4 leading-snug">
+                {serviceData.introSection ? (
+                  <>
+                    {serviceData.introSection.heading}{' '}
+                    <span className="text-[#009FE8]">
+                      {serviceData.introSection.headingHighlight}
+                    </span>
+                  </>
+                ) : (
+                  serviceData.title
+                )}
+              </h2>
+
+              {serviceData.introSection ? (
+                <div className="space-y-4 text-base md:text-lg text-gray-700 leading-relaxed mb-6">
+                  {serviceData.introSection.paragraphs.map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-6">
+                  {serviceData.description}
+                </p>
+              )}
+
+              {serviceData.introSection && (
+                <a
+                  href={serviceData.introSection.ctaLink}
+                  className="inline-flex items-center text-sm md:text-base font-semibold text-[#009FE8] hover:text-[#0077B6] transition-colors"
+                >
+                  {serviceData.introSection.ctaText}
+                  <span className="ml-2 text-lg leading-none">→</span>
+                </a>
+              )}
+            </div>
+            </div>
+
+            {/* Right: Image */}
+            <div className="relative w-full overflow-hidden shadow-sm">
+              <div className="relative w-full">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={serviceData.introSection?.image || serviceData.listingImage}
+                  alt={serviceData.introSection?.imageAlt || serviceData.listingImageAlt}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>

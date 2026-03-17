@@ -27,6 +27,15 @@ export interface MarketingServiceData {
   listingImageAlt: string;
   icon?: string;
   badge?: string;
+  introSection?: {
+    heading: string;
+    headingHighlight: string;
+    paragraphs: string[];
+    image: string;
+    imageAlt: string;
+    ctaText: string;
+    ctaLink: string;
+  };
   seo: MarketingServiceSEO;
   highlights: MarketingServiceHighlight[];
 }
@@ -44,6 +53,19 @@ const MARKETING_SERVICES: MarketingServiceData[] = [
     listingImageAlt: 'Team collaborating around digital analytics dashboard',
     icon: '/icons/brand_strategy.svg',
     badge: 'Insights',
+    introSection: {
+      heading: 'Stay Ahead With',
+      headingHighlight: 'Smart Packaging Intelligence',
+      paragraphs: [
+        'Track industry trends, competitor strategies, and evolving consumer behaviour across global beverage and dairy markets to generate valuable insights that support smarter packaging decisions.',
+        'By analysing market developments, sustainability expectations, and changing consumption patterns, businesses can identify opportunities and stay ahead of the competition.',
+        'These insights help brands develop packaging solutions that enhance product protection, improve convenience and visual appeal, and meet growing consumer demand for sustainable and efficient packaging while supporting long‑term brand growth.',
+      ],
+      image: '/latest_insite_image_2.jpg',
+      imageAlt: 'Team presenting analytics dashboard in modern office',
+      ctaText: 'Explore market insight',
+      ctaLink: '/insights/smart-packaging-traceability',
+    },
     seo: {
       meta_title: 'Market Intelligence | Marketing Services',
       meta_description:
