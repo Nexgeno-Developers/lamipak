@@ -1,11 +1,17 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
 import CompanyHero from '@/components/company/CompanyHero';
-import { fetchCompanyData, getAllMarketingServices } from '@/lib/api';
+import LatestNewsClient from '@/components/marketing/LatestNewsClient';
+import {
+  fetchCompanyData,
+  getAllMarketingServices,
+  fetchMarketingServicesOverviewData,
+  fetchMarketingLatestNews,
+} from '@/lib/api';
 import { getCanonicalUrl } from '@/config/site';
 import CallToAction from '@/components/home/CallToAction';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
+import ConnectTechnicalExperts from '@/components/technical-services/ConnectTechnicalExperts';
 
 export const metadata: Metadata = {
   title: 'Marketing Services | Lamipak',
@@ -30,9 +36,11 @@ export const metadata: Metadata = {
  * and lists all marketing services using server‑side data.
  */
 export default async function MarketingServicesPage() {
-  const [companyData, marketingServices] = await Promise.all([
+  const [companyData, marketingServices, overview, marketingNews] = await Promise.all([
     fetchCompanyData(),
     getAllMarketingServices(),
+    fetchMarketingServicesOverviewData(),
+    fetchMarketingLatestNews(),
   ]);
 
   return (
@@ -45,25 +53,66 @@ export default async function MarketingServicesPage() {
         }}
       />
 
-      {/* 360° Marketing Support Section (inspired by reference image) */}
-      <section className="bg-gray-50 py-12 md:py-20">
+      {/* 360° Marketing Support Section (driven by API) */}
+      <section className="bg-white py-12 md:py-16 lg:py-20">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-10 items-center">
-            {/* Left – Circular marketing diagram / image placeholder */}
-             
-            <Image src="/3d_images.jpg" alt="Marketing Support Service" width={1000} height={1000} />
+          <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-10 items-center mb-10 md:mb-12">
+            {/* Left – Image from API */}
+            <div className="w-full">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={overview.image}
+                alt={overview.imageAlt}
+                className="w-full h-auto object-cover rounded-[32px]"
+              />
+            </div>
 
-            {/* Right – Heading + pills similar to reference design */}
-            <div>
-             
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-              360 Marketing Support Service
+            {/* Right – Heading + description from API */}
+            <div className="text-center lg:text-left">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#0E233C] mb-4 md:mb-5">
+                {overview.heading}
               </h2>
-              <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-6 max-w-2xl">
-              Introducing Lamipak Market Support Service, a 360-degree marketing solution catering to the diverse needs of the client through business intelligence, recipe support, and sales distribution. With a holistic approach, we can leverage data insights, expertise in recipe formulation, and efficient channels to guide customers from initial concepts to compelling go-to-market products.
-              Lamipak is committed to empowering businesses, ensuring a seamless journey from concept to market success in today's dynamic and competitive landscape.
+              <p className="text-base md:text-lg text-gray-700 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                {overview.description}
               </p>
+            </div>
+          </div>
 
+          {/* Stats strip – matches provided design */}
+          <div className="bg-[#F7F9FB] rounded-[40px] px-4 py-6 md:px-8 md:py-8 lg:px-10 lg:py-10 shadow-sm">
+            <div className="text-center mb-8">
+              <h3 className="text-xl md:text-2xl font-semibold text-[#0E233C]">
+                Empowering Your Business Journey With
+              </h3>
+              <p className="text-xl md:text-2xl font-bold text-[#009FE8] mt-1">
+                End-To-End Marketing Excellence
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+              {overview.stats.map((stat) => (
+                <div
+                  key={stat.id}
+                  className="bg-white rounded-[28px] px-6 py-6 md:px-7 md:py-7 flex flex-col items-start shadow-xs border border-[#E5EDF5] relative overflow-hidden"
+                >
+                  {/* Icon */}
+                  <div className="mb-4 inline-flex items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-2xl bg-[#E7F4FF]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={stat.icon}
+                      alt=""
+                      className="w-5 h-5 object-contain"
+                    />
+                  </div>
+
+                  <p className="text-2xl md:text-3xl font-bold text-[#0E233C] mb-1">
+                    {stat.value}
+                  </p>
+                  <p className="text-sm md:text-base text-gray-600">
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -125,6 +174,18 @@ export default async function MarketingServicesPage() {
           })}
         </div>
       </section>
+
+      {/* Latest News Section – marketing themed slider */}
+      <LatestNewsClient items={marketingNews} />
+
+      {/* Connect with Marketing Experts – reuse technical experts component */}
+      <ConnectTechnicalExperts
+        heading={overview.connectSection.heading}
+        headingHighlight={overview.connectSection.headingHighlight}
+        formTitle={overview.connectSection.formTitle}
+        illustrationImage={overview.connectSection.illustrationImage}
+        illustrationAlt={overview.connectSection.illustrationAlt}
+      />
 
       <CallToAction />
       <NewsletterSubscription />

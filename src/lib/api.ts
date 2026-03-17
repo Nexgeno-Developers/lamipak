@@ -34,6 +34,12 @@ import {
   type MarketingServiceData,
 } from '@/fake-api/marketing-services';
 import {
+  getMarketingServicesOverviewData as fakeGetMarketingServicesOverviewData,
+  getMarketingLatestNews as fakeGetMarketingLatestNews,
+  type MarketingServicesOverview,
+  type MarketingNewsItem,
+} from '@/fake-api/marketing-services-overview';
+import {
   getTechnicalServicesListingData as fakeGetTechnicalServicesListingData,
   type TechnicalServicesListingData
 } from '@/fake-api/technical-services-listing';
@@ -51,6 +57,8 @@ export type {
   TechnicalServicesListingData,
   CompanyData,
   MarketingServiceData,
+  MarketingServicesOverview,
+  MarketingNewsItem,
 };
 import { getHeaderData as fakeGetHeaderData, type HeaderData } from '@/fake-api/layout';
 import { getFooterData as fakeGetFooterData, type FooterData } from '@/fake-api/layout';
@@ -335,6 +343,40 @@ export async function fetchCompanyData(): Promise<CompanyData> {
   }
   
   return fakeGetCompanyData();
+}
+
+/**
+ * Fetches marketing services overview content (listing hero section)
+ *
+ * @returns Promise<MarketingServicesOverview>
+ */
+export async function fetchMarketingServicesOverviewData(): Promise<MarketingServicesOverview> {
+  if (useRealAPI()) {
+    // TODO: Replace with real API call when Laravel backend is ready
+    // const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.marketingServicesOverview}`);
+    // if (!response.ok) throw new Error('Failed to fetch marketing services overview');
+    // return response.json();
+    throw new Error('Real API not yet implemented');
+  }
+
+  return fakeGetMarketingServicesOverviewData();
+}
+
+/**
+ * Fetches latest marketing news for marketing services listing page
+ *
+ * @returns Promise<MarketingNewsItem[]>
+ */
+export async function fetchMarketingLatestNews(): Promise<MarketingNewsItem[]> {
+  if (useRealAPI()) {
+    // TODO: Replace with real API call when Laravel backend is ready
+    // const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.marketingLatestNews}`);
+    // if (!response.ok) throw new Error('Failed to fetch marketing latest news');
+    // return response.json();
+    throw new Error('Real API not yet implemented');
+  }
+
+  return fakeGetMarketingLatestNews();
 }
 
 /**
