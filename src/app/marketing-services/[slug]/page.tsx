@@ -6,6 +6,7 @@ import { getCanonicalUrl } from '@/config/site';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import CallToAction from '@/components/home/CallToAction';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
+import CompanyHero from '@/components/company/CompanyHero';
 
 interface MarketingServicePageProps {
   params: Promise<{
@@ -62,30 +63,13 @@ export default async function MarketingServiceDetailsPage(
 
   return (
     <main className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <section className="relative pt-[220px] pb-[150px] overflow-hidden">
-        <div className="absolute inset-0">
-          {serviceData.heroBackgroundImage ? (
-            <img
-              src={serviceData.heroBackgroundImage}
-              alt=""
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          ) : (
-            <div className="absolute inset-0 bg-gray-800" />
-          )}
-          <div className="absolute inset-0 bg-[#0e233ce8] opacity-90" />
-        </div>
-        <div className="relative z-10 h-full flex flex-col">
-          <div className="container mx-auto flex-1 flex flex-col justify-center px-4">
-            <div className="text-center">
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight uppercase">
-                {serviceData.title}
-              </h1>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Hero Section – reuse About Us / Company hero style */}
+      <CompanyHero
+        data={{
+          title: serviceData.title,
+          backgroundImage: serviceData.heroBackgroundImage || '/about_banner.jpg',
+        }}
+      />
 
       {/* Breadcrumbs */}
       <section className="bg-gray-50">

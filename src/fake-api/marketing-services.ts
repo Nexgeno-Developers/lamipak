@@ -39,7 +39,7 @@ const MARKETING_SERVICES: MarketingServiceData[] = [
       'Lamipak provides strategic market intelligence to help brands navigate the evolving beverage and dairy landscape. Our team analyzes global industry trends, consumer behavior, and emerging market opportunities to guide product positioning and packaging decisions. Through continuous research and competitive benchmarking, we help partners make informed choices that align with market demand and future growth potential.',
     description:
       'By combining data, on‑ground understanding, and category experience, we help you identify the right occasions, formats, and communication territories. Insights are translated into clear recommendations that guide product offerings, packaging portfolios, channel priorities, and activation plans, unlocking untapped value and long‑term growth potential.',
-    heroBackgroundImage: '/marketing_banner.jpg',
+    heroBackgroundImage: '/about_banner.jpg',
     listingImage: '/market_inteligence.jpg',
     listingImageAlt: 'Team collaborating around digital analytics dashboard',
     icon: '/icons/brand_strategy.svg',
