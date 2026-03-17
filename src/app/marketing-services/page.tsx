@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import CompanyHero from '@/components/company/CompanyHero';
 import { fetchCompanyData, getAllMarketingServices } from '@/lib/api';
 import { getCanonicalUrl } from '@/config/site';
@@ -49,59 +50,20 @@ export default async function MarketingServicesPage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-10 items-center">
             {/* Left – Circular marketing diagram / image placeholder */}
-            <div className="flex justify-center lg:justify-start">
-              <div className="relative w-[260px] h-[260px] md:w-[320px] md:h-[320px] rounded-full bg-gradient-to-br from-[#00B4FF] via-[#3DDC97] to-[#0E233C] p-[10px] shadow-xl">
-                <div className="w-full h-full rounded-full bg-white flex items-center justify-center text-center px-6">
-                  <div>
-                    <p className="text-xs font-semibold tracking-[0.15em] text-[#0E233C] mb-2 uppercase">
-                      Marketing Intelligence
-                    </p>
-                    <h2 className="text-xl md:text-2xl font-bold text-[#0E233C] leading-snug mb-1">
-                      360° Marketing
-                    </h2>
-                    <p className="text-sm text-gray-600">
-                      Connecting insight, packaging and commercial execution for stronger brand growth.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+             
+            <Image src="/3d_images.jpg" alt="Marketing Support Service" width={1000} height={1000} />
 
             {/* Right – Heading + pills similar to reference design */}
             <div>
-              <p className="text-sm font-semibold tracking-[0.15em] text-[#009FE8] uppercase mb-3">
-                360 Marketing Support Service
-              </p>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#0E233C] mb-4">
-                Integrated Marketing Support
+             
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+              360 Marketing Support Service
               </h2>
               <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-6 max-w-2xl">
-                Lamipak Marketing Support Service is designed as a 360‑degree solution that blends
-                customer insights, creative storytelling, and commercial activation. We work with your
-                teams to transform packaging and campaigns into consistent brand experiences across every
-                touchpoint.
+              Introducing Lamipak Market Support Service, a 360-degree marketing solution catering to the diverse needs of the client through business intelligence, recipe support, and sales distribution. With a holistic approach, we can leverage data insights, expertise in recipe formulation, and efficient channels to guide customers from initial concepts to compelling go-to-market products.
+              Lamipak is committed to empowering businesses, ensuring a seamless journey from concept to market success in today's dynamic and competitive landscape.
               </p>
 
-              {/* Pills / key areas */}
-              <div className="flex flex-wrap gap-3 mb-4">
-                <span className="inline-flex items-center rounded-full bg-[#009FE8] text-white px-4 py-2 text-sm font-semibold shadow-md">
-                  Brand Strategy
-                </span>
-                <span className="inline-flex items-center rounded-full bg-[#13C38B] text-white px-4 py-2 text-sm font-semibold shadow-md">
-                  360° Campaigns
-                </span>
-                <span className="inline-flex items-center rounded-full bg-[#FF7043] text-white px-4 py-2 text-sm font-semibold shadow-md">
-                  Shopper Activation
-                </span>
-                <span className="inline-flex items-center rounded-full bg-[#4CAF50] text-white px-4 py-2 text-sm font-semibold shadow-md">
-                  Insights & Design
-                </span>
-              </div>
-
-              <p className="text-sm md:text-base text-gray-600 max-w-2xl">
-                From idea to shelf, our specialists collaborate with commercial and technical teams to
-                ensure that every campaign and every pack contributes to measurable, sustainable growth.
-              </p>
             </div>
           </div>
         </div>
