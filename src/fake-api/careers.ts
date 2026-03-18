@@ -44,6 +44,15 @@ export interface CareersListingData {
     heading: string;
     description: string;
   };
+  leadershipMessage?: {
+    image: string;
+    imageAlt: string;
+    name: string;
+    role: string;
+    heading: string;
+    headingHighlight: string;
+    paragraphs: string[];
+  };
   jobs: CareerJob[];
   seo: CareerSEO;
 }
@@ -152,6 +161,18 @@ export async function getCareersListingData(): Promise<CareersListingData> {
       heading: 'Join Lamipak',
       description:
         'Explore open roles across commercial, marketing, and technical teams. We value ownership, collaboration, and continuous learning.',
+    },
+    leadershipMessage: {
+      image: '/images/career/leader.jpg',
+      imageAlt: 'Lamipak leader portrait',
+      name: 'Danny Oei',
+      role: 'Chairman',
+      heading: 'Brings',
+      headingHighlight: 'Life',
+      paragraphs: [
+        'Lamipak is built on the belief that packaging can protect quality, enable progress, and connect brands with consumers in meaningful ways. Our teams bring together creativity, engineering discipline, and a passion for improvement.',
+        'If you’re excited to learn, collaborate, and take ownership, you’ll find a place here to grow your skills and make a real impact—locally and globally.',
+      ],
     },
     jobs: JOBS,
     seo: {

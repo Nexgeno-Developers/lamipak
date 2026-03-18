@@ -100,16 +100,50 @@ export default async function CareerPage() {
         </section>
       )}
 
-      {data.intro && (
-        <section className="bg-white py-10 md:py-16">
+     
+
+      {/* Leadership message section (like reference design) */}
+      {data.leadershipMessage && (
+        <section className="bg-gray-50 py-10 md:py-16">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl">
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#0E233C] mb-4">
-                {data.intro.heading}
-              </h2>
-              <p className="text-base md:text-lg text-gray-700 leading-relaxed">
-                {data.intro.description}
-              </p>
+            <div className="bg-white rounded-[32px] md:rounded-[40px] p-6 md:p-10 lg:p-12 shadow-sm border border-gray-100">
+              <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-10 lg:gap-14 items-start">
+                {/* Left: photo + name */}
+                <div>
+                  <div className="bg-[#EDF0F1] rounded-[28px] p-4">
+                    <div className="relative w-full overflow-hidden rounded-[24px]">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={data.leadershipMessage.image}
+                        alt={data.leadershipMessage.imageAlt}
+                        className="w-full h-auto object-cover"
+                      />
+                    </div>
+                  </div>
+                  <p className="text-center font-semibold text-[#0E233C] mt-5">
+                    {data.leadershipMessage.name}{' '}
+                    <span className="font-normal text-gray-600">
+                      {data.leadershipMessage.role ? `| ${data.leadershipMessage.role}` : ''}
+                    </span>
+                  </p>
+                </div>
+
+                {/* Right: content */}
+                <div className="max-w-3xl">
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#0E233C] mb-5">
+                    {data.leadershipMessage.heading}{' '}
+                    <span className="text-[#009FE8]">
+                      {data.leadershipMessage.headingHighlight}
+                    </span>{' '}
+                    To Packaging
+                  </h2>
+                  <div className="space-y-5 text-sm md:text-base text-gray-700 leading-relaxed">
+                    {data.leadershipMessage.paragraphs.map((p, i) => (
+                      <p key={i}>{p}</p>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
