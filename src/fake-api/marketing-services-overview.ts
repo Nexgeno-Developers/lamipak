@@ -10,6 +10,10 @@ export interface MarketingServicesOverview {
   description: string;
   image: string;
   imageAlt: string;
+  statsHeading: string;
+  statsSubheading: string;
+  listingHeading: string;
+  listingHeadingHighlight: string;
   stats: {
     id: string;
     icon: string;
@@ -46,30 +50,34 @@ export async function getMarketingServicesOverviewData(): Promise<MarketingServi
     heading: '360 Marketing Support Service',
     description:
       'Introducing Lamipak Market Support Service, a 360-degree marketing solution catering to the diverse needs of the client through business intelligence, recipe support, creative consultancy, and sales & distribution. With a holistic approach, we leverage insights, formulation expertise, and efficient routes to market to guide customers from initial concepts to compelling go-to-market products. Lamipak is committed to empowering businesses, ensuring a seamless journey from concept to market success in today’s dynamic and competitive landscape.',
-    image: '/3d_images.jpg',
+    image: '/3d_images1.jpg',
     imageAlt: 'Lamipak 360 marketing support visualization',
+    statsHeading: 'Empowering Your Business Journey With',
+    statsSubheading: 'End-To-End Marketing Excellence',
+    listingHeading: 'What Are You Looking For?',
+    listingHeadingHighlight: 'Are You',
     stats: [
       {
         id: 'countries',
-        icon: '/icons/marketing/globe.svg',
+        icon: '/globe_icon.svg',
         value: '84+',
         label: 'Countries Distribution',
       },
       {
         id: 'support',
-        icon: '/icons/marketing/360.svg',
+        icon: '/suppoer_icon.svg',
         value: '360°',
         label: 'Integrated Support',
       },
       {
         id: 'team',
-        icon: '/icons/marketing/team.svg',
+        icon: '/employee.svg',
         value: '250+',
         label: 'Team Members',
       },
       {
         id: 'steps',
-        icon: '/icons/marketing/steps.svg',
+        icon: '/process.svg',
         value: '5 STEPS',
         label: 'Recipe to Market Process',
       },

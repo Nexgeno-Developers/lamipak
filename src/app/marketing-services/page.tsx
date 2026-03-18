@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import CompanyHero from '@/components/company/CompanyHero';
+import Image from 'next/image';
 import LatestNewsClient from '@/components/marketing/LatestNewsClient';
 import {
   fetchCompanyData,
@@ -54,9 +55,9 @@ export default async function MarketingServicesPage() {
       />
 
       {/* 360° Marketing Support Section (driven by API) */}
-      <section className="bg-white py-12 md:py-16 lg:py-20">
+      <section className="bg-gray-50 py-12 md:py-16 lg:py-20">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-10 items-center mb-10 md:mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-[80px] items-center">
             {/* Left – Image from API */}
             <div className="w-full">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -69,23 +70,23 @@ export default async function MarketingServicesPage() {
 
             {/* Right – Heading + description from API */}
             <div className="text-center lg:text-left">
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#0E233C] mb-4 md:mb-5">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-6 leading-[70px]">
                 {overview.heading}
               </h2>
-              <p className="text-base md:text-lg text-gray-700 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+              <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4 md:mb-6">
                 {overview.description}
               </p>
             </div>
           </div>
 
-          {/* Stats strip – matches provided design */}
-          <div className="bg-[#F7F9FB] rounded-[40px] px-4 py-6 md:px-8 md:py-8 lg:px-10 lg:py-10 shadow-sm">
+          {/* Stats strip – heading/subheading driven by API */}
+          <div className="bg-gray-50 pt-20">
             <div className="text-center mb-8">
-              <h3 className="text-xl md:text-2xl font-semibold text-[#0E233C]">
-                Empowering Your Business Journey With
+              <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-2 text-center">
+                {overview.statsHeading}
               </h3>
-              <p className="text-xl md:text-2xl font-bold text-[#009FE8] mt-1">
-                End-To-End Marketing Excellence
+              <p className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-6 text-[#009FE8] text-center">
+                {overview.statsSubheading}
               </p>
             </div>
 
@@ -93,22 +94,25 @@ export default async function MarketingServicesPage() {
               {overview.stats.map((stat) => (
                 <div
                   key={stat.id}
-                  className="bg-white rounded-[28px] px-6 py-6 md:px-7 md:py-7 flex flex-col items-start shadow-xs border border-[#E5EDF5] relative overflow-hidden"
+                  className="bg-[#EDF0F1] rounded-[50px] p-8 md:p-10  duration-300 flex flex-col text-start"
                 >
                   {/* Icon */}
-                  <div className="mb-4 inline-flex items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-2xl bg-[#E7F4FF]">
+                  <div className="mb-6 w-12 h-12 flex items-center justify-start">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={stat.icon}
-                      alt=""
-                      className="w-5 h-5 object-contain"
-                    />
+                  
+                    <Image
+                    src={stat.icon}
+                    alt={stat.label}
+                    width={64}
+                    height={64}
+                    className="w-full h-full object-contain"
+                  />
                   </div>
 
-                  <p className="text-2xl md:text-3xl font-bold text-[#0E233C] mb-1">
+                  <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#000] mb-2">
                     {stat.value}
                   </p>
-                  <p className="text-sm md:text-base text-gray-600">
+                  <p className="text-lg md:text-xl text-black font-medium">
                     {stat.label}
                   </p>
                 </div>
@@ -118,12 +122,14 @@ export default async function MarketingServicesPage() {
         </div>
       </section>
 
-      {/* Marketing services listing – "What Are You Looking For?" */}
+      {/* Marketing services listing – "What Are You Looking For?" heading from API */}
       <section className="bg-gray-50">
-       
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 leading-[70px] text-center">
-            What <span className="text-[#009FE8]">Are You</span> Looking For?
-          </h2>
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 leading-[70px] text-center">
+          {overview.listingHeading.replace(overview.listingHeadingHighlight, '').trim()}{' '}
+          <span className="text-[#009FE8]">
+            {overview.listingHeadingHighlight}
+          </span>{' '}
+        </h2>
 
         <div className="">
           {marketingServices.map((service, index) => {
@@ -145,12 +151,12 @@ export default async function MarketingServicesPage() {
                       <h3 className="text-lg md:text-xl lg:text-[36px] font-bold text-[#0E233C] mb-3">
                         {service.title}
                       </h3>
-                      <p className="text-sm md:text-base text-black leading-[32px] mb-4">
+                      <p className="text-base md:text-lg text-black leading-relaxed mb-4 md:mb-6">
                         {service.shortDescription}
                       </p>
                       <Link
                         href={`/marketing-services/${service.slug}`}
-                        className="inline-flex items-center text-sm md:text-base font-semibold text-[#009FE8] hover:text-[#0077B6] transition-colors"
+                        className="inline-flex items-center text-sm md:text-[20px] uppercase font-bold text-[#009FE8] hover:text-[#0077B6] transition-colors"
                       >
                         Find out more
                         <span className="ml-2 text-lg leading-none">→</span>
