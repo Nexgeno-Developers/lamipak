@@ -107,7 +107,7 @@ const categories: ProductCategory[] = [
     slug: 'sterile-packaging',
     description: 'Ultra-clean sterile packaging for pharmaceutical and sensitive liquid applications. FDA approved with Class A sterility standards.',
     image: '/category-sterile.jpg',
-    heroBackgroundImage: '/banner-slider2.jpg',
+    heroBackgroundImage: '/banner-slider2.webp',
     heroSubtitle: 'Pharmaceutical-grade sterile packaging solutions',
     globalImpact: {
       image: '/leading_dairy_img.jpg',
@@ -146,7 +146,7 @@ const categories: ProductCategory[] = [
     slug: 'closure-systems',
     description: 'Innovative closure systems providing secure sealing, easy opening, and tamper-evident features for various packaging formats.',
     image: '/category-closure.jpg',
-    heroBackgroundImage: '/banner-slider3.jpg',
+    heroBackgroundImage: '/banner-slider3.webp',
     heroSubtitle: 'Secure sealing, easy opening, tamper-evident',
     globalImpact: {
       image: '/leading_dairy_img.jpg',
@@ -185,7 +185,7 @@ const categories: ProductCategory[] = [
     slug: 'sustainable-solutions',
     description: 'Eco-friendly packaging solutions designed for sustainability and reduced environmental impact. Plant-derived materials and recyclable options.',
     image: '/category-sustainable.jpg',
-    heroBackgroundImage: '/banner-slider4.jpg',
+    heroBackgroundImage: '/banner-slider4.webp',
     heroSubtitle: 'Eco-friendly packaging for a sustainable future',
     globalImpact: {
       image: '/leading_dairy_img.jpg',
@@ -224,7 +224,7 @@ const categories: ProductCategory[] = [
     slug: 'specialty-packaging',
     description: 'Custom packaging solutions for specialized applications and unique requirements. Tailored solutions for specific industry needs.',
     image: '/category-specialty.jpg',
-    heroBackgroundImage: '/banner-slider5.jpg',
+    heroBackgroundImage: '/banner-slider5.webp',
     heroSubtitle: 'Custom packaging tailored to your needs',
     globalImpact: {
       image: '/leading_dairy_img.jpg',

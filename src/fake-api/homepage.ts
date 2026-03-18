@@ -258,7 +258,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           titleHighlight: 'SUSTAINABLE FUTURE.',
           ctaText: 'DISCOVER MORE',
           ctaLink: '/solutions',
-          backgroundImage: '/banner-slider2.jpg',
+          backgroundImage: '/banner-slider2.webp',
         },
         {
           id: '3',
@@ -267,7 +267,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           titleHighlight: 'PERFECTION.',
           ctaText: 'LEARN MORE',
           ctaLink: '/solutions',
-          backgroundImage: '/banner-slider3.jpg',
+          backgroundImage: '/banner-slider3.webp',
         },
         {
           id: '4',
@@ -276,7 +276,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           titleHighlight: 'LOCAL SOLUTIONS.',
           ctaText: 'GET STARTED',
           ctaLink: '/contact',
-          backgroundImage: '/banner-slider4.jpg',
+          backgroundImage: '/banner-slider4.webp',
         },
         {
           id: '5',
@@ -285,7 +285,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           titleHighlight: 'PACKAGING TECHNOLOGY.',
           ctaText: 'EXPLORE NOW',
           ctaLink: '/solutions',
-          backgroundImage: '/banner-slider5.jpg',
+          backgroundImage: '/banner-slider5.webp',
         },
       ],
       categories: [
@@ -575,7 +575,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'Del envase al mundo digital: transformando la conexión con el consumidor a través de One Pack One Code',
           time: '10:00 AM',
           date: 'January 21, 2026',
-          image: '/banner-slider2.jpg', // Replace with actual innovation image
+          image: '/banner-slider2.webp', // Replace with actual innovation image
           imageAlt: 'Milk cartons with blue patterns',
           imagePosition: 'bottom',
           isHighlighted: true,
@@ -587,7 +587,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'Del envase al mundo digital: transformando la conexión con el consumidor a través de One Pack One Code',
           time: '10:00 AM',
           date: 'January 21, 2026',
-          image: '/banner-slider3.jpg', // Replace with actual innovation image
+          image: '/banner-slider3.webp', // Replace with actual innovation image
           imageAlt: 'Bottling line in factory',
           imagePosition: 'top',
           isHighlighted: false,
@@ -599,7 +599,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'Sustainable Packaging Solutions for the Future',
           time: '2:00 PM',
           date: 'February 15, 2026',
-          image: '/banner-slider4.jpg',
+          image: '/banner-slider4.webp',
           imageAlt: 'Sustainable packaging solutions',
           imagePosition: 'top',
           isHighlighted: false,
@@ -611,7 +611,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'Smart Packaging Technology Revolution',
           time: '11:30 AM',
           date: 'March 10, 2026',
-          image: '/banner-slider5.jpg',
+          image: '/banner-slider5.webp',
           imageAlt: 'Smart packaging technology',
           imagePosition: 'bottom',
           isHighlighted: true,
