@@ -381,7 +381,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           image: '/services_image_1.jpg', // Replace with actual technical services image
           imageAlt: 'Technical Services - Production line with aseptic packaging',
           ctaText: 'Read More',
-          ctaLink: '/services/technical',
+          ctaLink: '/technical-services',
           icon: 'gear', // Gear icon
         },
         {
@@ -391,7 +391,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           image: '/services_image_2.jpg', // Replace with actual marketing service image
           imageAlt: 'Marketing Service - Digital marketing and business intelligence',
           ctaText: 'Read More',
-          ctaLink: '/services/marketing',
+          ctaLink: '/marketing-services',
           icon: 'megaphone', // Megaphone icon
         },
       ],

@@ -24,7 +24,7 @@ export default function OurValues({ data }: OurValuesProps) {
   }
 
   return (
-    <section className="py-12 md:py-16 lg:py-20 bg-white">
+    <section className="py-12 md:py-16 lg:py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         {/* Heading */}
         <div className="text-center mb-8 md:mb-12">
@@ -47,7 +47,7 @@ export default function OurValues({ data }: OurValuesProps) {
                   <button
                     key={value.id}
                     onClick={() => setSelectedValueId(value.id)}
-                    className={`w-full text-left py-4 px-0 border-b border-gray-200 transition-colors ${
+                    className={`cursor-pointer w-full text-left py-5 px-0 border-b border-gray-200 transition-colors ${
                       isSelected
                         ? 'text-[#009FE8]'
                         : 'text-gray-900 hover:text-gray-700'
@@ -82,13 +82,14 @@ export default function OurValues({ data }: OurValuesProps) {
           {/* Right Column - Image and Caption */}
           <div className="flex flex-col">
             {/* Image */}
-            <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden mb-4 shadow-lg">
+            <div className="relative w-full rounded-lg mb-4">
               {selectedValue.image ? (
                 <Image
                   src={selectedValue.image}
                   alt={selectedValue.imageAlt}
-                  fill
-                  className="object-cover transition-opacity duration-300"
+                  width={1600}
+                  height={1200}
+                  className="w-full h-auto object-cover transition-opacity duration-300"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               ) : (
@@ -97,7 +98,7 @@ export default function OurValues({ data }: OurValuesProps) {
             </div>
 
             {/* Caption */}
-            <div className="bg-gray-100 rounded-lg p-4 md:p-6">
+            <div className="bg-gray-100 rounded-lg p-4 md:p-6 mt-[-110px] relative z-10">
               <p className="text-sm md:text-base text-gray-900 leading-relaxed">
                 {selectedValue.caption}
               </p>

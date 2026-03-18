@@ -133,13 +133,13 @@ export default async function MarketingServiceDetailsPage(
             </div>
 
             {/* Right: Image */}
-            <div className="relative w-full overflow-hidden shadow-sm">
+            <div className="relative w-full overflow-hidden">
               <div className="relative w-full">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={serviceData.introSection?.image || serviceData.listingImage}
                   alt={serviceData.introSection?.imageAlt || serviceData.listingImageAlt}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
@@ -149,28 +149,28 @@ export default async function MarketingServiceDetailsPage(
 
       {/* Highlights Section – four cards with icons */}
       {serviceData.highlights.length > 0 && (
-        <section className="bg-white py-10 md:py-16">
+        <section className="bg-gray-50 py-10 md:py-16">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
               {serviceData.highlights.map((highlight) => (
                 <div
                   key={highlight.id}
-                  className="bg-[#F7F9FB] rounded-[24px] px-6 py-6 md:px-7 md:py-7 shadow-sm flex flex-col h-full"
+                  className="bg-[#EDF0F1] rounded-[50px] py-10 px-8 md:py-20 md:px-10  duration-300 flex flex-col text-start"
                 >
                   {highlight.icon && (
-                    <div className="mb-4 inline-flex items-center justify-center w-10 h-10 rounded-2xl bg-[#E7F4FF]">
+                    <div className="mb-6 w-12 h-12 flex items-center justify-start">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={highlight.icon}
                         alt=""
-                        className="w-5 h-5 object-contain"
+                        className="w-full h-full object-contain"
                       />
                     </div>
                   )}
-                  <h4 className="text-base md:text-lg font-semibold text-[#0E233C] mb-2">
+                  <h4 className="text-base md:text-[20px] font-bold text-[#0E233C] mb-2">
                     {highlight.title}
                   </h4>
-                  <p className="text-xs md:text-sm text-gray-600 leading-relaxed">
+                  <p className="text-xs md:text-base text-black leading-relaxed">
                     {highlight.description}
                   </p>
                 </div>
@@ -186,9 +186,9 @@ export default async function MarketingServiceDetailsPage(
 
       {/* Brand Journey Section – five cards row */}
       {serviceData.brandJourney && serviceData.brandJourney.items.length > 0 && (
-        <section className="bg-gray-50 py-10 md:py-16">
+        <section className="bg-gray-50 pt-10 md:pt-16">
           <div className="container mx-auto px-4">
-            <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-10">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-8 text-center ">
               Elevate Your{' '}
               <span className="text-[#009FE8]">
                 {serviceData.brandJourney.headingHighlight}
@@ -199,20 +199,20 @@ export default async function MarketingServiceDetailsPage(
               {serviceData.brandJourney.items.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white rounded-[24px] px-5 py-6 shadow-sm flex flex-col items-start"
+                  className="bg-[#EDF0F1] rounded-[50px] px-8 text-center py-8 md:px-6  duration-300 flex flex-col text-center "
                 >
-                  <div className="mb-4 inline-flex items-center justify-center w-10 h-10 rounded-2xl bg-[#E7F4FF]">
+                  <div className="mb-4 w-12 h-12 flex items-center justify-center w-full">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={item.icon}
                       alt=""
-                      className="w-5 h-5 object-contain"
+                      className="w-full h-full object-contain"
                     />
                   </div>
-                  <h3 className="text-sm md:text-base font-semibold text-[#0E233C] leading-snug">
+                  <h3 className="text-sm md:text-[20px] font-bold text-[#0E233C] leading-snug">
                     {item.title}
                   </h3>
-                  <p className="text-xs md:text-sm text-gray-600 mt-1">
+                  <p className="text-xs md:text-base text-gray-600 mt-1  mb-0 pb-0">
                     {item.subtitle}
                   </p>
                 </div>
@@ -225,7 +225,7 @@ export default async function MarketingServiceDetailsPage(
       {/* Connect with Marketing Experts – reuse shared component */}
 
        
-      <section className="bg-gray-50 py-10 md:py-16">
+      <section className="bg-gray-50 py-8">
         <div className="container mx-auto px-4">
           <ConnectTechnicalExperts
             heading={overview.connectSection.heading}

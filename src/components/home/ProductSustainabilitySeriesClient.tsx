@@ -35,7 +35,7 @@ export default function ProductSustainabilitySeriesClient({ data }: ProductSusta
           {/* Background Image */}
           <div className="absolute inset-0">
             <img
-              src="/product_section_bg_home.jpg"
+              src="/product_section_bg_home.webp"
               alt="Product Section Background"
               className="absolute inset-0 w-full h-full object-cover"
             />

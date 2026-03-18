@@ -75,7 +75,7 @@ export default async function AboutUsPage() {
         <AboutUsQuadrantServer />
         
       
-   <div className="pt-20 pb-20">
+   <div className="pt-20">
 <CallToAction />
    </div>
         
