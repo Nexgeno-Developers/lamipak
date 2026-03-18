@@ -152,7 +152,26 @@ export default async function CareerPage() {
 
       {/* Vertical Tabs Features Section (reused from Technical Services) */}
       {data.verticalFeatures && data.verticalFeatures.length > 0 && (
-        <VerticalTabsFeatures features={data.verticalFeatures} />
+        <>
+          {data.verticalFeaturesHeader && (
+            <section className="bg-gray-50 pt-10 md:pt-14">
+              <div className="container mx-auto px-4">
+                <div className="text-center max-w-3xl mx-auto">
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#0E233C]">
+                    <span className="text-[#009FE8]">
+                      {data.verticalFeaturesHeader.heading}
+                    </span>{' '}
+                    {data.verticalFeaturesHeader.headingHighlight}
+                  </h2>
+                  <p className="text-sm md:text-base text-gray-600 mt-3">
+                    {data.verticalFeaturesHeader.description}
+                  </p>
+                </div>
+              </div>
+            </section>
+          )}
+          <VerticalTabsFeatures features={data.verticalFeatures} />
+        </>
       )}
 
       <section id="open-positions" className="bg-gray-50 py-10 md:py-16">

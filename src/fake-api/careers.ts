@@ -60,6 +60,11 @@ export interface CareersListingData {
     image: string;
     imageAlt: string;
   }>;
+  verticalFeaturesHeader?: {
+    heading: string;
+    headingHighlight: string;
+    description: string;
+  };
   jobs: CareerJob[];
   seo: CareerSEO;
 }
@@ -223,6 +228,12 @@ export async function getCareersListingData(): Promise<CareersListingData> {
         imageAlt: 'Team wellbeing',
       },
     ],
+    verticalFeaturesHeader: {
+      heading: 'Company Value',
+      headingHighlight: 'Presentation',
+      description:
+        'Our values guide our commitment to quality, innovation, and sustainable packaging—creating freshness and safety in every product.',
+    },
     jobs: JOBS,
     seo: {
       meta_title: 'Career | Lamipak',
