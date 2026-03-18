@@ -7,6 +7,7 @@ import Breadcrumbs from '@/components/common/Breadcrumbs';
 import VideoModalClient from '@/components/common/VideoModalClient';
 import VerticalTabsFeatures from '@/components/technical-services/VerticalTabsFeatures';
 import ConnectTechnicalExperts from '@/components/technical-services/ConnectTechnicalExperts';
+import CareerListingClient from '@/components/career/CareerListingClient';
 import CallToAction from '@/components/home/CallToAction';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
 
@@ -224,65 +225,7 @@ export default async function CareerPage() {
         />
       )}
 
-      <section id="open-positions" className="bg-gray-50 py-10 md:py-16">
-        <div className="container mx-auto px-4">
-          <div className="flex items-end justify-between gap-6 mb-8">
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold text-[#0E233C]">
-                Open Positions
-              </h2>
-              <p className="text-sm md:text-base text-gray-600 mt-2">
-                {data.jobs.length} role{data.jobs.length === 1 ? '' : 's'} available
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {data.jobs.map((job) => (
-              <article
-                key={job.id}
-                className="bg-white rounded-[28px] border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-6 flex flex-col"
-              >
-                <div className="flex items-start justify-between gap-4 mb-3">
-                  <h3 className="text-lg md:text-xl font-semibold text-[#0E233C]">
-                    {job.title}
-                  </h3>
-                  <span className="shrink-0 inline-flex rounded-full bg-[#E7F4FF] text-[#009FE8] px-3 py-1 text-xs font-semibold">
-                    {job.jobType}
-                  </span>
-                </div>
-
-                <div className="text-sm text-gray-600 space-y-1 mb-4">
-                  <p>
-                    <span className="font-semibold text-gray-700">Department:</span>{' '}
-                    {job.department}
-                  </p>
-                  <p>
-                    <span className="font-semibold text-gray-700">Location:</span>{' '}
-                    {job.location}
-                  </p>
-                </div>
-
-                <p className="text-sm md:text-base text-gray-700 leading-relaxed flex-1">
-                  {job.shortDescription}
-                </p>
-
-                <div className="mt-6 flex items-center justify-between gap-4">
-                  <span className="text-xs text-gray-500">
-                    Posted: {job.postedDate}
-                  </span>
-                  <Link
-                    href={`/career/${job.slug}`}
-                    className="inline-flex items-center text-sm font-semibold text-[#009FE8] hover:text-[#0077B6] transition-colors"
-                  >
-                    View details <span className="ml-2">→</span>
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <CareerListingClient jobs={data.jobs} jobsSection={data.jobsSection} />
 
       <CallToAction />
       <NewsletterSubscription />

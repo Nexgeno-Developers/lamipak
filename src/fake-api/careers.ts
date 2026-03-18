@@ -16,8 +16,11 @@ export interface CareerJob {
   slug: string;
   title: string;
   department: string;
+  function: string;
+  region: 'North America' | 'Latin America' | 'EMEA' | 'Asia Pacific';
   location: string;
   jobType: string; // e.g. Full-time
+  experienceLevel: string; // e.g. "5–10 Years"
   postedDate: string; // e.g. "2026-03-10"
   shortDescription: string;
   description: string;
@@ -84,6 +87,20 @@ export interface CareersListingData {
     illustrationImage: string;
     illustrationAlt: string;
   };
+  jobsSection?: {
+    notice: string;
+    heading: string;
+    headingHighlight: string;
+    headingSuffix: string;
+    regions: Array<'All' | 'North America' | 'Latin America' | 'EMEA' | 'Asia Pacific'>;
+    filters: {
+      titlePlaceholder: string;
+      locationPlaceholder: string;
+      functionPlaceholder: string;
+      experiencePlaceholder: string;
+      datePlaceholder: string;
+    };
+  };
   jobs: CareerJob[];
   seo: CareerSEO;
 }
@@ -94,8 +111,11 @@ const JOBS: CareerJob[] = [
     slug: 'marketing-specialist',
     title: 'Marketing Specialist',
     department: 'Marketing',
+    function: 'Human Resources',
+    region: 'EMEA',
     location: 'Dubai, UAE',
     jobType: 'Full-time',
+    experienceLevel: '2–5 Years',
     postedDate: '2026-03-10',
     shortDescription:
       'Support go-to-market planning, campaigns, and content creation across key product categories.',
@@ -120,8 +140,11 @@ const JOBS: CareerJob[] = [
     slug: 'packaging-engineer',
     title: 'Packaging Engineer',
     department: 'Technical Services',
+    function: 'Engineering',
+    region: 'Asia Pacific',
     location: 'Shanghai, China',
     jobType: 'Full-time',
+    experienceLevel: '5–10 Years',
     postedDate: '2026-03-01',
     shortDescription:
       'Drive packaging performance, testing, and customer technical support for aseptic solutions.',
@@ -146,8 +169,11 @@ const JOBS: CareerJob[] = [
     slug: 'sales-executive',
     title: 'Sales Executive',
     department: 'Commercial',
+    function: 'Sales',
+    region: 'Asia Pacific',
     location: 'Mumbai, India',
     jobType: 'Full-time',
+    experienceLevel: '3–5 Years',
     postedDate: '2026-02-20',
     shortDescription:
       'Build and manage customer relationships, identify opportunities, and drive revenue growth.',
@@ -286,6 +312,21 @@ export async function getCareersListingData(): Promise<CareersListingData> {
       formTitle: 'Send Us A Message',
       illustrationImage: '/connected_image.jpg',
       illustrationAlt: 'Connect with Lamipak team',
+    },
+    jobsSection: {
+      notice:
+        'We will never ask for personal information unrelated to the job application process, such as bank or credit card data, and never charge any fees to apply to any jobs.',
+      heading: 'See all open positions and',
+      headingHighlight: 'early career opportunities',
+      headingSuffix: 'or search by region :',
+      regions: ['All', 'North America', 'Latin America', 'EMEA', 'Asia Pacific'],
+      filters: {
+        titlePlaceholder: 'Title',
+        locationPlaceholder: 'Location',
+        functionPlaceholder: 'All',
+        experiencePlaceholder: 'Experience Level',
+        datePlaceholder: 'Date',
+      },
     },
     jobs: JOBS,
     seo: {
