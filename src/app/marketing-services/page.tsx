@@ -57,7 +57,7 @@ export default async function MarketingServicesPage() {
       {/* 360° Marketing Support Section (driven by API) */}
       <section className="bg-gray-50 py-12 md:py-16 lg:py-20">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-[80px] items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-[40%_50%] gap-[80px] items-center">
             {/* Left – Image from API */}
             <div className="w-full">
               {/* eslint-disable-next-line @next/next/no-img-element */}
