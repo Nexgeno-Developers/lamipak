@@ -22,6 +22,8 @@ export const API_CONFIG = {
     company: '/company',
     careers: '/careers',
     career: (slug: string) => `/careers/${slug}`,
+    packagingPages: '/packaging-pages',
+    packagingPage: (slug: string) => `/packaging-pages/${slug}`,
     header: '/header',
     footer: '/footer',
     approach: '/approach',

@@ -55,6 +55,12 @@ import {
   type CareersListingData,
   type CareerJob,
 } from '@/fake-api/careers';
+import {
+  getPackagingPageData as fakeGetPackagingPageData,
+  getAllPackagingPages as fakeGetAllPackagingPages,
+  getAllPackagingPageSlugs as fakeGetAllPackagingPageSlugs,
+  type PackagingPageData,
+} from '@/fake-api/packaging-pages';
 import { getCanonicalUrl } from '@/config/site';
 
 // Re-export types for convenience
@@ -69,6 +75,7 @@ export type {
   MarketingNewsItem,
   CareersListingData,
   CareerJob,
+  PackagingPageData,
 };
 import { getHeaderData as fakeGetHeaderData, type HeaderData } from '@/fake-api/layout';
 import { getFooterData as fakeGetFooterData, type FooterData } from '@/fake-api/layout';
@@ -453,6 +460,55 @@ export async function fetchMarketingPressNews(): Promise<MarketingNewsItem[]> {
   }
 
   return fakeGetMarketingPressNews();
+}
+
+/**
+ * Fetch packaging page data by slug
+ */
+export async function fetchPackagingPageData(slug: string): Promise<PackagingPageData | null> {
+  if (useRealAPI()) {
+    // TODO: Replace with real API call when Laravel backend is ready
+    // const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.packagingPage(slug)}`);
+    // if (!response.ok) {
+    //   if (response.status === 404) return null;
+    //   throw new Error('Failed to fetch packaging page data');
+    // }
+    // return response.json();
+    throw new Error('Real API not yet implemented');
+  }
+
+  return fakeGetPackagingPageData(slug);
+}
+
+/**
+ * Get all packaging page slugs (for static generation)
+ */
+export async function getAllPackagingPageSlugs(): Promise<string[]> {
+  if (useRealAPI()) {
+    // TODO: Replace with real API call when Laravel backend is ready
+    // const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.packagingPages}`);
+    // if (!response.ok) throw new Error('Failed to fetch packaging pages');
+    // const data = await response.json();
+    // return data.map((p: PackagingPageData) => p.slug);
+    throw new Error('Real API not yet implemented');
+  }
+
+  return fakeGetAllPackagingPageSlugs();
+}
+
+/**
+ * Fetch all packaging pages (server-side)
+ */
+export async function getAllPackagingPages(): Promise<PackagingPageData[]> {
+  if (useRealAPI()) {
+    // TODO: Replace with real API call when Laravel backend is ready
+    // const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.packagingPages}`);
+    // if (!response.ok) throw new Error('Failed to fetch packaging pages');
+    // return response.json();
+    throw new Error('Real API not yet implemented');
+  }
+
+  return fakeGetAllPackagingPages();
 }
 
 /**
