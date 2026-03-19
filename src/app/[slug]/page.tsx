@@ -351,6 +351,52 @@ export default async function DynamicPage({ params }: PageProps) {
               );
             }
 
+            if (section.type === 'journey_recycling_section') {
+              return (
+                <section key={idx} className="bg-white py-12 md:py-16">
+                  <div className="container mx-auto px-4">
+                    <h2 className="text-center text-[#009FE8] text-xl md:text-3xl font-bold">
+                      {section.heading}
+                    </h2>
+
+                    <div className="mt-6 overflow-hidden rounded-[26px] border border-gray-100 bg-gray-50">
+                      <div className="relative w-full pt-[56%] md:pt-[50%]">
+                        <Image
+                          src={section.image}
+                          alt={section.imageAlt || section.heading}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, 1200px"
+                          priority
+                        />
+                      </div>
+                    </div>
+
+                    <p className="mx-auto mt-6 max-w-5xl text-center text-[10px] md:text-xs text-gray-700 leading-relaxed">
+                      {section.description}
+                    </p>
+
+                    {section.ctaLink ? (
+                      <div className="mt-4 text-center">
+                        <Link
+                          href={section.ctaLink}
+                          className="text-[#009FE8] text-xs md:text-sm font-semibold hover:underline transition"
+                        >
+                          {section.ctaText}
+                        </Link>
+                      </div>
+                    ) : (
+                      <div className="mt-4 text-center">
+                        <span className="text-[#009FE8] text-xs md:text-sm font-semibold">
+                          {section.ctaText}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </section>
+              );
+            }
+
             return null;
           })}
 

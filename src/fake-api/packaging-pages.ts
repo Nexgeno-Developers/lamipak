@@ -88,6 +88,16 @@ export type PackagingPageSection =
       footnote?: string;
     }
   | {
+      type: 'journey_recycling_section';
+      heading: string;
+      headingHighlight?: string;
+      image: string;
+      imageAlt?: string;
+      description: string;
+      ctaText: string;
+      ctaLink?: string;
+    }
+  | {
       type: 'feature_grid';
       heading: string;
       headingHighlight?: string;
@@ -260,6 +270,16 @@ const PAGES: PackagingPageData[] = [
         ],
         footnote:
           'These numbers show how carton packaging contributes to reducing waste, lowering emissions, and supporting sustainable resource use.',
+      },
+      {
+        type: 'journey_recycling_section',
+        heading: 'Building A Circular Packaging Future',
+        image: '/journey_images.jpg',
+        imageAlt: 'The recycling journey',
+        description:
+          'Lamipak Believes That The Future Of Packaging Must Be Circular. Our Pick Carton, Save Nature Sustainability Campaign Highlights Our Commitment To Developing Packaging Solutions That Support Responsible Sourcing, Lower Carbon Impact, And Improved Recycling Systems. By Choosing Cartons, Businesses Help Reduce Reliance On Fossil-Based Materials, Improve Logistics Efficiency, And Support Packaging That Can Be Recovered And Recycled Into New Materials. Together With Partners Across The Value Chain, We Are Working To Ensure That Every Carton Delivers Measurable Environmental Progress. Together Let’s Create An Environmentally Smarter Future.',
+        ctaText: 'Join The Movement Pick Carton. Save Nature.',
+        ctaLink: '/contact',
       },
     ],
     seo: {
