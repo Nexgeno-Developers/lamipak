@@ -5,7 +5,7 @@ import LamiraPage from '@/components/LamiraPage';
 import GreenEffortsPage from '@/components/GreenEffortsPage';
 import CmsPage from '@/components/CmsPage';
 import { getDynamicPageBySlug, type DynamicPageData } from '@/fake-api/dynamic-pages';
-
+ 
 interface PageProps {
   params: Promise<{
     slug: string;
