@@ -56,7 +56,10 @@ export default function LamiraPage({ data }: LamiraPageProps) {
         <LamiraSocialWorldMomentsSection data={data.lamiraSocialWorldMomentsSection} />
       ) : null}
 
-      <CallToAction />
+<div className="bg-gray-50 pt-12">
+<CallToAction />
+</div>
+      
       <NewsletterSubscription />
     </main>
   );
