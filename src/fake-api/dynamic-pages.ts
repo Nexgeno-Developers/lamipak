@@ -18,6 +18,60 @@ export interface DynamicPageData {
   type: string;
   title: string;
   content: string;
+  lamiraMeetSection?: {
+    titlePrefix?: string;
+    titleHighlight: string;
+    titleSuffix?: string;
+    subtitle: string;
+    storyTitle: string;
+    paragraphs: string[];
+    image: string;
+    imageAlt: string;
+  };
+  lamiraSpecialAbilitiesSection?: {
+    headingHighlight: string;
+    headingSuffix: string;
+    subtitle: string;
+    image: string;
+    imageAlt: string;
+    videoUrl: string;
+    abilities: Array<{
+      id: string;
+      title: string;
+      description: string;
+    }>;
+  };
+  lamiraLovesSection?: {
+    headingPrefix?: string;
+    headingHighlight: string;
+    headingSuffix?: string;
+    subtitle: string;
+    items: Array<{
+      id: string;
+      title: string;
+      description: string;
+      image: string;
+      imageAlt: string;
+    }>;
+  };
+  lamiraSharedGuideSection?: {
+    image: string;
+    imageAlt: string;
+    headingPrefix?: string;
+    headingHighlight: string;
+    headingSuffix?: string;
+    description: string;
+  };
+  lamiraSocialWorldMomentsSection?: {
+    headingPrefix: string;
+    headingHighlight: string;
+    headingSuffix?: string;
+    items: Array<{
+      id: string;
+      image: string;
+      imageAlt: string;
+    }>;
+  };
   seo?: {
     meta_title: string;
     meta_description: string;
@@ -167,8 +221,120 @@ const PAGES: DynamicPageData[] = [
       parentLabel: 'Packaging',
       parentHref: '/',
     },
-    
-      
+    lamiraMeetSection: {
+      titlePrefix: 'Meet',
+      titleHighlight: 'Lamira',
+      subtitle: "Lamipak’s guardian of nature and innovation",
+      storyTitle: "Lamira’s Story",
+      paragraphs: [
+        'Lamira was born in the pristine forests of finland, a place known for its pure landscapes, rich biodiversity, and deep connection to nature. from these forests, Lamira began a journey to become a protector of the natural world and a guide for sustainable thinking.',
+        'Lamira is known as the eternal guardian, a timeless character who symbolizes the responsibility we all share in caring for our environment. with a friendly personality and a sense of curiosity, Lamira inspires people to see sustainability not as a challenge, but as an opportunity for creativity and progress.',
+      ],
+      image: '/banner-slider1.jpg',
+      imageAlt: 'Lamira tree and sustainable innovation network visual',
+    },
+    lamiraSpecialAbilitiesSection: {
+      headingHighlight: "Lamira's",
+      headingSuffix: 'Special Abilities',
+      subtitle:
+        "Lamira's unique abilities symbolize the transformation and innovation that sustainable packaging can achieve.",
+      image: '/banner-slider2.jpg',
+      imageAlt: 'Lamira special abilities collage',
+      videoUrl: 'https://www.youtube.com/embed/ScMzIvxBSi4',
+      abilities: [
+        {
+          id: 'purification-spell',
+          title: 'Purification Spell',
+          description:
+            "Lamira's blue antlers hold magical powers. When they touch discarded packaging materials, they transform them into seeds. these seeds represent new beginnings and the possibility of giving materials a second life.",
+        },
+        {
+          id: 'packaging-reshaping-magic',
+          title: 'Packaging Reshaping Magic',
+          description:
+            "Lamira's blue scarf can morph into any shape. this ability reflects Lamira's expertise in designing flexible packaging solutions that adapt to different products, needs, and industries.",
+        },
+      ],
+    },
+    lamiraLovesSection: {
+      headingPrefix: 'What',
+      headingHighlight: 'Lamira',
+      headingSuffix: 'Loves',
+      subtitle:
+        'Lamira spends time exploring the natural world and bringing together friends who share a passion for protecting it.',
+      items: [
+        {
+          id: 'nature-exploration',
+          title: 'Nature Exploration',
+          description:
+            "From forests and oceans to deserts and mountains, Lamira enjoys discovering the beauty and diversity of earth's landscapes.",
+          image: '/banner-slider2.jpg',
+          imageAlt: 'People exploring nature trail',
+        },
+        {
+          id: 'creative-diy-projects',
+          title: 'Creative DIY Projects',
+          description:
+            'Lamira enjoys building and creating using materials found in nature, encouraging resourcefulness and responsible use of resources.',
+          image: '/banner-slider3.jpg',
+          imageAlt: 'Creative DIY projects with craft materials',
+        },
+        {
+          id: 'forest-councils',
+          title: 'Forest Councils',
+          description:
+            "Lamira often gathers animal and plant friends to discuss how to make their shared home more beautiful, balanced, and resilient.",
+          image: '/journey_images.jpg',
+          imageAlt: 'Forest friends council discussion',
+        },
+      ],
+    },
+    lamiraSharedGuideSection: {
+      image: '/about_banner.jpg',
+      imageAlt: 'Lamira shared guide tree in network',
+      headingPrefix: 'A Shared Guide',
+      headingHighlight: 'For The Future',
+      headingSuffix: '',
+      description:
+        'Lamira is more than a mascot. lamira is a symbol of Lamipak’s commitment to sustainable packaging innovation and a reminder that protecting our planet requires creativity, collaboration, and responsibility. through Lamira’s story, Lamipak invites partners, customers, and communities to imagine a future where packaging solutions support both people and nature. together, guided by lamira, we can continue building a world where innovation nurtures the environment and every idea helps create a more sustainable tomorrow.',
+    },
+    lamiraSocialWorldMomentsSection: {
+      headingPrefix: 'Moments From Our',
+      headingHighlight: 'Social World',
+      headingSuffix: '',
+      items: [
+        {
+          id: 'moment-1',
+          image: '/services_image_1.jpg',
+          imageAlt: 'Social moment image 1',
+        },
+        {
+          id: 'moment-2',
+          image: '/services_image_2.jpg',
+          imageAlt: 'Social moment image 2',
+        },
+        {
+          id: 'moment-3',
+          image: '/journey_images.jpg',
+          imageAlt: 'Social moment image 3',
+        },
+        {
+          id: 'moment-4',
+          image: '/about_us_image_1.jpg',
+          imageAlt: 'Social moment image 4',
+        },
+        {
+          id: 'moment-5',
+          image: '/about_us_image_2.jpg',
+          imageAlt: 'Social moment image 5',
+        },
+        {
+          id: 'moment-6',
+          image: '/sales_images.jpg',
+          imageAlt: 'Social moment image 6',
+        },
+      ],
+    },
   },
   {
     slug: 'our-green-efforts',

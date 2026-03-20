@@ -1,9 +1,12 @@
-import Image from 'next/image';
-import Link from 'next/link';
 import CompanyHero from '@/components/company/CompanyHero';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import CallToAction from '@/components/home/CallToAction';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
+import LamiraMeetSection from '@/components/components/LamiraMeetSection';
+import LamiraSpecialAbilitiesSection from '@/components/components/LamiraSpecialAbilitiesSection';
+import LamiraLovesSection from '@/components/components/LamiraLovesSection';
+import LamiraSharedGuideSection from '@/components/components/LamiraSharedGuideSection';
+import LamiraSocialWorldMomentsSection from '@/components/components/LamiraSocialWorldMomentsSection';
 import type { DynamicPageData } from '@/fake-api/dynamic-pages';
 
 export interface LamiraPageProps {
@@ -11,8 +14,6 @@ export interface LamiraPageProps {
 }
 
 export default function LamiraPage({ data }: LamiraPageProps) {
-  const sections = data.sections ?? [];
-
   return (
     <main className="min-h-screen bg-gray-50">
       <CompanyHero
@@ -37,7 +38,23 @@ export default function LamiraPage({ data }: LamiraPageProps) {
         </div>
       </section>
 
-      
+      {data.lamiraMeetSection ? (
+        <LamiraMeetSection data={data.lamiraMeetSection} />
+      ) : null}
+
+      {data.lamiraSpecialAbilitiesSection ? (
+        <LamiraSpecialAbilitiesSection data={data.lamiraSpecialAbilitiesSection} />
+      ) : null}
+
+      {data.lamiraLovesSection ? <LamiraLovesSection data={data.lamiraLovesSection} /> : null}
+
+      {data.lamiraSharedGuideSection ? (
+        <LamiraSharedGuideSection data={data.lamiraSharedGuideSection} />
+      ) : null}
+
+      {data.lamiraSocialWorldMomentsSection ? (
+        <LamiraSocialWorldMomentsSection data={data.lamiraSocialWorldMomentsSection} />
+      ) : null}
 
       <CallToAction />
       <NewsletterSubscription />
