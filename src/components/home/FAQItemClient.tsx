@@ -45,7 +45,7 @@ export default function FAQItemClient({ item }: FAQItemClientProps) {
       {/* Answer */}
       {isOpen && (
         <div className="pb-6 pl-0 pr-12">
-          <p className="text-gray-700 text-base md:text-lg leading-relaxed">
+          <p className="text-black text-base md:text-lg leading-relaxed">
             {item.answer}
           </p>
         </div>

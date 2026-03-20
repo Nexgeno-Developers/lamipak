@@ -183,7 +183,7 @@ function WorkCard({ card }: { card: SustainabilityWorkCard }) {
       </h3>
 
       {/* Description */}
-      <p className="text-gray-700 text-base md:text-lg mb-6 leading-relaxed">
+      <p className="text-black text-base md:text-lg mb-6 leading-relaxed">
         {card.description}
       </p>
 

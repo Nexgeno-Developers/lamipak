@@ -93,7 +93,7 @@ export default async function CareerDetailsPage({ params }: CareerDetailsPagePro
                 {job.postedAgo ? `, ${job.postedAgo}` : ''}
               </p>
 
-              <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-gray-700">
+              <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-black">
                 <div className="flex items-center gap-2">
                   <span className="text-gray-500">Salary:</span>
                   <span className="font-semibold text-gray-900">{job.salary ?? 'Negotiable'}</span>
@@ -146,7 +146,7 @@ export default async function CareerDetailsPage({ params }: CareerDetailsPagePro
               {job.responsibilities.length > 0 && (
                 <div className="mt-2">
                   <h2 className="text-base font-semibold text-gray-900">Responsibilities</h2>
-                  <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-gray-700">
+                  <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-black">
                     {job.responsibilities.map((item, i) => (
                       <li key={i}>{item}</li>
                     ))}
@@ -160,7 +160,7 @@ export default async function CareerDetailsPage({ params }: CareerDetailsPagePro
                   <p className="mt-1 text-xs text-gray-500">
                     (Education / Knowledge / Working Experience)
                   </p>
-                  <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-gray-700">
+                  <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-black">
                     {job.requirements.map((item, i) => (
                       <li key={i}>{item}</li>
                     ))}

@@ -21,7 +21,7 @@ export default async function CallToAction() {
                 <span className="text-gray-900">{data.heading}</span>{' '}
                 <span className="text-[#009FE8]">{data.headingHighlight}</span>
               </h2>
-              <p className="text-gray-700 text-base md:text-lg">
+              <p className="text-black text-base md:text-lg">
                 {data.description}
               </p>
             </div>

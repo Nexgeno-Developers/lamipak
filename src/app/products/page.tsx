@@ -56,7 +56,7 @@ export default async function ProductsPage() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
               Our Products
             </h1>
-            <p className="text-xl md:text-2xl text-gray-700 leading-relaxed">
+            <p className="text-xl md:text-2xl text-black leading-relaxed">
               Discover our innovative packaging solutions designed for excellence, sustainability, and performance.
             </p>
           </div>
@@ -68,7 +68,7 @@ export default async function ProductsPage() {
         <section className="bg-gray-50 border-b border-gray-200">
           <div className="container mx-auto px-4 py-8">
             <div className="flex flex-wrap items-center gap-4">
-              <span className="text-gray-700 font-medium">Filter by Category:</span>
+              <span className="text-black font-medium">Filter by Category:</span>
               <Link
                 href="/products"
                 className="px-4 py-2 rounded-full border-2 border-[#009FE8] text-[#009FE8] hover:bg-[#009FE8] hover:text-white transition-colors font-medium"
@@ -79,7 +79,7 @@ export default async function ProductsPage() {
                 <Link
                   key={category.id}
                   href={`/products/category/${category.slug}`}
-                  className="px-4 py-2 rounded-full border-2 border-gray-300 text-gray-700 hover:border-[#009FE8] hover:text-[#009FE8] transition-colors font-medium"
+                  className="px-4 py-2 rounded-full border-2 border-gray-300 text-black hover:border-[#009FE8] hover:text-[#009FE8] transition-colors font-medium"
                 >
                   {category.name}
                 </Link>

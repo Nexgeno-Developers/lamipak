@@ -20,7 +20,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
       {/* Home Icon */}
       <Link
         href="/"
-        className="text-gray-500 hover:text-gray-700 transition-colors"
+        className="text-gray-500 hover:text-black transition-colors"
         aria-label="Home"
       >
         <svg
@@ -60,7 +60,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
           {item.href && index < items.length - 1 ? (
             <Link
               href={item.href}
-              className="text-gray-500 hover:text-gray-700 transition-colors"
+              className="text-gray-500 hover:text-black transition-colors"
             >
               {item.label}
             </Link>

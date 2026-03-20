@@ -1316,7 +1316,7 @@ const PAGES: DynamicPageData[] = [
       {
         type: 'journey_recycling_section',
         heading: 'Building A Circular Packaging Future',
-        image: '/journey_images.jpg',
+        image: '/journey_image.jpg',
         imageAlt: 'The recycling journey',
         description:
           'Lamipak Believes That The Future Of Packaging Must Be Circular. Our Pick Carton, Save Nature Sustainability Campaign Highlights Our Commitment To Developing Packaging Solutions That Support Responsible Sourcing, Lower Carbon Impact, And Improved Recycling Systems.',

@@ -34,7 +34,7 @@ export default function ProductSpecifications({ product }: ProductSpecifications
 
             {/* Description */}
             {product.description && (
-              <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed">
+              <p className="text-lg md:text-xl text-black mb-8 leading-relaxed">
                 {product.description}
               </p>
             )}
@@ -67,7 +67,7 @@ export default function ProductSpecifications({ product }: ProductSpecifications
                 <dl className="space-y-3">
                   {product.quickSpecifications.map((spec, index) => (
                     <div key={index} className="flex justify-between items-start border-b border-[#EEEEEE] pb-4">
-                      <dt className="text-base md:text-lg text-gray-700 font-medium pr-4">
+                      <dt className="text-base md:text-lg text-black font-medium pr-4">
                         {spec.label}:
                       </dt>
                       <dd className="text-base md:text-lg text-[#009FE8] font-semibold text-right">
@@ -101,7 +101,7 @@ export default function ProductSpecifications({ product }: ProductSpecifications
                           d="M5 13l4 4L19 7"
                         />
                       </svg>
-                      <span className="text-base md:text-lg text-gray-700">{item}</span>
+                      <span className="text-base md:text-lg text-black">{item}</span>
                     </li>
                   ))}
                 </ul>

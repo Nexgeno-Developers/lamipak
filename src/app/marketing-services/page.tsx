@@ -75,7 +75,7 @@ export default async function MarketingServicesPage() {
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-6 leading-[70px]">
                 {overview.heading}
               </h2>
-              <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4 md:mb-6">
+              <p className="text-base md:text-lg text-black leading-relaxed mb-4 md:mb-6">
                 {overview.description}
               </p>
             </div>

@@ -168,7 +168,7 @@ export default async function CategoryProductsPage({ params }: CategoryPageProps
 
                 {/* Description */}
                 {category.description && (
-                  <p className="text-lg md:text-xl text-gray-700 mb-8 md:mb-12 max-w-4xl mx-auto leading-relaxed">
+                  <p className="text-lg md:text-xl text-black mb-8 md:mb-12 max-w-4xl mx-auto leading-relaxed">
                     {category.description}
                   </p>
                 )}

@@ -144,7 +144,7 @@ export default function GreenSustainabilityVisionSection({ data }: GreenSustaina
                 <div className="flex flex-1 flex-col gap-3 px-4 py-5 sm:px-5">
                   {card.bullets.map((bullet, idx) => (
                     <p key={idx} className="text-sm leading-relaxed text-gray-800">
-                      <span className="mr-1 font-medium text-gray-700">&gt;</span>
+                      <span className="mr-1 font-medium text-black">&gt;</span>
                       {bullet.parts.map((part, i) =>
                         part.bold ? (
                           <strong key={i} className="font-semibold text-gray-900">

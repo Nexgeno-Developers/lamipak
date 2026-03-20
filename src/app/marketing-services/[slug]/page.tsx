@@ -109,13 +109,13 @@ export default async function MarketingServiceDetailsPage(
               </h2>
 
               {serviceData.introSection ? (
-                <div className="space-y-4 text-base md:text-lg text-gray-700 leading-relaxed mb-6">
+                <div className="space-y-4 text-base md:text-lg text-black leading-relaxed mb-6">
                   {serviceData.introSection.paragraphs.map((paragraph, index) => (
                     <p key={index}>{paragraph}</p>
                   ))}
                 </div>
               ) : (
-                <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-6">
+                <p className="text-base md:text-lg text-black leading-relaxed mb-6">
                   {serviceData.description}
                 </p>
               )}

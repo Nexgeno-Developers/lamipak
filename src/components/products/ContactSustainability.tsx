@@ -43,7 +43,7 @@ export default function ContactSustainability() {
             </h2>
 
             {/* Subtitle */}
-            <p className="text-base md:text-lg text-gray-700 mb-8">
+            <p className="text-base md:text-lg text-black mb-8">
               Get in touch with our packaging specialists.
             </p>
 

@@ -95,7 +95,7 @@ export default function VisionMission({ data }: VisionMissionProps) {
                   </h3>
                   
                   {/* Text */}
-                  <p className="text-sm md:text-base text-gray-700 leading-relaxed">
+                  <p className="text-sm md:text-base text-black leading-relaxed">
                     {data.vision.text}
                   </p>
                 </div>
@@ -119,7 +119,7 @@ export default function VisionMission({ data }: VisionMissionProps) {
                   </h3>
                   
                   {/* Text */}
-                  <p className="text-sm md:text-base text-gray-700 leading-relaxed">
+                  <p className="text-sm md:text-base text-black leading-relaxed">
                     {data.mission.text}
                   </p>
                 </div>

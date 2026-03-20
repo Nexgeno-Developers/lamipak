@@ -61,7 +61,7 @@ export default async function CareerPage() {
                   <span className="text-[#009FE8]">{data.heroSplit.headingHighlight}</span>
                 </h2>
 
-                <div className="space-y-5 text-sm md:text-base text-gray-700 leading-relaxed">
+                <div className="space-y-5 text-sm md:text-base text-black leading-relaxed">
                   {data.heroSplit.paragraphs.map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
@@ -140,7 +140,7 @@ export default async function CareerPage() {
                     </span>{' '}
                     To Packaging
                   </h2>
-                  <div className="space-y-5 text-sm md:text-base text-gray-700 leading-relaxed">
+                  <div className="space-y-5 text-sm md:text-base text-black leading-relaxed">
                     {data.leadershipMessage.paragraphs.map((p, i) => (
                       <p key={i}>{p}</p>
                     ))}

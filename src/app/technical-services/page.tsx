@@ -77,7 +77,7 @@ export default async function TechnicalServicesPage() {
               {listingData.introSection.heading}
             </h2>
             {listingData.introSection.paragraphs.map((paragraph, index) => (
-              <p key={index} className={`text-lg md:text-xl text-gray-700 leading-relaxed ${index < listingData.introSection.paragraphs.length - 1 ? 'mb-4' : ''}`}>
+              <p key={index} className={`text-lg md:text-xl text-black leading-relaxed ${index < listingData.introSection.paragraphs.length - 1 ? 'mb-4' : ''}`}>
                 {paragraph}
               </p>
             ))}
@@ -141,7 +141,7 @@ export default async function TechnicalServicesPage() {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-gray-700 mb-6 flex-1 leading-relaxed">
+                  <p className="text-black mb-6 flex-1 leading-relaxed">
                     {card.description}
                   </p>
 
@@ -282,7 +282,7 @@ export default async function TechnicalServicesPage() {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-gray-700 mb-2 flex-1 leading-relaxed">
+                  <p className="text-black mb-2 flex-1 leading-relaxed">
                     {card.description}
                   </p>
 

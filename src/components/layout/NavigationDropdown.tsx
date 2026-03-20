@@ -61,7 +61,7 @@ export default function NavigationDropdown({ item }: NavigationDropdownProps) {
             <Link
               key={child.id}
               href={child.href}
-              className="block px-5 py-3 text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:text-blue-600 transition-all duration-150 group/item relative"
+              className="block px-5 py-3 text-black hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:text-blue-600 transition-all duration-150 group/item relative"
             >
               <span className="relative z-10 flex items-center">
                 {child.label}

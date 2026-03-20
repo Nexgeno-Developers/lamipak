@@ -33,7 +33,7 @@ export default function AboutUsQuadrant({ data }: AboutUsQuadrantProps) {
             {data.topLeft.paragraphs.map((paragraph, index) => (
               <p
                 key={index}
-                className={`text-base md:text-lg text-gray-700 leading-relaxed ${
+                className={`text-base md:text-lg text-black leading-relaxed ${
                   index < data.topLeft.paragraphs.length - 1 ? 'mb-4 md:mb-6' : ''
                 }`}
               >
@@ -91,7 +91,7 @@ export default function AboutUsQuadrant({ data }: AboutUsQuadrantProps) {
             {data.bottomRight.paragraphs.map((paragraph, index) => (
               <p
                 key={index}
-                className={`text-base md:text-lg text-gray-700 leading-relaxed ${
+                className={`text-base md:text-lg text-black leading-relaxed ${
                   index < data.bottomRight.paragraphs.length - 1 ? 'mb-4 md:mb-6' : ''
                 }`}
               >

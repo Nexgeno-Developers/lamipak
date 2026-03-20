@@ -64,7 +64,7 @@ export default function ApproachClient({ data }: ApproachClientProps) {
             </h2>
 
             {/* Subtitle */}
-            <p className="text-gray-700 mb-8 text-lg">
+            <p className="text-black mb-8 text-lg">
               {data.subtitle}
             </p>
 
@@ -117,7 +117,7 @@ export default function ApproachClient({ data }: ApproachClientProps) {
                         className={`cursor-pointer px-4 py-2 rounded-full text-[14px] font-medium transition-all ${
                           isSelected
                             ? 'bg-[#009FE8] text-white shadow-md'
-                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                            : 'bg-gray-100 text-black hover:bg-gray-200'
                         }`}
                       >
                         {option.label}

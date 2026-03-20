@@ -61,7 +61,7 @@ export default function OperationalSuccess({ data }: OperationalSuccessProps) {
                   <div className="relative">
                     {/* Building */}
                     <svg
-                      className="w-6 h-6 md:w-8 md:h-8 text-gray-700"
+                      className="w-6 h-6 md:w-8 md:h-8 text-black"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -75,7 +75,7 @@ export default function OperationalSuccess({ data }: OperationalSuccessProps) {
                     </svg>
                     {/* Clipboard overlay */}
                     <svg
-                      className="absolute -top-1 -right-1 w-3 h-3 md:w-4 md:h-4 text-gray-700"
+                      className="absolute -top-1 -right-1 w-3 h-3 md:w-4 md:h-4 text-black"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -89,7 +89,7 @@ export default function OperationalSuccess({ data }: OperationalSuccessProps) {
                     </svg>
                     {/* Pencil overlay */}
                     <svg
-                      className="absolute top-0 right-0 w-2 h-2 md:w-3 md:h-3 text-gray-700"
+                      className="absolute top-0 right-0 w-2 h-2 md:w-3 md:h-3 text-black"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -106,7 +106,7 @@ export default function OperationalSuccess({ data }: OperationalSuccessProps) {
                   <div className="relative">
                     {/* Building */}
                     <svg
-                      className="w-6 h-6 md:w-8 md:h-8 text-gray-700"
+                      className="w-6 h-6 md:w-8 md:h-8 text-black"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -120,7 +120,7 @@ export default function OperationalSuccess({ data }: OperationalSuccessProps) {
                     </svg>
                     {/* Gears overlay */}
                     <svg
-                      className="absolute -top-1 -right-1 w-3 h-3 md:w-4 md:h-4 text-gray-700"
+                      className="absolute -top-1 -right-1 w-3 h-3 md:w-4 md:h-4 text-black"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"

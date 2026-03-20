@@ -31,7 +31,7 @@ export default function OurValues({ data }: OurValuesProps) {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#009FE8] mb-4">
             {data.heading}
           </h2>
-          <p className="text-base md:text-lg text-gray-700 max-w-3xl mx-auto">
+          <p className="text-base md:text-lg text-black max-w-3xl mx-auto">
             {data.description}
           </p>
         </div>
@@ -50,7 +50,7 @@ export default function OurValues({ data }: OurValuesProps) {
                     className={`cursor-pointer w-full text-left py-5 px-0 border-b border-gray-200 transition-colors ${
                       isSelected
                         ? 'text-[#009FE8]'
-                        : 'text-gray-900 hover:text-gray-700'
+                        : 'text-gray-900 hover:text-black'
                     }`}
                   >
                     <div className="flex items-center justify-between">

@@ -187,11 +187,11 @@ export default async function TechnicalServicePage({ params }: TechnicalServiceP
                     {serviceData.title}
                   </h2>
                   {serviceData.introSection.detailedDescription ? (
-                    <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+                    <p className="text-lg md:text-xl text-black leading-relaxed">
                       {serviceData.introSection.detailedDescription}
                     </p>
                   ) : (
-                    <p className="text-xl text-gray-700 leading-relaxed">
+                    <p className="text-xl text-black leading-relaxed">
                       {serviceData.description}
                     </p>
                   )}
@@ -207,7 +207,7 @@ export default async function TechnicalServicePage({ params }: TechnicalServiceP
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
                 <div className="prose prose-lg max-w-none">
-                  <p className="text-xl text-gray-700 leading-relaxed">
+                  <p className="text-xl text-black leading-relaxed">
                     {serviceData.description}
                   </p>
                 </div>
