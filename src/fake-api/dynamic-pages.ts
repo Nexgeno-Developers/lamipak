@@ -178,6 +178,56 @@ export interface DynamicPageData {
     iconColor?: string;
     sectionBackgroundColor?: string;
   };
+  /** NGO membership world map (NGOs page) */
+  ngosMembershipMapSection?: {
+    headingBlue: string;
+    headingBlack: string;
+    markers: Array<{
+      id: string;
+      lines: string[];
+      topPercent: number;
+      leftPercent: number;
+      size?: 'md' | 'lg';
+      leaderHeightPx?: number;
+    }>;
+    accentColor?: string;
+    leaderLineColor?: string;
+    dotColor?: string;
+    sectionBackgroundColor?: string;
+  };
+  /** Circular future intro + people & community (NGOs page) */
+  ngosCircularFutureSection?: {
+    heroHeadingBlue: string;
+    heroHeadingBlack: string;
+    heroIntro: string;
+    featureHeadingBlack: string;
+    featureHeadingBlue: string;
+    featureBody: string;
+    image: string;
+    imageAlt: string;
+    accentColor?: string;
+    backgroundColor?: string;
+  };
+  /** NGO alliance / recycling target cards (NGOs page) */
+  ngosAllianceCardsSection?: {
+    fieldLabels?: {
+      organization?: string;
+      initiative?: string;
+      recyclingTarget?: string;
+    };
+    cards: Array<{
+      id: string;
+      /** First card: thick blue border */
+      highlighted?: boolean;
+      organizationName: string;
+      initiativeDescription: string;
+      recyclingTargets: string[];
+    }>;
+    accentColor?: string;
+    highlightBorderColor?: string;
+    cardBackgroundColor?: string;
+    sectionBackgroundColor?: string;
+  };
   seo?: {
     meta_title: string;
     meta_description: string;
@@ -822,6 +872,123 @@ const PAGES: DynamicPageData[] = [
       og_type: 'website',
       twitter_title: 'Certifications & Achievements | Lamipak',
       twitter_description: 'LEED-certified facilities and sustainability achievements at Lamipak.',
+      twitter_image: '/banner-slider2.webp',
+      twitter_card: 'summary_large_image',
+    },
+  },
+  {
+    slug: 'ngos',
+    type: 'ngos',
+    title: 'NGOs',
+    content:
+      'Lamipak works with NGOs and partners across Europe, China, and New Zealand to advance environmental stewardship, responsible packaging, and community engagement.',
+    heroBackgroundImage: '/about_banner.jpg',
+    breadcrumbs: {
+      parentLabel: 'Home',
+      parentHref: '/',
+    },
+    ngosMembershipMapSection: {
+      headingBlue: 'NGO Membership',
+      headingBlack: 'Of Lamipak',
+      accentColor: '#00AEEF',
+      leaderLineColor: '#7dd3fc',
+      dotColor: '#D1D3D4',
+      sectionBackgroundColor: '#ffffff',
+      markers: [
+        {
+          id: 'europe',
+          lines: ['Europe'],
+          topPercent: 33,
+          leftPercent: 49,
+          size: 'md',
+          leaderHeightPx: 52,
+        },
+        {
+          id: 'china',
+          lines: ['China'],
+          topPercent: 40,
+          leftPercent: 71.5,
+          size: 'lg',
+          leaderHeightPx: 58,
+        },
+        {
+          id: 'new-zealand',
+          lines: ['New', 'Zealand'],
+          topPercent: 75,
+          leftPercent: 87.5,
+          size: 'md',
+          leaderHeightPx: 48,
+        },
+      ],
+    },
+    ngosCircularFutureSection: {
+      backgroundColor: '#f9f9f9',
+      accentColor: '#00AEEF',
+      heroHeadingBlue: 'Working Together For',
+      heroHeadingBlack: 'A Circular Future.',
+      heroIntro:
+        'By Partnering With International Organizations And Industry Platforms, Lamipak Contributes To Strengthening Recycling Systems, Advancing Sustainable Packaging Solutions, And Supporting The Transition To A Circular Economy. These Collaborations Reflect Our Commitment To Shared Responsibility In Protecting The Environment And Building A More Sustainable Packaging Industry.',
+      featureHeadingBlack: 'OUR',
+      featureHeadingBlue: 'PEOPLE AND COMMUNITY',
+      featureBody:
+        'To Strengthen Our Learning And Development Framework, We Provide A Diverse Range Of Training Programs That Empower Employees To Enhance Their Skills And Grow Alongside The Organization. We Place The Long-Term, Sustainable Development Of Our Enterprise At The Forefront, With A Strong Commitment To Maintaining The Highest Safety Standards. The Health And Safety Of Our Employees Remain Our Top Priority, Ensuring A Secure And Supportive Working Environment For Everyone.',
+      image: '/banner-slider4.webp',
+      imageAlt: 'Forest canopy forming a heart shape toward the sky — circular future and care for nature',
+    },
+    ngosAllianceCardsSection: {
+      sectionBackgroundColor: '#ffffff',
+      cardBackgroundColor: '#f5f5f5',
+      accentColor: '#00AEEF',
+      highlightBorderColor: '#00AEEF',
+      fieldLabels: {
+        organization: 'ORGANIZATION',
+        initiative: 'INITIATIVE',
+        recyclingTarget: 'RECYCLING TARGET',
+      },
+      cards: [
+        {
+          id: 'fbca',
+          highlighted: true,
+          organizationName: 'FBCA (The Food and Beverage Carton Alliance)',
+          initiativeDescription:
+            'FBCA is a platform to increase recycling of fiber-based multi-material packaging by bringing together producers, recyclers, and stakeholders across the value chain.',
+          recyclingTargets: ['2025 target: 60%', '2030 target: 70%'],
+        },
+        {
+          id: 'atcsri',
+          organizationName:
+            'Alliance of Technological Innovation in Compulsory Resources Recycling Industry (ATCSRI)',
+          initiativeDescription:
+            'ATCSRI is an alliance for technology innovation across enterprise resources and the recycling industry, supporting circular systems and improved recovery rates.',
+          recyclingTargets: ['2025 target: 26%', '2030 target: 40%'],
+        },
+        {
+          id: 'packaging-forum',
+          organizationName: 'The Packaging Forum',
+          initiativeDescription:
+            'A membership organization providing a forum for collaboration on sustainable outcomes for packaging materials, design, and end-of-life solutions.',
+          recyclingTargets: [
+            'All packaging in Aotearoa NZ to be reusable, recyclable or compostable by 2025',
+          ],
+        },
+      ],
+    },
+    seo: {
+      meta_title: 'NGOs | NGO Membership | Lamipak',
+      meta_description:
+        'Discover Lamipak’s NGO partnerships and membership across Europe, China, and New Zealand.',
+      canonical_path: '/ngos',
+      keywords: ['NGO', 'Lamipak', 'sustainability', 'partnerships', 'membership'],
+      author: 'Lamipak',
+      robots: { index: true, follow: true },
+      og_title: 'NGO Membership Of Lamipak',
+      og_description:
+        'Lamipak collaborates with NGOs worldwide to support environmental and social progress.',
+      og_image: '/banner-slider2.webp',
+      og_type: 'website',
+      twitter_title: 'NGO Membership Of Lamipak',
+      twitter_description:
+        'Our NGO partnerships in Europe, China, and New Zealand advance responsible growth.',
       twitter_image: '/banner-slider2.webp',
       twitter_card: 'summary_large_image',
     },

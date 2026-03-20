@@ -7,6 +7,7 @@ import GreenEffortsPage from '@/components/GreenEffortsPage';
 import CmsPage from '@/components/CmsPage';
 import PickCartoonPage from '@/components/PickCartoonPage';
 import CertificationsAchievementsPage from '@/components/CertificationsAchievementsPage';
+import NgosPage from '@/components/NgosPage';
 import { getDynamicPageBySlug, type DynamicPageData } from '@/fake-api/dynamic-pages';
 
 interface PageProps {
@@ -19,6 +20,7 @@ const componentMap: Record<string, ComponentType<{ data: DynamicPageData }>> = {
   lamira: LamiraPage,
   green: GreenEffortsPage,
   certifications: CertificationsAchievementsPage,
+  ngos: NgosPage,
   'pick-carton': PickCartoonPage,
 };
 
