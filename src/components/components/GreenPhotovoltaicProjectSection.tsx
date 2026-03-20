@@ -120,7 +120,7 @@ export default function GreenPhotovoltaicProjectSection({ data }: GreenPhotovolt
   const LocationIcon = HEADER_ICONS[data.locationIcon ?? 'lightbulb'];
 
   return (
-    <section className="bg-gray-50 py-10 md:py-14">
+    <section className="bg-gray-50 py-10 md:py-12">
       <div className="container mx-auto max-w-6xl px-4">
         <div className="rounded-[36px] bg-white p-6 shadow-sm md:p-9 lg:p-11">
           <header className="mb-8 md:mb-10">

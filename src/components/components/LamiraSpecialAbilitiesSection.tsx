@@ -25,8 +25,8 @@ export default function LamiraSpecialAbilitiesSection({
   const videoCardContent = abilities[0];
 
   return (
-    <section className="bg-gray-50 py-10 md:py-14">
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="bg-gray-50 py-10 md:py-12">
+      <div className="mx-auto px-4 container">
         <div className="text-center max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-bold text-black leading-tight">
             <span className="text-[#00A0E3]">{data.headingHighlight}</span> {data.headingSuffix}

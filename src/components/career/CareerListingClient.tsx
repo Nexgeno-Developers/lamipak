@@ -74,7 +74,7 @@ export default function CareerListingClient({
 
   return (
     <section id="open-positions" className="bg-white py-10 md:py-16">
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto px-4 container">
         {jobsSection?.notice ? (
           <p className="text-sm text-gray-500">{jobsSection.notice}</p>
         ) : null}
