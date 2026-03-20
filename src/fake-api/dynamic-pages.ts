@@ -382,7 +382,7 @@ export interface DynamicPageData {
 
 const PAGES: DynamicPageData[] = [
   {
-    slug: 'sustainability/lamira/123/534543/e4treger/weget',
+    slug: 'lamira',
     type: 'lamira1',
     title: 'Lamira',
     content:
