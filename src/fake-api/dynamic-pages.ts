@@ -1335,20 +1335,55 @@ const PAGES: DynamicPageData[] = [
 export async function getDynamicPageBySlug(
   slug: string,
 ): Promise<DynamicPageData | null> {
-  if (slug === 'factory') {
+  if (slug === 'about-us') {
     const companyData = await fakeGetCompanyData();
     const companySeo = companyData.seo;
 
     return {
       slug,
-      type: 'our-company',
-      title: 'Our Company',
+      type: 'About Us',
+      title: 'About Us',
       content: companySeo.meta_description,
       ourCompanyData: companyData,
       seo: {
         meta_title: companySeo.meta_title,
         meta_description: companySeo.meta_description,
         canonical_path: companySeo.canonical_url,
+        keywords: undefined,
+        author: undefined,
+        robots: { index: true, follow: true },
+        og_title: companySeo.og_title,
+        og_description: companySeo.og_description,
+        og_image: companySeo.og_image,
+        og_type: 'website',
+        twitter_title: companySeo.twitter_title,
+        twitter_description: companySeo.twitter_description,
+        twitter_image: companySeo.twitter_image,
+        twitter_card:
+          (companySeo.twitter_card as
+            | 'summary_large_image'
+            | 'summary'
+            | 'player'
+            | 'app'
+            | undefined) ?? 'summary_large_image',
+      },
+    };
+  }
+
+  if (slug === 'our-factory') {
+    const companyData = await fakeGetCompanyData();
+    const companySeo = companyData.seo;
+
+    return {
+      slug,
+      type: 'our-factory',
+      title: 'Our Factory',
+      content: companySeo.meta_description,
+      ourCompanyData: companyData,
+      seo: {
+        meta_title: companySeo.meta_title,
+        meta_description: companySeo.meta_description,
+        canonical_path: '/our-factory',
         keywords: undefined,
         author: undefined,
         robots: { index: true, follow: true },

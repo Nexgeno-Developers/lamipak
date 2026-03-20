@@ -24,6 +24,7 @@ const componentMap: Record<string, ComponentType<{ data: DynamicPageData }>> = {
   certifications: CertificationsAchievementsPage,
   ngos: NgosPage,
   'our-company': OurCompanyDynamicPage,
+  'our-factory': OurCompanyDynamicPage,
   'carbon-roadmap': CarbonNetZeroRoadmapPage,
   'pick-carton': PickCartoonPage,
 };
