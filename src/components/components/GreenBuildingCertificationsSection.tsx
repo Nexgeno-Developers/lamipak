@@ -1,0 +1,117 @@
+import Image from 'next/image';
+import type { DynamicPageData } from '@/fake-api/dynamic-pages';
+
+type SectionData = NonNullable<DynamicPageData['certificationsGreenBuildingSection']>;
+
+function RibbonBadgeIcon({ className, color }: { className?: string; color: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="12" cy="12" r="11" fill={color} />
+      <path
+        d="M12 6a2.8 2.8 0 0 1 2.8 2.8c0 1-.5 1.9-1.3 2.4l1.4 4.3h-6l1.4-4.3A2.8 2.8 0 0 1 9.2 8.8 2.8 2.8 0 0 1 12 6Z"
+        fill="white"
+      />
+      <path d="M9.5 16h5l-.6 2H10l-.5-2Z" fill="white" opacity="0.92" />
+    </svg>
+  );
+}
+
+export interface GreenBuildingCertificationsSectionProps {
+  data: SectionData;
+}
+
+export default function GreenBuildingCertificationsSection({ data }: GreenBuildingCertificationsSectionProps) {
+  const eyebrowColor = data.eyebrowColor ?? '#00AEEF';
+  const headingGreen = data.headingGreenColor ?? '#0D9B4E';
+  const pillColor = data.pillColor ?? '#009CFF';
+  const iconColor = data.iconCircleColor ?? '#00AEEF';
+
+  return (
+    <section className="bg-[#f5f6f8] py-14 md:py-20">
+      <div className="container mx-auto max-w-7xl px-4 md:px-6">
+        <header className="mb-10 text-center md:mb-14">
+          <p
+            className="text-xs font-semibold uppercase tracking-[0.2em] md:text-sm"
+            style={{ color: eyebrowColor }}
+          >
+            {data.eyebrow}
+          </p>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl lg:text-[2.75rem]">
+            <span style={{ color: headingGreen }}>{data.headingGreen}</span>{' '}
+            <span className="text-gray-900">{data.headingBlack}</span>
+          </h2>
+        </header>
+
+        <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
+          {data.cards.map((card) => (
+            <article
+              key={card.id}
+              className="overflow-hidden rounded-[28px] bg-white shadow-md shadow-gray-200/60 md:rounded-[32px]"
+            >
+              <div className="relative aspect-[16/10] w-full overflow-hidden p-3 md:p-4">
+                <div className="relative h-full w-full overflow-hidden rounded-[22px] md:rounded-[24px]">
+                  <Image
+                    src={card.image}
+                    alt={card.imageAlt}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 45vw, 100vw"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-4 px-5 pb-6 pt-1 md:px-7 md:pb-8">
+                <div className="flex gap-3">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full shadow-sm ring-2 ring-white">
+                    <RibbonBadgeIcon className="h-11 w-11" color={iconColor} />
+                  </div>
+                  <div className="min-w-0 pt-0.5">
+                    <h3 className="text-lg font-bold text-gray-900 md:text-xl">{card.factoryTitle}</h3>
+                    <p className="text-sm text-gray-500 md:text-base">{card.location}</p>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-baseline gap-2">
+                  <span
+                    className="inline-flex rounded-full px-3.5 py-1 text-xs font-semibold text-white md:text-sm"
+                    style={{ backgroundColor: pillColor }}
+                  >
+                    {card.certificationLabel}
+                  </span>
+                  <span className="text-sm font-medium text-gray-500 md:text-base">{card.year}</span>
+                </div>
+
+                <p className="text-sm leading-relaxed text-gray-900 md:text-base">{card.description}</p>
+
+                {card.badgeImages && card.badgeImages.length > 0 ? (
+                  <div className="flex flex-wrap items-center gap-3 border-t border-gray-100 pt-5">
+                    {card.badgeImages.map((badge) => (
+                      <div
+                        key={badge.src + badge.alt}
+                        className="relative h-12 w-[4.5rem] shrink-0 overflow-hidden rounded-lg bg-gray-50 sm:h-14 sm:w-24"
+                      >
+                        <Image
+                          src={badge.src}
+                          alt={badge.alt}
+                          fill
+                          className="object-contain p-1"
+                          sizes="96px"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

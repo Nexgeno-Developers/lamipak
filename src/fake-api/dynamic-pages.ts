@@ -125,6 +125,59 @@ export interface DynamicPageData {
   };
   /** Photovoltaic / case-study blocks (Our Green Efforts); render in order */
   greenPhotovoltaicProjectSections?: GreenPhotovoltaicProjectBlock[];
+  /** Green Building Certifications (certifications-achievements page) */
+  certificationsGreenBuildingSection?: {
+    eyebrow: string;
+    /** First part of main title, shown in green */
+    headingGreen: string;
+    /** Second part of main title, shown in black */
+    headingBlack: string;
+    eyebrowColor?: string;
+    headingGreenColor?: string;
+    pillColor?: string;
+    iconCircleColor?: string;
+    cards: Array<{
+      id: string;
+      image: string;
+      imageAlt: string;
+      factoryTitle: string;
+      location: string;
+      certificationLabel: string;
+      year: string;
+      description: string;
+      /** Footer seals / logos */
+      badgeImages?: Array<{ src: string; alt: string }>;
+    }>;
+  };
+  /** Vertical sustainability timeline (e.g. certifications-achievements page) */
+  certificationsSustainabilityTimelineSection?: {
+    headingBlue: string;
+    headingBlack: string;
+    subtitle: string;
+    items: Array<{
+      id: string;
+      year: string;
+      title: string;
+      description: string;
+    }>;
+    accentColor?: string;
+    backgroundColor?: string;
+  };
+  /** Square “View certificate” tiles row (certifications-achievements page) */
+  certificationsCertificateTilesSection?: {
+    items: Array<{
+      id: string;
+      /** Document URL (PDF or page) */
+      href: string;
+      /** Defaults to “VIEW CERTIFICATE” */
+      ctaLabel?: string;
+      openInNewTab?: boolean;
+    }>;
+    cardBackgroundColor?: string;
+    linkColor?: string;
+    iconColor?: string;
+    sectionBackgroundColor?: string;
+  };
   seo?: {
     meta_title: string;
     meta_description: string;
@@ -621,6 +674,155 @@ const PAGES: DynamicPageData[] = [
       twitter_description:
         'From renewable materials to recycling partnerships, see how Lamipak advances circular packaging.',
       twitter_image: '/banner-slider1.jpg',
+      twitter_card: 'summary_large_image',
+    },
+  },
+  {
+    slug: 'certifications-achievements',
+    type: 'certifications',
+    title: 'Certifications & Achievements',
+    content:
+      'Lamipak’s manufacturing sites pursue rigorous green building standards including LEED certification, reflecting our commitment to sustainable facilities and responsible operations.',
+    heroBackgroundImage: '/about_banner.jpg',
+    breadcrumbs: {
+      parentLabel: 'Home',
+      parentHref: '/',
+    },
+    certificationsGreenBuildingSection: {
+      eyebrow: 'PROTECTING ENVIRONMENT',
+      headingGreen: 'Green Building',
+      headingBlack: 'Certifications',
+      eyebrowColor: '#00AEEF',
+      headingGreenColor: '#0D9B4E',
+      pillColor: '#009CFF',
+      iconCircleColor: '#00AEEF',
+      cards: [
+        {
+          id: 'china-kunshan',
+          image: '/banner-slider2.webp',
+          imageAlt: 'Aerial view of Lamipak China factory with rooftop solar panels',
+          factoryTitle: 'Lamipak (China) Factory',
+          location: 'Kunshan, China',
+          certificationLabel: 'LEED Platinum',
+          year: '2023',
+          description:
+            'Our Kunshan facility was designed and operated to meet the highest LEED performance standards for energy, water, indoor environmental quality, and sustainable site development. Rooftop solar and efficient building systems reduce operational carbon intensity while supporting a healthier workplace for our teams.',
+          badgeImages: [
+            { src: '/our_values_images.jpg', alt: 'LEED Platinum recognition' },
+            { src: '/creative_images.jpg', alt: 'Green building certification badge' },
+          ],
+        },
+        {
+          id: 'indonesia-cikande',
+          image: '/banner-slider3.webp',
+          imageAlt: 'Aerial view of Lamipak Indonesia factory with solar installations',
+          factoryTitle: 'Lamipak Indonesia Factory',
+          location: 'Cikande, Indonesia',
+          certificationLabel: 'LEED Gold',
+          year: '2025',
+          description:
+            'The Cikande plant integrates renewable energy and resource-efficient design to achieve LEED Gold certification, aligning operations with Lamipak’s global sustainability vision and local environmental stewardship in Indonesia.',
+          badgeImages: [
+            { src: '/sales_images.jpg', alt: 'LEED Gold certificate' },
+            { src: '/market_inteligence.jpg', alt: 'U.S. Green Building Council LEED Gold seal' },
+          ],
+        },
+      ],
+    },
+    certificationsSustainabilityTimelineSection: {
+      headingBlue: 'Our Sustainability',
+      headingBlack: 'Timeline',
+      subtitle: 'Major Milestones In Our Journey Toward Responsible Growth.',
+      accentColor: '#00AEEF',
+      backgroundColor: '#f8f9fa',
+      items: [
+        {
+          id: 'tl-2019',
+          year: '2019',
+          title: 'First Sustainability Report',
+          description:
+            'Released Our First Sustainability Report Aligned With GRI Standards And Carbon Emission Verification.',
+        },
+        {
+          id: 'tl-2020',
+          year: '2020',
+          title: 'Sustainable Product Launch',
+          description: 'Launched The First U-Shaped Paper Straw As An Eco-Friendly Alternative.',
+        },
+        {
+          id: 'tl-2021',
+          year: '2021',
+          title: 'SBTi & EV Commitment',
+          description:
+            'Signed The SBTi Commitment And Began Transitioning Fleet To Electric Vehicles.',
+        },
+        {
+          id: 'tl-2022',
+          year: '2022',
+          title: 'Green Building Upgrade',
+          description:
+            'Upgraded Building To LEED Standards And Implemented ISO 50001 Energy Management Certification.',
+        },
+        {
+          id: 'tl-2023',
+          year: '2023',
+          title: 'LEED Platinum Certification',
+          description:
+            'Kunshan Factory Achieved Dual LEED Platinum Certifications For Production And Office Buildings.',
+        },
+        {
+          id: 'tl-2025',
+          year: '2025',
+          title: 'LEED Gold Certification',
+          description:
+            'Indonesian Factory Achieved LEED Gold, With 100% Renewable Electricity In Plant.',
+        },
+      ],
+    },
+    certificationsCertificateTilesSection: {
+      sectionBackgroundColor: '#ffffff',
+      cardBackgroundColor: '#f0f2f5',
+      linkColor: '#0096FF',
+      iconColor: '#8b9399',
+      items: [
+        {
+          id: 'tile-leed-kunshan-prod',
+          href: '#',
+          ctaLabel: 'VIEW CERTIFICATE',
+        },
+        {
+          id: 'tile-leed-kunshan-office',
+          href: '#',
+          ctaLabel: 'VIEW CERTIFICATE',
+        },
+        {
+          id: 'tile-leed-indonesia',
+          href: '#',
+          ctaLabel: 'VIEW CERTIFICATE',
+        },
+        {
+          id: 'tile-iso50001',
+          href: '#',
+          ctaLabel: 'VIEW CERTIFICATE',
+        },
+      ],
+    },
+    seo: {
+      meta_title: 'Certifications & Achievements | Green Building | Lamipak',
+      meta_description:
+        'Explore Lamipak’s LEED-certified factories and green building achievements across China and Indonesia.',
+      canonical_path: '/certifications-achievements',
+      keywords: ['LEED', 'green building', 'certifications', 'Lamipak', 'sustainability'],
+      author: 'Lamipak',
+      robots: { index: true, follow: true },
+      og_title: 'Certifications & Achievements | Lamipak',
+      og_description:
+        'Green building certifications including LEED Platinum and LEED Gold at Lamipak manufacturing facilities.',
+      og_image: '/banner-slider2.webp',
+      og_type: 'website',
+      twitter_title: 'Certifications & Achievements | Lamipak',
+      twitter_description: 'LEED-certified facilities and sustainability achievements at Lamipak.',
+      twitter_image: '/banner-slider2.webp',
       twitter_card: 'summary_large_image',
     },
   },
