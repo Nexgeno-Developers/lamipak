@@ -371,6 +371,24 @@ export interface DynamicPageData {
           iconId: 'supplier' | 'human_rights' | 'environment' | 'workplace';
         }>;
       }
+    | {
+        layout: 'securityTrust';
+        eyebrow: string;
+        titleBlue: string;
+        title: string;
+        leftParagraphs: string[];
+        cards: Array<{
+          id: string;
+          title: string;
+          description: string;
+          iconId: 'confidentiality' | 'integrity' | 'availability';
+        }>;
+        stats: Array<{
+          id: string;
+          value: string;
+          label: string;
+        }>;
+      }
   >;
 
   /** Governance Management - GRC section (Risk & Control cards) */
@@ -1488,6 +1506,54 @@ const PAGES: DynamicPageData[] = [
             description:
               'Safe working conditions are a non-negotiable requirement for lamipak and all partners across the value chain',
             iconId: 'workplace',
+          },
+        ],
+      },
+      {
+        layout: 'securityTrust',
+        eyebrow: 'Digital Trust',
+        titleBlue: 'Information Security & Data',
+        title: 'Protection',
+        leftParagraphs: [
+          "Protecting information assets is essential in today's digital business environment.",
+          "Lamipak maintains a structured IT information security policy and code of practice for the classification and protection of information, which defines how company and customer data are managed, classified, and safeguarded.",
+          'Through continuous improvement of our security controls and information management systems, we work to ensure the confidentiality, integrity, and availability of critical business data.',
+        ],
+        cards: [
+          {
+            id: 'confidentiality',
+            title: 'Confidentiality',
+            description:
+              'Company and customer data are managed and classified under a structured it information security policy to prevent unauthorised access.',
+            iconId: 'confidentiality',
+          },
+          {
+            id: 'integrity',
+            title: 'Integrity',
+            description:
+              'Continuous improvement of security controls and information management systems ensures data remains accurate and unaltered.',
+            iconId: 'integrity',
+          },
+          {
+            id: 'availability',
+            title: 'Availability',
+            description:
+              'Critical business data remains accessible and reliable to authorised users at all times through robust systems and controls.',
+            iconId: 'availability',
+          },
+        ],
+        stats: [
+          { id: 'zero', value: 'ZERO', label: 'Tolerance For Corruption & Fraud' },
+          { id: '04', value: '04', label: 'Core Grc Pillars' },
+          {
+            id: '100',
+            value: '100%',
+            label: 'Supplier Code Of Conduct Coverage',
+          },
+          {
+            id: 'cia',
+            value: 'CIA',
+            label: 'Confidentiality Integrity Availability',
           },
         ],
       },

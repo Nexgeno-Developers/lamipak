@@ -1,0 +1,156 @@
+import type { ReactNode } from 'react';
+
+export type GovernanceSecurityTrustIconId =
+  | 'confidentiality'
+  | 'integrity'
+  | 'availability';
+
+export type GovernanceSecurityTrustCard = {
+  id: string;
+  title: string;
+  description: string;
+  iconId: GovernanceSecurityTrustIconId;
+};
+
+export type GovernanceSecurityTrustSectionData = {
+  layout: 'securityTrust';
+  eyebrow: string;
+  titleBlue: string;
+  title: string;
+  leftParagraphs: string[];
+  cards: GovernanceSecurityTrustCard[];
+  stats: Array<{
+    id: string;
+    value: string;
+    label: string;
+  }>;
+};
+
+function IconOutline({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  return (
+    <svg
+      width="26"
+      height="26"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {children}
+    </svg>
+  );
+}
+
+function renderCardIcon(iconId: GovernanceSecurityTrustIconId) {
+  switch (iconId) {
+    case 'confidentiality':
+      return (
+        <IconOutline>
+          <path d="M12 22s8-4 8-10V6l-8-4-8 4v6c0 6 8 10 8 10z" />
+          <path d="M9.5 10.5l1.5 1.5 3.5-3.5" />
+        </IconOutline>
+      );
+    case 'integrity':
+      return (
+        <IconOutline>
+          <path d="M12 2l7 4v6c0 5-3 9-7 10-4-1-7-5-7-10V6l7-4z" />
+          <path d="M9 12l2 2 4-4" />
+        </IconOutline>
+      );
+    case 'availability':
+      return (
+        <IconOutline>
+          <circle cx="12" cy="12" r="9" />
+          <path d="M8.5 12h7" />
+          <path d="M12 8.5v7" />
+          <path d="M3 12h2" />
+          <path d="M19 12h2" />
+        </IconOutline>
+      );
+    default:
+      return null;
+  }
+}
+
+export default function GovernanceSecurityTrustSection({
+  data,
+}: {
+  data: GovernanceSecurityTrustSectionData;
+}) {
+  return (
+    <section className="bg-white py-10 md:py-14">
+      <div className="container mx-auto px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-[#009FE8] font-semibold text-sm md:text-base">
+            {data.eyebrow}
+          </div>
+
+          <h2 className="mt-2 text-3xl md:text-5xl font-bold leading-tight">
+            <span className="text-[#009FE8]">{data.titleBlue}</span>{' '}
+            <span className="text-gray-900">{data.title}</span>
+          </h2>
+
+          <div className="mt-6 grid grid-cols-1 lg:grid-cols-[48%_52%] gap-8 items-start">
+            <div className="space-y-4 text-gray-900">
+              {data.leftParagraphs.map((p) => (
+                <p key={p} className="text-gray-800 leading-relaxed">
+                  {p}
+                </p>
+              ))}
+            </div>
+
+            <div className="space-y-4">
+              {data.cards.map((card) => (
+                <div
+                  key={card.id}
+                  className="bg-[#EEF2F3] rounded-[18px] px-5 py-4"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="text-[#009FE8] mt-0.5">
+                      {renderCardIcon(card.iconId)}
+                    </div>
+
+                    <div>
+                      <p className="text-sm md:text-base font-bold text-gray-900">
+                        {card.title}
+                      </p>
+                      <p className="text-xs md:text-sm text-gray-700 mt-1 leading-snug">
+                        {card.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-12 bg-[#EEF2F3] rounded-[18px] px-6 py-10">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {data.stats.map((stat) => (
+                <div
+                  key={stat.id}
+                  className="bg-white rounded-[16px] px-4 py-10 text-center"
+                >
+                  <div className="text-black font-extrabold text-[26px] leading-none">
+                    {stat.value}
+                  </div>
+                  <div className="mt-3 text-sm text-gray-800 leading-snug">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
