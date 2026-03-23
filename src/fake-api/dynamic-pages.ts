@@ -324,6 +324,25 @@ export interface DynamicPageData {
         | 'whistle';
     }>;
   };
+
+  /** Governance Management - secondary framework section (no CTAs) */
+  governanceFrameworkSecondarySection?: {
+    eyebrow: string;
+    title: string;
+    description: string[];
+    cards: Array<{
+      id: string;
+      title: string;
+      subtitle: string;
+      iconId:
+        | 'framework'
+        | 'integrity'
+        | 'risk_control'
+        | 'supply_chain'
+        | 'security'
+        | 'whistle';
+    }>;
+  };
   breadcrumbs?: {
     parentLabel: string;
     parentHref: string;
@@ -1406,6 +1425,53 @@ const PAGES: DynamicPageData[] = [
           id: 'supply_chain',
           title: 'Responsible Supply Chain',
           subtitle: 'Global compliance',
+          iconId: 'supply_chain',
+        },
+        {
+          id: 'security',
+          title: 'Information Security',
+          subtitle: 'Data protection & it policy',
+          iconId: 'security',
+        },
+        {
+          id: 'whistle',
+          title: 'Speak-Up & Whistleblowing',
+          subtitle: 'Confidential reporting',
+          iconId: 'whistle',
+        },
+      ],
+    },
+    governanceFrameworkSecondarySection: {
+      eyebrow: 'Our Governance Framework',
+      title: 'Governance & Management',
+      description: [
+        "Strong governance is the foundation of lamipak's long-term value creation. It is built on transparency, accountability, and responsible decision-making across all global operations, through clear policies and ethical practices. Lamipak ensures sustainable growth while protecting the interests of stakeholders, employees, partners, and the environment.",
+        'We maintain a structured system of policies, procedures, and oversight mechanisms designed to ensure that our business is conducted ethically, responsibly, and in full compliance with applicable laws and regulations.',
+        'Our governance framework integrates risk management, compliance oversight, and operational controls to ensure consistent standards across our manufacturing, supply chain, and commercial activities worldwide.',
+      ],
+      cards: [
+        {
+          id: 'framework',
+          title: 'Transparency',
+          subtitle: 'Transparency & accountability',
+          iconId: 'framework',
+        },
+        {
+          id: 'integrity',
+          title: 'Accountability',
+          subtitle: 'Global compliance',
+          iconId: 'integrity',
+        },
+        {
+          id: 'risk_control',
+          title: 'Compliance',
+          subtitle: 'Data protection & it policy',
+          iconId: 'risk_control',
+        },
+        {
+          id: 'supply_chain',
+          title: 'Sustainable Growth',
+          subtitle: 'Confidential reporting',
           iconId: 'supply_chain',
         },
         {

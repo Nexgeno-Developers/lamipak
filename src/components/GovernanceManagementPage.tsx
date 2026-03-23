@@ -3,6 +3,7 @@ import Breadcrumbs from '@/components/common/Breadcrumbs';
 import CallToAction from '@/components/home/CallToAction';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
 import GovernanceFrameworkSection from '@/components/governance/GovernanceFrameworkSection';
+import GovernanceFrameworkSecondarySection from '@/components/governance/GovernanceFrameworkSecondarySection';
 import type { DynamicPageData } from '@/fake-api/dynamic-pages';
 
 export interface GovernanceManagementPageProps {
@@ -31,6 +32,12 @@ export default function GovernanceManagementPage({
       </section>
 
       <GovernanceFrameworkSection data={data.governanceFrameworkSection} />
+
+      <div className="h-1 bg-[#009FE8]" />
+
+      <GovernanceFrameworkSecondarySection
+        data={data.governanceFrameworkSecondarySection}
+      />
 
       <div className="bg-gray-50 pt-12">
         <CallToAction />
