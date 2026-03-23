@@ -8,6 +8,7 @@ import GovernanceDetailSection from '@/components/governance/GovernanceDetailSec
 import GovernanceComplianceCardsSection from '@/components/governance/GovernanceComplianceCardsSection';
 import GovernanceGrcSection from '@/components/governance/GovernanceGrcSection';
 import GovernanceSecurityTrustSection from '@/components/governance/GovernanceSecurityTrustSection';
+import GovernanceWhistleblowingSection from './governance/GovernanceWhistleblowingSection';
 import type { DynamicPageData } from '@/fake-api/dynamic-pages';
 
 export interface GovernanceManagementPageProps {
@@ -50,8 +51,10 @@ export default function GovernanceManagementPage({
             <GovernanceDetailSection key={d.title} data={d} />
           ) : d.layout === 'complianceCards' ? (
             <GovernanceComplianceCardsSection key={d.title} data={d} />
+          ) : d.layout === 'securityTrust' ? (
+            <GovernanceSecurityTrustSection key={d.titleBlue} data={d} />
           ) : (
-            <GovernanceSecurityTrustSection
+            <GovernanceWhistleblowingSection
               key={d.titleBlue}
               data={d}
             />

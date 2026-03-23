@@ -389,6 +389,13 @@ export interface DynamicPageData {
           label: string;
         }>;
       }
+    | {
+        layout: 'whistleblowing';
+        eyebrow: string;
+        titleBlue: string;
+        title: string;
+        paragraphs: string[];
+      }
   >;
 
   /** Governance Management - GRC section (Risk & Control cards) */
@@ -1555,6 +1562,15 @@ const PAGES: DynamicPageData[] = [
             value: 'CIA',
             label: 'Confidentiality Integrity Availability',
           },
+        ],
+      },
+      {
+        layout: 'whistleblowing',
+        eyebrow: 'Openness & Accountability',
+        titleBlue: 'Speak-Up &',
+        title: 'Whistleblowing',
+        paragraphs: [
+          'Lamipak encourages a culture of openness and accountability. employees, partners, and stakeholders are encouraged to report concerns related to misconduct, unethical behavior, or violations of company policies. our reporting channels are designed to ensure:',
         ],
       },
     ],
