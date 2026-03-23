@@ -1320,6 +1320,33 @@ const PAGES: DynamicPageData[] = [
     ],
   },
  
+  {
+    slug: 'contact',
+    type: 'contact-us',
+    title: 'Contact Us',
+    content:
+      'Get in touch with Lamipak. Reach our team for partnerships, inquiries, and support.',
+    heroBackgroundImage: '/about_banner.jpg',
+    seo: {
+      meta_title: 'Contact Us - Get in Touch | Lamipak',
+      meta_description:
+        'Reach out to Lamipak for inquiries, partnerships, and support.',
+      canonical_path: '/contact',
+      keywords: ['contact', 'Lamipak', 'packaging', 'partnerships', 'support'],
+      author: 'Lamipak',
+      robots: { index: true, follow: true },
+      og_title: 'Contact Us | Lamipak',
+      og_description:
+        'Reach out to Lamipak for inquiries, partnerships, and support.',
+      og_image: '/banner-slider2.webp',
+      og_type: 'website',
+      twitter_title: 'Contact Us | Lamipak',
+      twitter_description:
+        'Reach out to Lamipak for inquiries, partnerships, and support.',
+      twitter_image: '/banner-slider2.webp',
+      twitter_card: 'summary_large_image',
+    },
+  },
 ];
 
 /**

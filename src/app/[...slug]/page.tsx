@@ -11,6 +11,7 @@ import CertificationsAchievementsPage from '@/components/CertificationsAchieveme
 import NgosPage from '@/components/NgosPage';
 import CarbonNetZeroRoadmapPage from '@/components/CarbonNetZeroRoadmapPage';
 import OurCompanyDynamicPage from '@/components/OurCompanyDynamicPage';
+import ContactUsPage from '@/components/ContactUsPage';
 
 import {
   getDynamicPageBySlug,
@@ -32,6 +33,7 @@ const componentMap: Record<string, ComponentType<{ data: DynamicPageData }>> = {
   'our-factory': OurCompanyDynamicPage,
   'carbon-roadmap': CarbonNetZeroRoadmapPage,
   'pick-carton': PickCartoonPage,
+  'contact-us': ContactUsPage,
 };
 
 async function fetchPageData(fullSlug: string) {
