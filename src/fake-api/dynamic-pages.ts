@@ -303,6 +303,27 @@ export interface DynamicPageData {
     twitter_card?: 'summary' | 'summary_large_image' | 'player' | 'app';
   };
   heroBackgroundImage?: string;
+
+  /** Governance Management - main framework section */
+  governanceFrameworkSection?: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    primaryCta: { text: string; href: string };
+    secondaryCta: { text: string; href: string };
+    cards: Array<{
+      id: string;
+      title: string;
+      subtitle: string;
+      iconId:
+        | 'framework'
+        | 'integrity'
+        | 'risk_control'
+        | 'supply_chain'
+        | 'security'
+        | 'whistle';
+    }>;
+  };
   breadcrumbs?: {
     parentLabel: string;
     parentHref: string;
@@ -1355,6 +1376,52 @@ const PAGES: DynamicPageData[] = [
     content:
       'Reach out to Lamipak for governance management inquiries, governance policies, and compliance-related support.',
     heroBackgroundImage: '/about_banner.jpg',
+    governanceFrameworkSection: {
+      eyebrow: 'Lamipak - Corporate Governance',
+      title: 'Governance & Management',
+      description:
+        "Strong governance is the foundation of Lamipak's long-term value creation. It is built on transparency, accountability, and responsible decision-making across all global operations, through clear policies and ethical practices. Lamipak ensures sustainable growth while protecting the interests of stakeholders, employees, partners, and the environment.",
+      primaryCta: { text: 'Explore Our Framework', href: '#governance-framework' },
+      secondaryCta: { text: 'Speak Up', href: '/contact' },
+      cards: [
+        {
+          id: 'framework',
+          title: 'Our Governance Framework',
+          subtitle: 'Transparency & accountability',
+          iconId: 'framework',
+        },
+        {
+          id: 'integrity',
+          title: 'Business Integrity & Ethical Conduct',
+          subtitle: 'Zero-tolerance policy',
+          iconId: 'integrity',
+        },
+        {
+          id: 'risk_control',
+          title: 'Governance, Risk & Control',
+          subtitle: 'Transparency & accountability',
+          iconId: 'risk_control',
+        },
+        {
+          id: 'supply_chain',
+          title: 'Responsible Supply Chain',
+          subtitle: 'Global compliance',
+          iconId: 'supply_chain',
+        },
+        {
+          id: 'security',
+          title: 'Information Security',
+          subtitle: 'Data protection & it policy',
+          iconId: 'security',
+        },
+        {
+          id: 'whistle',
+          title: 'Speak-Up & Whistleblowing',
+          subtitle: 'Confidential reporting',
+          iconId: 'whistle',
+        },
+      ],
+    },
     seo: {
       meta_title: 'Governance Management | Lamipak',
       meta_description:

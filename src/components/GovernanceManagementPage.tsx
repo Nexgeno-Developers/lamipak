@@ -30,7 +30,7 @@ export default function GovernanceManagementPage({
         </div>
       </section>
 
-      <GovernanceFrameworkSection />
+      <GovernanceFrameworkSection data={data.governanceFrameworkSection} />
 
       <div className="bg-gray-50 pt-12">
         <CallToAction />
