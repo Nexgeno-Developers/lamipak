@@ -355,6 +355,19 @@ export interface DynamicPageData {
     buttonHref: string;
     paragraphs: string[];
   }>;
+
+  /** Governance Management - GRC section (Risk & Control cards) */
+  governanceGrcSection?: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    cards: Array<{
+      id: string;
+      title: string;
+      description: string;
+      iconId: 'erm' | 'ic' | 'ia' | 'af';
+    }>;
+  };
   breadcrumbs?: {
     parentLabel: string;
     parentHref: string;
@@ -1513,6 +1526,42 @@ const PAGES: DynamicPageData[] = [
           title: 'Speak-Up & Whistleblowing',
           subtitle: 'Confidential reporting',
           iconId: 'whistle',
+        },
+      ],
+    },
+    governanceGrcSection: {
+      eyebrow: 'Risk & Control',
+      title: 'Governance, Risk, And Control Systems (GRC)',
+      description:
+        'Lamipak operates a comprehensive risk control system designed to underpin the achievement of our objectives on operations’ effectiveness and efficiency, assets safety, compliance, reliable reporting and strategy. our framework is structured around four core pillars:',
+      cards: [
+        {
+          id: 'erm',
+          title: 'Enterprise Risk Management',
+          description:
+            "The group’s enterprise risk management (ERM) process is designed to identify, assess, and mitigate actual and potential risks as emerging risks to our business in order to protect the group from negative financial and/or reputational impact.",
+          iconId: 'erm',
+        },
+        {
+          id: 'ic',
+          title: 'Internal Control',
+          description:
+            'Internal control is designed to reduce identified risks to the business, safeguard the company’s assets, help to detect fraud, protect the shareholders’ investment, it also helps to ensure reliability of reporting, and compliance with laws.',
+          iconId: 'ic',
+        },
+        {
+          id: 'ia',
+          title: 'Internal Audit',
+          description:
+            'Internal auditing is an independent activity that evaluates and improves risk management, internal control, and governance to help an organization achieve its objectives.',
+          iconId: 'ia',
+        },
+        {
+          id: 'af',
+          title: 'Anti-Fraud',
+          description:
+            'Anti-fraud refers to measures used to prevent and detect fraud through awareness, security controls, technology, and actions to fix weaknesses and strengthen teamwork.',
+          iconId: 'af',
         },
       ],
     },
