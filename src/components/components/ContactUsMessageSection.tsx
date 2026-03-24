@@ -1,5 +1,5 @@
-import ContactUsMessageLeft from '@/components/ContactUsMessageLeft';
-import ContactUsMessageRight from '@/components/ContactUsMessageRight';
+import ContactUsMessageLeft from '@/components/components/ContactUsMessageLeft';
+import ContactUsMessageRight from '@/components/components/ContactUsMessageRight';
 
 export default function ContactUsMessageSection() {
   return (
