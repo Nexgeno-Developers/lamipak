@@ -68,7 +68,7 @@ export default async function AboutUsPage() {
       )}
 
       <main className="min-h-screen bg-gray-50">
-        <CompanyHero data={{ ...companyData.hero, title: 'About Us' }} />
+        <CompanyHero data={companyData.hero} />
         <section className="bg-gray-50">
           <div className="container mx-auto px-4 py-4">
             <Breadcrumbs items={[{ label: 'About us' }]} />

@@ -62,7 +62,7 @@ export const COMPANY_SUB_NAVIGATION: CompanyNavigation = {
       id: '1',
       icon: 'info',
       label: 'About us',
-      href: '/our-company',
+      href: '/about-us',
     },
     {
       id: '2',

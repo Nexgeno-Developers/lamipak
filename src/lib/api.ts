@@ -61,6 +61,7 @@ import {
   getAllPackagingPageSlugs as fakeGetAllPackagingPageSlugs,
   type PackagingPageData,
 } from '@/fake-api/packaging-pages';
+import { getDynamicPageBySlug as fakeGetDynamicPageBySlug } from '@/fake-api/dynamic-pages';
 import { getCanonicalUrl } from '@/config/site';
 
 // Re-export types for convenience
@@ -358,7 +359,14 @@ export async function fetchCompanyData(): Promise<CompanyData> {
     // return response.json();
     throw new Error('Real API not yet implemented');
   }
-  
+
+  // Source company content through dynamic page API payload.
+  const dynamicCompanyPage = await fakeGetDynamicPageBySlug('our-company');
+  if (dynamicCompanyPage?.ourCompanyData) {
+    return dynamicCompanyPage.ourCompanyData;
+  }
+
+  // Safety fallback for local development.
   return fakeGetCompanyData();
 }
 

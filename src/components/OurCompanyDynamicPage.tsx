@@ -37,7 +37,7 @@ export default function OurCompanyDynamicPage({ data }: OurCompanyDynamicPagePro
       )}
 
       <main className="min-h-screen bg-gray-50">
-        <CompanyHero data={{ ...companyData.hero, title: 'About Us' }} />
+        <CompanyHero data={companyData.hero} />
 
         <CompanyNavigation data={companyData.navigation} activePath={activeCompanyPath} />
 
