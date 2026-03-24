@@ -97,7 +97,7 @@ export async function getHeaderData(): Promise<HeaderData> {
           {
             id: '1-2',
             label: 'Our Company',
-            href: '/our-company',
+            href: '/about-us',
           },
           {
             id: '1-3',

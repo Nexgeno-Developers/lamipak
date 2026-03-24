@@ -80,13 +80,13 @@ export const COMPANY_SUB_NAVIGATION: CompanyNavigation = {
       id: '4',
       icon: 'document',
       label: 'Media Kit',
-      href: '/our-company/media-kit',
+      href: '/media-kit',
     },
     {
       id: '5',
       icon: 'heart',
       label: 'Responsibility',
-      href: '/our-company/responsibility',
+      href: '/responsibility',
     },
   ],
 };
