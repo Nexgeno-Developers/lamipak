@@ -137,7 +137,7 @@ export default function GovernanceGrcSection({
                   {renderIcon(card.iconId)}
                 </div>
 
-                <h3 className="mt-5 text-[15px] md:text-base font-bold text-gray-900">
+                <h3 className="mt-5 text-[15px] md:text-base font-bold text-black">
                   {card.title}
                 </h3>
                 <p className="mt-4 text-[13px] md:text-sm text-gray-700 leading-relaxed">

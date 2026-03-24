@@ -24,16 +24,16 @@ export default function AboutUsQuadrant({ data }: AboutUsQuadrantProps) {
         {/* Top Left - Text Content */}
         <div className="flex items-center justify-center p-8 md:p-12 lg:p-16 xl:p-16">
           <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 leading-[70px]">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 leading-[60px]">
               <span className="text-[#009FE8]">{data.topLeft.titleHighlight}</span>
-              <span className="text-gray-900">
+              <span className="text-black">
                 {data.topLeft.title.replace(data.topLeft.titleHighlight, '').trim()}
               </span>
             </h2>
             {data.topLeft.paragraphs.map((paragraph, index) => (
               <p
                 key={index}
-                className={`text-base md:text-lg text-black leading-relaxed ${
+                className={`text-base text-black leading-relaxed ${
                   index < data.topLeft.paragraphs.length - 1 ? 'mb-4 md:mb-6' : ''
                 }`}
               >
@@ -82,8 +82,8 @@ export default function AboutUsQuadrant({ data }: AboutUsQuadrantProps) {
         {/* Bottom Right - Text Content */}
         <div className="flex items-center justify-center p-8 md:p-12 lg:p-16 xl:p-16 order-4 lg:order-4">
           <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 leading-[70px]">
-              <span className="text-gray-900">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 leading-[60px]">
+              <span className="text-black">
                 {data.bottomRight.title.split(data.bottomRight.titleHighlight)[0]}
               </span>
               <span className="text-[#009FE8]">{data.bottomRight.titleHighlight}</span>
@@ -91,7 +91,7 @@ export default function AboutUsQuadrant({ data }: AboutUsQuadrantProps) {
             {data.bottomRight.paragraphs.map((paragraph, index) => (
               <p
                 key={index}
-                className={`text-base md:text-lg text-black leading-relaxed ${
+                className={`text-base  text-black leading-relaxed ${
                   index < data.bottomRight.paragraphs.length - 1 ? 'mb-4 md:mb-6' : ''
                 }`}
               >

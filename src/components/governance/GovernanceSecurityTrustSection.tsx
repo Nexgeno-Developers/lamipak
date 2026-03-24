@@ -94,11 +94,11 @@ export default function GovernanceSecurityTrustSection({
 
           <h2 className="mt-2 text-3xl md:text-5xl font-bold leading-tight">
             <span className="text-[#009FE8]">{data.titleBlue}</span>{' '}
-            <span className="text-gray-900">{data.title}</span>
+            <span className="text-black">{data.title}</span>
           </h2>
 
           <div className="mt-6 grid grid-cols-1 lg:grid-cols-[48%_52%] gap-8 items-start">
-            <div className="space-y-4 text-gray-900">
+            <div className="space-y-4 text-black">
               {data.leftParagraphs.map((p) => (
                 <p key={p} className="text-gray-800 leading-relaxed">
                   {p}
@@ -118,7 +118,7 @@ export default function GovernanceSecurityTrustSection({
                     </div>
 
                     <div>
-                      <p className="text-sm md:text-base font-bold text-gray-900">
+                      <p className="text-sm md:text-base font-bold text-black">
                         {card.title}
                       </p>
                       <p className="text-xs md:text-sm text-gray-700 mt-1 leading-snug">

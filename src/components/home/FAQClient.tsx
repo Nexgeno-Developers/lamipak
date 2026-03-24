@@ -11,7 +11,7 @@ export default function FAQClient({ data }: FAQClientProps) {
       <div className="container mx-auto px-4">
         {/* Section Title */}
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-start mb-8 md:mb-12">
-          <span className="text-gray-900">Frequently Asked</span>{' '}
+          <span className="text-black">Frequently Asked</span>{' '}
           <span className="text-[#009FE8]">Questions</span>
         </h2>
 

@@ -22,7 +22,7 @@ export default function OperationalSuccess({ data }: OperationalSuccessProps) {
       <div className="container mx-auto px-4">
         {/* Section Heading */}
         <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black">
             <span className="text-[#009FE8]">{data.headingHighlight}</span>{' '}
             {data.heading.replace(data.headingHighlight, '').trim()}
           </h2>
@@ -142,7 +142,7 @@ export default function OperationalSuccess({ data }: OperationalSuccessProps) {
                 ) : null}
                 
                 {/* Title */}
-                <span className="text-lg md:text-xl font-semibold text-gray-900">
+                <span className="text-lg md:text-xl font-semibold text-black">
                   {card.title}
                 </span>
               </div>

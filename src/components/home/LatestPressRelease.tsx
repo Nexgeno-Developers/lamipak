@@ -21,7 +21,7 @@ export default async function LatestPressRelease() {
         {/* Header */}
         <div className="mb-8 md:mb-12">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
-            <span className="text-gray-900">Latest</span>{' '}
+            <span className="text-black">Latest</span>{' '}
             <span className="text-[#009FE8]">Press Release</span>
           </h2>
         </div>
@@ -66,7 +66,7 @@ function PressReleaseCard({ card, imagePosition }: { card: PressReleaseCard; ima
         </div>
 
         {/* Title */}
-        <h3 className="text-xl md:text-2xl font-semibold mb-4 flex-1 text-gray-900">
+        <h3 className="text-xl md:text-2xl font-semibold mb-4 flex-1 text-black">
           {card.title}
         </h3>
 

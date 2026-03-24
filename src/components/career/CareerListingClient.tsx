@@ -78,13 +78,13 @@ export default function CareerListingClient({
        
 
         <div className="mt-6 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 md:text-5xl">
+          <h2 className="text-2xl font-bold text-black md:text-5xl">
             {jobsSection?.heading ?? 'See all open positions and'}{' '}
             <span className="text-[#009FE8]">
               {jobsSection?.headingHighlight ?? 'early career opportunities'}
             </span>
             ,{' '}
-            <span className="text-gray-900">
+            <span className="text-black">
               {jobsSection?.headingSuffix ?? 'or search by region :'}
             </span>
           </h2>
@@ -103,7 +103,7 @@ export default function CareerListingClient({
                   'cursor-pointer rounded-full border px-5 py-2 text-sm font-medium transition',
                   active
                     ? 'border-[#009FE8] text-[#009FE8]'
-                    : 'border-gray-200 text-gray-900 hover:border-[#009FE8] hover:text-[#009FE8]',
+                    : 'border-gray-200 text-black hover:border-[#009FE8] hover:text-[#009FE8]',
                 ].join(' ')}
               >
                 {tab}
@@ -120,7 +120,7 @@ export default function CareerListingClient({
                 value={qTitle}
                 onChange={(e) => setQTitle(e.target.value)}
                 placeholder={jobsSection?.filters.titlePlaceholder ?? 'Title'}
-                className="w-full bg-transparent text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none"
+                className="w-full bg-transparent text-sm text-black placeholder:text-gray-400 focus:outline-none"
               />
             </div>
 
@@ -129,7 +129,7 @@ export default function CareerListingClient({
                 value={qLocation}
                 onChange={(e) => setQLocation(e.target.value)}
                 placeholder={jobsSection?.filters.locationPlaceholder ?? 'Location'}
-                className="w-full bg-transparent text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none"
+                className="w-full bg-transparent text-sm text-black placeholder:text-gray-400 focus:outline-none"
               />
             </div>
 
@@ -140,7 +140,7 @@ export default function CareerListingClient({
                 aria-label="Function"
                 className={[
                   'w-full bg-transparent text-sm focus:outline-none',
-                  qFunction ? 'text-gray-900' : 'text-gray-400',
+                  qFunction ? 'text-black' : 'text-gray-400',
                 ].join(' ')}
               >
                 <option value="">{jobsSection?.filters.functionPlaceholder ?? 'All'}</option>
@@ -158,7 +158,7 @@ export default function CareerListingClient({
                 onChange={(e) => setQExperience(e.target.value)}
                 className={[
                   'w-full bg-transparent text-sm focus:outline-none',
-                  qExperience ? 'text-gray-900' : 'text-gray-400',
+                  qExperience ? 'text-black' : 'text-gray-400',
                 ].join(' ')}
               >
                 <option value="">
@@ -179,7 +179,7 @@ export default function CareerListingClient({
                   value={qDate}
                   onChange={(e) => setQDate(e.target.value)}
                   aria-label={jobsSection?.filters.datePlaceholder ?? 'Date'}
-                  className="w-full bg-transparent text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none"
+                  className="w-full bg-transparent text-sm text-black placeholder:text-gray-400 focus:outline-none"
                 />
               </div>
             </div>
@@ -223,7 +223,7 @@ export default function CareerListingClient({
                   >
                     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                       <div className="min-w-0">
-                        <h3 className="text-lg font-semibold text-gray-900">{job.title}</h3>
+                        <h3 className="text-lg font-semibold text-black">{job.title}</h3>
                         <p className="mt-1 text-sm text-gray-600">{job.shortDescription}</p>
 
                         <div className="mt-4 flex flex-wrap gap-2">

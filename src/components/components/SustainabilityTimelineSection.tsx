@@ -34,9 +34,9 @@ export default function SustainabilityTimelineSection({ data }: SustainabilityTi
         <header className="mb-12 md:mb-16">
           <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-[2.5rem]">
             <span style={{ color: accent }}>{data.headingBlue}</span>{' '}
-            <span className="text-gray-900">{data.headingBlack}</span>
+            <span className="text-black">{data.headingBlack}</span>
           </h2>
-          <p className="mt-4 max-w-2xl text-base text-gray-900 md:text-lg">{data.subtitle}</p>
+          <p className="mt-4 max-w-2xl text-base text-black md:text-lg">{data.subtitle}</p>
         </header>
 
         <ul className="list-none space-y-0 p-0">
@@ -52,8 +52,8 @@ export default function SustainabilityTimelineSection({ data }: SustainabilityTi
                 </div>
                 <div className="min-w-0 flex-1 pt-0.5">
                   <p className="text-sm font-medium text-gray-400 md:text-base">{item.year}</p>
-                  <h3 className="mt-1 text-lg font-bold text-gray-900 md:text-xl">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-gray-900 md:text-base">
+                  <h3 className="mt-1 text-lg font-bold text-black md:text-xl">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-black md:text-base">
                     {item.description}
                   </p>
                 </div>

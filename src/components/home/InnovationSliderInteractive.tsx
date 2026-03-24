@@ -39,7 +39,7 @@ InnovationSliderInteractive.Cards = Cards;
 function InnovationCard({ card }: { card: InnovationCard }) {
   const isHighlighted = card.isHighlighted || false;
   const cardBgClass = isHighlighted ? 'bg-[#009FE8]' : 'bg-[#EDF0F1]';
-  const textColorClass = isHighlighted ? 'text-white' : 'text-gray-900';
+  const textColorClass = isHighlighted ? 'text-white' : 'text-black';
   const linkColorClass = isHighlighted ? 'text-white' : 'text-[#009FE8]';
 
   return (

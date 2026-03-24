@@ -70,7 +70,7 @@ export default function CompanyNavigation({ data, activePath }: CompanyNavigatio
                 
                 {/* Label */}
                 <span className={`text-sm md:text-[20px] font-medium text-center transition-colors ${
-                  isActive ? 'text-[#009FE8] font-semibold' : 'text-gray-900'
+                  isActive ? 'text-[#009FE8] font-semibold' : 'text-black'
                 }`}>
                   {item.label}
                 </span>

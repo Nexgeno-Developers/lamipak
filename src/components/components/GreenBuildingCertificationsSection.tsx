@@ -43,7 +43,7 @@ export default function GreenBuildingCertificationsSection({ data }: GreenBuildi
           </p>
           <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
             <span className='text-[#009FE8]'>{data.headingGreen}</span>{' '}
-            <span className="text-gray-900">{data.headingBlack}</span>
+            <span className="text-black">{data.headingBlack}</span>
           </h2>
         </header>
 
@@ -71,7 +71,7 @@ export default function GreenBuildingCertificationsSection({ data }: GreenBuildi
                     <RibbonBadgeIcon className="h-11 w-11" color={iconColor} />
                   </div>
                   <div className="min-w-0 pt-0.5">
-                    <h3 className="text-lg font-bold text-gray-900 md:text-xl">{card.factoryTitle}</h3>
+                    <h3 className="text-lg font-bold text-black md:text-xl">{card.factoryTitle}</h3>
                     <p className="text-sm text-gray-500 md:text-base">{card.location}</p>
                   </div>
                 </div>
@@ -86,7 +86,7 @@ export default function GreenBuildingCertificationsSection({ data }: GreenBuildi
                   <span className="text-sm font-medium text-gray-500 md:text-base">{card.year}</span>
                 </div>
 
-                <p className="text-sm leading-relaxed text-gray-900 md:text-base">{card.description}</p>
+                <p className="text-sm leading-relaxed text-black md:text-base">{card.description}</p>
 
                 {card.badgeImages && card.badgeImages.length > 0 ? (
                   <div className="flex flex-wrap items-center gap-3 border-t border-gray-100 pt-5">

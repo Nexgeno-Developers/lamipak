@@ -163,7 +163,7 @@ export default async function CategoryProductsPage({ params }: CategoryPageProps
                 {/* Section Title */}
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
                   <span className="text-[#009FE8]">{category.name}</span>{' '}
-                  <span className="text-gray-900">We Support</span>
+                  <span className="text-black">We Support</span>
                 </h2>
 
                 {/* Description */}
@@ -231,7 +231,7 @@ function ProductSupportCard({ product }: { product: NonNullable<Awaited<ReturnTy
       {/* Product Info */}
       <div className="flex-1 flex flex-col pl-3 pr-3">
         {/* Title */}
-        <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2 group-hover:text-[#009FE8] transition-colors pt-3">
+        <h3 className="text-lg md:text-xl font-bold text-black mb-2 group-hover:text-[#009FE8] transition-colors pt-3">
           {product.title}
         </h3>
 
@@ -294,7 +294,7 @@ function ProductCard({ product }: { product: NonNullable<Awaited<ReturnType<type
         )}
 
         {/* Title */}
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 group-hover:text-[#009FE8] transition-colors">
+        <h2 className="text-2xl md:text-3xl font-bold text-black mb-3 group-hover:text-[#009FE8] transition-colors">
           {product.title}
         </h2>
 

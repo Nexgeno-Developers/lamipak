@@ -188,7 +188,7 @@ export default async function MarketingServiceDetailsPage(
       {serviceData.brandJourney && serviceData.brandJourney.items.length > 0 && (
         <section className="bg-gray-50 pt-10 md:pt-16">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-8 text-center ">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-8 text-center ">
               Elevate Your{' '}
               <span className="text-[#009FE8]">
                 {serviceData.brandJourney.headingHighlight}

@@ -18,7 +18,7 @@ export default function FAQItemClient({ item }: FAQItemClientProps) {
         aria-expanded={isOpen}
       >
         {/* Question Text */}
-        <span className="text-lg md:text-xl font-medium text-gray-900 pr-4 flex-1">
+        <span className="text-lg md:text-xl font-medium text-black pr-4 flex-1">
           {item.question}
         </span>
 
@@ -45,7 +45,7 @@ export default function FAQItemClient({ item }: FAQItemClientProps) {
       {/* Answer */}
       {isOpen && (
         <div className="pb-6 pl-0 pr-12">
-          <p className="text-black text-base md:text-lg leading-relaxed">
+          <p className="text-black text-base  leading-relaxed">
             {item.answer}
           </p>
         </div>

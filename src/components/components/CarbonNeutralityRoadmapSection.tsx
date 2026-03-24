@@ -55,7 +55,7 @@ export default function CarbonNeutralityRoadmapSection({ data }: CarbonNeutralit
   return (
     <section className="py-12 md:pt-24 md:pb-12 bg-gray-50">
       <div className="container mx-auto px-4">
-        <h2 className="mb-14 text-center text-3xl font-bold tracking-tight text-gray-900 md:mb-20 md:text-4xl lg:text-5xl">
+        <h2 className="mb-14 text-center text-3xl font-bold tracking-tight text-black md:mb-20 md:text-4xl lg:text-5xl">
           {data.headingBlack}{' '}
           <span style={{ color: accent }}>{data.headingBlue}</span>
         </h2>
@@ -81,8 +81,8 @@ export default function CarbonNeutralityRoadmapSection({ data }: CarbonNeutralit
                   <p className="mt-5 text-xl font-bold md:text-2xl" style={{ color: accent }}>
                     {m.year}
                   </p>
-                  <h3 className="mt-2 text-base font-bold text-gray-900 md:text-lg">{m.title}</h3>
-                  <ul className="mt-4 max-w-[280px] space-y-2.5 text-left text-sm leading-snug text-gray-900 md:text-[0.9375rem]">
+                  <h3 className="mt-2 text-base font-bold text-black md:text-lg">{m.title}</h3>
+                  <ul className="mt-4 max-w-[280px] space-y-2.5 text-left text-sm leading-snug text-black md:text-[0.9375rem]">
                     {m.bullets.map((line, idx) => (
                       <li key={idx} className="flex gap-2.5">
                         <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-900" aria-hidden />

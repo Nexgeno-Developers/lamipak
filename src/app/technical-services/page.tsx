@@ -69,15 +69,15 @@ export default async function TechnicalServicesPage() {
       </section>
 
       {/* Technical Support Service Section */}
-      <section className="bg-gray-50 pb-12">
+      <section className="bg-gray-50 pb-12 ">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-center">
           {/* Left Column - Text Content */}
-          <div className="container mx-auto px-4 lg:px-16 xl:px-24">
+          <div className="container mx-auto px-4 lg:px-16 xl:px-24 pt-20">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#0e233c] mb-6">
               {listingData.introSection.heading}
             </h2>
             {listingData.introSection.paragraphs.map((paragraph, index) => (
-              <p key={index} className={`text-lg md:text-xl text-black leading-relaxed ${index < listingData.introSection.paragraphs.length - 1 ? 'mb-4' : ''}`}>
+              <p key={index} className={`text-base md:text-base text-black leading-relaxed ${index < listingData.introSection.paragraphs.length - 1 ? 'mb-4' : ''}`}>
                 {paragraph}
               </p>
             ))}
@@ -99,7 +99,7 @@ export default async function TechnicalServicesPage() {
         <div className="bg-[#EDF0F1] rounded-[50px] p-8 md:p-12 lg:p-16  container mx-auto px-4">
           {/* Section Heading */}
           <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black">
               <span className="text-[#009FE8]">{listingData.upgradeSection.headingHighlight}</span>{' '}
               {listingData.upgradeSection.heading.replace(listingData.upgradeSection.headingHighlight, '').trim()}
             </h2>
@@ -249,7 +249,7 @@ export default async function TechnicalServicesPage() {
         <div className="container mx-auto px-4">
           {/* Section Heading */}
           <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black">
               <span className="text-[#009FE8]">{listingData.operationalSuccess.headingHighlight}</span>{' '}
               {listingData.operationalSuccess.heading.replace(listingData.operationalSuccess.headingHighlight, '').trim()}
             </h2>

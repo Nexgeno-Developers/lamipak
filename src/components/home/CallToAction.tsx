@@ -18,7 +18,7 @@ export default async function CallToAction() {
             {/* Left Side - Heading and Description */}
             <div className="flex-1">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                <span className="text-gray-900">{data.heading}</span>{' '}
+                <span className="text-black">{data.heading}</span>{' '}
                 <span className="text-[#009FE8]">{data.headingHighlight}</span>
               </h2>
               <p className="text-black text-base md:text-lg">

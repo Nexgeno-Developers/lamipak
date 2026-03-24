@@ -41,7 +41,7 @@ export default function JourneyClient({ data }: JourneyClientProps) {
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
             <span className="text-[#009FE8]">{data.titleHighlight}</span>{' '}
-            <span className="text-gray-900">
+            <span className="text-black">
               {data.title.replace(data.titleHighlight, '').trim()}
             </span>
           </h2>
@@ -77,7 +77,7 @@ export default function JourneyClient({ data }: JourneyClientProps) {
                         className={`cursor-pointer text-left transition-colors flex items-center ${
                           isSelected
                             ? 'text-[#009FE8] font-semibold'
-                            : 'text-gray-600 hover:text-gray-900'
+                            : 'text-gray-600 hover:text-black'
                         }`}
                       >
                         <span className="text-base md:text-lg lg:text-[24px] font-bold leading-tight">{milestone.year}</span>
@@ -121,7 +121,7 @@ export default function JourneyClient({ data }: JourneyClientProps) {
                   {/* Caption Overlay */}
                   <div className="absolute bottom-4 left-4 right-4 md:bottom-[-30px] md:left-6 md:right-6">
                     <div className="bg-gray-100 bg-opacity-90 backdrop-blur-sm rounded-[15px] text-center p-4 md:p-5 w-[70%] mx-auto">
-                      <p className="text-gray-900 text-base md:text-lg font-medium">
+                      <p className="text-black text-base md:text-lg font-medium">
                         {selectedMilestone.caption}
                       </p>
                     </div>

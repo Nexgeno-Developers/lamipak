@@ -32,7 +32,7 @@ export default function WorkInSustainabilityClient({ data }: WorkInSustainabilit
         {/* Header with Title and Navigation */}
         <div className="flex items-center justify-between mb-8 md:mb-12">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
-            <span className="text-gray-900">Work in</span>{' '}
+            <span className="text-black">Work in</span>{' '}
             <span className="text-[#009FE8]">Sustainability</span>
           </h2>
 
@@ -178,12 +178,12 @@ function WorkCard({ card }: { card: SustainabilityWorkCard }) {
       </div>
 
       {/* Title */}
-      <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+      <h3 className="text-2xl md:text-3xl font-bold text-black mb-4">
         {card.title}
       </h3>
 
       {/* Description */}
-      <p className="text-black text-base md:text-lg mb-6 leading-relaxed">
+      <p className="text-black text-base md:text-base mb-6 leading-relaxed">
         {card.description}
       </p>
 

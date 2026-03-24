@@ -44,7 +44,7 @@ export default function NgoMembershipMapSection({ data }: NgoMembershipMapSectio
       <div className="container mx-auto px-4 ">
         <h2 className="mb-10 text-center text-3xl font-bold tracking-tight md:mb-14 md:text-4xl lg:text-5xl">
           <span style={{ color: accent }}>{data.headingBlue}</span>{' '}
-          <span className="text-gray-900">{data.headingBlack}</span>
+          <span className="text-black">{data.headingBlack}</span>
         </h2>
 
         <div

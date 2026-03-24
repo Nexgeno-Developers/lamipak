@@ -193,12 +193,12 @@ function ProductCard({ product }: { product: SustainabilityProductCard }) {
         </span>
 
         {/* Title */}
-        <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+        <h3 className="text-2xl md:text-3xl font-bold text-black mb-4">
           {product.title}
         </h3>
 
         {/* Description */}
-        <p className="text-black text-base md:text-lg mb-6 leading-relaxed">
+        <p className="text-black text-base  mb-6 leading-relaxed">
           {product.description}
         </p>
 

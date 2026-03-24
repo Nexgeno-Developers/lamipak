@@ -113,7 +113,7 @@ export default function GreenSustainabilityVisionSection({ data }: GreenSustaina
     <section className="bg-gray-50 py-8 md:py-12">
       <div className="container mx-auto px-4">
         <header className="mb-12 text-center md:mb-14">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900 md:text-3xl lg:text-5xl">
+          <h2 className="text-2xl font-bold tracking-tight text-black md:text-3xl lg:text-5xl">
             <span style={{ color: BRAND_BLUE }}>{data.headingBrand}</span>{' '}
             <span className="font-bold">{data.headingRest}</span>
           </h2>
@@ -147,7 +147,7 @@ export default function GreenSustainabilityVisionSection({ data }: GreenSustaina
                       <span className="mr-1 font-medium text-black">&gt;</span>
                       {bullet.parts.map((part, i) =>
                         part.bold ? (
-                          <strong key={i} className="font-semibold text-gray-900">
+                          <strong key={i} className="font-semibold text-black">
                             {part.text}
                           </strong>
                         ) : (

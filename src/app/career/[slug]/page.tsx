@@ -91,11 +91,11 @@ export default async function CareerDetailsPage({ params }: CareerDetailsPagePro
               <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-black">
                 <div className="flex items-center gap-2">
                   <span className="text-gray-500">Salary:</span>
-                  <span className="font-semibold text-gray-900">{job.salary ?? 'Negotiable'}</span>
+                  <span className="font-semibold text-black">{job.salary ?? 'Negotiable'}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-gray-500">Work Exp.:</span>
-                  <span className="font-semibold text-gray-900">{job.experienceLevel}</span>
+                  <span className="font-semibold text-black">{job.experienceLevel}</span>
                 </div>
               </div>
             </div>
@@ -140,7 +140,7 @@ export default async function CareerDetailsPage({ params }: CareerDetailsPagePro
             <div className="min-w-0">
               {job.responsibilities.length > 0 && (
                 <div className="mt-2">
-                  <h2 className="text-base font-semibold text-gray-900">Responsibilities</h2>
+                  <h2 className="text-base font-semibold text-black">Responsibilities</h2>
                   <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-black">
                     {job.responsibilities.map((item, i) => (
                       <li key={i}>{item}</li>
@@ -151,7 +151,7 @@ export default async function CareerDetailsPage({ params }: CareerDetailsPagePro
 
               {job.requirements.length > 0 && (
                 <div className="mt-10">
-                  <h2 className="text-base font-semibold text-gray-900">Qualifications</h2>
+                  <h2 className="text-base font-semibold text-black">Qualifications</h2>
                   <p className="mt-1 text-xs text-gray-500">
                     (Education / Knowledge / Working Experience)
                   </p>
@@ -178,7 +178,7 @@ export default async function CareerDetailsPage({ params }: CareerDetailsPagePro
                       href={`/career/${j.slug}`}
                       className="block rounded-2xl py-2 transition"
                     >
-                      <p className="text-sm font-semibold text-gray-900">{j.title}</p>
+                      <p className="text-sm font-semibold text-black">{j.title}</p>
                       <p className="mt-1 text-xs text-gray-500">
                         {j.location}
                         {j.postedAgo ? `, ${j.postedAgo}` : ''}

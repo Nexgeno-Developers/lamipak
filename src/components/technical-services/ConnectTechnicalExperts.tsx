@@ -57,7 +57,7 @@ export default function ConnectTechnicalExperts({
       <div className="container mx-auto px-4">
         {/* Section Heading */}
         <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black">
             {heading.replace(headingHighlight, '').trim()}{' '}
             <span className="text-[#009FE8]">{headingHighlight}</span>
           </h2>
@@ -69,7 +69,7 @@ export default function ConnectTechnicalExperts({
             {/* Left Section - Contact Form */}
             <div className="p-8 md:p-10 lg:p-12">
               {/* Form Title */}
-              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
+              <h3 className="text-2xl md:text-3xl font-bold text-black mb-8">
                 {formTitle}
               </h3>
 
@@ -85,7 +85,7 @@ export default function ConnectTechnicalExperts({
                       value={formData.firstName}
                       onChange={handleChange}
                       required
-                      className="w-full px-6 py-4 bg-gray-100 rounded-[25px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
+                      className="w-full px-6 py-4 bg-gray-100 rounded-[25px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base"
                     />
                   </div>
                   <div>
@@ -96,7 +96,7 @@ export default function ConnectTechnicalExperts({
                       value={formData.lastName}
                       onChange={handleChange}
                       required
-                      className="w-full px-6 py-4 bg-gray-100 rounded-[25px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
+                      className="w-full px-6 py-4 bg-gray-100 rounded-[25px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base"
                     />
                   </div>
                 </div>
@@ -111,7 +111,7 @@ export default function ConnectTechnicalExperts({
                       value={formData.phoneNumber}
                       onChange={handleChange}
                       required
-                      className="w-full px-6 py-4 bg-gray-100 rounded-[25px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
+                      className="w-full px-6 py-4 bg-gray-100 rounded-[25px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base"
                     />
                   </div>
                   <div>
@@ -122,7 +122,7 @@ export default function ConnectTechnicalExperts({
                       value={formData.emailAddress}
                       onChange={handleChange}
                       required
-                      className="w-full px-6 py-4 bg-gray-100 rounded-[25px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
+                      className="w-full px-6 py-4 bg-gray-100 rounded-[25px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base"
                     />
                   </div>
                 </div>
@@ -136,7 +136,7 @@ export default function ConnectTechnicalExperts({
                     onChange={handleChange}
                     required
                     rows={5}
-                    className="w-full px-6 py-4 bg-gray-100 rounded-[25px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base resize-none"
+                    className="w-full px-6 py-4 bg-gray-100 rounded-[25px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base resize-none"
                   />
                 </div>
 

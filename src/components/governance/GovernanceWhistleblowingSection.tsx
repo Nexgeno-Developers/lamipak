@@ -21,7 +21,7 @@ export default function GovernanceWhistleblowingSection({
 
           <h2 className="mt-4 text-3xl md:text-5xl font-bold leading-tight">
             <span className="text-[#009FE8]">{data.titleBlue}</span>{' '}
-            <span className="text-gray-900">{data.title}</span>
+            <span className="text-black">{data.title}</span>
           </h2>
 
           <div className="mt-5 text-black leading-relaxed text-base  space-y-4">

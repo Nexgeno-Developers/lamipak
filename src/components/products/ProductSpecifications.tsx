@@ -28,7 +28,7 @@ export default function ProductSpecifications({ product }: ProductSpecifications
           {/* Right Side - Product Information */}
           <div>
             {/* Title */}
-            <h2 className="text-[24px] md:text-[30px] lg:text-[36px] font-bold text-gray-900 pb-2">
+            <h2 className="text-[24px] md:text-[30px] lg:text-[36px] font-bold text-black pb-2">
               {product.title}
             </h2>
 
@@ -42,7 +42,7 @@ export default function ProductSpecifications({ product }: ProductSpecifications
             {/* Size & Formats */}
             {product.sizes && product.sizes.length > 0 && (
               <div className="mb-12">
-                <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-4">
+                <h3 className="text-xl md:text-2xl font-semibold text-black mb-4">
                   Size & Formats
                 </h3>
                 <div className="flex flex-wrap gap-3">
@@ -61,7 +61,7 @@ export default function ProductSpecifications({ product }: ProductSpecifications
             {/* Quick Specifications */}
             {product.quickSpecifications && product.quickSpecifications.length > 0 && (
               <div className="mb-8 pb-4">
-                <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-6">
+                <h3 className="text-xl md:text-2xl font-semibold text-black mb-6">
                   Quick Specifications
                 </h3>
                 <dl className="space-y-3">
@@ -82,7 +82,7 @@ export default function ProductSpecifications({ product }: ProductSpecifications
             {/* Compatible With */}
             {product.compatibleWith && product.compatibleWith.length > 0 && (
               <div>
-                <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-4">
+                <h3 className="text-xl md:text-2xl font-semibold text-black mb-4">
                   Compatible With
                 </h3>
                 <ul className="space-y-2">

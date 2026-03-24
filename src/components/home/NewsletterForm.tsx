@@ -17,7 +17,7 @@ export default function NewsletterForm({ placeholder, buttonText }: NewsletterFo
           type="email"
           placeholder={placeholder}
           required
-          className="flex-1 px-4 py-2 bg-transparent text-gray-900 placeholder-gray-400 focus:outline-none border-none"
+          className="flex-1 px-4 py-2 bg-transparent text-black placeholder-gray-400 focus:outline-none border-none"
         />
 
         {/* Subscribe Button - Inside the form */}

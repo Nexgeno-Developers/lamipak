@@ -40,7 +40,7 @@ export default function PickCartoonPage({ data }: PickCartoonPageProps) {
             <section key={idx} className="bg-gray-50 py-12 md:pt-20">
               <div className="container mx-auto px-4">
                 <div className="text-center">
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 leading-[70px] text-black">
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 text-black">
                     {section.heading}{' '}
                     {section.headingHighlight ? (
                       <span className="text-[#009FE8]">{section.headingHighlight}</span>

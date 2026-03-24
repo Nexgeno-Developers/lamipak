@@ -50,7 +50,7 @@ export default function OurValues({ data }: OurValuesProps) {
                     className={`cursor-pointer w-full text-left py-5 px-0 border-b border-gray-200 transition-colors ${
                       isSelected
                         ? 'text-[#009FE8]'
-                        : 'text-gray-900 hover:text-black'
+                        : 'text-black hover:text-black'
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -99,7 +99,7 @@ export default function OurValues({ data }: OurValuesProps) {
 
             {/* Caption */}
             <div className="bg-gray-100 rounded-lg p-4 md:p-6 mt-[-110px] relative z-10">
-              <p className="text-sm md:text-base text-gray-900 leading-relaxed">
+              <p className="text-sm md:text-base text-black leading-relaxed">
                 {selectedValue.caption}
               </p>
             </div>

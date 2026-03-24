@@ -17,7 +17,7 @@ function FrameworkCard({ title, subtitle, icon }: FrameworkCardProps) {
         {icon}
       </div>
       <div className="pt-1">
-        <p className="text-base md:text-lg font-bold text-gray-900">{title}</p>
+        <p className="text-base md:text-lg font-bold text-black">{title}</p>
         <p className="text-xs md:text-sm text-gray-700 mt-1 leading-snug">
           {subtitle}
         </p>

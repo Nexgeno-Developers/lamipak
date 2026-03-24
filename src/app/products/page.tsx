@@ -53,7 +53,7 @@ export default async function ProductsPage() {
       <section className="bg-white border-b border-gray-200">
         <div className="container mx-auto px-4 py-12 md:py-16">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-6">
               Our Products
             </h1>
             <p className="text-xl md:text-2xl text-black leading-relaxed">
@@ -137,7 +137,7 @@ function ProductCard({ product }: { product: NonNullable<Awaited<ReturnType<type
         )}
 
         {/* Title */}
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 group-hover:text-[#009FE8] transition-colors">
+        <h2 className="text-2xl md:text-3xl font-bold text-black mb-3 group-hover:text-[#009FE8] transition-colors">
           {product.title}
         </h2>
 

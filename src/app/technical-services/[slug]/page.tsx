@@ -183,7 +183,7 @@ export default async function TechnicalServicePage({ params }: TechnicalServiceP
 
                 {/* Right Column - Content */}
                 <div>
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 uppercase">
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-6 uppercase">
                     {serviceData.title}
                   </h2>
                   {serviceData.introSection.detailedDescription ? (

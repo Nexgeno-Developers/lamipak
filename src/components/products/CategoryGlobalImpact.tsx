@@ -64,7 +64,7 @@ export default function CategoryGlobalImpact({ data }: CategoryGlobalImpactProps
                     />
                   </svg>
                   {/* Feature Text */}
-                  <span className="text-base md:text-lg lg:text-xl text-gray-900 font-medium leading-relaxed">
+                  <span className="text-base md:text-lg lg:text-xl text-black font-medium leading-relaxed">
                     {feature}
                   </span>
                 </li>

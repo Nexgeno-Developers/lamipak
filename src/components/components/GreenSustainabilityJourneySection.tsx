@@ -20,9 +20,9 @@ export default function GreenSustainabilityJourneySection({ data }: GreenSustain
               <span className="block" style={{ color: accent }}>
                 {data.headingLineBlue}
               </span>
-              <span className="mt-1 block font-bold text-gray-900">{data.headingLineBlack}</span>
+              <span className="mt-1 block font-bold text-black">{data.headingLineBlack}</span>
             </h2>
-            <p className="mt-8 max-w-xl text-base leading-relaxed text-gray-900 md:mt-10 md:text-lg">
+            <p className="mt-8 max-w-xl text-base leading-relaxed text-black md:mt-10 md:text-lg">
               {data.body}
             </p>
           </div>

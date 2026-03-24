@@ -48,7 +48,7 @@ export default async function SimilarProducts({ currentProductSlug }: SimilarPro
           {/* Title */}
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
             <span className="text-[#009FE8]">Similar</span>{' '}
-            <span className="text-gray-900">Products</span>
+            <span className="text-black">Products</span>
           </h2>
         </div>
 

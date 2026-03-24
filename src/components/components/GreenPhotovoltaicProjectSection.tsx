@@ -128,10 +128,10 @@ export default function GreenPhotovoltaicProjectSection({ data }: GreenPhotovolt
               <LocationIcon className="h-5 w-5 shrink-0 md:h-6 md:w-6" />
               <span className="text-sm font-medium md:text-base">{data.locationLabel}</span>
             </div>
-            <h2 className="text-2xl font-bold tracking-tight text-gray-900 md:text-3xl lg:text-[2.125rem] lg:leading-tight">
+            <h2 className="text-2xl font-bold tracking-tight text-black md:text-3xl lg:text-[2.125rem] lg:leading-tight">
               {data.title}
             </h2>
-            <p className="mt-3 max-w-3xl text-sm leading-relaxed text-gray-900 md:text-base">
+            <p className="mt-3 max-w-3xl text-sm leading-relaxed text-black md:text-base">
               {data.description}
             </p>
           </header>
@@ -152,7 +152,7 @@ export default function GreenPhotovoltaicProjectSection({ data }: GreenPhotovolt
                   {phase.metrics.map((m) => (
                     <div key={`${phase.id}-${m.label}`}>
                       <p className="text-xs font-medium text-gray-600 md:text-sm">{m.label}</p>
-                      <p className="mt-1.5 text-2xl font-bold tracking-tight text-gray-900 md:text-3xl lg:text-[2rem]">
+                      <p className="mt-1.5 text-2xl font-bold tracking-tight text-black md:text-3xl lg:text-[2rem]">
                         {m.value}
                       </p>
                     </div>
@@ -181,7 +181,7 @@ export default function GreenPhotovoltaicProjectSection({ data }: GreenPhotovolt
                   </span>
                   <div className="min-w-0">
                     <p className="text-xs text-gray-800 md:text-sm">{item.label}</p>
-                    <p className="break-words text-base font-bold text-gray-900 md:text-lg">{item.value}</p>
+                    <p className="break-words text-base font-bold text-black md:text-lg">{item.value}</p>
                   </div>
                 </div>
               );

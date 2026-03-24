@@ -38,7 +38,7 @@ export default function ContactSustainability() {
           {/* Left Panel - Contact Us Form */}
           <div className="bg-[#EDF0F1] rounded-[50px] p-8 md:p-10 lg:p-12">
             {/* Heading */}
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-3">
               Contact Us
             </h2>
 
@@ -58,7 +58,7 @@ export default function ContactSustainability() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-6 py-4 bg-white rounded-[50px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
+                  className="w-full px-6 py-4 bg-white rounded-[50px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base"
                 />
               </div>
 
@@ -71,7 +71,7 @@ export default function ContactSustainability() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-6 py-4 bg-white rounded-[50px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
+                  className="w-full px-6 py-4 bg-white rounded-[50px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base"
                 />
               </div>
 

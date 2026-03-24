@@ -97,7 +97,7 @@ export default function ContactUsMessageLeft() {
 
   return (
     <div>
-      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-6">
         Send us a Message
       </h2>
 
@@ -105,7 +105,7 @@ export default function ContactUsMessageLeft() {
         {/* First row */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-900 mb-2" htmlFor="firstName">
+            <label className="block text-sm font-medium text-black mb-2" htmlFor="firstName">
               First Name <span className="text-[#333]">*</span>
             </label>
             <input
@@ -116,12 +116,12 @@ export default function ContactUsMessageLeft() {
               onChange={handleChange}
               required
               placeholder="Jane"
-              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
+              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-900 mb-2" htmlFor="lastName">
+            <label className="block text-sm font-medium text-black mb-2" htmlFor="lastName">
               Last Name <span className="text-[#333]">*</span>
             </label>
             <input
@@ -132,7 +132,7 @@ export default function ContactUsMessageLeft() {
               onChange={handleChange}
               required
               placeholder="Doe"
-              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
+              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base"
             />
           </div>
         </div>
@@ -140,7 +140,7 @@ export default function ContactUsMessageLeft() {
         {/* Second row */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-900 mb-2" htmlFor="emailAddress">
+            <label className="block text-sm font-medium text-black mb-2" htmlFor="emailAddress">
               Email Address <span className="text-[#333]">*</span>
             </label>
             <input
@@ -151,12 +151,12 @@ export default function ContactUsMessageLeft() {
               onChange={handleChange}
               required
               placeholder="jane@company.com"
-              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
+              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-900 mb-2" htmlFor="phoneNumber">
+            <label className="block text-sm font-medium text-black mb-2" htmlFor="phoneNumber">
               Phone Number
             </label>
             <input
@@ -166,7 +166,7 @@ export default function ContactUsMessageLeft() {
               value={formData.phoneNumber}
               onChange={handleChange}
               placeholder="+1 (555) 000-0000"
-              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
+              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base"
             />
           </div>
         </div>
@@ -174,7 +174,7 @@ export default function ContactUsMessageLeft() {
         {/* Third row */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-900 mb-2" htmlFor="companyName">
+            <label className="block text-sm font-medium text-black mb-2" htmlFor="companyName">
               Company Name <span className="text-[#333]">*</span>
             </label>
             <input
@@ -185,12 +185,12 @@ export default function ContactUsMessageLeft() {
               onChange={handleChange}
               required
               placeholder="Enter company name"
-              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
+              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-900 mb-2" htmlFor="websiteUrl">
+            <label className="block text-sm font-medium text-black mb-2" htmlFor="websiteUrl">
               Company Website URL
             </label>
             <input
@@ -200,7 +200,7 @@ export default function ContactUsMessageLeft() {
               value={formData.websiteUrl}
               onChange={handleChange}
               placeholder="https://www.example.com"
-              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
+              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base"
             />
           </div>
         </div>
@@ -208,7 +208,7 @@ export default function ContactUsMessageLeft() {
         {/* Fourth row */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-900 mb-2" htmlFor="jobFunction">
+            <label className="block text-sm font-medium text-black mb-2" htmlFor="jobFunction">
               Job Function <span className="text-[#333]">*</span>
             </label>
             <select
@@ -217,7 +217,7 @@ export default function ContactUsMessageLeft() {
               value={formData.jobFunction}
               onChange={handleChange}
               required
-              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
+              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base"
             >
               {JOB_FUNCTION_OPTIONS.map((opt) => (
                 <option key={opt} value={opt}>
@@ -228,7 +228,7 @@ export default function ContactUsMessageLeft() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-900 mb-2" htmlFor="jobTitle">
+            <label className="block text-sm font-medium text-black mb-2" htmlFor="jobTitle">
               Job Title <span className="text-[#333]">*</span>
             </label>
             <input
@@ -239,7 +239,7 @@ export default function ContactUsMessageLeft() {
               onChange={handleChange}
               required
               placeholder="Select title"
-              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
+              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base"
             />
           </div>
         </div>
@@ -247,7 +247,7 @@ export default function ContactUsMessageLeft() {
         {/* Fifth row */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-900 mb-2" htmlFor="countryRegion">
+            <label className="block text-sm font-medium text-black mb-2" htmlFor="countryRegion">
               Country/Region <span className="text-[#333]">*</span>
             </label>
             <input
@@ -258,12 +258,12 @@ export default function ContactUsMessageLeft() {
               onChange={handleChange}
               required
               placeholder="e.g. United Kingdom"
-              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
+              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-900 mb-2" htmlFor="interestedIn">
+            <label className="block text-sm font-medium text-black mb-2" htmlFor="interestedIn">
               What are you interested in? <span className="text-[#333]">*</span>
             </label>
             <select
@@ -272,7 +272,7 @@ export default function ContactUsMessageLeft() {
               value={formData.interestedIn}
               onChange={handleChange}
               required
-              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base"
+              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base"
             >
               {INTEREST_OPTIONS.map((opt) => (
                 <option key={opt} value={opt}>
@@ -285,12 +285,12 @@ export default function ContactUsMessageLeft() {
 
         {/* Products */}
         <div>
-          <p className="text-sm font-medium text-gray-900 mb-3">Interested Products</p>
+          <p className="text-sm font-medium text-black mb-3">Interested Products</p>
           <div className="flex flex-wrap gap-4">
             {PRODUCT_OPTIONS.map((product) => {
               const checked = selectedProductsSet.has(product);
               return (
-                <label key={product} className="inline-flex items-center gap-2 text-sm text-gray-900">
+                <label key={product} className="inline-flex items-center gap-2 text-sm text-black">
                   <input
                     type="checkbox"
                     checked={checked}
@@ -306,7 +306,7 @@ export default function ContactUsMessageLeft() {
 
         {/* Message */}
         <div>
-          <label className="block text-sm font-medium text-gray-900 mb-2" htmlFor="message">
+          <label className="block text-sm font-medium text-black mb-2" htmlFor="message">
             Message
           </label>
           <textarea
@@ -317,7 +317,7 @@ export default function ContactUsMessageLeft() {
             required
             rows={5}
             placeholder="How can we help you?"
-            className="w-full px-6 py-4 rounded-[15px] border border-gray-200  focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-gray-900 placeholder-gray-400 text-base resize-none"
+            className="w-full px-6 py-4 rounded-[15px] border border-gray-200  focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base resize-none"
           />
         </div>
 

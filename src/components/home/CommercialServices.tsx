@@ -19,7 +19,7 @@ export default async function CommercialServices() {
         {/* Section Title */}
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8 md:mb-12">
           <span className="text-[#009FE8]">Lamipak</span>{' '}
-          <span className="text-gray-900">Commercial Services</span>
+          <span className="text-black">Commercial Services</span>
         </h2>
 
         {/* Service Cards Grid */}
@@ -72,7 +72,7 @@ function ServiceCard({ card }: { card: CommercialServiceCard }) {
         </div>
 
         {/* Description */}
-        <p className="text-black text-base md:text-lg mb-6 leading-relaxed">
+        <p className="text-black text-base mb-6 leading-relaxed">
           {card.description}
         </p>
 

@@ -77,7 +77,7 @@ export default function ProductFeaturesSliderClient({
               {/* Feature Content */}
               <div className="p-4 md:p-6 flex-1 flex flex-col">
                 {/* Title */}
-                <h3 className="text-2xl md:text-[24px] font-bold text-gray-900 mb-1 mt-3">
+                <h3 className="text-2xl md:text-[24px] font-bold text-black mb-1 mt-3">
                   {feature.title}
                 </h3>
 

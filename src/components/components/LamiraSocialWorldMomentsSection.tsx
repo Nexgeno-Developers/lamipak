@@ -22,7 +22,7 @@ export default function LamiraSocialWorldMomentsSection({
     <section className="bg-gray-50 py-10 md:py-12">
       <div className="mx-auto px-4 container">
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900">
+          <h2 className="text-3xl md:text-5xl font-bold text-black">
             {data.headingPrefix} <span className="text-[#00A0E3]">{data.headingHighlight}</span>
             {data.headingSuffix ? ` ${data.headingSuffix}` : ''}
           </h2>

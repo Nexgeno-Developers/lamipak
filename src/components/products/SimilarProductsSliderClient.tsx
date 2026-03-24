@@ -159,7 +159,7 @@ export default function SimilarProductsSliderClient({
               {/* Product Info */}
               <div className="p-4 md:p-4 flex-1 flex flex-col">
                 {/* Product Name */}
-                <h3 className="text-2xl md:text-[24px] font-bold text-gray-900 mb-1">
+                <h3 className="text-2xl md:text-[24px] font-bold text-black mb-1">
                   {product.title}
                 </h3>
 

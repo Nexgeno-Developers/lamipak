@@ -74,14 +74,14 @@ export default function ContactUsMessageRight() {
   return (
     <aside className="space-y-6">
       <div className="bg-[#EDF0F1] rounded-[50px] p-6 md:p-7">
-        <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4">Headquarters</h3>
+        <h3 className="text-lg md:text-xl font-bold text-black mb-4">Headquarters</h3>
 
         <div className="space-y-4">
           <div className="flex items-start gap-3">
             <div className="text-[#009FE8] mt-0.5">
               <IconLocation />
             </div>
-            <div className="text-sm text-gray-900 leading-relaxed">
+            <div className="text-sm text-black leading-relaxed">
               123 Sustainable Way, Industrial District,
               <br />
               Shanghai, China
@@ -92,28 +92,28 @@ export default function ContactUsMessageRight() {
             <div className="text-[#009FE8] mt-0.5">
               <IconPhone />
             </div>
-            <div className="text-sm text-gray-900">+86 21 0000 0000</div>
+            <div className="text-sm text-black">+86 21 0000 0000</div>
           </div>
         </div>
       </div>
 
       <div className="bg-[#EDF0F1] rounded-[50px] p-6 md:p-7">
-        <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4">Departments</h3>
+        <h3 className="text-lg md:text-xl font-bold text-black mb-4">Departments</h3>
 
         <div className="space-y-4">
           <div>
-            <p className="text-xs md:text-sm font-bold tracking-wide text-gray-900 mb-2">SALES & PARTNERSHIPS</p>
-            <p className="text-sm text-gray-900">sales@lamipak.com</p>
+            <p className="text-xs md:text-sm font-bold tracking-wide text-black mb-2">SALES & PARTNERSHIPS</p>
+            <p className="text-sm text-black">sales@lamipak.com</p>
           </div>
 
           <div>
-            <p className="text-xs md:text-sm font-bold tracking-wide text-gray-900 mb-2">TECHNICAL SUPPORT</p>
-            <p className="text-sm text-gray-900">tech.support@lamipak.com</p>
+            <p className="text-xs md:text-sm font-bold tracking-wide text-black mb-2">TECHNICAL SUPPORT</p>
+            <p className="text-sm text-black">tech.support@lamipak.com</p>
           </div>
 
           <div>
-            <p className="text-xs md:text-sm font-bold tracking-wide text-gray-900 mb-2">CAREERS</p>
-            <p className="text-sm text-gray-900">hr@lamipak.com</p>
+            <p className="text-xs md:text-sm font-bold tracking-wide text-black mb-2">CAREERS</p>
+            <p className="text-sm text-black">hr@lamipak.com</p>
           </div>
         </div>
       </div>

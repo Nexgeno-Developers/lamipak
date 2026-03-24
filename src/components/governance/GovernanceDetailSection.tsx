@@ -49,7 +49,7 @@ export default function GovernanceDetailSection({
     
 
     <div className="mt-8 bg-[#EDF0F1] rounded-[50px] px-6 md:px-16 py-10">
-      <p className="text-center text-gray-900 leading-relaxed max-w-4xl mx-auto">
+      <p className="text-center text-black leading-relaxed max-w-4xl mx-auto">
         {data.centerText}
       </p>
 
@@ -63,7 +63,7 @@ export default function GovernanceDetailSection({
       </div>
     </div>
 
-    <div className="mt-10 text-gray-900 leading-relaxed">
+    <div className="mt-10 text-black leading-relaxed">
       {data.paragraphs.map((p) => (
         <p key={p}>{p}</p>
       ))}

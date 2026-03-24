@@ -41,7 +41,7 @@ export default function NgoAllianceCardsSection({ data }: NgoAllianceCardsSectio
                   <p className={titleLabelClass} style={{ color: accent }}>
                     {labels.organization}
                   </p>
-                  <p className="text-base font-bold leading-snug text-gray-900 md:text-lg">
+                  <p className="text-base font-bold leading-snug text-black md:text-lg">
                     {card.organizationName}
                   </p>
                 </div>
@@ -50,7 +50,7 @@ export default function NgoAllianceCardsSection({ data }: NgoAllianceCardsSectio
                   <p className={titleLabelClass} style={{ color: accent }}>
                     {labels.initiative}
                   </p>
-                  <p className="text-sm leading-relaxed text-gray-900 md:text-base">
+                  <p className="text-sm leading-relaxed text-black md:text-base">
                     {card.initiativeDescription}
                   </p>
                 </div>
@@ -63,7 +63,7 @@ export default function NgoAllianceCardsSection({ data }: NgoAllianceCardsSectio
                     {card.recyclingTargets.map((line, idx) => (
                       <p
                         key={idx}
-                        className="text-sm font-bold leading-relaxed text-gray-900 md:text-base"
+                        className="text-sm font-bold leading-relaxed text-black md:text-base"
                       >
                         {line}
                       </p>

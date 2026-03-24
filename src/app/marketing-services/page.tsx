@@ -75,7 +75,7 @@ export default async function MarketingServicesPage() {
               <h2 className="text-3xl md:text-4xl lg:text-5xl text-black font-bold mb-6 md:mb-6 leading-[70px]">
                 {overview.heading}
               </h2>
-              <p className="text-base md:text-lg text-black leading-relaxed mb-4 md:mb-6">
+              <p className="text-base text-black leading-relaxed mb-4 md:mb-6">
                 {overview.description}
               </p>
             </div>
@@ -126,7 +126,7 @@ export default async function MarketingServicesPage() {
 
       {/* Marketing services listing – "What Are You Looking For?" heading from API */}
       <section className="bg-gray-50">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 leading-[70px] text-black text-center">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 text-black text-center">
           {overview.listingHeading.replace(overview.listingHeadingHighlight, '').trim()}{' '}
           <span className="text-[#009FE8]">
             {overview.listingHeadingHighlight}
@@ -153,7 +153,7 @@ export default async function MarketingServicesPage() {
                       <h3 className="text-lg md:text-xl lg:text-[36px] font-bold text-[#0E233C] mb-3">
                         {service.title}
                       </h3>
-                      <p className="text-base md:text-lg text-black leading-relaxed mb-4 md:mb-6">
+                      <p className="text-base text-black leading-relaxed mb-4 md:mb-6">
                         {service.shortDescription}
                       </p>
                       <Link
