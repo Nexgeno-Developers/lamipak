@@ -172,7 +172,7 @@ export async function getCompanyData(): Promise<CompanyData> {
 
   return {
     hero: {
-      title: 'Our Company',
+      title: 'About Us',
       backgroundImage: '/about_banner.jpg', // You'll need to add this image
     },
     statistics: [

@@ -51,7 +51,7 @@ export async function getPageData(slug: string): Promise<PageData | null> {
   // Mock data - in real implementation, this would fetch from API
   const mockPages: Record<string, PageData> = {
     'about': {
-      title: 'About Us',
+      title: 'Vision & Mission',
       content: `
         <h2>Our Story</h2>
         <p>We are a team of passionate developers and designers dedicated to creating exceptional digital experiences.</p>
