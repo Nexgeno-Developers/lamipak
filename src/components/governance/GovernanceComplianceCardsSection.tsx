@@ -30,8 +30,8 @@ function IconOutline({
   return (
     <span className="text-[#009FE8] inline-flex items-center justify-center">
       <svg
-        width="22"
-        height="22"
+        width="30"
+        height="30"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -91,9 +91,9 @@ export default function GovernanceComplianceCardsSection({
   data: GovernanceComplianceCardsSectionData;
 }) {
   return (
-    <section className="bg-white py-12 md:py-16">
+    <section className="bg-gray-50 py-8 md:py-12">
       <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
+        <div className="">
           <div className="text-[#009FE8] font-semibold text-sm md:text-base">
             {data.eyebrow}
           </div>
@@ -110,7 +110,7 @@ export default function GovernanceComplianceCardsSection({
                 alt={data.imageAlt}
                 width={1600}
                 height={900}
-                className="w-full h-[240px] md:h-[320px] object-cover rounded-[16px]"
+                className="w-full object-cover rounded-[50px]"
                 priority
               />
             </div>
@@ -119,9 +119,9 @@ export default function GovernanceComplianceCardsSection({
               {data.cards.map((card) => (
                 <div
                   key={card.id}
-                  className="bg-[#EEF2F3] rounded-[18px] px-5 py-4"
+                  className="bg-[#EEF2F3] rounded-[50px] px-6 py-4"
                 >
-                  <div className="flex items-start gap-3">
+                  <div className="flex items-center gap-3">
                     <div className="mt-0.5 shrink-0">
                       {renderCardIcon(card.iconId)}
                     </div>

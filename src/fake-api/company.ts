@@ -248,7 +248,7 @@ export async function getCompanyData(): Promise<CompanyData> {
           id: '3',
           icon: 'building',
           label: 'Government',
-          href: '/our-company/government',
+          href: '/governance-management',
         },
         {
           id: '4',

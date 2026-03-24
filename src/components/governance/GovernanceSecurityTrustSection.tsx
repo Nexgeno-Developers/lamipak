@@ -33,8 +33,8 @@ function IconOutline({
 }) {
   return (
     <svg
-      width="26"
-      height="26"
+      width="30"
+      height="30"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -85,9 +85,9 @@ export default function GovernanceSecurityTrustSection({
   data: GovernanceSecurityTrustSectionData;
 }) {
   return (
-    <section className="bg-white py-10 md:py-14">
+    <section className="bg-gray-50 py-10 md:py-12">
       <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
+        <div className="">
           <div className="text-[#009FE8] font-semibold text-sm md:text-base">
             {data.eyebrow}
           </div>
@@ -110,9 +110,9 @@ export default function GovernanceSecurityTrustSection({
               {data.cards.map((card) => (
                 <div
                   key={card.id}
-                  className="bg-[#EEF2F3] rounded-[18px] px-5 py-4"
+                  className="bg-[#EDF0F1] rounded-[50px] px-5 py-4"
                 >
-                  <div className="flex items-start gap-3">
+                  <div className="flex items-center gap-3">
                     <div className="text-[#009FE8] mt-0.5">
                       {renderCardIcon(card.iconId)}
                     </div>
@@ -131,14 +131,14 @@ export default function GovernanceSecurityTrustSection({
             </div>
           </div>
 
-          <div className="mt-12 bg-[#EEF2F3] rounded-[18px] px-6 py-10">
+          <div className="mt-12">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {data.stats.map((stat) => (
                 <div
                   key={stat.id}
-                  className="bg-white rounded-[16px] px-4 py-10 text-center"
+                  className="bg-[#EDF0F1] rounded-[50px] px-4 py-16 text-center"
                 >
-                  <div className="text-black font-extrabold text-[26px] leading-none">
+                  <div className="text-black font-extrabold text-[42px] leading-none">
                     {stat.value}
                   </div>
                   <div className="mt-3 text-sm text-gray-800 leading-snug">

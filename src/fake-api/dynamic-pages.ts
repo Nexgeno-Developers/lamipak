@@ -1483,8 +1483,8 @@ const PAGES: DynamicPageData[] = [
         buttonText: 'Zero Tolerance Policy',
         buttonHref: '/contact',
         paragraphs: [
-          'Our code of business conduct requires all employees, managers, and business partners to comply with the laws and regulations of every country in which we operate. we expect the same high standards of integrity from our suppliers, distributors, and service partners.',
-          'ethical decision-making is embedded into our daily operations to ensure that business success is achieved responsibly and transparently.',
+          'Our code of business conduct requires all employees, managers, and business partners to comply with the laws and regulations of every country in which we operate. we expect the same high standards of integrity from our suppliers, distributors, and service partners. ethical decision-making is embedded into our daily operations to ensure that business success is achieved responsibly and transparently.',
+          
         ],
       },
       {
@@ -1641,18 +1641,7 @@ const PAGES: DynamicPageData[] = [
           subtitle: 'Global compliance',
           iconId: 'supply_chain',
         },
-        {
-          id: 'security',
-          title: 'Information Security',
-          subtitle: 'Data protection & it policy',
-          iconId: 'security',
-        },
-        {
-          id: 'whistle',
-          title: 'Speak-Up & Whistleblowing',
-          subtitle: 'Confidential reporting',
-          iconId: 'whistle',
-        },
+        
       ],
     },
     governanceFrameworkSecondarySection: {

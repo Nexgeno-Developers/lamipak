@@ -112,9 +112,9 @@ export default function GovernanceGrcSection({
   const resolved = data ?? DEFAULT_DATA;
 
   return (
-    <section className="bg-white py-12 md:py-16">
+    <section className="bg-gray-50 py-8 md:py-12">
       <div className="container mx-auto px-4">
-        <div className="max-w-6xl">
+        <div className="">
           <div className="text-[#009FE8] font-semibold text-sm md:text-base">
             {resolved.eyebrow}
           </div>
@@ -123,7 +123,7 @@ export default function GovernanceGrcSection({
             {resolved.title}
           </h2>
 
-          <p className="mt-6 text-gray-700 leading-relaxed max-w-3xl">
+          <p className="mt-6 text-black leading-relaxed">
             {resolved.description}
           </p>
 
@@ -131,7 +131,7 @@ export default function GovernanceGrcSection({
             {resolved.cards.map((card) => (
               <div
                 key={card.id}
-                className="bg-[#EEF2F3] rounded-[18px] px-5 py-6 text-center"
+                className="bg-[#EDF0F1] rounded-[50px] px-5 py-6 text-center"
               >
                 <div className="flex justify-center text-[#009FE8]">
                   {renderIcon(card.iconId)}

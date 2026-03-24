@@ -12,8 +12,8 @@ type FrameworkCardProps = {
 
 function FrameworkCard({ title, subtitle, icon }: FrameworkCardProps) {
   return (
-    <div className="bg-[#EDF0F1] rounded-[18px] p-5 flex items-start gap-4">
-      <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[#009FE8] shrink-0">
+    <div className="bg-[#EDF0F1] rounded-[50px] p-5 flex items-center gap-4">
+      <div className="flex items-center justify-center text-[#009FE8] shrink-0">
         {icon}
       </div>
       <div className="pt-1">
@@ -33,8 +33,8 @@ function IconOutline({
 }) {
   return (
     <svg
-      width="22"
-      height="22"
+      width="30"
+      height="30"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -168,7 +168,7 @@ export default function GovernanceFrameworkSecondarySection({
   const resolved = data ?? DEFAULT_DATA;
 
   return (
-    <section className="bg-white py-12 md:py-16">
+    <section className="bg-gray-50 py-8 md:py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
           <div>
@@ -180,7 +180,7 @@ export default function GovernanceFrameworkSecondarySection({
               {resolved.title}
             </h2>
 
-            <div className="mt-6 text-gray-700 leading-relaxed max-w-xl space-y-5">
+            <div className="mt-6 text-gray-700 leading-relaxed space-y-5">
               {resolved.description.map((p) => (
                 <p key={p}>{p}</p>
               ))}

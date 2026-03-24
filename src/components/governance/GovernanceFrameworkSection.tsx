@@ -33,8 +33,8 @@ type FrameworkCardProps = {
 
 function FrameworkCard({ title, subtitle, icon }: FrameworkCardProps) {
   return (
-    <div className="bg-[#EDF0F1] rounded-[18px] p-5 flex items-start gap-4">
-      <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-[#009FE8] shrink-0">
+    <div className="bg-[#EDF0F1] rounded-[50px] p-5 flex items-center gap-4">
+      <div className="flex items-center justify-center text-[#009FE8] shrink-0">
         {icon}
       </div>
       <div className="pt-1">
@@ -52,8 +52,8 @@ function IconOutline({
 }) {
   return (
     <svg
-      width="22"
-      height="22"
+      width="30"
+      height="30"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -66,53 +66,6 @@ function IconOutline({
     </svg>
   );
 }
-
-const DEFAULT_DATA: GovernanceFrameworkSectionData = {
-  eyebrow: 'Lamipak - Corporate Governance',
-  title: 'Governance & Management',
-  description:
-    "Strong governance is the foundation of Lamipak's long-term value creation. It is built on transparency, accountability, and responsible decision-making across all global operations, through clear policies and ethical practices. Lamipak ensures sustainable growth while protecting the interests of stakeholders, employees, partners, and the environment.",
-  primaryCta: { text: 'Explore Our Framework', href: '#governance-framework' },
-  secondaryCta: { text: 'Speak Up', href: '/contact' },
-  cards: [
-    {
-      id: 'framework',
-      title: 'Our Governance Framework',
-      subtitle: 'Transparency & accountability',
-      iconId: 'framework',
-    },
-    {
-      id: 'integrity',
-      title: 'Business Integrity & Ethical Conduct',
-      subtitle: 'Zero-tolerance policy',
-      iconId: 'integrity',
-    },
-    {
-      id: 'risk_control',
-      title: 'Governance, Risk & Control',
-      subtitle: 'Transparency & accountability',
-      iconId: 'risk_control',
-    },
-    {
-      id: 'supply_chain',
-      title: 'Responsible Supply Chain',
-      subtitle: 'Global compliance',
-      iconId: 'supply_chain',
-    },
-    {
-      id: 'security',
-      title: 'Information Security',
-      subtitle: 'Data protection & it policy',
-      iconId: 'security',
-    },
-    {
-      id: 'whistle',
-      title: 'Speak-Up & Whistleblowing',
-      subtitle: 'Confidential reporting',
-      iconId: 'whistle',
-    },
-  ],
-};
 
 function renderIcon(iconId: GovernanceFrameworkIconId) {
   switch (iconId) {
@@ -174,46 +127,44 @@ function renderIcon(iconId: GovernanceFrameworkIconId) {
 export default function GovernanceFrameworkSection({
   data,
 }: {
-  data?: GovernanceFrameworkSectionData;
+  data: GovernanceFrameworkSectionData;
 }) {
-  const resolved = data ?? DEFAULT_DATA;
-
   return (
-    <section className="bg-white py-12 md:py-16">
+    <section className="bg-gray-50 py-8 md:py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
           <div>
             <div className="text-[#009FE8] font-semibold text-sm md:text-base">
-              {resolved.eyebrow}
+              {data.eyebrow}
             </div>
 
             <h2 className="mt-4 text-3xl md:text-5xl font-bold text-[#009FE8] leading-tight">
-              {resolved.title}
+              {data.title}
             </h2>
 
-            <p className="mt-6 text-gray-700 leading-relaxed max-w-xl">
-              {resolved.description}
+            <p className="mt-6 text-gray-700 leading-relaxed ">
+              {data.description}
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
               <a
-                href={resolved.primaryCta.href}
+                href={data.primaryCta.href}
                 className="inline-flex items-center justify-center rounded-full bg-[#009FE8] text-white font-bold px-7 py-3 hover:bg-[#0077B6] transition-colors"
               >
-                {resolved.primaryCta.text}
+                {data.primaryCta.text}
               </a>
 
               <Link
-                href={resolved.secondaryCta.href}
+                href={data.secondaryCta.href}
                 className="inline-flex items-center justify-center rounded-full border border-[#009FE8] text-[#009FE8] font-bold px-7 py-3 hover:bg-[#009FE8] hover:text-white transition-colors"
               >
-                {resolved.secondaryCta.text}
+                {data.secondaryCta.text}
               </Link>
             </div>
           </div>
 
           <div id="governance-framework" className="space-y-4">
-            {resolved.cards.map((card) => (
+            {data.cards.map((card) => (
               <FrameworkCard
                 key={card.id}
                 title={card.title}

@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import CompanyHero from '@/components/company/CompanyHero';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import CallToAction from '@/components/home/CallToAction';
@@ -19,6 +20,11 @@ export interface GovernanceManagementPageProps {
 export default function GovernanceManagementPage({
   data,
 }: GovernanceManagementPageProps) {
+  const detailSections = data.governanceDetailSections ?? [];
+  const firstCenterPanelIndex = detailSections.findIndex(
+    (d) => d.layout === 'centerPanel',
+  );
+
   return (
     <main className="min-h-screen bg-gray-50">
       <CompanyHero
@@ -37,36 +43,53 @@ export default function GovernanceManagementPage({
         </div>
       </section>
 
-        <GovernanceFrameworkSection data={data.governanceFrameworkSection} />
+        <GovernanceFrameworkSection data={data.governanceFrameworkSection!} />
 
-        <div className="h-1 bg-[#009FE8]" />
+       
 
         <GovernanceFrameworkSecondarySection
           data={data.governanceFrameworkSecondarySection}
         />
 
-        <GovernanceGrcSection data={data.governanceGrcSection} />
+        {detailSections.map((d, index) => {
+          if (d.layout === 'centerPanel') {
+            const detail = (
+              <GovernanceDetailSection key={d.title} data={d} />
+            );
+            if (index === firstCenterPanelIndex) {
+              return (
+                <Fragment key={`${d.title}-with-grc`}>
+                  {detail}
+                  <GovernanceGrcSection data={data.governanceGrcSection} />
+                </Fragment>
+              );
+            }
+            return detail;
+          }
+          if (d.layout === 'complianceCards') {
+            return <GovernanceComplianceCardsSection key={d.title} data={d} />;
+          }
+          if (d.layout === 'securityTrust') {
+            return (
+              <GovernanceSecurityTrustSection key={d.titleBlue} data={d} />
+            );
+          }
+          if (d.layout === 'whistleCards') {
+            return (
+              <GovernanceWhistleblowingCardsSection
+                key={d.cards.map((c) => c.id).join('-')}
+                data={d}
+              />
+            );
+          }
+          return (
+            <GovernanceWhistleblowingSection key={d.titleBlue} data={d} />
+          );
+        })}
 
-        {data.governanceDetailSections?.map((d) => (
-          d.layout === 'centerPanel' ? (
-            <GovernanceDetailSection key={d.title} data={d} />
-          ) : d.layout === 'complianceCards' ? (
-            <GovernanceComplianceCardsSection key={d.title} data={d} />
-          ) : d.layout === 'securityTrust' ? (
-            <GovernanceSecurityTrustSection key={d.titleBlue} data={d} />
-          ) : d.layout === 'whistleCards' ? (
-            <GovernanceWhistleblowingCardsSection
-              key={d.cards.map((c) => c.id).join('-')}
-              data={d}
-            />
-          ) : (
-            <GovernanceWhistleblowingSection
-              key={d.titleBlue}
-              data={d}
-            />
-          )
-        ))}
-     
+        {firstCenterPanelIndex === -1 ? (
+          <GovernanceGrcSection data={data.governanceGrcSection} />
+        ) : null}
 
       <div className="bg-gray-50 pt-12">
         <CallToAction />
