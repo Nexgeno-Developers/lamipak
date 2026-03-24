@@ -26,7 +26,7 @@ export default function GovernanceDetailSection({
             {data.eyebrow}
           </div>
 
-          <h2 className="mt-2 text-3xl md:text-5xl font-bold text-[#009FE8] leading-tight">
+          <h2 className="mt-2 text-3xl md:text-5xl font-bold text-black leading-tight">
             {data.title}
           </h2>
         </div>

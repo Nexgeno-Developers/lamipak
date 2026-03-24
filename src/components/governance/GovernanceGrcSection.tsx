@@ -119,7 +119,7 @@ export default function GovernanceGrcSection({
             {resolved.eyebrow}
           </div>
 
-          <h2 className="mt-3 text-3xl md:text-5xl font-bold text-[#009FE8] leading-tight">
+          <h2 className="mt-3 text-3xl md:text-5xl font-bold text-black leading-tight">
             {resolved.title}
           </h2>
 

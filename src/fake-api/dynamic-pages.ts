@@ -1832,6 +1832,41 @@ export async function getDynamicPageBySlug(
     };
   }
 
+  if (slug === 'vision-mission') {
+    const companyData = await fakeGetCompanyData();
+    const companySeo = companyData.seo;
+
+    return {
+      slug,
+      type: 'our-factory',
+      title: 'Vision & Mission',
+      content: companySeo.meta_description,
+      ourCompanyData: companyData,
+      seo: {
+        meta_title: 'Vision & Mission - Lamipak',
+        meta_description: companySeo.meta_description,
+        canonical_path: '/vision-mission',
+        keywords: undefined,
+        author: undefined,
+        robots: { index: true, follow: true },
+        og_title: 'Vision & Mission - Lamipak',
+        og_description: companySeo.og_description,
+        og_image: companySeo.og_image,
+        og_type: 'website',
+        twitter_title: 'Vision & Mission - Lamipak',
+        twitter_description: companySeo.twitter_description,
+        twitter_image: companySeo.twitter_image,
+        twitter_card:
+          (companySeo.twitter_card as
+            | 'summary_large_image'
+            | 'summary'
+            | 'player'
+            | 'app'
+            | undefined) ?? 'summary_large_image',
+      },
+    };
+  }
+
   // Simulate API delay
   await new Promise((resolve) => setTimeout(resolve, 80));
 

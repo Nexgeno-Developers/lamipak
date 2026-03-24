@@ -1,95 +1,81 @@
 import type { Metadata } from 'next';
-import { fetchCompanyData } from '@/lib/api';
+import { notFound } from 'next/navigation';
 import { getCanonicalUrl } from '@/config/site';
 import CompanyHero from '@/components/company/CompanyHero';
-import CompanyNavigationServer from '@/components/company/CompanyNavigationServer';
-import VisionMissionServer from '@/components/company/VisionMissionServer';
+import CompanyNavigation from '@/components/company/CompanyNavigation';
+import VisionMission from '@/components/company/VisionMission';
+import OurValues from '@/components/company/OurValues';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
-import OurValuesServer from '@/components/company/OurValuesServer';
 import CallToAction from '@/components/home/CallToAction';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
+import { getDynamicPageBySlug } from '@/fake-api/dynamic-pages';
 
-/**
- * Generate metadata for Vision & Mission page
- */
 export async function generateMetadata(): Promise<Metadata> {
-  const companyData = await fetchCompanyData();
-  
-  const canonicalUrl = getCanonicalUrl('/vision-mission');
+  const data = await getDynamicPageBySlug('vision-mission');
+  if (!data?.seo) return { title: 'Vision & Mission' };
+
+  const seo = data.seo;
+  const canonicalUrl = seo.canonical_path
+    ? getCanonicalUrl(seo.canonical_path)
+    : getCanonicalUrl('/vision-mission');
 
   return {
-    title: 'Vision & Mission - Lamipak',
-    description: companyData.seo.meta_description,
+    title: seo.meta_title || data.title,
+    description: seo.meta_description || data.content,
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: 'Vision & Mission - Lamipak',
-      description: companyData.seo.og_description || companyData.seo.meta_description,
-      images: companyData.seo.og_image ? [companyData.seo.og_image] : [],
+      title: seo.og_title || seo.meta_title || data.title,
+      description: seo.og_description || seo.meta_description || data.content,
+      images: seo.og_image ? [seo.og_image] : [],
       url: canonicalUrl,
-      type: 'website',
+      type: seo.og_type || 'website',
     },
     twitter: {
-      card: (companyData.seo.twitter_card as 'summary_large_image' | 'summary' | 'player' | 'app') || 'summary_large_image',
-      title: 'Vision & Mission - Lamipak',
-      description: companyData.seo.twitter_description || companyData.seo.meta_description,
-      images: companyData.seo.twitter_image ? [companyData.seo.twitter_image] : [],
+      card: seo.twitter_card || 'summary_large_image',
+      title: seo.twitter_title || seo.meta_title || data.title,
+      description: seo.twitter_description || seo.meta_description || data.content,
+      images: seo.twitter_image ? [seo.twitter_image] : [],
     },
   };
 }
 
-/**
- * Vision & Mission Page Component
- * 
- * Server Component that fetches company data server-side
- * and displays hero section and statistics.
- * This is a duplicate of the About Us page.
- */
 export default async function VisionMissionPage() {
-  const companyData = await fetchCompanyData();
+  const data = await getDynamicPageBySlug('vision-mission');
+  if (!data || !data.ourCompanyData) notFound();
 
-  // Prepare schema data with canonical URL
-  const schemaData = companyData.seo.schema ? {
-    ...companyData.seo.schema,
-    url: getCanonicalUrl('/vision-mission'),
-  } : null;
+  const companyData = data.ourCompanyData;
 
   return (
-    <>
-      {/* JSON-LD Schema */}
-      {schemaData && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
-        />
-      )}
+    <main className="min-h-screen bg-gray-50">
+      <CompanyHero
+    data={{
+      ...companyData.hero,
+      title: data.title,
+    }}
+  />
+<section className="bg-gray-50">
+        <div className="container mx-auto px-4 py-4">
+          <Breadcrumbs items={[{ label: data.title }]} />
+        </div>
+      </section>
+            
 
-      <main className="min-h-screen bg-gray-50">
-        {/* Hero Section */}
-        <CompanyHero data={companyData.hero} />
-        <section className="bg-gray-50">
-          <div className="container mx-auto px-4 py-4">
-            <Breadcrumbs
-              items={[
-                
-                { label: 'Vision & Mission' },
-              ]}
-            />
-          </div>
-        </section>
-        <CompanyNavigationServer activePath="/vision-mission" />
+      <CompanyNavigation
+        data={companyData.navigation}
+        activePath={`/${data.slug}`}
+      />
 
-       
+      
 
-        <VisionMissionServer />
-        
-        {/* Our Values Section */}
-        <OurValuesServer />
-        
+      {companyData.visionMission ? <VisionMission data={companyData.visionMission} /> : null}
+      {companyData.ourValues ? <OurValues data={companyData.ourValues} /> : null}
+
+      <div className="pt-12 bg-gray-50">
         <CallToAction />
-        <NewsletterSubscription />
-      </main>
-    </>
+      </div>
+      <NewsletterSubscription />
+    </main>
   );
 }
