@@ -68,8 +68,8 @@ export default async function AboutUsPage() {
       )}
 
       <main className="min-h-screen bg-gray-50">
-        {/* Hero Section */}
-        <CompanyHero data={{ ...companyData.hero, title: 'About Us' }} /> <section className="bg-gray-50">
+        <CompanyHero data={{ ...companyData.hero, title: 'About Us' }} />
+        <section className="bg-gray-50">
           <div className="container mx-auto px-4 py-4">
             <Breadcrumbs items={[{ label: 'About us' }]} />
           </div>
@@ -77,18 +77,18 @@ export default async function AboutUsPage() {
         <CompanyNavigationServer activePath="/about-us" />
 
        
-<CompanyStatistics />
-        {/* <AboutUsQuadrantServer /> */}
 
+        <CompanyStatistics statistics={companyData.statistics} />
+
+       
         <Journey />
 
-        <VideoBanner />
-        
-      
-   <div className="pt-20">
-<CallToAction />
-   </div>
-        
+        <VideoBanner videoOnly={true} />
+
+        <div className="pt-20">
+          <CallToAction />
+        </div>
+
         <NewsletterSubscription />
       </main>
     </>
