@@ -101,6 +101,8 @@ export type CategoryShowcaseSectionData = {
 
 export type RollFedCatalogProduct = {
   id: string;
+  /** Product detail route slug, e.g. /products/brick-slim */
+  slug: string;
   title: string;
   sizes: string;
   image?: string;
@@ -269,36 +271,42 @@ export async function getSubCategoryPage(
     const standardProducts: RollFedCatalogProduct[] = [
       {
         id: 'brick-slim',
+        slug: 'brick-slim',
         title: 'Brick Slim',
         sizes: '80ml, 125ml, 200ml, 250ml, 500ml, 1000ml, 1500ml, 2000ml',
         image: '/product_image_3.jpg',
       },
       {
         id: 'brick-base',
+        slug: 'brick-base',
         title: 'Brick Base',
         sizes: '100ml, 200ml, 250ml, 500ml, 1000ml',
         image: '/product_image_3.jpg',
       },
       {
         id: 'brick-mid',
+        slug: 'brick-mid',
         title: 'Brick Mid',
         sizes: '200ml',
         image: '/product_image_3.jpg',
       },
       {
         id: 'lamiwedge',
+        slug: 'lamiwedge',
         title: 'LamiWedge',
         sizes: '125ml, 200ml',
         image: '/product_image_3.jpg',
       },
       {
         id: 'lamipillow',
+        slug: 'lamipillow',
         title: 'LamiPillow',
         sizes: '70ml, 100ml, 200ml, 220ml, 250ml, 600ml, 1000ml',
         image: '/product_image_3.jpg',
       },
       {
         id: 'lamitriangle',
+        slug: 'lamitriangle',
         title: 'LamiTriangle',
         sizes: '20ml, 65ml, 80ml, 150ml, 200ml',
         image: '/product_image_3.jpg',
@@ -306,14 +314,14 @@ export async function getSubCategoryPage(
     ];
 
     const premiumProducts: RollFedCatalogProduct[] = [
-      { id: 'lamileaf-slim', title: 'LamiLeaf Slim', sizes: '125ml, 200ml', image: '/product_image_3.jpg' },
-      { id: 'lamidiamond', title: 'LamiDiamond', sizes: '200ml, 250ml, 1000ml', image: '/product_image_3.jpg' },
-      { id: 'lamisquare', title: 'LamiSquare', sizes: '1000ml', image: '/product_image_3.jpg' },
-      { id: 'lamiedge', title: 'LamiEdge', sizes: '500ml, 1000ml', image: '/product_image_3.jpg' },
-      { id: 'lamileaf-base', title: 'LamiLeaf Base', sizes: '250ml', image: '/product_image_3.jpg' },
-      { id: 'lamigemina', title: 'LamiGemina', sizes: '1000ml', image: '/product_image_3.jpg' },
-      { id: 'lami-gemina-leaf', title: 'Lami Gemina Leaf', sizes: '1000ml', image: '/product_image_3.jpg' },
-      { id: 'lamiultra', title: 'LamiUltra', sizes: '180ml', image: '/product_image_3.jpg' },
+      { id: 'lamileaf-slim', slug: 'lamileaf-slim', title: 'LamiLeaf Slim', sizes: '125ml, 200ml', image: '/product_image_3.jpg' },
+      { id: 'lamidiamond', slug: 'lamidiamond', title: 'LamiDiamond', sizes: '200ml, 250ml, 1000ml', image: '/product_image_3.jpg' },
+      { id: 'lamisquare', slug: 'lamisquare', title: 'LamiSquare', sizes: '1000ml', image: '/product_image_3.jpg' },
+      { id: 'lamiedge', slug: 'lamiedge', title: 'LamiEdge', sizes: '500ml, 1000ml', image: '/product_image_3.jpg' },
+      { id: 'lamileaf-base', slug: 'lamileaf-base', title: 'LamiLeaf Base', sizes: '250ml', image: '/product_image_3.jpg' },
+      { id: 'lamigemina', slug: 'lamigemina', title: 'LamiGemina', sizes: '1000ml', image: '/product_image_3.jpg' },
+      { id: 'lami-gemina-leaf', slug: 'lami-gemina-leaf', title: 'Lami Gemina Leaf', sizes: '1000ml', image: '/product_image_3.jpg' },
+      { id: 'lamiultra', slug: 'lamiultra', title: 'LamiUltra', sizes: '180ml', image: '/product_image_3.jpg' },
     ];
 
     return {

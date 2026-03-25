@@ -1,8 +1,12 @@
+import Link from 'next/link';
 import type { RollFedCatalogProduct, RollFedCatalogSectionData } from '@/fake-api/page-builder';
 
 function ProductCard({ product }: { product: RollFedCatalogProduct }) {
   return (
-    <article className="rounded-[20px] bg-[#EEF2F3] p-5 md:p-6 min-h-[250px] flex flex-col">
+    <Link
+      href={`/products/${product.slug}`}
+      className="rounded-[20px] bg-[#EEF2F3] p-5 md:p-6 min-h-[250px] flex flex-col transition-all hover:shadow-md hover:-translate-y-0.5"
+    >
       <div className="relative h-28 md:h-32 flex items-center justify-center">
         {product.image ? (
           <img src={product.image} alt={product.title} className="max-h-full w-auto object-contain" />
@@ -12,7 +16,7 @@ function ProductCard({ product }: { product: RollFedCatalogProduct }) {
       </div>
       <h3 className="mt-4 text-lg font-bold text-black">{product.title}</h3>
       <p className="mt-2 text-sm text-black/70 leading-relaxed">{product.sizes}</p>
-    </article>
+    </Link>
   );
 }
 
