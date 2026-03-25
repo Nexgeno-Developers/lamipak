@@ -109,12 +109,18 @@ function Accordion({
 
 function FeatureBlock({
   feature,
+  reverse,
 }: {
   feature: OnePackOneCodeLandingSectionData['features'][number];
+  reverse?: boolean;
 }) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[44%_56%] gap-8 lg:gap-10 items-center">
-      <div>
+    <div
+      className={`grid grid-cols-1 lg:gap-10 gap-8 items-center ${
+        reverse ? 'lg:grid-cols-[56%_44%]' : 'lg:grid-cols-[44%_56%]'
+      }`}
+    >
+      <div className={reverse ? 'lg:order-2' : undefined}>
         <div className="flex items-end gap-4 mb-4">
           <div className="text-5xl md:text-6xl font-extrabold text-[#B7D7EA] leading-none">{feature.number}</div>
           <div className="min-w-0">
@@ -131,7 +137,7 @@ function FeatureBlock({
         </ul>
       </div>
 
-      <div>
+      <div className={reverse ? 'lg:order-1' : undefined}>
         <div className="rounded-[22px] bg-[#0c1f45] p-4 md:p-6 shadow-inner">
           {feature.image ? (
             <img src={feature.image} alt={feature.title} className="w-full h-[220px] md:h-[260px] object-contain" />
@@ -189,12 +195,11 @@ export function OnePackOneCodeLandingSection({
       
 
       {/* Access points + features */}
-      <div className="container mx-auto px-4 pb-12">
-        
+      <div className="w-full px-4 sm:px-6 lg:px-10 pb-12">
 
-        <div className="mt-12 space-y-14">
-          {data.features.map((f) => (
-            <FeatureBlock key={f.id} feature={f} />
+        <div className="mt-12 space-y-14 w-full">
+          {data.features.map((f, idx) => (
+            <FeatureBlock key={f.id} feature={f} reverse={idx % 2 === 1} />
           ))}
         </div>
       </div>
