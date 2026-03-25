@@ -225,7 +225,7 @@ export async function getCareersListingData(): Promise<CareersListingData> {
       mediaImage: '/about_banner.jpg',
       mediaAlt: 'Lamipak production line',
       mediaLink: '/video2.mp4',
-    },
+    },  
     intro: {
       heading: 'Join Lamipak',
       description:
