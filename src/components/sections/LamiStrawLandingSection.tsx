@@ -1,12 +1,15 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import type { LamiStrawIconId, LamiStrawLandingSectionData } from '@/fake-api/page-builder';
 import type { ReactElement } from 'react';
+import NewsletterSubscription from '../home/NewsletterSubscription';
+import CallToAction from '../home/CallToAction';
 
 function IconBase({ children }: { children: React.ReactNode }) {
   return (
-    <div className="h-14 w-14 rounded-2xl bg-[#B7D7EA] flex items-center justify-center">
+    <div className="h-40 w-40 rounded-[20px] p-[10px] bg-[#B7D7EA] flex items-center justify-center">
       {children}
     </div>
   );
@@ -61,40 +64,45 @@ function StrawCard({
   const Icon = iconById[card.iconId] ?? iconById.u;
 
   return (
-    <div className="bg-[#EEF2F3] rounded-[22px] p-6 flex flex-col min-h-[210px]">
-      <div className="flex items-start gap-4">
+    <div className="bg-[#EDF0F1] rounded-[50px] p-6 flex flex-col">
+      <div className="flex items-start gap-6">
         <IconBase>
           {card.image ? (
-            <img
+            <Image
               src={card.image}
               alt={card.imageAlt || card.title}
-              className="h-10 w-10 object-contain"
+              width={130}
+              height={130}
+              className="h-full w-full object-contain p-[0px] rounded-[20px]"
+              priority={false}
             />
           ) : (
             <Icon />
           )}
         </IconBase>
         <div className="flex-1">
-          <h3 className="text-[#0A4A7A] text-lg md:text-xl font-bold leading-snug">
+          <h3 className="text-black text-lg md:text-xl font-bold leading-snug">
             {card.title}
           </h3>
-        </div>
-      </div>
 
-      <p className="mt-4 text-sm md:text-base text-black/70 leading-relaxed">
+          <p className="mt-4 text-sm md:text-base text-black leading-relaxed">
         {card.description}
       </p>
 
       {card.href && (
-        <div className="mt-auto pt-5">
+        <div className="mt-4">
           <Link
             href={card.href}
-            className="text-[#009FE8] text-xs md:text-sm font-medium inline-flex items-center hover:opacity-80 transition-opacity"
+            className="text-[#009FE8] text-xs md:text-sm font-semibold inline-flex items-center hover:opacity-80 transition-opacity"
           >
             {card.readMoreLabel}
           </Link>
         </div>
       )}
+        </div>
+      </div>
+
+      
     </div>
   );
 }
@@ -105,16 +113,16 @@ export function LamiStrawLandingSection({
   data: LamiStrawLandingSectionData;
 }) {
   return (
-    <section className="bg-white py-10 md:py-16">
+    <>
+    <section className="bg-gray-50 py-10 md:py-20">
       <div className="container mx-auto px-4">
         <div className=" mx-auto text-center">
           <p className="text-[#009FE8] text-xs md:text-sm font-semibold tracking-wider uppercase mb-5">
             {data.eyebrow}
           </p>
-          <h1 className="text-[22px] md:text-4xl font-bold text-black leading-tight">
-            {data.title}
-          </h1>
-          <div className="mt-5 text-sm md:text-base text-black/70 leading-relaxed space-y-4">
+          <h1 className="text-[22px] md:text-4xl font-bold text-black leading-tight">{data.title}</h1>
+
+          <div className="mt-5 text-sm md:text-base text-black leading-relaxed space-y-4">
             {data.descriptionLines.map((line, idx) => (
               <p key={idx}>{line}</p>
             ))}
@@ -130,6 +138,11 @@ export function LamiStrawLandingSection({
         </div>
       </div>
     </section>
+
+
+    <CallToAction />
+    <NewsletterSubscription />
+    </>
   );
 }
 
