@@ -46,7 +46,7 @@ export default function VideoModalBanner({
 
   return (
     <>
-      <section className="relative min-h-[70dvh] h-[100dvh] md:h-screen overflow-hidden bg-[#0c1f45]">
+      <section className="relative min-h-[70dvh] h-[100dvh] md:h-screen overflow-hidden bg-[#0c1f45] mt-20 mb-8">
         <div className="absolute inset-0">
           {safeBackground ? (
             <img

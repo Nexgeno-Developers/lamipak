@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import type { OnePackOneCodeLandingSectionData, OnePackOneCodeTabId } from '@/fake-api/page-builder';
+import Image from 'next/image';
 import VideoModalBanner from '../home/VideoModalBanner';
 import CallToAction from '../home/CallToAction';
 import NewsletterSubscription from '../home/NewsletterSubscription';
@@ -116,33 +117,38 @@ function FeatureBlock({
 }) {
   return (
     <div
-      className={`grid grid-cols-1 lg:gap-10 gap-8 items-center ${
-        reverse ? 'lg:grid-cols-[56%_44%]' : 'lg:grid-cols-[44%_56%]'
-      }`}
+      className='grid grid-cols-1 lg:gap-10 gap-8 lg:grid-cols-2 items-center'
     >
       <div className={reverse ? 'lg:order-2' : undefined}>
-        <div className="flex items-end gap-4 mb-4">
+        <div className="">
           <div className="text-5xl md:text-6xl font-extrabold text-[#B7D7EA] leading-none">{feature.number}</div>
-          <div className="min-w-0">
-            <h3 className="text-lg md:text-2xl font-bold text-black/90">{feature.title}</h3>
+          <div className="min-w-0 py-5">
+            <h3 className="text-lg md:text-3xl font-bold text-black">{feature.title}</h3>
           </div>
         </div>
-        <ul className="space-y-3">
+        <div className="space-y-3">
           {feature.bullets.map((b, idx) => (
-            <li key={`${feature.id}-${idx}`} className="flex items-start gap-3 text-sm md:text-base text-black/70">
-              <span className="mt-1 h-2 w-2 rounded-full bg-[#009FE8]" aria-hidden />
+            <p key={`${feature.id}-${idx}`} className="flex items-start gap-3 text-sm md:text-base text-black/70">
+              
               <span className="leading-relaxed">{b}</span>
-            </li>
+            </p>
           ))}
-        </ul>
+        </div>
       </div>
 
       <div className={reverse ? 'lg:order-1' : undefined}>
-        <div className="rounded-[22px] bg-[#0c1f45] p-4 md:p-6 shadow-inner">
+        <div className="">
           {feature.image ? (
-            <img src={feature.image} alt={feature.title} className="w-full h-[220px] md:h-[260px] object-contain" />
+            <Image
+              src={feature.image}
+              alt={feature.title}
+              width={800}
+              height={600}
+              className="w-full object-contain"
+              priority={false}
+            />
           ) : (
-            <div className="w-full h-[220px] bg-black/10 rounded-xl" />
+            <div className="" />
           )}
         </div>
       </div>
@@ -191,9 +197,9 @@ export function OnePackOneCodeLandingSection({
       
 
       {/* Access points + features */}
-      <div className="w-full px-4 sm:px-6 lg:px-10 pb-12">
+      <div className="container w-full px-4 mx-auto">
 
-        <div className="mt-12 space-y-14 w-full">
+        <div className="mt-12 space-y-20 w-full">
           {data.features.map((f, idx) => (
             <FeatureBlock key={f.id} feature={f} reverse={idx % 2 === 1} />
           ))}

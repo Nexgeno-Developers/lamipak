@@ -372,11 +372,11 @@ export async function getMainCategoryPage(
             {
               id: 'cap-solutions',
               code: 'LAMI-03',
-              title: 'Cap solutions',
+              title: 'Cap Solutions',
               description:
                 'Precision-engineered closures ensuring leak-proof delivery, consumer-friendly opening, and compatibility with your filling environment.',
               ctaLabel: 'Technical specs',
-              href: '/packaging/closure-systems',
+              href: '/packaging/cap-solutions',
               iconId: 'cap',
             },
             {
@@ -408,16 +408,6 @@ export async function getMainCategoryPage(
                 'Premium metallic co-printing effect for high-end bottle and beverage packaging, designed for consistent adhesion and shelf impact.',
               ctaLabel: 'Technical specs',
               href: '/packaging/metallic-lnk',
-              iconId: 'innovation',
-            },
-            {
-              id: 'opticap',
-              code: 'LAMI-07',
-              title: 'Opticap',
-              description:
-                'Opticap cap effect adds visual sophistication to closures and caps with a clean, consistent finish for premium consumer experiences.',
-              ctaLabel: 'Technical specs',
-              href: '/packaging/opticap',
               iconId: 'innovation',
             },
             {
@@ -998,37 +988,38 @@ export async function getSubCategoryPage(
     };
   }
 
-  if (subCategory === 'opticap') {
+  if (subCategory === 'cap-solutions') {
+    // Cap Solutions landing page (legacy "opticap" link is disabled below)
     return {
-      slug: `${mainCategory}/${subCategory}`,
-      title: 'Opticap',
+      slug: `${mainCategory}/cap-solutions`,
+      title: 'Cap Solutions',
       seo: {
-        meta_title: 'Opticap | Lamipak',
+        meta_title: 'Cap Solutions | Lamipak',
         meta_description:
-          'Opticap cap effect for premium bottle and closure aesthetics — clean, consistent finish designed for reliability and shelf impact.',
-        canonical_path: `/${mainCategory}/${subCategory}`,
+          'Cap Solutions are precision-engineered closures ensuring leak-proof delivery, consumer-friendly opening, and reliable compatibility across production lines.',
+        canonical_path: `/${mainCategory}/cap-solutions`,
       },
       sections: [
         {
           type: 'heroWithBreadcrumbs',
           data: {
-            title: 'Opticap',
+            title: 'Cap Solutions',
             backgroundImage: '/banner-slider1.jpg',
             breadcrumbs: [
               { label: 'Packaging', href: '/packaging' },
-              { label: 'Opticap' },
+              { label: 'Cap Solutions' },
             ],
           },
         },
         {
           type: 'opticapLanding',
           data: {
-            title: 'Opticap',
+            title: 'Cap Solutions',
             image: '/product_image_3.jpg',
             descriptionLines: [
-              'Opticap’s cap effect adds visual sophistication to closures and caps with a clean, consistent finish.',
-              'Built for premium consumer experiences, Opticap enhances the look of your bottle while supporting reliable performance across production runs.',
-              'From formulation to finished packaging, Opticap supports innovation, quality, and long-term brand trust.',
+              'Cap Solutions are precision-engineered closures ensuring leak-proof delivery, consumer-friendly opening, and consistent performance.',
+              'Built for dependable production runs, Cap Solutions enhance user experience while maintaining compatibility with your filling environment.',
+              'From sourcing to finished packaging, Cap Solutions support innovation, quality, and long-term brand trust.',
             ],
             sizeFormatTitle: 'Size Format',
             sizeFormatText: 'Can be used in roll-fed format, sleeve-fed format, and sustainable product formats',
@@ -1042,7 +1033,7 @@ export async function getSubCategoryPage(
               { id: 'sustainable-product', label: 'Sustainable Product', href: '/packaging/sustainable-solutions' },
             ],
             productFeaturesDescription:
-              'Opticap delivers consistent optical finishing across production lines, keeping visual quality stable while reducing material waste. This solution is designed to complement your existing formats, helping brands maintain a premium shelf presence and a dependable consumer experience.',
+              'Cap Solutions deliver reliable closure performance across production lines, helping brands maintain consistent quality while reducing downtime and variation.',
             connectSection: {
               heading: 'Connect with Our Technical Experts',
               headingHighlight: 'Technical Experts',
@@ -1054,6 +1045,10 @@ export async function getSubCategoryPage(
         },
       ],
     };
+  }
+
+  if (subCategory === 'opticap') {
+    return null;
   }
 
   const category = await getCategoryBySlug(subCategory);
