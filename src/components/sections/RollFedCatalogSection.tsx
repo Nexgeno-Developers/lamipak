@@ -55,7 +55,9 @@ export function RollFedCatalogSection({ data }: { data: RollFedCatalogSectionDat
         </p>
 
         <ProductGrid title={data.standardTitle} products={data.standardProducts} />
-        <ProductGrid title={data.premiumTitle} products={data.premiumProducts} />
+        {data.premiumTitle && data.premiumProducts.length > 0 && (
+          <ProductGrid title={data.premiumTitle} products={data.premiumProducts} />
+        )}
       </div>
     </section>
   );
