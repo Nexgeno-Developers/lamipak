@@ -1,21 +1,32 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import type { RollFedCatalogProduct, RollFedCatalogSectionData } from '@/fake-api/page-builder';
+import CallToAction from '../home/CallToAction';
+import NewsletterSubscription from '../home/NewsletterSubscription';
 
 function ProductCard({ product }: { product: RollFedCatalogProduct }) {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="rounded-[20px] bg-[#EEF2F3] p-5 md:p-6 min-h-[250px] flex flex-col transition-all hover:shadow-md hover:-translate-y-0.5"
+      className="rounded-[50px] bg-[#EDF0F1] p-5 md:p-[20px] flex flex-col transition-all"
     >
-      <div className="relative h-28 md:h-32 flex items-center justify-center">
+      <div className="relative rounded-[50px] flex items-center justify-center">
         {product.image ? (
-          <img src={product.image} alt={product.title} className="max-h-full w-auto object-contain" />
+          <Image
+            src={product.image}
+            alt={product.title}
+            width={500}
+            height={500}
+            sizes="(max-width: 768px) 112px, 128px "
+            className="object-contain rounded-[50px]"
+            priority={false}
+          />
         ) : (
-          <div className="h-20 w-14 rounded-md bg-[#0EA5E9]/25" />
+          <div className="" />
         )}
       </div>
-      <h3 className="mt-4 text-lg font-bold text-black">{product.title}</h3>
-      <p className="mt-2 text-sm text-black/70 leading-relaxed">{product.sizes}</p>
+      <h3 className="mt-6 text-lg font-bold text-black">{product.title}</h3>
+      <p className="mt-1 text-sm text-black leading-relaxed pb-5">{product.sizes}</p>
     </Link>
   );
 }
@@ -29,7 +40,7 @@ function ProductGrid({
 }) {
   return (
     <section className="mt-10 md:mt-12">
-      <h2 className="text-center text-[#009FE8] text-sm md:text-base font-medium mb-6 md:mb-8">
+      <h2 className="text-center text-[#009FE8] text-sm md:text-[24px] font-bold mb-6 md:mb-8">
         {title}
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
@@ -43,14 +54,11 @@ function ProductGrid({
 
 export function RollFedCatalogSection({ data }: { data: RollFedCatalogSectionData }) {
   return (
-    <section className="bg-[#F5F6F7] py-10 md:py-14">
-      <div className="container mx-auto px-4 max-w-6xl">
-        {data.eyebrow && (
-          <p className="text-center text-[#009FE8] text-sm font-medium mb-3">
-            {data.eyebrow}
-          </p>
-        )}
-        <p className="text-center text-black/80 text-sm md:text-base leading-relaxed max-w-4xl mx-auto">
+    <>
+    <section className="bg-gray-50 py-10 md:py-14">
+      <div className="container mx-auto px-4">
+       
+        <p className="text-center text-black text-sm md:text-base leading-relaxed  mx-auto">
           {data.intro}
         </p>
 
@@ -60,6 +68,10 @@ export function RollFedCatalogSection({ data }: { data: RollFedCatalogSectionDat
         )}
       </div>
     </section>
+
+    <CallToAction />
+    <NewsletterSubscription />
+    </>
   );
 }
 

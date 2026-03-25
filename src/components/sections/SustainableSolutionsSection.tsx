@@ -7,7 +7,7 @@ export function SustainableSolutionsSection({
   data: SustainableSolutionsSectionData;
 }) {
   return (
-    <section className="bg-white py-12 md:py-16">
+    <section className="bg-gray-50 py-12 md:py-16">
       <div className="container mx-auto px-4 max-w-6xl">
         {data.intro && (
           <p className="text-center text-black/70 text-sm md:text-base leading-relaxed max-w-4xl mx-auto mb-10 md:mb-14">
