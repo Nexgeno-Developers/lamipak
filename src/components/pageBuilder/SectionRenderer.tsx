@@ -9,6 +9,8 @@ import { ProductDetailsSection } from '@/components/sections/ProductDetailsSecti
 import { CustomBannerSection } from '@/components/sections/CustomBannerSection';
 import { CategoryShowcaseSection } from '@/components/sections/CategoryShowcaseSection';
 import { RollFedCatalogSection } from '@/components/sections/RollFedCatalogSection';
+import { SustainableSolutionsSection } from '@/components/sections/SustainableSolutionsSection';
+import { HeroWithBreadcrumbsSection } from '@/components/sections/HeroWithBreadcrumbsSection';
 
 const sectionMap: Partial<
   Record<PageBuilderSection['type'], (props: { data: any; pageContext?: PageBuilderContext }) => ReactElement | null>
@@ -17,6 +19,8 @@ const sectionMap: Partial<
   subcategoryGrid: ({ data, pageContext }) => <SubCategoryGridSection data={data} pageContext={pageContext} />,
   categoryShowcase: ({ data }) => <CategoryShowcaseSection data={data} />,
   rollFedCatalog: ({ data }) => <RollFedCatalogSection data={data} />,
+  heroWithBreadcrumbs: ({ data }) => <HeroWithBreadcrumbsSection data={data} />,
+  sustainableSolutions: ({ data }) => <SustainableSolutionsSection data={data} />,
   productGrid: ({ data, pageContext }) => <ProductGridSection data={data} pageContext={pageContext} />,
   productDetails: ({ data }) => <ProductDetailsSection data={data} />,
   customBanner: ({ data }) => <CustomBannerSection data={data} />,

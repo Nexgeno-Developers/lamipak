@@ -27,6 +27,17 @@ export type HeroSectionData = {
   backgroundImage?: string;
 };
 
+export type BreadcrumbItemData = {
+  label: string;
+  href?: string;
+};
+
+export type HeroWithBreadcrumbsSectionData = {
+  title: string;
+  backgroundImage?: string;
+  breadcrumbs: BreadcrumbItemData[];
+};
+
 export type SubCategoryGridSectionItem = {
   type: 'subcategory';
   subCategory: string; // becomes [subCategory] in route
@@ -117,11 +128,27 @@ export type RollFedCatalogSectionData = {
   premiumProducts: RollFedCatalogProduct[];
 };
 
+export type SustainableSolutionItem = {
+  id: string;
+  title: string;
+  description: string;
+  image?: string;
+  imageAlt?: string;
+  href?: string;
+};
+
+export type SustainableSolutionsSectionData = {
+  intro?: string;
+  items: SustainableSolutionItem[];
+};
+
 export type PageBuilderSection =
   | { type: 'hero'; data: HeroSectionData }
+  | { type: 'heroWithBreadcrumbs'; data: HeroWithBreadcrumbsSectionData }
   | { type: 'subcategoryGrid'; data: SubCategoryGridSectionData }
   | { type: 'categoryShowcase'; data: CategoryShowcaseSectionData }
   | { type: 'rollFedCatalog'; data: RollFedCatalogSectionData }
+  | { type: 'sustainableSolutions'; data: SustainableSolutionsSectionData }
   | { type: 'productGrid'; data: ProductGridSectionData }
   | { type: 'productDetails'; data: ProductDetailsSectionData }
   | { type: 'customBanner'; data: CustomBannerSectionData };
@@ -334,10 +361,14 @@ export async function getSubCategoryPage(
       },
       sections: [
         {
-          type: 'hero',
+          type: 'heroWithBreadcrumbs',
           data: {
             title: 'Roll-Fed',
             backgroundImage: '/banner-slider1.jpg',
+            breadcrumbs: [
+              { label: 'Packaging', href: '/packaging' },
+              { label: 'Roll-Fed' },
+            ],
           },
         },
         {
@@ -399,10 +430,14 @@ export async function getSubCategoryPage(
       },
       sections: [
         {
-          type: 'hero',
+          type: 'heroWithBreadcrumbs',
           data: {
             title: 'Sleeve-Fed',
             backgroundImage: '/banner-slider1.jpg',
+            breadcrumbs: [
+              { label: 'Packaging', href: '/packaging' },
+              { label: 'Sleeve-Fed' },
+            ],
           },
         },
         {
@@ -415,6 +450,68 @@ export async function getSubCategoryPage(
             standardProducts,
             premiumTitle: '',
             premiumProducts: [],
+          },
+        },
+      ],
+    };
+  }
+
+  if (subCategory === 'sustainable-solutions') {
+    return {
+      slug: `${mainCategory}/${subCategory}`,
+      title: 'Sustainable Solutions',
+      seo: {
+        meta_title: 'Sustainable Solutions | Lamipak',
+        meta_description:
+          'Sustainable aseptic packaging solutions like LamiNatural, LamiPure, and LamiPristine — engineered for performance and reduced environmental impact.',
+        canonical_path: `/${mainCategory}/${subCategory}`,
+      },
+      sections: [
+        {
+          type: 'heroWithBreadcrumbs',
+          data: {
+            title: 'Sustainable Solutions',
+            backgroundImage: '/banner-slider1.jpg',
+            breadcrumbs: [
+              { label: 'Packaging', href: '/packaging' },
+              { label: 'Sustainable Solutions' },
+            ],
+          },
+        },
+        {
+          type: 'sustainableSolutions',
+          data: {
+            intro:
+              'Lamipak is committed to sustainable packaging and engineered solutions designed to protect product quality while reducing environmental impact.',
+            items: [
+              {
+                id: 'laminatural',
+                title: 'LamiNatural',
+                description:
+                  'LamiNatural is more than just a package; it is a commitment to sustainability. Lamipak’s first sustainable packaging solution, featuring in a bio-based barrier design and reduced impact in real-world operations.',
+                image: '/product_image_1.jpg',
+                imageAlt: 'LamiNatural sustainable packaging',
+                href: '/products/lamisleeve-aseptic-packaging',
+              },
+              {
+                id: 'lamipure',
+                title: 'LamiPure',
+                description:
+                  'LamiPure represents the next evolution in sustainable packaging solutions. Engineered with performance at its core, LamiPure offers aseptic barrier reliability while helping brands reduce their environmental footprint.',
+                image: '/product_image_2.jpg',
+                imageAlt: 'LamiPure sustainable packaging',
+                href: '/products/lamipure-sterile-packaging',
+              },
+              {
+                id: 'lamipristine',
+                title: 'LamiPristine',
+                description:
+                  'LamiPristine is an innovative and sustainable aseptic packaging solution by eliminating foil and utilizing unbleached paperboard. By replacing conventional PE barrier layers, LamiPristine supports better circularity in real operations.',
+                image: '/product_image_3.jpg',
+                imageAlt: 'LamiPristine sustainable packaging',
+                href: '/products/lamisleeve-aseptic-packaging',
+              },
+            ],
           },
         },
       ],
