@@ -11,6 +11,7 @@ export interface HeroSlide {
   category: string;
   title: string;
   titleHighlight: string;
+  description: string;
   ctaText: string;
   ctaLink: string;
   backgroundImage: string;
@@ -245,80 +246,166 @@ export async function getHomepageData(): Promise<HomepageData> {
         {
           id: '1',
           category: 'ASEPTIC PACKAGING ENGINEERING',
-          title: 'IN A STERILE WORLD,',
-          titleHighlight: 'PRECISION STILL WINS.',
+          title: 'Leading Aseptic,',
+          titleHighlight: 'Packaging Company.',
           ctaText: 'EXPLORE SOLUTIONS',
-          ctaLink: '/solutions',
+          description:
+            'Lamipak is a trusted aseptic packaging manufacturer delivering innovative and reliable aseptic packaging solutions for food and beverage brands worldwide.',
+          ctaLink: '/',
           backgroundImage: '/banner-slide-1.webp',
         },
         {
           id: '2',
           category: 'INNOVATION IN PACKAGING',
-          title: 'ADVANCED TECHNOLOGY,',
-          titleHighlight: 'SUSTAINABLE FUTURE.',
+          title: 'Dairy Industry,',
+          titleHighlight: 'Aseptic Packaging.',
           ctaText: 'DISCOVER MORE',
-          ctaLink: '/solutions',
+          ctaLink: '/',
+          description:
+            'Specialized aseptic packaging solutions for milk, flavoured dairy, yoghurt, cheese and cultured products. Protect freshness, maintain nutritional value, and enhance brand appeal with durable and sustainable packaging solutions tailored for dairy.',
           backgroundImage: '/banner-slide-2.webp',
         },
         {
           id: '3',
           category: 'INDUSTRIAL EXCELLENCE',
-          title: 'WHERE QUALITY MEETS,',
-          titleHighlight: 'PERFECTION.',
+          title: 'Juice, Nectar &,',
+          titleHighlight: 'StillDrinks Packaging.',
           ctaText: 'LEARN MORE',
-          ctaLink: '/solutions',
+          ctaLink: '/',
+          description:
+            'Premium aseptic packaging for juice, nectar, and still beverages that safeguards taste and freshness. Our eco friendly packaging solutions combine product protection with environmentally responsible design.',
           backgroundImage: '/banner-slide-3.webp',
         },
         {
           id: '4',
           category: 'GLOBAL LEADERSHIP',
-          title: 'WORLDWIDE EXPERTISE,',
-          titleHighlight: 'LOCAL SOLUTIONS.',
+          title: 'Plant-Based,',
+          titleHighlight: 'Packaging Innovation.',
           ctaText: 'GET STARTED',
-          ctaLink: '/contact',
-          backgroundImage: '/banner-slider4.webp',
+          ctaLink: '/',
+          description:
+            'Future-focused environmentally friendly packaging for plant-based beverages and dairy alternatives. Our sustainable packaging solutions help brands reduce impact while maintaining product integrity and shelf stability.',
+          backgroundImage: '/banner-slide-4.webp',
         },
         {
           id: '5',
           category: 'CUTTING-EDGE SOLUTIONS',
-          title: 'NEXT GENERATION,',
-          titleHighlight: 'PACKAGING TECHNOLOGY.',
+          title: 'Ready-to-Drink,',
+          titleHighlight: '(RTD) Packaging.',
           ctaText: 'EXPLORE NOW',
-          ctaLink: '/solutions',
-          backgroundImage: '/banner-slider5.webp',
+          ctaLink: '/',
+          description:
+            'High-performance aseptic packaging designed for ready-to-drink beverages. Protect taste, extend shelf life, and support growth with innovative and packaging solutions.',
+          backgroundImage: '/banner-slide-5.webp',
         },
+
+        {
+          id: '6',
+          category: 'CUTTING-EDGE SOLUTIONS',
+          title: 'Alcohol Packaging,',
+          titleHighlight: '',
+          ctaText: 'EXPLORE NOW',
+          ctaLink: '/',
+          description:
+            'Modern aseptic packaging solutions for wine, liquor, and spirits that combine product protection with lightweight packaging solutions for today’s evolving beverage market.',
+          backgroundImage: '/banner-slide-6.webp',
+        },
+
+        {
+          id: '7',
+          category: 'CUTTING-EDGE SOLUTIONS',
+          title: 'Functional Drinks,',
+          titleHighlight: 'Packaging Solutions.',
+          ctaText: 'EXPLORE NOW',
+          ctaLink: '/',
+          description:
+            'Smart aseptic packaging solutions for energy drinks, fortified beverages, and wellness blends. Preserve active ingredients and extend shelf life with advanced, packaging solutions built for performance.',
+          backgroundImage: '/banner-slide-7.webp',
+        },
+
+        {
+          id: '8',
+          category: 'CUTTING-EDGE SOLUTIONS',
+          title: 'Nutraceutical,',
+          titleHighlight: 'Packaging Excellence.',
+          ctaText: 'EXPLORE NOW',
+          ctaLink: '/',
+          description:
+            'Secure and hygienic carton packaging designed for nutraceutical drinks. Our nutraceuticals packaging innovations ensure product safety, stability, and premium shelf presence.',
+          backgroundImage: '/banner-slide-8.webp',
+        },
+
+        // {
+        //   id: '9',
+        //   category: 'CUTTING-EDGE SOLUTIONS',
+        //   title: 'Sustainable ,',
+        //   titleHighlight: 'Packaging Solutions',
+        //   ctaText: 'EXPLORE NOW',
+        //   ctaLink: '/',
+        //   description:
+        //     'Sustainable Packaging Solutions for a Greener Future. Backed by our green factories and responsible production practices, Lamipak offers a broad range of sustainable packaging solutions and renewable aseptic packaging solutions that reduce environmental impact while protecting product quality.',
+        //   backgroundImage: '/banner-slide-9.webp',
+        // },
       ],
       categories: [
         {
           id: '1',
-          label: 'DAIRY SYSTEMS',
-          href: '/solutions/dairy',
+          label: 'Leading Aseptic',
+          href: '/',
           slideIndex: 0, // First slide
         },
         {
           id: '2',
-          label: 'PLANT-BASED BEVERAGES',
-          href: '/solutions/plant-based',
+          label: 'Dairy Industry',
+          href: '/',
           slideIndex: 1, // Second slide
         },
         {
           id: '3',
-          label: 'LIQUID FOODS',
-          href: '/solutions/liquid-foods',
+          label: 'Juice, Nectar',
+          href: '/',
           slideIndex: 2, // Third slide
         },
         {
           id: '4',
-          label: 'NUTRITIONAL',
-          href: '/solutions/nutritional',
+          label: 'Plant Based',
+          href: '/',
           slideIndex: 3, // Fourth slide
         },
         {
           id: '5',
-          label: 'PHARMA LIQUIDS',
-          href: '/solutions/pharma',
+          label: 'Ready-to-Drink',
+          href: '/',
           slideIndex: 4, // Fifth slide
         },
+        {
+          id: '6',
+          label: 'Alcohol',
+          href: '/',
+          slideIndex: 5, // Fifth slide
+        },
+
+        {
+          id: '7',
+          label: 'Functional Drinks',
+          href: '/',
+          slideIndex: 6, // Fifth slide
+        },
+
+        {
+          id: '8',
+          label: 'Nutraceutical',
+          href: '/',
+          slideIndex: 7, // Fifth slide
+        },
+
+        // {
+        //   id: '5',
+        //   label: 'Sustainable',
+        //   href: '/',
+        //   slideIndex: 8, // Fifth slide
+        // },
+
       ],
       videoUrl: '/video2.mp4',
     },

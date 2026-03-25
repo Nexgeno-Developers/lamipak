@@ -109,19 +109,23 @@ export default function Hero({ data }: HeroProps) {
           {/* Push hero text to the bottom */}
           <div className="mt-auto pb-8 sm:pb-10 md:pb-14 pt-20 sm:pt-24 md:pt-0">
             {/* Category Label */}
-            <div className="mb-3">
+            {/* <div className="mb-3">
               <span className="text-white text-sm md:text-base font-medium tracking-wider uppercase">
                 {currentSlideData.category}
               </span>
-            </div>
+            </div> */}
 
             {/* Main Headline */}
             <div className="mb-6 max-w-5xl">
-              <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight [overflow-wrap:anywhere]">
+              <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight [overflow-wrap:anywhere]">
                 <span className="text-white">{currentSlideData.title}</span>
                 <br />
                 <span className="text-[#009FE8]">{currentSlideData.titleHighlight}</span>
               </h1>
+
+              <p className="text-base text-white py-[20px] !leading-[32px] pr-[200px]">
+                {currentSlideData.description}
+              </p>
             </div>
 
             {/* CTA Link */}
@@ -149,12 +153,12 @@ export default function Hero({ data }: HeroProps) {
 
             {/* Categories + Right-side arrows */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 min-w-0">
-              <div className="flex items-center gap-3 sm:gap-4 md:gap-6 overflow-x-auto pb-2 scrollbar-hide flex-1 min-w-0 -mx-1 px-1">
+              <div className="flex items-center gap-3 sm:gap-2 md:gap-3 overflow-x-auto pb-2 scrollbar-hide flex-1 min-w-0 -mx-1 px-1">
                 {data.categories.map((category) => (
                   <button
                     key={category.id}
                     onClick={(e) => handleCategoryClick(category.slideIndex, e)}
-                    className={`flex-shrink-0 px-4 py-2 rounded-full border text-sm md:text-base font-light transition-all whitespace-nowrap cursor-pointer ${
+                    className={`flex-shrink-0 px-3 py-[6px] rounded-full border text-sm md:text-[14px] font-light transition-all whitespace-nowrap cursor-pointer ${
                       currentSlide === category.slideIndex
                         ? 'border border-[#009FE8] text-white bg-[#009FE8] font-semibold'
                         : 'text-white/90 hover:text-white '
