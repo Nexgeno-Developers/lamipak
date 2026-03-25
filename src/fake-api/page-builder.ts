@@ -189,6 +189,7 @@ export type OnePackOneCodeLandingSectionData = {
   activeTabId: OnePackOneCodeTabId;
   hero: {
     backgroundImage?: string;
+    videoUrl?: string;
   };
   accessPoints: {
     title: string;
@@ -708,6 +709,7 @@ export async function getSubCategoryPage(
             activeTabId: 'lottery',
             hero: {
               backgroundImage: '/banner-slider2.webp',
+              videoUrl: '/video2.mp4',
             },
             accessPoints: {
               title: 'Universal Access Points',

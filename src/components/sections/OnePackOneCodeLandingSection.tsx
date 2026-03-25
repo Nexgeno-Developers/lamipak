@@ -3,6 +3,9 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import type { OnePackOneCodeLandingSectionData, OnePackOneCodeTabId } from '@/fake-api/page-builder';
+import VideoModalBanner from '../home/VideoModalBanner';
+import CallToAction from '../home/CallToAction';
+import NewsletterSubscription from '../home/NewsletterSubscription';
 
 function TabIcon({ id }: { id: OnePackOneCodeTabId }) {
   const common = 'stroke="currentColor" fill="none" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"';
@@ -153,8 +156,9 @@ export function OnePackOneCodeLandingSection({
   }, [activeTab, data.tabs]);
 
   return (
+    <>
     <section className="bg-white">
-      <div className="container mx-auto px-4 pt-6 pb-10">
+      <div className="container mx-auto px-4 pt-6">
         {/* Tabs */}
         <div className="mt-6">
           <div className="flex items-stretch justify-center gap-2 md:gap-4 overflow-x-auto pb-2 scrollbar-hide">
@@ -179,47 +183,35 @@ export function OnePackOneCodeLandingSection({
             })}
           </div>
         </div>
+      </div>
 
-        {/* Hero video block */}
-        <div className="mt-6 rounded-[18px] overflow-hidden bg-[#0c1f45]">
-          <div className="relative h-[220px] md:h-[260px]">
-            {data.hero.backgroundImage ? (
-              <img src={data.hero.backgroundImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-80" />
-            ) : null}
-            <div className="absolute inset-0 bg-[#0c1f45] opacity-35" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <PlayOverlayButton />
-            </div>
-            <div className="absolute inset-x-0 bottom-0 bg-white/95 py-3 px-5">
-              <div className="text-center text-sm md:text-base font-semibold text-black">{activeLabel}</div>
-            </div>
-          </div>
-        </div>
+      {/* Full-width hero video block like home page */}
+      
 
-        {/* Access points */}
-        <div className="mt-10">
-          <h3 className="text-center text-[#0A4A7A] text-lg md:text-xl font-bold">{data.accessPoints.title}</h3>
-          <p className="text-center mt-3 text-sm md:text-base text-black/60 max-w-2xl mx-auto">{data.accessPoints.description}</p>
-          <div className="mt-6">
-            <Accordion items={data.accessPoints.items} />
-          </div>
-        </div>
+      {/* Access points + features */}
+      <div className="container mx-auto px-4 pb-12">
+        
 
-        {/* Features */}
         <div className="mt-12 space-y-14">
           {data.features.map((f) => (
             <FeatureBlock key={f.id} feature={f} />
           ))}
         </div>
-
-        {/* Optional helper */}
-        <div className="mt-14 flex justify-center">
-          <Link href="/contact" className="text-[#009FE8] font-semibold hover:opacity-80 transition-opacity">
-            Contact our team
-          </Link>
-        </div>
       </div>
+
+      <VideoModalBanner
+        videoUrl={data.hero.videoUrl || '/video2.mp4'}
+        backgroundImage={data.hero.backgroundImage}
+      />
+
     </section>
+<div className='bg-gray-50 pt-24'>
+<CallToAction />
+</div>
+   
+    <NewsletterSubscription />
+
+    </>
   );
 }
 
