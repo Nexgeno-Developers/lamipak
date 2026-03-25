@@ -464,7 +464,7 @@ export async function getHomepageData(): Promise<HomepageData> {
         {
           id: '1',
           title: 'Technical Services',
-          description: 'Dedicated to top-notch aseptic packaging, we launch our technical support services with customizable solutions to maximize your production line\'s efficiency.',
+          description: 'Focused on delivering reliable aseptic packaging solutions, our technical services provide tailored support to optimise production line performance. We help maximise efficiency, maintain product quality, and ensure smooth, uninterrupted operations.',
           image: '/services_image_1.jpg', // Replace with actual technical services image
           imageAlt: 'Technical Services - Production line with aseptic packaging',
           ctaText: 'Read More',
@@ -474,7 +474,7 @@ export async function getHomepageData(): Promise<HomepageData> {
         {
           id: '2',
           title: 'Marketing Service',
-          description: 'Discover Lamipak Market Support Service, Your comprehensive marketing partner offering business intelligence, recipe support, and sales distribution.',
+          description: 'Explore Lamipak Market Support Service, your strategic marketing partner delivering business intelligence, creative support, recipe development support, and sales distribution guidance to drive successful product launches and market growth. We identity growth opportunities for your product and new market opportunities',
           image: '/services_image_2.jpg', // Replace with actual marketing service image
           imageAlt: 'Marketing Service - Digital marketing and business intelligence',
           ctaText: 'Read More',
@@ -492,7 +492,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           date: 'NOV 2025',
           image: '/latest_insite_image_1.jpg', // Replace with actual insight image
           imageAlt: 'Global Dairy Market Outlook - White carton packages with green leaf design',
-          link: '/insights/global-dairy-market-outlook',
+          link: '/',
         },
         {
           id: '2',
@@ -501,7 +501,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           date: 'NOV 2025',
           image: '/latest_insite_image_2.jpg', // Replace with actual insight image
           imageAlt: 'Smart Packaging & Traceability - Laboratory with blue liquid containers',
-          link: '/insights/smart-packaging-traceability',
+          link: '/',
         },
         {
           id: '3',
@@ -510,7 +510,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           date: 'NOV 2025',
           image: '/latest_insite_image_3.jpg', // Replace with actual insight image
           imageAlt: 'Circular Economy in Packaging - Person examining plastic pouch in laboratory',
-          link: '/insights/circular-economy-packaging',
+          link: '/',
         },
          {
           id: '4',
@@ -519,7 +519,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           date: 'NOV 2025',
           image: '/latest_insite_image_2.jpg', // Replace with actual insight image
           imageAlt: 'Smart Packaging & Traceability - Laboratory with blue liquid containers',
-          link: '/insights/smart-packaging-traceability',
+          link: '/',
         },
        
       ],
@@ -531,9 +531,9 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'LamiNatural',
           label: 'Bio-Based Materials',
           description: 'Plant-derived polymer packaging with full aseptic barrier performance and reduced carbon footprint.',
-          image: '/product_image_1.jpg', // Replace with actual LamiNatural product image
+          image: '/LamiNatural1.webp', // Replace with actual LamiNatural product image
           imageAlt: 'LamiNatural - Green carton package with leaf design',
-          link: '/products/laminatural',
+          link: '/',
           ctaText: 'Read More',
         },
         {
@@ -541,9 +541,9 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'LamiPure',
           label: 'Bio-Based Materials',
           description: 'Plant-derived polymer packaging with full aseptic barrier performance and reduced carbon footprint.',
-          image: '/product_image_2.jpg', // Replace with actual LamiPure product image
+          image: '/LamiNatural2.webp', // Replace with actual LamiPure product image
           imageAlt: 'LamiPure - White carton package with blue water pattern',
-          link: '/products/lamipure',
+          link: '/',
           ctaText: 'Read More',
         },
         {
@@ -551,9 +551,9 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'Papers',
           label: 'Bio-Based Materials',
           description: 'Plant-derived polymer packaging with full aseptic barrier performance and reduced carbon footprint.',
-          image: '/product_image_3.jpg', // Replace with actual Papers product image
+          image: '/LamiNatural3.webp', // Replace with actual Papers product image
           imageAlt: 'Papers - Paper straws in blue liquid',
-          link: '/products/papers',
+          link: '/',
           ctaText: 'Read More',
         },
         
@@ -612,8 +612,9 @@ export async function getHomepageData(): Promise<HomepageData> {
       items: [
         {
           id: '1',
-          question: 'What is aseptic packaging and why does it matter?',
-          answer: 'Aseptic packaging is a process where a product and its package are sterilized separately and then combined in a sterile environment. This method preserves the product\'s quality, flavor, and nutritional value without refrigeration, extending shelf life significantly. It matters because it reduces food waste, lowers energy consumption, and provides consumers with safe, high-quality products that can be stored at room temperature.',
+          question: 'What does Lamipak specialize in?',
+          answer: 'Lamipak specializes in aseptic liquid packaging materials, primarily used for beverages such as milk, juice, plant-based drinks, and other liquid foods. The company develops high-quality carton packaging solutions that help brands protect product freshness, extend shelf life, and reduce environmental impact through efficient material design and responsible sourcing.',
+          'Lamipak works closely with beverage producers worldwide to deliver packaging that combines performance, sustainability, and brand visibility.',
         },
         {
           id: '2',

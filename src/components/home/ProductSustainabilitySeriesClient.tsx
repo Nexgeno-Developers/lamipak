@@ -175,13 +175,14 @@ function ProductCard({ product }: { product: SustainabilityProductCard }) {
   return (
     <div className="bg-white rounded-[50px] overflow-hidden transition-shadow duration-300 h-full p-[15px]">
       {/* Image */}
-      <div className="relative h-64 md:h-72 overflow-hidden rounded-[50px]">
+      <div className="relative overflow-hidden rounded-[50px]">
         <Image
           src={product.image}
           alt={product.imageAlt}
-          fill
+          height={400}
+          width={400}
           className="object-cover"
-          sizes="(max-width: 768px) 100vw, 33vw"
+          sizes="(max-width: 768px) 100vw, 33vw w-full"
         />
       </div>
 
