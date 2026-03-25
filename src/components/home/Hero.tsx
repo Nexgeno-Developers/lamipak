@@ -173,7 +173,7 @@ export default function Hero({ data }: HeroProps) {
               <div className="flex items-center justify-end sm:justify-start gap-2 flex-shrink-0">
                 <button
                   onClick={prevSlide}
-                  className="cursor-pointer w-10 h-10 md:w-12 md:h-12 rounded-full border border-white bg-transparent hover:bg-white/20 flex items-center justify-center transition-all group"
+                  className="cursor-pointer w-10 h-10 md:w-10 md:h-10 rounded-full border border-white bg-transparent hover:bg-white/20 flex items-center justify-center transition-all group"
                   aria-label="Previous slide"
                 >
                   <svg
@@ -193,7 +193,7 @@ export default function Hero({ data }: HeroProps) {
 
                 <button
                   onClick={nextSlide}
-                  className="cursor-pointer w-10 h-10 md:w-12 md:h-12 rounded-full border border-white bg-transparent hover:bg-white/20 flex items-center justify-center transition-all group"
+                  className="cursor-pointer w-10 h-10 md:w-10 md:h-10 rounded-full border border-white bg-transparent hover:bg-white/20 flex items-center justify-center transition-all group"
                   aria-label="Next slide"
                 >
                   <svg
