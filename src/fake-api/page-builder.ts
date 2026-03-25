@@ -250,6 +250,28 @@ export type MetallicLnkLandingSectionData = {
   };
 };
 
+export type OpticapLandingSectionData = {
+  title: string;
+  image: string;
+  descriptionLines: string[];
+  sizeFormatTitle: string;
+  sizeFormatText: string;
+  productFeaturesTitle: string;
+  productFeaturesPills: Array<{
+    id: string;
+    label: string;
+    href: string;
+  }>;
+  productFeaturesDescription: string;
+  connectSection?: {
+    heading: string;
+    headingHighlight: string;
+    formTitle: string;
+    illustrationImage: string;
+    illustrationAlt: string;
+  };
+};
+
 export type PageBuilderSection =
   | { type: 'hero'; data: HeroSectionData }
   | { type: 'heroWithBreadcrumbs'; data: HeroWithBreadcrumbsSectionData }
@@ -261,6 +283,7 @@ export type PageBuilderSection =
   | { type: 'onePackOneCodeLanding'; data: OnePackOneCodeLandingSectionData }
   | { type: 'waterpakLanding'; data: WaterpakLandingSectionData }
   | { type: 'metallicLnkLanding'; data: MetallicLnkLandingSectionData }
+  | { type: 'opticapLanding'; data: OpticapLandingSectionData }
   | { type: 'productGrid'; data: ProductGridSectionData }
   | { type: 'productDetails'; data: ProductDetailsSectionData }
   | { type: 'customBanner'; data: CustomBannerSectionData };
@@ -385,6 +408,16 @@ export async function getMainCategoryPage(
                 'Premium metallic co-printing effect for high-end bottle and beverage packaging, designed for consistent adhesion and shelf impact.',
               ctaLabel: 'Technical specs',
               href: '/packaging/metallic-lnk',
+              iconId: 'innovation',
+            },
+            {
+              id: 'opticap',
+              code: 'LAMI-07',
+              title: 'Opticap',
+              description:
+                'Opticap cap effect adds visual sophistication to closures and caps with a clean, consistent finish for premium consumer experiences.',
+              ctaLabel: 'Technical specs',
+              href: '/packaging/opticap',
               iconId: 'innovation',
             },
             {
@@ -953,6 +986,64 @@ export async function getSubCategoryPage(
             ],
             productFeaturesDescription:
               'Deliver a premium and exclusive feel to your brand with a luxurious shimmering effect on every corner of your packaging. This feature is fully compatible with both roll-fed and sleeve-fed formats, offering complete flexibility for your production lines.',
+            connectSection: {
+              heading: 'Connect with Our Technical Experts',
+              headingHighlight: 'Technical Experts',
+              formTitle: 'Send Us A Message',
+              illustrationImage: '/connected_image.jpg',
+              illustrationAlt: 'Connect with Technical Experts',
+            },
+          },
+        },
+      ],
+    };
+  }
+
+  if (subCategory === 'opticap') {
+    return {
+      slug: `${mainCategory}/${subCategory}`,
+      title: 'Opticap',
+      seo: {
+        meta_title: 'Opticap | Lamipak',
+        meta_description:
+          'Opticap cap effect for premium bottle and closure aesthetics — clean, consistent finish designed for reliability and shelf impact.',
+        canonical_path: `/${mainCategory}/${subCategory}`,
+      },
+      sections: [
+        {
+          type: 'heroWithBreadcrumbs',
+          data: {
+            title: 'Opticap',
+            backgroundImage: '/banner-slider1.jpg',
+            breadcrumbs: [
+              { label: 'Packaging', href: '/packaging' },
+              { label: 'Opticap' },
+            ],
+          },
+        },
+        {
+          type: 'opticapLanding',
+          data: {
+            title: 'Opticap',
+            image: '/product_image_3.jpg',
+            descriptionLines: [
+              'Opticap’s cap effect adds visual sophistication to closures and caps with a clean, consistent finish.',
+              'Built for premium consumer experiences, Opticap enhances the look of your bottle while supporting reliable performance across production runs.',
+              'From formulation to finished packaging, Opticap supports innovation, quality, and long-term brand trust.',
+            ],
+            sizeFormatTitle: 'Size Format',
+            sizeFormatText: 'Can be used in roll-fed format, sleeve-fed format, and sustainable product formats',
+            productFeaturesTitle: 'Product Features',
+            productFeaturesPills: [
+              { id: 'sleeve-fed', label: 'Sleeve-fed', href: '/packaging/sleeve-fed' },
+              { id: 'roll-fed', label: 'Roll-fed', href: '/packaging/roll-fed' },
+              { id: 'one-pack-one-code', label: 'OnePack OneCode', href: '/packaging/one-pack-one-code' },
+              { id: 'waterpak', label: 'Waterpak', href: '/packaging/waterpak' },
+              { id: 'metallic-lnk', label: 'Metallic Ink', href: '/packaging/metallic-lnk' },
+              { id: 'sustainable-product', label: 'Sustainable Product', href: '/packaging/sustainable-solutions' },
+            ],
+            productFeaturesDescription:
+              'Opticap delivers consistent optical finishing across production lines, keeping visual quality stable while reducing material waste. This solution is designed to complement your existing formats, helping brands maintain a premium shelf presence and a dependable consumer experience.',
             connectSection: {
               heading: 'Connect with Our Technical Experts',
               headingHighlight: 'Technical Experts',
