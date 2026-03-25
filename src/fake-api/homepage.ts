@@ -613,34 +613,32 @@ export async function getHomepageData(): Promise<HomepageData> {
         {
           id: '1',
           question: 'What does Lamipak specialize in?',
-          answer: 'Lamipak specializes in aseptic liquid packaging materials, primarily used for beverages such as milk, juice, plant-based drinks, and other liquid foods. The company develops high-quality carton packaging solutions that help brands protect product freshness, extend shelf life, and reduce environmental impact through efficient material design and responsible sourcing.',
-          'Lamipak works closely with beverage producers worldwide to deliver packaging that combines performance, sustainability, and brand visibility.',
+          answer: `Lamipak specializes in aseptic liquid packaging materials, primarily used for beverages such as milk, juice, plant-based drinks, and other liquid foods. The company develops high-quality carton packaging solutions that help brands protect product freshness, extend shelf life, and reduce environmental impact through efficient material design and responsible sourcing.
+             Lamipak works closely with beverage producers worldwide to deliver packaging that combines performance, sustainability, and brand visibility.`,
         },
         {
           id: '2',
-          question: 'How long does it take to implement a new aseptic filling line?',
-          answer: 'The implementation timeline for a new aseptic filling line typically ranges from 6 to 12 months, depending on the complexity of the system, facility preparation requirements, and regulatory approvals. This includes site assessment, equipment manufacturing, installation, validation testing, and staff training. Our team works closely with clients to ensure minimal disruption to existing operations.',
+          question: 'What types of packaging formats does Lamipak offer?',
+          answer: `Lamipak provides a range of aseptic carton packaging formats designed to meet different product and market needs. These formats are suitable for dairy, plant-based beverages, juices, and other liquid foods. Options include various carton sizes and shapes that help brands optimize shelf presence, logistics efficiency, and consumer convenience.
+          Each packaging format is engineered to work with compatible filling machines and to maintain product quality throughout the supply chain.`,
         },
         {
           id: '3',
-          question: 'Can Lamipak systems integrate with our existing production infrastructure?',
-          answer: 'Yes, Lamipak systems are designed with flexibility and integration in mind. Our engineering team conducts a thorough assessment of your existing infrastructure to ensure seamless integration. We provide custom solutions that can connect with your current production lines, control systems, and quality management processes while maintaining optimal efficiency and performance.',
+          question: 'How does Lamipak support sustainability in packaging?',
+          answer: `Sustainability is central to Lamipak’s packaging development. The company focuses on responsibly sourced paperboard, optimized material structures, and manufacturing practices that support lower environmental impact. Lamipak also works with certified systems and global sustainability standards to help customers meet their own environmental goals while delivering safe, reliable packaging.`,
         },
         {
           id: '4',
-          question: 'What sterility assurance level (SAL) do your systems achieve?',
-          answer: 'Our aseptic packaging systems achieve a Sterility Assurance Level (SAL) of 10^-6, which means there is less than one chance in a million that a non-sterile unit could be produced. This is the highest standard in the industry and ensures maximum product safety and quality. Our systems undergo rigorous validation and testing to maintain this level consistently.',
+          question: 'Which industries does Lamipak serve?',
+          answer: `Lamipak serves a wide range of beverage and liquid food producers across global markets. This includes companies in dairy, plant-based beverages, juices, and other liquid food categories that require reliable aseptic packaging solutions.
+            By combining packaging materials with technical expertise and industry insights, Lamipak helps brands bring products to market efficiently and competitively.`,
         },
         {
           id: '5',
-          question: 'Do you offer ongoing maintenance and service contracts?',
-          answer: 'Yes, we offer comprehensive maintenance and service contracts tailored to your operational needs. Our service packages include preventive maintenance, 24/7 technical support, spare parts management, remote monitoring, and on-site service visits. We also provide training programs for your staff to ensure optimal system performance and minimize downtime.',
+          question: 'How can I start working with Lamipak?',
+          answer: `Companies interested in Lamipak packaging solutions can easily get in touch with the team to discuss their product requirements, packaging needs, and market goals. Lamipak specialists work closely with customers to recommend the right carton formats, technical solutions, and marketing support. Whether you are launching a new beverage or expanding your packaging portfolio, Lamipak can help you find the right solution.`,
         },
-        {
-          id: '6',
-          question: 'What support do you provide for regulatory compliance?',
-          answer: 'We provide extensive support for regulatory compliance, including documentation for FDA, EU, and other international standards. Our team assists with validation protocols, quality documentation, and regulatory submissions. We stay updated with the latest regulations and ensure our systems meet all applicable food safety and packaging standards worldwide.',
-        },
+       
       ],
     },
     innovationInPackaging: {

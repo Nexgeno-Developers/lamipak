@@ -45,9 +45,18 @@ export default function FAQItemClient({ item }: FAQItemClientProps) {
       {/* Answer */}
       {isOpen && (
         <div className="pb-6 pl-0 pr-12">
-          <p className="text-black text-base  leading-relaxed">
-            {item.answer}
-          </p>
+          {item.answer
+            .split(/\n+/)
+            .map((p) => p.trim())
+            .filter(Boolean)
+            .map((paragraph, idx, arr) => (
+              <p
+                key={`${item.id}-p-${idx}`}
+                className={`text-black text-base leading-relaxed ${idx > 0 ? 'mt-4' : ''}`}
+              >
+                {paragraph}
+              </p>
+            ))}
         </div>
       )}
     </div>
