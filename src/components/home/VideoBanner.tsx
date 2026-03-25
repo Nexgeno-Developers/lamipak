@@ -29,7 +29,7 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
   if (!data) return null;
 
   return (
-    <section className="relative h-[100vh] overflow-hidden">
+    <section className="relative min-h-[70dvh] h-[100dvh] md:h-screen md:min-h-0 overflow-hidden">
       {/* Background Video/GIF - Autoplay - Hidden when video is playing */}
       {!isVideoPlaying && (
         <div className="absolute inset-0">

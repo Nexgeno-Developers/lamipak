@@ -10,5 +10,7 @@ import MobileMenuClient from './MobileMenuClient';
 export default async function MobileMenu() {
   const headerData = await fetchHeaderData();
 
-  return <MobileMenuClient navigation={headerData.navigation} />;
+  return (
+    <MobileMenuClient navigation={headerData.navigation} cta={headerData.cta} />
+  );
 }

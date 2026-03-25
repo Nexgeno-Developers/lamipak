@@ -10,18 +10,18 @@ export default async function Footer() {
   const footerData = await fetchFooterData();
 
   return (
-    <footer className="bg-[#009FE8] text-white">
+    <footer className="bg-[#009FE8] text-white overflow-x-hidden">
       <div className="container mx-auto px-4 pt-12 md:pt-16 pb-8">
-        <div className="flex flex-col md:flex-row gap-8 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 xl:gap-10">
           {/* Left Section - Logo, Description, and Social Icons */}
-          <div className="w-full md:w-[40%] pr-[100px]">
+          <div className="w-full sm:col-span-2 lg:col-span-4 xl:col-span-4 lg:pr-4 xl:pr-8">
             {/* Logo */}
             <Link href={footerData.logo.href} className="block mb-4">
               {footerData.logo.image ? (
                 <img
                   src={footerData.logo.image}
                   alt={footerData.logo.text || 'Logo'}
-                  className="w-[140px] w-auto"
+                  className="h-auto w-auto max-h-14 md:max-h-16 max-w-[160px] object-contain object-left"
                 />
               ) : (
                 <h2 className="text-2xl md:text-3xl font-normal text-white">
@@ -31,7 +31,7 @@ export default async function Footer() {
             </Link>
 
             {/* Description */}
-            <p className="text-white text-sm md:text-base font-thin mb-6 leading-relaxed">
+            <p className="text-white text-sm md:text-base font-thin mb-6 leading-relaxed break-words text-pretty">
               {footerData.description}
             </p>
 
@@ -80,7 +80,7 @@ export default async function Footer() {
 
           {/* Middle Section - Four Columns */}
           {footerData.columns.map((column) => (
-            <div key={column.id} className="w-full md:w-[15%]">
+            <div key={column.id} className="w-full sm:col-span-1 lg:col-span-2 min-w-0">
               <h3 className="text-white font-bold mb-4 text-base md:text-lg">
                 {column.title}
               </h3>
@@ -89,7 +89,7 @@ export default async function Footer() {
                   <li key={link.id}>
                     <Link
                       href={link.href}
-                      className="font-thin text-white hover:opacity-80 transition-opacity text-sm md:text-base"
+                      className="font-thin text-white hover:opacity-80 transition-opacity text-sm md:text-base break-words [overflow-wrap:anywhere]"
                     >
                       {link.label}
                     </Link>

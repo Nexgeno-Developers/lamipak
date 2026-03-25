@@ -71,7 +71,7 @@ export default function Hero({ data }: HeroProps) {
   const currentSlideData = slides[currentSlide];
 
   return (
-    <section className="relative h-screen min-h-[600px] overflow-hidden">
+    <section className="relative h-[100dvh] md:h-screen min-h-[max(100dvh,600px)] overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         {slides.map((slide, index) => (
@@ -108,9 +108,9 @@ export default function Hero({ data }: HeroProps) {
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col">
-        <div className="container mx-auto flex-1 flex flex-col">
+        <div className="container mx-auto px-4 flex-1 flex flex-col min-h-0">
           {/* Push hero text to the bottom */}
-          <div className="mt-auto pb-10 md:pb-14">
+          <div className="mt-auto pb-8 sm:pb-10 md:pb-14 pt-20 sm:pt-24 md:pt-0">
             {/* Category Label */}
             <div className="mb-3">
               <span className="text-white text-sm md:text-base font-medium tracking-wider uppercase">
@@ -120,7 +120,7 @@ export default function Hero({ data }: HeroProps) {
 
             {/* Main Headline */}
             <div className="mb-6 max-w-5xl">
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight [overflow-wrap:anywhere]">
                 <span className="text-white">{currentSlideData.title}</span>
                 <br />
                 <span className="text-[#009FE8]">{currentSlideData.titleHighlight}</span>
@@ -151,8 +151,8 @@ export default function Hero({ data }: HeroProps) {
             </div>
 
             {/* Categories + Right-side arrows */}
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-4 md:gap-6 overflow-x-auto pb-2 scrollbar-hide flex-1">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 min-w-0">
+              <div className="flex items-center gap-3 sm:gap-4 md:gap-6 overflow-x-auto pb-2 scrollbar-hide flex-1 min-w-0 -mx-1 px-1">
                 {data.categories.map((category) => (
                   <button
                     key={category.id}
@@ -169,7 +169,7 @@ export default function Hero({ data }: HeroProps) {
               </div>
 
               {/* Navigation Arrows - pinned on the right */}
-              <div className="flex items-center gap-2 flex-shrink-0">
+              <div className="flex items-center justify-end sm:justify-start gap-2 flex-shrink-0">
                 <button
                   onClick={prevSlide}
                   className="cursor-pointer w-10 h-10 md:w-12 md:h-12 rounded-full border border-white bg-transparent hover:bg-white/20 flex items-center justify-center transition-all group"

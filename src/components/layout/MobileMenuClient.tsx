@@ -6,6 +6,7 @@ import type { NavigationItem } from '@/fake-api/layout';
 
 interface MobileMenuClientProps {
   navigation: NavigationItem[];
+  cta?: { text: string; href: string };
 }
 
 interface MobileNavItemProps {
@@ -67,7 +68,7 @@ function MobileNavItem({ item, onClose }: MobileNavItemProps) {
   );
 }
 
-export default function MobileMenuClient({ navigation }: MobileMenuClientProps) {
+export default function MobileMenuClient({ navigation, cta }: MobileMenuClientProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -135,7 +136,7 @@ export default function MobileMenuClient({ navigation }: MobileMenuClientProps) 
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 right-0 h-full w-80 bg-[#0a1a3a] shadow-xl z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
+        className={`fixed top-0 right-0 h-full w-[min(20rem,calc(100vw-1rem))] max-w-full bg-[#0a1a3a] shadow-xl z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -170,6 +171,18 @@ export default function MobileMenuClient({ navigation }: MobileMenuClientProps) 
               <MobileNavItem key={item.id} item={item} onClose={handleClose} />
             ))}
           </nav>
+
+          {cta && (
+            <div className="p-4 border-t border-[#00d4ff] border-opacity-20 shrink-0">
+              <Link
+                href={cta.href}
+                onClick={handleClose}
+                className="block w-full text-center border border-[#00d4ff] text-white px-4 py-3 rounded-full hover:bg-[#00d4ff] hover:text-[#0a1a3a] transition-all font-medium text-sm uppercase tracking-wider"
+              >
+                {cta.text}
+              </Link>
+            </div>
+          )}
         </div>
       </aside>
     </>

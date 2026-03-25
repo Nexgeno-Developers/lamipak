@@ -12,17 +12,17 @@ export default async function Header() {
   const headerData = await fetchHeaderData();
 
   return (
-    <header className="absolute w-full top-[30px] z-50">
-      <div className="container mx-auto">
-        <div className="flex items-center justify-between h-16 md:h-20 relative">
+    <header className="absolute w-full top-3 sm:top-5 md:top-[30px] z-50 left-0 right-0">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between gap-3 h-14 sm:h-16 md:h-20 relative min-w-0">
           {/* Logo */}
-          <Link href={headerData.logo.href} className="flex items-center">
+          <Link href={headerData.logo.href} className="flex items-center min-w-0 shrink">
             {headerData.logo.image ? (
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 min-w-0">
                 <img
                   src={headerData.logo.image}
                   alt={headerData.logo.text || 'Logo'}
-                  className="h-12 md:h-24 w-auto"
+                  className="h-9 sm:h-11 md:h-24 w-auto max-h-24 max-w-[min(200px,55vw)] object-contain object-left"
                 />
                 
               </div>
