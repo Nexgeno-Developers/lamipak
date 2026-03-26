@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
-import { redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 
 import { getMainCategoryPage } from '@/fake-api/page-builder';
 import { getCanonicalUrl } from '@/config/site';
+import { PageBuilder } from '@/components/pageBuilder/PageBuilder';
 
 const MAIN_CATEGORY = 'packaging' as const;
+const BASE_PATH = '/aseptic-pakaging-solutions';
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getMainCategoryPage(MAIN_CATEGORY);
@@ -15,19 +17,26 @@ export async function generateMetadata(): Promise<Metadata> {
     };
   }
 
-  const canonicalUrl = page.seo?.canonical_path
-    ? getCanonicalUrl(page.seo.canonical_path)
-    : getCanonicalUrl(`/${MAIN_CATEGORY}`);
-
   return {
     title: page.seo?.meta_title || page.title,
     description: page.seo?.meta_description,
     alternates: {
-      canonical: canonicalUrl,
+      canonical: getCanonicalUrl(BASE_PATH + '/'),
     },
   };
 }
 
-export default async function PackagingMainRoute() {
-  redirect('/aseptic-pakaging-solutions/');
+export default async function AsepticPackagingSolutionsMainRoute() {
+  const page = await getMainCategoryPage(MAIN_CATEGORY);
+  if (!page) notFound();
+
+  return (
+    <PageBuilder
+      pageData={page}
+      pageContext={{
+        mainCategory: MAIN_CATEGORY,
+      }}
+    />
+  );
 }
+

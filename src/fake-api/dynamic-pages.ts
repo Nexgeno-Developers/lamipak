@@ -364,6 +364,7 @@ export interface DynamicPageData {
         title: string;
         imageSrc: string;
         imageAlt: string;
+        description?: string[];
         cards: Array<{
           id: string;
           title: string;
@@ -1476,7 +1477,7 @@ const PAGES: DynamicPageData[] = [
         layout: 'centerPanel',
         eyebrow: 'Ethical Standards',
         title: 'Business Integrity & Ethical Conduct',
-        imageSrc: '/market_inteligence.jpg',
+        imageSrc: '/buisness_intigrity.webp',
         imageAlt: 'Team discussing compliance in a corporate setting',
         centerText:
           'Integrity is the foundation of how lamipak operates. we maintain a strict zero-tolerance policy toward corruption, bribery, fraud, and unethical conduct in any form.',
@@ -1492,8 +1493,13 @@ const PAGES: DynamicPageData[] = [
         eyebrow: 'Global Standards',
         titleBlue: 'Responsible Supply Chain &',
         title: 'Global Compliance',
-        imageSrc: '/market_inteligence.jpg',
+        imageSrc: '/responsible_image.jpg',
         imageAlt: 'People discussing supplier code of conduct and compliance',
+        description: [
+          'As a global supplier to the food and beverage industry, Lamipak recognizes its responsibility to promote ethical and responsible practices throughout its value chain.',
+          'Our Supplier Code of Conduct establishes clear expectations for business integrity, labor standards, environmental responsibility, and workplace safety. We work closely with suppliers and partners to ensure alignment with these principles.',
+          'We also uphold internationally recognized human rights principles and maintain a workplace environment that prohibits forced labor, discrimination, harassment, and unsafe working conditions.',
+        ],
         cards: [
           {
             id: 'supplier-code',
@@ -1613,9 +1619,9 @@ const PAGES: DynamicPageData[] = [
       eyebrow: 'Lamipak - Corporate Governance',
       title: 'Governance & Management',
       description:
-        "Strong governance is the foundation of Lamipak's long-term value creation. It is built on transparency, accountability, and responsible decision-making across all global operations, through clear policies and ethical practices. Lamipak ensures sustainable growth while protecting the interests of stakeholders, employees, partners, and the environment.",
-      primaryCta: { text: 'Explore Our Framework', href: '#governance-framework' },
-      secondaryCta: { text: 'Speak Up', href: '/contact' },
+        "Strong governance is the foundation of Lampiak’s long-term value creation.It is built on transparency, accountability, and responsible decision-making across all global operations. Through clear policies and ethical practices, Lampiak ensures sustainable growth while protecting the interests of stakeholders, employees, partners, and the environment.",
+      primaryCta: { text: 'Explore Our Framework', href: '/' },
+      secondaryCta: { text: 'Speak Up', href: '/' },
       cards: [
         {
           id: 'framework',
@@ -1648,8 +1654,8 @@ const PAGES: DynamicPageData[] = [
       eyebrow: 'Our Governance Framework',
       title: 'Governance & Management',
       description: [
-        "Strong governance is the foundation of lamipak's long-term value creation. It is built on transparency, accountability, and responsible decision-making across all global operations, through clear policies and ethical practices. Lamipak ensures sustainable growth while protecting the interests of stakeholders, employees, partners, and the environment.",
-        'We maintain a structured system of policies, procedures, and oversight mechanisms designed to ensure that our business is conducted ethically, responsibly, and in full compliance with applicable laws and regulations.',
+        "Strong governance is the foundation of Lampiak’s long-term value creation.It is built on transparency, accountability, and responsible decision-making across all global operations. Through clear policies and ethical practices, Lampiak ensures sustainable growth while protecting the interests of stakeholders, employees, partners, and the environment.",
+        'We maintain a structured system of policies, procedures, and oversight mechanisms designed to ensure that our business is conducted ethically, responsibly, and in full compliance with applicable laws and regulations. These principles guide our management practices and support sustainable growth in the global food and beverage packaging industry.',
         'Our governance framework integrates risk management, compliance oversight, and operational controls to ensure consistent standards across our manufacturing, supply chain, and commercial activities worldwide.',
       ],
       cards: [

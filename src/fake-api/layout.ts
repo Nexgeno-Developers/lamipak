@@ -132,21 +132,21 @@ export async function getHeaderData(): Promise<HeaderData> {
 
   /** Order matches /packaging category showcase grid */
   const productMenuChildren: NavigationItem[] = [
-    { id: 'p-roll-fed', label: 'Roll Fed', href: '/packaging/roll-fed' },
-    { id: 'p-sleeve-fed', label: 'Sleeve Fed', href: '/packaging/sleeve-fed' },
-    { id: 'p-cap-solutions', label: 'Cap Solutions', href: '/packaging/cap-solutions' },
-    { id: 'p-straws', label: 'Straws', href: '/packaging/lamistraw' },
-    { id: 'p-waterpak', label: 'Waterpak', href: '/packaging/waterpak' },
+    { id: 'p-roll-fed', label: 'Roll Fed', href: '/aseptic-pakaging-solutions/roll-fed/' },
+    { id: 'p-sleeve-fed', label: 'Sleeve Fed', href: '/aseptic-pakaging-solutions/sleeve-fed/' },
+    { id: 'p-cap-solutions', label: 'Cap Solutions', href: '/aseptic-pakaging-solutions/cap-solutions/' },
+    { id: 'p-straws', label: 'Straws', href: '/aseptic-pakaging-solutions/lamistraw/' },
+    { id: 'p-waterpak', label: 'Waterpak', href: '/aseptic-pakaging-solutions/waterpak/' },
     {
       id: 'p-sustainable-solutions',
       label: 'Sustainable Solutions',
-      href: '/packaging/sustainable-solutions',
+      href: '/aseptic-pakaging-solutions/sustainable-solutions/',
     },
-    { id: 'p-metallic-lnk', label: 'Metallic Ink', href: '/packaging/metallic-lnk' },
+    { id: 'p-metallic-lnk', label: 'Metallic Ink', href: '/aseptic-pakaging-solutions/metallic-lnk/' },
     {
       id: 'p-one-pack-one-code',
       label: 'One Pack One Code',
-      href: '/packaging/one-pack-one-code',
+      href: '/aseptic-pakaging-solutions/one-pack-one-code/',
     },
   ];
 
@@ -166,7 +166,7 @@ export async function getHeaderData(): Promise<HeaderData> {
       {
         id: '2',
         label: 'Products',
-        href: '/packaging',
+        href: '/aseptic-pakaging-solutions/',
         children: productMenuChildren,
       },
       // {

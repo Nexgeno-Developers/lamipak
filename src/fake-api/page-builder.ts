@@ -367,7 +367,7 @@ export async function getMainCategoryPage(
               description:
                 'Optimized for high-speed filling lines, our roll-fed aseptic material offers superior barrier properties and shelf-life stability.',
               ctaLabel: 'Technical specs',
-              href: '/packaging/roll-fed',
+              href: '/aseptic-pakaging-solutions/roll-fed/',
               iconId: 'roll',
             },
             {
@@ -377,7 +377,7 @@ export async function getMainCategoryPage(
               description:
                 'Versatile pre-formed sleeves designed for flexible manufacturing environments, providing rapid changeover capabilities.',
               ctaLabel: 'Technical specs',
-              href: '/packaging/sleeve-fed',
+              href: '/aseptic-pakaging-solutions/sleeve-fed/',
               iconId: 'sleeve',
             },
             {
@@ -387,7 +387,7 @@ export async function getMainCategoryPage(
               description:
                 'Precision-engineered closures ensuring leak-proof sealing and intuitive opening experiences for end consumers.',
               ctaLabel: 'Technical specs',
-              href: '/packaging/cap-solutions',
+              href: '/aseptic-pakaging-solutions/cap-solutions/',
               iconId: 'cap',
             },
             {
@@ -397,7 +397,7 @@ export async function getMainCategoryPage(
               description:
                 'Paper and bio-plastic straw alternatives that integrate seamlessly with our drink packaging formats without compromising user experience.',
               ctaLabel: 'Impact report',
-              href: '/packaging/lamistraw',
+              href: '/aseptic-pakaging-solutions/lamistraw/',
               variant: 'highlight',
               iconId: 'straw',
             },
@@ -408,7 +408,7 @@ export async function getMainCategoryPage(
               description:
                 'Specifically engineered for still water, providing a low-carbon alternative to PET bottles with exceptional freshness retention.',
               ctaLabel: 'Technical specs',
-              href: '/packaging/waterpak',
+              href: '/aseptic-pakaging-solutions/waterpak/',
               iconId: 'water',
             },
             {
@@ -418,7 +418,7 @@ export async function getMainCategoryPage(
               description:
                 'Crafted with an outer bio-based polymer coating and unbleached paperboard, LamiNatural boasts a significantly lower carbon footprint throughout...',
               ctaLabel: 'Technical specs',
-              href: '/packaging/sustainable-solutions',
+              href: '/aseptic-pakaging-solutions/sustainable-solutions/',
               iconId: 'sustainable',
             },
             {
@@ -428,7 +428,7 @@ export async function getMainCategoryPage(
               description:
                 "Lamipak's metallic ink solutions provide a premium visual finish while maintaining strict food-grade safety standards for aseptic carton packaging.",
               ctaLabel: 'Technical specs',
-              href: '/packaging/metallic-lnk',
+              href: '/aseptic-pakaging-solutions/metallic-lnk/',
               iconId: 'metallic',
             },
             {
@@ -438,7 +438,7 @@ export async function getMainCategoryPage(
               description:
                 'Digital co-printing, traceability, and consumer engagement through a single code on-pack — connecting brands with shoppers while supporting compliance and loyalty.',
               ctaLabel: 'Technical specs',
-              href: '/packaging/one-pack-one-code',
+              href: '/aseptic-pakaging-solutions/one-pack-one-code/',
               iconId: 'code',
             },
           ],
@@ -463,54 +463,54 @@ export async function getSubCategoryPage(
         slug: 'brick-slim',
         title: 'Brick Slim',
         sizes: '80ml, 125ml, 200ml, 250ml, 500ml, 1000ml, 1500ml, 2000ml',
-        image: '/product_image_3.jpg',
+        image: '/roll_fed_product_1.webp',
       },
       {
         id: 'brick-base',
         slug: 'brick-base',
         title: 'Brick Base',
         sizes: '100ml, 200ml, 250ml, 500ml, 1000ml',
-        image: '/product_image_3.jpg',
+        image: '/roll_fed_product_2.webp',
       },
       {
         id: 'brick-mid',
         slug: 'brick-mid',
         title: 'Brick Mid',
         sizes: '200ml',
-        image: '/product_image_3.jpg',
+        image: '/roll_fed_product_3.webp',
       },
       {
         id: 'lamiwedge',
         slug: 'lamiwedge',
         title: 'LamiWedge',
         sizes: '125ml, 200ml',
-        image: '/product_image_3.jpg',
+        image: '/roll_fed_product_4.webp',
       },
       {
         id: 'lamipillow',
         slug: 'lamipillow',
         title: 'LamiPillow',
         sizes: '70ml, 100ml, 200ml, 220ml, 250ml, 600ml, 1000ml',
-        image: '/product_image_3.jpg',
+        image: '/roll_fed_product_5.webp',
       },
       {
         id: 'lamitriangle',
         slug: 'lamitriangle',
         title: 'LamiTriangle',
         sizes: '20ml, 65ml, 80ml, 150ml, 200ml',
-        image: '/product_image_3.jpg',
+        image: '/roll_fed_product_6.webp',
       },
     ];
 
     const premiumProducts: RollFedCatalogProduct[] = [
-      { id: 'lamileaf-slim', slug: 'lamileaf-slim', title: 'LamiLeaf Slim', sizes: '125ml, 200ml', image: '/product_image_3.jpg' },
-      { id: 'lamidiamond', slug: 'lamidiamond', title: 'LamiDiamond', sizes: '200ml, 250ml, 1000ml', image: '/product_image_3.jpg' },
-      { id: 'lamisquare', slug: 'lamisquare', title: 'LamiSquare', sizes: '1000ml', image: '/product_image_3.jpg' },
-      { id: 'lamiedge', slug: 'lamiedge', title: 'LamiEdge', sizes: '500ml, 1000ml', image: '/product_image_3.jpg' },
-      { id: 'lamileaf-base', slug: 'lamileaf-base', title: 'LamiLeaf Base', sizes: '250ml', image: '/product_image_3.jpg' },
-      { id: 'lamigemina', slug: 'lamigemina', title: 'LamiGemina', sizes: '1000ml', image: '/product_image_3.jpg' },
-      { id: 'lami-gemina-leaf', slug: 'lami-gemina-leaf', title: 'Lami Gemina Leaf', sizes: '1000ml', image: '/product_image_3.jpg' },
-      { id: 'lamiultra', slug: 'lamiultra', title: 'LamiUltra', sizes: '180ml', image: '/product_image_3.jpg' },
+      { id: 'lamileaf-slim', slug: 'lamileaf-slim', title: 'LamiLeaf Slim', sizes: '125ml, 200ml', image: '/roll_fed_preimium_1.webp' },
+      { id: 'lamidiamond', slug: 'lamidiamond', title: 'LamiDiamond', sizes: '200ml, 250ml, 1000ml', image: '/roll_fed_preimium_2.webp' },
+      { id: 'lamisquare', slug: 'lamisquare', title: 'LamiSquare', sizes: '1000ml', image: '/roll_fed_preimium_3.webp' },
+      { id: 'lamiedge', slug: 'lamiedge', title: 'LamiEdge', sizes: '500ml, 1000ml', image: '/roll_fed_preimium_4.webp' },
+      { id: 'lamileaf-base', slug: 'lamileaf-base', title: 'LamiLeaf Base', sizes: '250ml', image: '/roll_fed_preimium_51.webp' },
+      { id: 'lamigemina', slug: 'lamigemina', title: 'LamiGemina', sizes: '1000ml', image: '/roll_fed_preimium_6.webp' },
+      { id: 'lami-gemina-leaf', slug: 'lami-gemina-leaf', title: 'Lami Gemina Leaf', sizes: '1000ml', image: '/roll_fed_preimium_7.webp' },
+      { id: 'lamiultra', slug: 'lamiultra', title: 'LamiUltra', sizes: '180ml', image: '/roll_fed_preimium_8.webp' },
     ];
 
     return {
@@ -526,9 +526,9 @@ export async function getSubCategoryPage(
           type: 'heroWithBreadcrumbs',
           data: {
             title: 'Roll-Fed',
-            backgroundImage: '/banner-slider1.jpg',
+            backgroundImage: '/roll_feb_banner.webp',
             breadcrumbs: [
-              { label: 'Packaging', href: '/packaging' },
+              { label: 'Packaging', href: '/aseptic-pakaging-solutions/' },
               { label: 'Roll-Fed' },
             ],
           },
@@ -597,7 +597,7 @@ export async function getSubCategoryPage(
             title: 'Sleeve-Fed',
             backgroundImage: '/seelve_banner.webp',
             breadcrumbs: [
-              { label: 'Packaging', href: '/packaging' },
+              { label: 'Packaging', href: '/aseptic-pakaging-solutions/' },
               { label: 'Sleeve-Fed' },
             ],
           },
@@ -635,7 +635,7 @@ export async function getSubCategoryPage(
             title: 'Sustainable Solutions',
             backgroundImage: '/sutanable_image1.webp',
             breadcrumbs: [
-              { label: 'Packaging', href: '/packaging' },
+              { label: 'Packaging', href: '/aseptic-pakaging-solutions/' },
               { label: 'Sustainable Solutions' },
             ],
           },
@@ -698,7 +698,7 @@ export async function getSubCategoryPage(
             title: 'LamiStraw',
             backgroundImage: '/lawmistraw_banner.webp',
             breadcrumbs: [
-              { label: 'Packaging', href: '/packaging' },
+              { label: 'Packaging', href: '/aseptic-pakaging-solutions/' },
               { label: 'LamiStraw' },
             ],
           },
@@ -781,7 +781,7 @@ export async function getSubCategoryPage(
             title: 'One Pack One Code',
             backgroundImage: '/onepack_onecode.webp',
             breadcrumbs: [
-              { label: 'Packaging', href: '/packaging' },
+              { label: 'Packaging', href: '/aseptic-pakaging-solutions/' },
               { label: 'One Pack One Code' },
             ],
           },
@@ -790,7 +790,7 @@ export async function getSubCategoryPage(
           type: 'onePackOneCodeLanding',
           data: {
             breadcrumbs: [
-              { label: 'Packaging', href: '/packaging' },
+              { label: 'Packaging', href: '/aseptic-pakaging-solutions/' },
               { label: 'One Pack One Code' },
             ],
             tabs: [
@@ -895,7 +895,7 @@ export async function getSubCategoryPage(
             title: 'Waterpak',
             backgroundImage: '/waterpak_image.webp',
             breadcrumbs: [
-              { label: 'Packaging', href: '/packaging' },
+              { label: 'Packaging', href: '/aseptic-pakaging-solutions/' },
               { label: 'Waterpak' },
             ],
           },
@@ -914,10 +914,10 @@ export async function getSubCategoryPage(
               'Can be used in Roll-fed format, Sleeve-fed format, and Sustainable product',
             availableInTitle: 'WaterPak is Available In',
             availableIn: [
-              { id: 'sleeve-fed', label: 'Sleeve Fed', href: '/packaging/sleeve-fed' },
-              { id: 'roll-fed', label: 'Roll Fed', href: '/packaging/roll-fed' },
-              { id: 'one-pack-one-code', label: 'OnePack OneCode', href: '/packaging/one-pack-one-code' },
-              { id: 'sustainable-product', label: 'Sustainable product', href: '/packaging/sustainable-solutions' },
+              { id: 'sleeve-fed', label: 'Sleeve Fed', href: '/aseptic-pakaging-solutions/sleeve-fed/' },
+              { id: 'roll-fed', label: 'Roll Fed', href: '/aseptic-pakaging-solutions/roll-fed/' },
+              { id: 'one-pack-one-code', label: 'OnePack OneCode', href: '/aseptic-pakaging-solutions/one-pack-one-code/' },
+              { id: 'sustainable-product', label: 'Sustainable product', href: '/aseptic-pakaging-solutions/sustainable-solutions/' },
             ],
             availableInDescription:
               'WaterPak offers exceptional flexibility, available in Roll-Fed, Sleeve-Fed, and Sustainable Product formats to support your brand&apos;s eco-commitment. Enhance your packaging further with OnePack OneCode integration to strengthen digital consumer engagement, making WaterPak a smart choice that prioritizes quality integrity and environmental responsibility.',
@@ -951,7 +951,7 @@ export async function getSubCategoryPage(
             title: 'Metallic Ink',
             backgroundImage: '/metallic_ink.webp',
             breadcrumbs: [
-              { label: 'Packaging', href: '/packaging' },
+              { label: 'Packaging', href: '/aseptic-pakaging-solutions/' },
               { label: 'Metallic Ink' },
             ],
           },
@@ -968,9 +968,9 @@ export async function getSubCategoryPage(
             sizeFormatText: 'can be used in Roll-fed format and Sleeve-fed format',
             productFeaturesTitle: 'Product Features',
             productFeaturesPills: [
-              { id: 'sleeve-fed', label: 'Sleeve Fed', href: '/packaging/sleeve-fed' },
-              { id: 'roll-fed', label: 'Roll Fed', href: '/packaging/roll-fed' },
-              { id: 'one-pack-one-code', label: 'OnePack OneCode', href: '/packaging/one-pack-one-code' },
+              { id: 'sleeve-fed', label: 'Sleeve Fed', href: '/aseptic-pakaging-solutions/sleeve-fed/' },
+              { id: 'roll-fed', label: 'Roll Fed', href: '/aseptic-pakaging-solutions/roll-fed/' },
+              { id: 'one-pack-one-code', label: 'OnePack OneCode', href: '/aseptic-pakaging-solutions/one-pack-one-code/' },
             ],
             productFeaturesDescription:
               'Deliver a premium and exclusive feel to your brand with Metallic Ink, providing a luxurious shimmering effect on every corner of your packaging. This feature is fully compatible with both Roll-Fed and Sleeve-Fed formats, offering complete flexibility for your production lines. Elevate your shelf presence and strengthen consumer interaction through OnePack OneCode technology integration, setting a new standard for elegant and innovative packaging.',
@@ -1005,7 +1005,7 @@ export async function getSubCategoryPage(
             title: 'Cap Solutions',
             backgroundImage: '/cap-solution.webp',
             breadcrumbs: [
-              { label: 'Packaging', href: '/packaging' },
+              { label: 'Packaging', href: '/aseptic-pakaging-solutions/' },
               { label: 'Cap Solutions' },
             ],
           },
@@ -1023,12 +1023,12 @@ export async function getSubCategoryPage(
             sizeFormatText: 'can be used in Roll-fed format, Sleeve-fed format, and Sustainable product',
             productFeaturesTitle: 'Product Features',
             productFeaturesPills: [
-              { id: 'sleeve-fed', label: 'Sleeve Fed', href: '/packaging/sleeve-fed' },
-              { id: 'roll-fed', label: 'Roll Fed', href: '/packaging/roll-fed' },
-              { id: 'one-pack-one-code', label: 'OnePack OneCode', href: '/packaging/one-pack-one-code' },
-              { id: 'waterpak', label: 'Waterpak', href: '/packaging/waterpak' },
-              { id: 'metallic-lnk', label: 'Metallic Ink', href: '/packaging/metallic-lnk' },
-              { id: 'sustainable-product', label: 'Sustainable Product', href: '/packaging/sustainable-solutions' },
+              { id: 'sleeve-fed', label: 'Sleeve Fed', href: '/aseptic-pakaging-solutions/sleeve-fed/' },
+              { id: 'roll-fed', label: 'Roll Fed', href: '/aseptic-pakaging-solutions/roll-fed/' },
+              { id: 'one-pack-one-code', label: 'OnePack OneCode', href: '/aseptic-pakaging-solutions/one-pack-one-code/' },
+              { id: 'waterpak', label: 'Waterpak', href: '/aseptic-pakaging-solutions/waterpak/' },
+              { id: 'metallic-lnk', label: 'Metallic Ink', href: '/aseptic-pakaging-solutions/metallic-lnk/' },
+              { id: 'sustainable-product', label: 'Sustainable Product', href: '/aseptic-pakaging-solutions/sustainable-solutions/' },
             ],
             productFeaturesDescription:
               'Opticap27 can be seamlessly implemented across Roll-fed, Sleeve-fed, and WaterPak packaging formats, while fully supporting Sustainable Product variants for your green business vision. Add premium visual value with Metallic Ink accents and optimize digital connectivity through OnePackOneCode integration—making Opticap27 a crucial component for packaging that is safer, more functional, and truly modern.',
