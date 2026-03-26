@@ -777,7 +777,7 @@ export async function getSubCategoryPage(
           type: 'heroWithBreadcrumbs',
           data: {
             title: 'One Pack One Code',
-            backgroundImage: '/banner-slider2.webp',
+            backgroundImage: '/onepack_onecode.webp',
             breadcrumbs: [
               { label: 'Packaging', href: '/packaging' },
               { label: 'One Pack One Code' },
@@ -794,8 +794,8 @@ export async function getSubCategoryPage(
             tabs: [
               { id: 'digital', label: 'Digital Co-Printing' },
               { id: 'lottery', label: 'Lottery Activities' },
-              { id: 'marketing', label: 'Marketing/Brand Promotion' },
-              { id: 'loyalty', label: 'Loyalty/Rewards' },
+              { id: 'marketing', label: 'Marketing Promotion' },
+              { id: 'loyalty', label: 'Loyalty and Rewards' },
               { id: 'traceability', label: 'Traceability' },
             ],
             activeTabId: 'lottery',
@@ -827,55 +827,47 @@ export async function getSubCategoryPage(
                 number: '01',
                 title: 'Digital Co-Printing',
                 bullets: [
-                  'Our high-speed digital printing technology allows for unique identification across single packs.',
-                  'Highly-resilient variable data and customization at scale.',
-                  'Seamless integration with existing production workflows.',
+                  'We print unique images, messages or QR codes directly onto existing packaging. Different packs can carry different messages, creating dynamic storytelling right on the shelf.',
+                  'High-resolution variable data',
+                  'Seamless integration with production lines',
                 ],
-                image: '/product_image_1.jpg',
+                image: '/one_pack_image_1.webp',
               },
               {
                 id: 'lottery',
                 number: '02',
-                title: 'LOTTERY',
+                title: 'Lottery Activities',
                 bullets: [
-                  'Engage consumers with instant-win campaigns and participating codes.',
-                  'Boost brand interaction through controlled redemption flows.',
-                  'Track participation and performance across regions.',
+                  'Consumers scan to participate in prize draws during events, activations, or campaigns, turning engagement into excitement',
                 ],
-                image: '/product_image_2.jpg',
+                image: '/one_pack_image_2.webp',
               },
               {
                 id: 'marketing',
                 number: '03',
-                title: 'Marketing/Brand Promotion',
+                title: 'Marketing Promotion',
                 bullets: [
-                  'Drive targeted promotions with scannable codes and dynamic callouts.',
-                  'Support seasonal campaigns, retail activations, and content-led engagement.',
-                  'Deliver measurable performance insights from scan-to-engagement.',
+                  'Interactive games and digital promotions bring your brand to life and keep consumers coming back.',
                 ],
-                image: '/product_image_3.jpg',
+                image: '/one_pack_image_3.webp',
               },
               {
                 id: 'loyalty',
                 number: '04',
                 title: 'Loyalty and Rewards',
                 bullets: [
-                  'Turn purchases into loyalty points and reward-based experiences.',
-                  'Personalize redemption journeys for repeat customers and partners.',
-                  'Maintain traceability while improving customer satisfaction.',
+                  'Each pack carries a unique code, enabling point systems and rewards that encourage repeat purchases through verified after-purchase scanning.',
                 ],
-                image: '/product_image_2.jpg',
+                image: '/one_pack_image_4.webp',
               },
               {
                 id: 'traceability',
                 number: '05',
                 title: 'Traceability',
                 bullets: [
-                  'Track product origin and improve quality assurance workflows.',
-                  'Reduce risk with verified code validation and data continuity.',
-                  'Support compliance and responsible supply chain reporting.',
+                  'Consumers can scan to learn where their product comes from, supporting transparency, sustainability stories, and organic sourcing claims.',
                 ],
-                image: '/product_image_1.jpg',
+                image: '/one_pack_image_5.webp',
               },
             ],
           },
@@ -899,7 +891,7 @@ export async function getSubCategoryPage(
           type: 'heroWithBreadcrumbs',
           data: {
             title: 'Waterpak',
-            backgroundImage: '/banner-slider1.jpg',
+            backgroundImage: '/waterpak_image.webp',
             breadcrumbs: [
               { label: 'Packaging', href: '/packaging' },
               { label: 'Waterpak' },
@@ -910,24 +902,23 @@ export async function getSubCategoryPage(
           type: 'waterpakLanding',
           data: {
             title: 'WaterPak',
-            image: '/product_image_2.jpg',
+            image: '/waterpak_image_left.webp',
             descriptionLines: [
-              'WaterPak redefines hydration by offering a premium alternative packaging for bottled water that prioritizes both purity and consumer trust, while standing out for its clean look and shelf impact.',
-              'As a leader in aseptic-ready packaging, WaterPak utilizes high-performance barrier technology to protect product quality and keep taste consistent, helping brands deliver confidence in every sip.',
-              'Select the format that fits your line and market needs for fast adoption and dependable production.',
+              'WaterPak redefines hydration by offering a premium alternative packaging for bottled water that prioritizes both purity and planetary health. Utilizing state-of-the-art carton packaging for water, our solution features advanced barrier protection to ensure that still water packages remain fresh, odor-free, and completely protected from external contamination.',
+              'As a leader in eco friendly water packaging, WaterPak utilizes a high-performance water in cardboard packaging design that is lightweight yet durable, thanks to specialized water resistant paper packaging technology. Whether in a convenient water carton box or a high-capacity water bag box system, our sustainable water packaging ensures an extended shelf life without compromising taste integrity. Choose water in recyclable packaging to align your brand with environmental responsibility and the future of sustainable hydration.',
             ],
             sizeFormatTitle: 'Size Format',
             sizeFormatText:
-              'Be sure to select in roll-fed format, sleeve-fed format, and sustainable product formats — with design and barrier options optimized for your specific hydration product.',
+              'Can be used in Roll-fed format, Sleeve-fed format, and Sustainable product',
             availableInTitle: 'WaterPak is Available In',
             availableIn: [
-              { id: 'sleeve-fed', label: 'Sleeve-fed', href: '/packaging/sleeve-fed' },
-              { id: 'roll-fed', label: 'roll-fed', href: '/packaging/roll-fed' },
+              { id: 'sleeve-fed', label: 'Sleeve Fed', href: '/packaging/sleeve-fed' },
+              { id: 'roll-fed', label: 'Roll Fed', href: '/packaging/roll-fed' },
               { id: 'one-pack-one-code', label: 'OnePack OneCode', href: '/packaging/one-pack-one-code' },
               { id: 'sustainable-product', label: 'Sustainable product', href: '/packaging/sustainable-solutions' },
             ],
             availableInDescription:
-              'WaterPak offers exceptional flexibility, available in roll-fed, sleeve-fed, and sustainable product formats to support your brand’s economic commitments. Choose your preferred format and optimize your production line for consistency, quality integrity, and environmental responsibility.',
+              'WaterPak offers exceptional flexibility, available in Roll-Fed, Sleeve-Fed, and Sustainable Product formats to support your brand&apos;s eco-commitment. Enhance your packaging further with OnePack OneCode integration to strengthen digital consumer engagement, making WaterPak a smart choice that prioritizes quality integrity and environmental responsibility.',
             connectSection: {
               heading: 'Connect with Our Technical Experts',
               headingHighlight: 'Technical Experts',
@@ -956,7 +947,7 @@ export async function getSubCategoryPage(
           type: 'heroWithBreadcrumbs',
           data: {
             title: 'Metallic Ink',
-            backgroundImage: '/banner-slider1.jpg',
+            backgroundImage: '/metallic_ink.webp',
             breadcrumbs: [
               { label: 'Packaging', href: '/packaging' },
               { label: 'Metallic Ink' },
@@ -967,21 +958,20 @@ export async function getSubCategoryPage(
           type: 'metallicLnkLanding',
           data: {
             title: 'Metallic Ink',
-            image: '/product_image_1.jpg',
+            image: '/waterpak_image_left_2.webp',
             descriptionLines: [
-              'Metallic ink dispersing technology enables premium co-printing effects, creating a refined look and feel while reducing waste.',
-              'Through exceptional design flexibility, it reduces material costs while offering a sustainable and versatile packaging solution with complex patterns and high-resolution finishing.',
+              'Metallic Ink delivers striking localized metallic effects, creating a premium, eye-catching look that elevates your brand’s presence on the shelf. With exceptional design flexibility, it reduces material costs while offering a sustainable and versatile packaging solution that combines luxury, innovation, and environmental responsibility.',
             ],
             sizeFormatTitle: 'Size Format',
-            sizeFormatText: 'Can be used in roll-fed format and sleeve-fed format',
+            sizeFormatText: 'can be used in Roll-fed format and Sleeve-fed format',
             productFeaturesTitle: 'Product Features',
             productFeaturesPills: [
-              { id: 'sleeve-fed', label: 'Sleeve-fed', href: '/packaging/sleeve-fed' },
-              { id: 'roll-fed', label: 'Roll-fed', href: '/packaging/roll-fed' },
+              { id: 'sleeve-fed', label: 'Sleeve Fed', href: '/packaging/sleeve-fed' },
+              { id: 'roll-fed', label: 'Roll Fed', href: '/packaging/roll-fed' },
               { id: 'one-pack-one-code', label: 'OnePack OneCode', href: '/packaging/one-pack-one-code' },
             ],
             productFeaturesDescription:
-              'Deliver a premium and exclusive feel to your brand with a luxurious shimmering effect on every corner of your packaging. This feature is fully compatible with both roll-fed and sleeve-fed formats, offering complete flexibility for your production lines.',
+              'Deliver a premium and exclusive feel to your brand with Metallic Ink, providing a luxurious shimmering effect on every corner of your packaging. This feature is fully compatible with both Roll-Fed and Sleeve-Fed formats, offering complete flexibility for your production lines. Elevate your shelf presence and strengthen consumer interaction through OnePack OneCode technology integration, setting a new standard for elegant and innovative packaging.',
             connectSection: {
               heading: 'Connect with Our Technical Experts',
               headingHighlight: 'Technical Experts',
@@ -1011,7 +1001,7 @@ export async function getSubCategoryPage(
           type: 'heroWithBreadcrumbs',
           data: {
             title: 'Cap Solutions',
-            backgroundImage: '/banner-slider1.jpg',
+            backgroundImage: '/cap-solution.webp',
             breadcrumbs: [
               { label: 'Packaging', href: '/packaging' },
               { label: 'Cap Solutions' },
@@ -1022,25 +1012,24 @@ export async function getSubCategoryPage(
           type: 'opticapLanding',
           data: {
             title: 'Cap Solutions',
-            image: '/product_image_3.jpg',
+            image: '/cap-solution_left-image.webp',
             descriptionLines: [
-              'Cap Solutions are precision-engineered closures ensuring leak-proof delivery, consumer-friendly opening, and consistent performance.',
-              'Built for dependable production runs, Cap Solutions enhance user experience while maintaining compatibility with your filling environment.',
-              'From sourcing to finished packaging, Cap Solutions support innovation, quality, and long-term brand trust.',
+              'Opticap27, Lamipak&apos;s first cap product, brings innovation and reliability to our One-stop solutions. Newly patented anti-slip grooves for a comfortable and secure grip. Exclusive thread lock system for a tighter and safer close. Innovative cutter shape redefines the cutting experience.  An audible click to lock freshness.',
+            
             ],
             sizeFormatTitle: 'Size Format',
-            sizeFormatText: 'Can be used in roll-fed format, sleeve-fed format, and sustainable product formats',
+            sizeFormatText: 'can be used in Roll-fed format, Sleeve-fed format, and Sustainable product',
             productFeaturesTitle: 'Product Features',
             productFeaturesPills: [
-              { id: 'sleeve-fed', label: 'Sleeve-fed', href: '/packaging/sleeve-fed' },
-              { id: 'roll-fed', label: 'Roll-fed', href: '/packaging/roll-fed' },
+              { id: 'sleeve-fed', label: 'Sleeve Fed', href: '/packaging/sleeve-fed' },
+              { id: 'roll-fed', label: 'Roll Fed', href: '/packaging/roll-fed' },
               { id: 'one-pack-one-code', label: 'OnePack OneCode', href: '/packaging/one-pack-one-code' },
               { id: 'waterpak', label: 'Waterpak', href: '/packaging/waterpak' },
               { id: 'metallic-lnk', label: 'Metallic Ink', href: '/packaging/metallic-lnk' },
               { id: 'sustainable-product', label: 'Sustainable Product', href: '/packaging/sustainable-solutions' },
             ],
             productFeaturesDescription:
-              'Cap Solutions deliver reliable closure performance across production lines, helping brands maintain consistent quality while reducing downtime and variation.',
+              'Opticap27 can be seamlessly implemented across Roll-fed, Sleeve-fed, and WaterPak packaging formats, while fully supporting Sustainable Product variants for your green business vision. Add premium visual value with Metallic Ink accents and optimize digital connectivity through OnePackOneCode integration—making Opticap27 a crucial component for packaging that is safer, more functional, and truly modern.',
             connectSection: {
               heading: 'Connect with Our Technical Experts',
               headingHighlight: 'Technical Experts',
