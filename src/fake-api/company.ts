@@ -269,7 +269,7 @@ export async function getCompanyData(): Promise<CompanyData> {
         ],
       },
       topRight: {
-        image: '/about_us_image_2.jpg',
+        image: '/about_right_side.webp',
         imageAlt: 'Lamipak industrial facility with solar panels',
       },
       bottomLeft: {
