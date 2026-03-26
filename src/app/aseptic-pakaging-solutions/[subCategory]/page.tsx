@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
-import { redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 
 import { getCanonicalUrl } from '@/config/site';
 import { PageBuilder } from '@/components/pageBuilder/PageBuilder';
 import { getSubCategoryPage } from '@/fake-api/page-builder';
 
 const MAIN_CATEGORY = 'packaging' as const;
+const BASE_PATH = '/aseptic-pakaging-solutions';
 
 interface SubCategoryPageProps {
   params: Promise<{
@@ -24,20 +25,28 @@ export async function generateMetadata({ params }: SubCategoryPageProps): Promis
     };
   }
 
-  const canonicalUrl = page.seo?.canonical_path
-    ? getCanonicalUrl(page.seo.canonical_path)
-    : getCanonicalUrl(`/${MAIN_CATEGORY}/${subCategory}`);
-
   return {
     title: page.seo?.meta_title || page.title,
     description: page.seo?.meta_description,
     alternates: {
-      canonical: canonicalUrl,
+      canonical: getCanonicalUrl(`${BASE_PATH}/${subCategory}`),
     },
   };
 }
 
-export default async function PackagingSubCategoryRoute({ params }: SubCategoryPageProps) {
+export default async function AsepticPackagingSolutionsSubCategoryRoute({ params }: SubCategoryPageProps) {
   const { subCategory } = await params;
-  redirect(`/aseptic-pakaging-solutions/${subCategory}/`);
+  const page = await getSubCategoryPage(MAIN_CATEGORY, subCategory);
+  if (!page) notFound();
+
+  return (
+    <PageBuilder
+      pageData={page}
+      pageContext={{
+        mainCategory: MAIN_CATEGORY,
+        subCategory,
+      }}
+    />
+  );
 }
+
