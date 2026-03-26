@@ -3,6 +3,7 @@ import CompanyNavigation from '@/components/company/CompanyNavigation';
 import AboutUsQuadrant from '@/components/company/AboutUsQuadrant';
 import CallToAction from '@/components/home/CallToAction';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
+import VideoBanner from '@/components/home/VideoBanner';
 import { getCanonicalUrl } from '@/config/site';
 import type { DynamicPageData } from '@/fake-api/dynamic-pages';
 
@@ -46,7 +47,18 @@ export default function OurCompanyDynamicPage({ data }: OurCompanyDynamicPagePro
 
         <CompanyNavigation data={companyData.navigation} activePath={activeCompanyPath} />
 
-        {companyData.aboutUsQuadrant ? <AboutUsQuadrant data={companyData.aboutUsQuadrant} /> : null}
+        {companyData.aboutUsQuadrant ? (
+          <AboutUsQuadrant
+            data={companyData.aboutUsQuadrant}
+            videoBetween={
+              data.slug === 'introduction' ? (
+                <div className="pt-12">
+                  <VideoBanner videoOnly={true} />
+                </div>
+              ) : null
+            }
+          />
+        ) : null}
 
         <div className="pt-20">
           <CallToAction />

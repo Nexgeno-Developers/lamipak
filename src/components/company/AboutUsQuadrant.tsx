@@ -1,8 +1,14 @@
 import Image from 'next/image';
 import type { AboutUsQuadrantSection } from '@/fake-api/company';
+import type { ReactNode } from 'react';
 
 interface AboutUsQuadrantProps {
   data: AboutUsQuadrantSection;
+  /**
+   * Optional slot rendered between the "top row" text/image and the "bottom row"
+   * text/image. Used by `/introduction` to show the About Us video.
+   */
+  videoBetween?: ReactNode;
 }
 
 /**
@@ -16,12 +22,11 @@ interface AboutUsQuadrantProps {
  * 
  * Full width section with no container constraints.
  */
-export default function AboutUsQuadrant({ data }: AboutUsQuadrantProps) {
+export default function AboutUsQuadrant({ data, videoBetween }: AboutUsQuadrantProps) {
   return (
     <section className="w-full bg-gray-50">
-      {/* Four Quadrant Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2">
-        {/* Top Left - Text Content */}
+      {/* Top Row (Lamipak: A Global Leader...) */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 pb-10">
         <div className="flex items-center justify-center p-8 md:p-12 lg:p-16 xl:p-16">
           <div className="max-w-2xl">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 leading-[60px]">
@@ -43,7 +48,6 @@ export default function AboutUsQuadrant({ data }: AboutUsQuadrantProps) {
           </div>
         </div>
 
-        {/* Top Right - Image */}
         <div className="relative w-full">
           {data.topRight.image ? (
             <div className="relative w-full">
@@ -60,9 +64,14 @@ export default function AboutUsQuadrant({ data }: AboutUsQuadrantProps) {
             <div className="w-full h-auto bg-gray-200" style={{ aspectRatio: '4/3' }} />
           )}
         </div>
+      </div>
 
-        {/* Bottom Left - Image */}
-        <div className="relative w-full order-3 lg:order-3">
+      {/* Slot between top + bottom */}
+      {videoBetween ? <div className="bg-gray-50">{videoBetween}</div> : null}
+
+      {/* Bottom Row (Leading the Future...) */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 pt-20">
+        <div className="relative w-full">
           {data.bottomLeft.image ? (
             <div className="relative w-full">
               <Image
@@ -79,8 +88,7 @@ export default function AboutUsQuadrant({ data }: AboutUsQuadrantProps) {
           )}
         </div>
 
-        {/* Bottom Right - Text Content */}
-        <div className="flex items-center justify-center p-8 md:p-12 lg:p-16 xl:p-16 order-4 lg:order-4">
+        <div className="flex items-center justify-center p-8 md:p-12 lg:p-16 xl:p-16">
           <div className="max-w-2xl">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 leading-[60px]">
               <span className="text-black">
@@ -91,7 +99,7 @@ export default function AboutUsQuadrant({ data }: AboutUsQuadrantProps) {
             {data.bottomRight.paragraphs.map((paragraph, index) => (
               <p
                 key={index}
-                className={`text-base  text-black leading-relaxed ${
+                className={`text-base text-black leading-relaxed ${
                   index < data.bottomRight.paragraphs.length - 1 ? 'mb-4 md:mb-6' : ''
                 }`}
               >
