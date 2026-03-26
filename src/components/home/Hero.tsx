@@ -94,14 +94,11 @@ export default function Hero({ data }: HeroProps) {
             />
             {/* Gradient Overlay */}
             <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  'linear-gradient(83.04deg, #0E233C 13.24%, rgba(12, 47, 86, 0.607692) 69.2%, rgba(11, 59, 113, 0.2) 92.42%)',
-              }}
+              className="absolute inset-0 bg-gradient-to-r from-[#0E233C]/95 via-[#0C2F56]/60 to-[#087BFF]/10"
+             
             />
             {/* Blur Effect - Reduced */}
-            <div className="absolute inset-0 backdrop-blur-[2px]" />
+            {/* <div className="absolute inset-0 backdrop-blur-[2px]" /> */}
           </div>
         ))}
       </div>
@@ -112,19 +109,23 @@ export default function Hero({ data }: HeroProps) {
           {/* Push hero text to the bottom */}
           <div className="mt-auto pb-8 sm:pb-10 md:pb-14 pt-20 sm:pt-24 md:pt-0">
             {/* Category Label */}
-            <div className="mb-3">
+            {/* <div className="mb-3">
               <span className="text-white text-sm md:text-base font-medium tracking-wider uppercase">
                 {currentSlideData.category}
               </span>
-            </div>
+            </div> */}
 
             {/* Main Headline */}
-            <div className="mb-6 max-w-5xl">
-              <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight [overflow-wrap:anywhere]">
+            <div className="lg:max-w-5xl">
+              <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight [overflow-wrap:anywhere]">
                 <span className="text-white">{currentSlideData.title}</span>
                 <br />
                 <span className="text-[#009FE8]">{currentSlideData.titleHighlight}</span>
               </h1>
+
+              <p className="text-base text-white py-[20px] !leading-[32px] pr-[200px]">
+                {currentSlideData.description}
+              </p>
             </div>
 
             {/* CTA Link */}
@@ -152,12 +153,12 @@ export default function Hero({ data }: HeroProps) {
 
             {/* Categories + Right-side arrows */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 min-w-0">
-              <div className="flex items-center gap-3 sm:gap-4 md:gap-6 overflow-x-auto pb-2 scrollbar-hide flex-1 min-w-0 -mx-1 px-1">
+              <div className="flex items-center gap-3 sm:gap-2 md:gap-3 overflow-x-auto pb-2 scrollbar-hide flex-1 min-w-0 -mx-1 px-1">
                 {data.categories.map((category) => (
                   <button
                     key={category.id}
                     onClick={(e) => handleCategoryClick(category.slideIndex, e)}
-                    className={`flex-shrink-0 px-4 py-2 rounded-full border text-sm md:text-base font-light transition-all whitespace-nowrap cursor-pointer ${
+                    className={`flex-shrink-0 px-3 py-[6px] rounded-full border text-sm md:text-[14px] font-light transition-all whitespace-nowrap cursor-pointer ${
                       currentSlide === category.slideIndex
                         ? 'border border-[#009FE8] text-white bg-[#009FE8] font-semibold'
                         : 'text-white/90 hover:text-white '
@@ -172,7 +173,7 @@ export default function Hero({ data }: HeroProps) {
               <div className="flex items-center justify-end sm:justify-start gap-2 flex-shrink-0">
                 <button
                   onClick={prevSlide}
-                  className="cursor-pointer w-10 h-10 md:w-12 md:h-12 rounded-full border border-white bg-transparent hover:bg-white/20 flex items-center justify-center transition-all group"
+                  className="cursor-pointer w-10 h-10 md:w-10 md:h-10 rounded-full border border-white bg-transparent hover:bg-white/20 flex items-center justify-center transition-all group"
                   aria-label="Previous slide"
                 >
                   <svg
@@ -192,7 +193,7 @@ export default function Hero({ data }: HeroProps) {
 
                 <button
                   onClick={nextSlide}
-                  className="cursor-pointer w-10 h-10 md:w-12 md:h-12 rounded-full border border-white bg-transparent hover:bg-white/20 flex items-center justify-center transition-all group"
+                  className="cursor-pointer w-10 h-10 md:w-10 md:h-10 rounded-full border border-white bg-transparent hover:bg-white/20 flex items-center justify-center transition-all group"
                   aria-label="Next slide"
                 >
                   <svg

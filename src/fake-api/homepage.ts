@@ -11,6 +11,7 @@ export interface HeroSlide {
   category: string;
   title: string;
   titleHighlight: string;
+  description: string;
   ctaText: string;
   ctaLink: string;
   backgroundImage: string;
@@ -245,80 +246,166 @@ export async function getHomepageData(): Promise<HomepageData> {
         {
           id: '1',
           category: 'ASEPTIC PACKAGING ENGINEERING',
-          title: 'IN A STERILE WORLD,',
-          titleHighlight: 'PRECISION STILL WINS.',
+          title: 'Leading Aseptic,',
+          titleHighlight: 'Packaging Company.',
           ctaText: 'EXPLORE SOLUTIONS',
-          ctaLink: '/solutions',
-          backgroundImage: '/banner-slider1.jpg',
+          description:
+            'Lamipak is a trusted aseptic packaging manufacturer delivering innovative and reliable aseptic packaging solutions for food and beverage brands worldwide.',
+          ctaLink: '/',
+          backgroundImage: '/banner-slide-1.webp',
         },
         {
           id: '2',
           category: 'INNOVATION IN PACKAGING',
-          title: 'ADVANCED TECHNOLOGY,',
-          titleHighlight: 'SUSTAINABLE FUTURE.',
+          title: 'Dairy Industry,',
+          titleHighlight: 'Aseptic Packaging.',
           ctaText: 'DISCOVER MORE',
-          ctaLink: '/solutions',
-          backgroundImage: '/banner-slider2.webp',
+          ctaLink: '/',
+          description:
+            'Specialized aseptic packaging solutions for milk, flavoured dairy, yoghurt, cheese and cultured products. Protect freshness, maintain nutritional value, and enhance brand appeal with durable and sustainable packaging solutions tailored for dairy.',
+          backgroundImage: '/banner-slide-2.webp',
         },
         {
           id: '3',
           category: 'INDUSTRIAL EXCELLENCE',
-          title: 'WHERE QUALITY MEETS,',
-          titleHighlight: 'PERFECTION.',
+          title: 'Juice, Nectar &,',
+          titleHighlight: 'StillDrinks Packaging.',
           ctaText: 'LEARN MORE',
-          ctaLink: '/solutions',
-          backgroundImage: '/banner-slider3.webp',
+          ctaLink: '/',
+          description:
+            'Premium aseptic packaging for juice, nectar, and still beverages that safeguards taste and freshness. Our eco friendly packaging solutions combine product protection with environmentally responsible design.',
+          backgroundImage: '/banner-slide-3.webp',
         },
         {
           id: '4',
           category: 'GLOBAL LEADERSHIP',
-          title: 'WORLDWIDE EXPERTISE,',
-          titleHighlight: 'LOCAL SOLUTIONS.',
+          title: 'Plant-Based,',
+          titleHighlight: 'Packaging Innovation.',
           ctaText: 'GET STARTED',
-          ctaLink: '/contact',
-          backgroundImage: '/banner-slider4.webp',
+          ctaLink: '/',
+          description:
+            'Future-focused environmentally friendly packaging for plant-based beverages and dairy alternatives. Our sustainable packaging solutions help brands reduce impact while maintaining product integrity and shelf stability.',
+          backgroundImage: '/banner-slide-4.webp',
         },
         {
           id: '5',
           category: 'CUTTING-EDGE SOLUTIONS',
-          title: 'NEXT GENERATION,',
-          titleHighlight: 'PACKAGING TECHNOLOGY.',
+          title: 'Ready-to-Drink,',
+          titleHighlight: '(RTD) Packaging.',
           ctaText: 'EXPLORE NOW',
-          ctaLink: '/solutions',
-          backgroundImage: '/banner-slider5.webp',
+          ctaLink: '/',
+          description:
+            'High-performance aseptic packaging designed for ready-to-drink beverages. Protect taste, extend shelf life, and support growth with innovative and packaging solutions.',
+          backgroundImage: '/banner-slide-5.webp',
         },
+
+        {
+          id: '6',
+          category: 'CUTTING-EDGE SOLUTIONS',
+          title: 'Alcohol Packaging,',
+          titleHighlight: '',
+          ctaText: 'EXPLORE NOW',
+          ctaLink: '/',
+          description:
+            'Modern aseptic packaging solutions for wine, liquor, and spirits that combine product protection with lightweight packaging solutions for today’s evolving beverage market.',
+          backgroundImage: '/banner-slide-6.webp',
+        },
+
+        {
+          id: '7',
+          category: 'CUTTING-EDGE SOLUTIONS',
+          title: 'Functional Drinks,',
+          titleHighlight: 'Packaging Solutions.',
+          ctaText: 'EXPLORE NOW',
+          ctaLink: '/',
+          description:
+            'Smart aseptic packaging solutions for energy drinks, fortified beverages, and wellness blends. Preserve active ingredients and extend shelf life with advanced, packaging solutions built for performance.',
+          backgroundImage: '/banner-slide-7.webp',
+        },
+
+        {
+          id: '8',
+          category: 'CUTTING-EDGE SOLUTIONS',
+          title: 'Nutraceutical,',
+          titleHighlight: 'Packaging Excellence.',
+          ctaText: 'EXPLORE NOW',
+          ctaLink: '/',
+          description:
+            'Secure and hygienic carton packaging designed for nutraceutical drinks. Our nutraceuticals packaging innovations ensure product safety, stability, and premium shelf presence.',
+          backgroundImage: '/banner-slide-8.webp',
+        },
+
+        // {
+        //   id: '9',
+        //   category: 'CUTTING-EDGE SOLUTIONS',
+        //   title: 'Sustainable ,',
+        //   titleHighlight: 'Packaging Solutions',
+        //   ctaText: 'EXPLORE NOW',
+        //   ctaLink: '/',
+        //   description:
+        //     'Sustainable Packaging Solutions for a Greener Future. Backed by our green factories and responsible production practices, Lamipak offers a broad range of sustainable packaging solutions and renewable aseptic packaging solutions that reduce environmental impact while protecting product quality.',
+        //   backgroundImage: '/banner-slide-9.webp',
+        // },
       ],
       categories: [
         {
           id: '1',
-          label: 'DAIRY SYSTEMS',
-          href: '/solutions/dairy',
+          label: 'Leading Aseptic',
+          href: '/',
           slideIndex: 0, // First slide
         },
         {
           id: '2',
-          label: 'PLANT-BASED BEVERAGES',
-          href: '/solutions/plant-based',
+          label: 'Dairy Industry',
+          href: '/',
           slideIndex: 1, // Second slide
         },
         {
           id: '3',
-          label: 'LIQUID FOODS',
-          href: '/solutions/liquid-foods',
+          label: 'Juice, Nectar',
+          href: '/',
           slideIndex: 2, // Third slide
         },
         {
           id: '4',
-          label: 'NUTRITIONAL',
-          href: '/solutions/nutritional',
+          label: 'Plant Based',
+          href: '/',
           slideIndex: 3, // Fourth slide
         },
         {
           id: '5',
-          label: 'PHARMA LIQUIDS',
-          href: '/solutions/pharma',
+          label: 'Ready-to-Drink',
+          href: '/',
           slideIndex: 4, // Fifth slide
         },
+        {
+          id: '6',
+          label: 'Alcohol',
+          href: '/',
+          slideIndex: 5, // Fifth slide
+        },
+
+        {
+          id: '7',
+          label: 'Functional Drinks',
+          href: '/',
+          slideIndex: 6, // Fifth slide
+        },
+
+        {
+          id: '8',
+          label: 'Nutraceutical',
+          href: '/',
+          slideIndex: 7, // Fifth slide
+        },
+
+        // {
+        //   id: '5',
+        //   label: 'Sustainable',
+        //   href: '/',
+        //   slideIndex: 8, // Fifth slide
+        // },
+
       ],
       videoUrl: '/video2.mp4',
     },
@@ -368,7 +455,7 @@ export async function getHomepageData(): Promise<HomepageData> {
     },
     videoBanner: {
       title: 'Innovation in aseptic packaging',
-      videoUrl: '/video2.mp4', // or .gif for GIF files
+      videoUrl: 'https://www.youtube.com/watch?v=2Tpppx-X0z0',
       ctaText: 'View how we help global brands',
       ctaLink: '/about-us',
     },
@@ -377,7 +464,7 @@ export async function getHomepageData(): Promise<HomepageData> {
         {
           id: '1',
           title: 'Technical Services',
-          description: 'Dedicated to top-notch aseptic packaging, we launch our technical support services with customizable solutions to maximize your production line\'s efficiency.',
+          description: 'Focused on delivering reliable aseptic packaging solutions, our technical services provide tailored support to optimise production line performance. We help maximise efficiency, maintain product quality, and ensure smooth, uninterrupted operations.',
           image: '/services_image_1.jpg', // Replace with actual technical services image
           imageAlt: 'Technical Services - Production line with aseptic packaging',
           ctaText: 'Read More',
@@ -387,7 +474,7 @@ export async function getHomepageData(): Promise<HomepageData> {
         {
           id: '2',
           title: 'Marketing Service',
-          description: 'Discover Lamipak Market Support Service, Your comprehensive marketing partner offering business intelligence, recipe support, and sales distribution.',
+          description: 'Explore Lamipak Market Support Service, your strategic marketing partner delivering business intelligence, creative support, recipe development support, and sales distribution guidance to drive successful product launches and market growth. We identity growth opportunities for your product and new market opportunities',
           image: '/services_image_2.jpg', // Replace with actual marketing service image
           imageAlt: 'Marketing Service - Digital marketing and business intelligence',
           ctaText: 'Read More',
@@ -405,7 +492,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           date: 'NOV 2025',
           image: '/latest_insite_image_1.jpg', // Replace with actual insight image
           imageAlt: 'Global Dairy Market Outlook - White carton packages with green leaf design',
-          link: '/insights/global-dairy-market-outlook',
+          link: '/',
         },
         {
           id: '2',
@@ -414,7 +501,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           date: 'NOV 2025',
           image: '/latest_insite_image_2.jpg', // Replace with actual insight image
           imageAlt: 'Smart Packaging & Traceability - Laboratory with blue liquid containers',
-          link: '/insights/smart-packaging-traceability',
+          link: '/',
         },
         {
           id: '3',
@@ -423,7 +510,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           date: 'NOV 2025',
           image: '/latest_insite_image_3.jpg', // Replace with actual insight image
           imageAlt: 'Circular Economy in Packaging - Person examining plastic pouch in laboratory',
-          link: '/insights/circular-economy-packaging',
+          link: '/',
         },
          {
           id: '4',
@@ -432,7 +519,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           date: 'NOV 2025',
           image: '/latest_insite_image_2.jpg', // Replace with actual insight image
           imageAlt: 'Smart Packaging & Traceability - Laboratory with blue liquid containers',
-          link: '/insights/smart-packaging-traceability',
+          link: '/',
         },
        
       ],
@@ -444,9 +531,9 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'LamiNatural',
           label: 'Bio-Based Materials',
           description: 'Plant-derived polymer packaging with full aseptic barrier performance and reduced carbon footprint.',
-          image: '/product_image_1.jpg', // Replace with actual LamiNatural product image
+          image: '/LamiNatural1.webp', // Replace with actual LamiNatural product image
           imageAlt: 'LamiNatural - Green carton package with leaf design',
-          link: '/products/laminatural',
+          link: '/',
           ctaText: 'Read More',
         },
         {
@@ -454,9 +541,9 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'LamiPure',
           label: 'Bio-Based Materials',
           description: 'Plant-derived polymer packaging with full aseptic barrier performance and reduced carbon footprint.',
-          image: '/product_image_2.jpg', // Replace with actual LamiPure product image
+          image: '/LamiNatural2.webp', // Replace with actual LamiPure product image
           imageAlt: 'LamiPure - White carton package with blue water pattern',
-          link: '/products/lamipure',
+          link: '/',
           ctaText: 'Read More',
         },
         {
@@ -464,9 +551,9 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'Papers',
           label: 'Bio-Based Materials',
           description: 'Plant-derived polymer packaging with full aseptic barrier performance and reduced carbon footprint.',
-          image: '/product_image_3.jpg', // Replace with actual Papers product image
+          image: '/LamiNatural3.webp', // Replace with actual Papers product image
           imageAlt: 'Papers - Paper straws in blue liquid',
-          link: '/products/papers',
+          link: '/',
           ctaText: 'Read More',
         },
         
@@ -476,47 +563,56 @@ export async function getHomepageData(): Promise<HomepageData> {
       cards: [
         {
           id: '1',
-          title: 'CDP A Grade',
-          description: 'Recognized by CDP for leadership in environmental transparency and climate action across our global operations.',
+          title: 'Pick Carton, Save Nature',
+          description: 'At Lamipak, sustainability is not a side initiative. It is a commitment built into every carton we produce.',
           icon: 'A+',
           iconShape: 'square',
-          link: '/sustainability/cdp-a-grade',
+          link: '/pick-carton',
           ctaText: 'Learn More',
         },
         {
           id: '2',
-          title: 'LEED Platinum',
-          description: 'Our manufacturing facilities achieve LEED Platinum certification — the highest standard in sustainable building design.',
+          title: 'LAMIRA',
+          description: 'Lamira was born in the pristine forests of Finland, a place known for its pure landscapes, rich biodiversity...',
           icon: 'star',
           iconShape: 'circle',
-          link: '/sustainability/leed-platinum',
+          link: '/lamira',
           ctaText: 'Learn More',
         },
         {
           id: '3',
-          title: 'Our Commitment',
-          description: 'Active partnerships with environmental NGOs to drive circular economy initiatives and reduce packaging waste globally.',
+          title: 'Our Green Efforts',
+          description: 'At Lamipak, sustainability guides our operations. Through renewable energy and responsible production...',
           icon: 'checkmark',
           iconShape: 'shield',
-          link: '/sustainability/our-commitment',
+          link: '/our-green-efforts',
           ctaText: 'Learn More',
         },
         {
           id: '4',
-          title: 'Carbon Neutral',
-          description: 'Achieving carbon neutrality across all operations through renewable energy and carbon offset programs.',
+          title: 'Certifications & Achievements',
+          description: 'Sustainability is a key part of our long-term strategy. We have taken important steps to reduce our environmental impact...',
           icon: 'checkmark',
           iconShape: 'circle',
-          link: '/sustainability/carbon-neutral',
+          link: '/certifications-achievements',
           ctaText: 'Learn More',
         },
         {
           id: '5',
-          title: 'Zero Waste',
-          description: 'Implementing zero-waste initiatives at all facilities to minimize environmental impact and maximize resource efficiency.',
+          title: 'NGOs',
+          description: 'At Lamipak, sustainability is a shared responsibility. By collaborating with industry partners, recycling alliances...',
           icon: 'star',
           iconShape: 'square',
-          link: '/sustainability/zero-waste',
+          link: '/ngos',
+          ctaText: 'Learn More',
+        },
+        {
+          id: '6',
+          title: '2050 Carbon Net Zero RoadmaP',
+          description: '2050 NET ZERO ACROSS THE VALUE CHAIN',
+          icon: 'star',
+          iconShape: 'square',
+          link: '/2050-carbon-net-zero-roadmap',
           ctaText: 'Learn More',
         },
       ],
@@ -525,34 +621,33 @@ export async function getHomepageData(): Promise<HomepageData> {
       items: [
         {
           id: '1',
-          question: 'What is aseptic packaging and why does it matter?',
-          answer: 'Aseptic packaging is a process where a product and its package are sterilized separately and then combined in a sterile environment. This method preserves the product\'s quality, flavor, and nutritional value without refrigeration, extending shelf life significantly. It matters because it reduces food waste, lowers energy consumption, and provides consumers with safe, high-quality products that can be stored at room temperature.',
+          question: 'What does Lamipak specialize in?',
+          answer: `Lamipak specializes in aseptic liquid packaging materials, primarily used for beverages such as milk, juice, plant-based drinks, and other liquid foods. The company develops high-quality carton packaging solutions that help brands protect product freshness, extend shelf life, and reduce environmental impact through efficient material design and responsible sourcing.
+             Lamipak works closely with beverage producers worldwide to deliver packaging that combines performance, sustainability, and brand visibility.`,
         },
         {
           id: '2',
-          question: 'How long does it take to implement a new aseptic filling line?',
-          answer: 'The implementation timeline for a new aseptic filling line typically ranges from 6 to 12 months, depending on the complexity of the system, facility preparation requirements, and regulatory approvals. This includes site assessment, equipment manufacturing, installation, validation testing, and staff training. Our team works closely with clients to ensure minimal disruption to existing operations.',
+          question: 'What types of packaging formats does Lamipak offer?',
+          answer: `Lamipak provides a range of aseptic carton packaging formats designed to meet different product and market needs. These formats are suitable for dairy, plant-based beverages, juices, and other liquid foods. Options include various carton sizes and shapes that help brands optimize shelf presence, logistics efficiency, and consumer convenience.
+          Each packaging format is engineered to work with compatible filling machines and to maintain product quality throughout the supply chain.`,
         },
         {
           id: '3',
-          question: 'Can Lamipak systems integrate with our existing production infrastructure?',
-          answer: 'Yes, Lamipak systems are designed with flexibility and integration in mind. Our engineering team conducts a thorough assessment of your existing infrastructure to ensure seamless integration. We provide custom solutions that can connect with your current production lines, control systems, and quality management processes while maintaining optimal efficiency and performance.',
+          question: 'How does Lamipak support sustainability in packaging?',
+          answer: `Sustainability is central to Lamipak’s packaging development. The company focuses on responsibly sourced paperboard, optimized material structures, and manufacturing practices that support lower environmental impact. Lamipak also works with certified systems and global sustainability standards to help customers meet their own environmental goals while delivering safe, reliable packaging.`,
         },
         {
           id: '4',
-          question: 'What sterility assurance level (SAL) do your systems achieve?',
-          answer: 'Our aseptic packaging systems achieve a Sterility Assurance Level (SAL) of 10^-6, which means there is less than one chance in a million that a non-sterile unit could be produced. This is the highest standard in the industry and ensures maximum product safety and quality. Our systems undergo rigorous validation and testing to maintain this level consistently.',
+          question: 'Which industries does Lamipak serve?',
+          answer: `Lamipak serves a wide range of beverage and liquid food producers across global markets. This includes companies in dairy, plant-based beverages, juices, and other liquid food categories that require reliable aseptic packaging solutions.
+            By combining packaging materials with technical expertise and industry insights, Lamipak helps brands bring products to market efficiently and competitively.`,
         },
         {
           id: '5',
-          question: 'Do you offer ongoing maintenance and service contracts?',
-          answer: 'Yes, we offer comprehensive maintenance and service contracts tailored to your operational needs. Our service packages include preventive maintenance, 24/7 technical support, spare parts management, remote monitoring, and on-site service visits. We also provide training programs for your staff to ensure optimal system performance and minimize downtime.',
+          question: 'How can I start working with Lamipak?',
+          answer: `Companies interested in Lamipak packaging solutions can easily get in touch with the team to discuss their product requirements, packaging needs, and market goals. Lamipak specialists work closely with customers to recommend the right carton formats, technical solutions, and marketing support. Whether you are launching a new beverage or expanding your packaging portfolio, Lamipak can help you find the right solution.`,
         },
-        {
-          id: '6',
-          question: 'What support do you provide for regulatory compliance?',
-          answer: 'We provide extensive support for regulatory compliance, including documentation for FDA, EU, and other international standards. Our team assists with validation protocols, quality documentation, and regulatory submissions. We stay updated with the latest regulations and ensure our systems meet all applicable food safety and packaging standards worldwide.',
-        },
+       
       ],
     },
     innovationInPackaging: {
@@ -567,7 +662,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           imageAlt: 'Industrial facility with recycling machinery',
           imagePosition: 'top',
           isHighlighted: false,
-          link: '/innovation/one-pack-one-code',
+          link: '/',
           ctaText: 'Learn More',
         },
         {
@@ -579,7 +674,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           imageAlt: 'Milk cartons with blue patterns',
           imagePosition: 'bottom',
           isHighlighted: true,
-          link: '/innovation/digital-packaging',
+          link: '/',
           ctaText: 'Learn More',
         },
         {
@@ -591,7 +686,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           imageAlt: 'Bottling line in factory',
           imagePosition: 'top',
           isHighlighted: false,
-          link: '/innovation/consumer-connection',
+          link: '/',
           ctaText: 'Learn More',
         },
         {
@@ -603,7 +698,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           imageAlt: 'Sustainable packaging solutions',
           imagePosition: 'top',
           isHighlighted: false,
-          link: '/innovation/sustainable-solutions',
+          link: '/',
           ctaText: 'Learn More',
         },
         {
@@ -615,7 +710,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           imageAlt: 'Smart packaging technology',
           imagePosition: 'bottom',
           isHighlighted: true,
-          link: '/innovation/smart-packaging',
+          link: '/',
           ctaText: 'Learn More',
         },
       ],
@@ -628,7 +723,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'Lamipak Showcases Expanded End-to-End Packaging Solutions at Gulfood Manufacturing 2025',
           image: '/latest_press_1.jpg',
           imageAlt: 'Lamipak exhibition booth at Gulfood Manufacturing 2025',
-          link: '/press-release/gulfood-manufacturing-2025',
+          link: '/',
         },
         {
           id: '2',
@@ -636,7 +731,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'Lamipak Introduces New Fresh Milk Packaging Solutions',
           image: '/latest_press_2.jpg',
           imageAlt: 'Fresh milk packaging solutions',
-          link: '/press-release/fresh-milk-packaging',
+          link: '/',
         },
         {
           id: '3',
@@ -644,21 +739,21 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'Lamipak Receives Certificate of Appreciation from PT. Lami Packaging Indonesia',
           image: '/latest_press_3.jpg',
           imageAlt: 'Certificate of appreciation',
-          link: '/press-release/certificate-appreciation',
+          link: '/',
         },
         
       ],
     },
     callToAction: {
-      heading: 'Still have',
-      headingHighlight: 'questions?',
-      description: 'Our engineering team is ready to walk you through any technical details.',
-      ctaText: 'TALK TO AN ENGINEER',
+      heading: 'Still Have',
+      headingHighlight: 'Questions?',
+      description: 'Our Lamipak team is ready to walk you through any technical details.',
+      ctaText: 'Contact Us',
       ctaLink: '/contact',
     },
     newsletterSubscription: {
-      headline: 'Stay ahead in aseptic engineering.',
-      subtitle: 'Get the latest insights delivered to your inbox.',
+      headline: 'Stay Ahead in Aseptic Engineering.',
+      subtitle: 'Get the Latest Insights Delivered to Your Inbox.',
       placeholder: 'Enter your email',
       buttonText: 'SUBSCRIBE',
       backgroundImage: '/newsletter-bg.jpg',

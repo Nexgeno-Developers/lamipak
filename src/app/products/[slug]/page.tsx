@@ -122,7 +122,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <div className="absolute inset-0 bg-gray-800" />
             )}
             {/* Dark Blue Overlay */}
-            <div className="absolute inset-0 bg-[#0e233ce8] opacity-90" />
+            <div className="absolute inset-0 bg-[#0e233c52] opacity-90" />
             {/* Blur Effect */}
             <div className="absolute inset-0 backdrop-blur-sm" />
           </div>
@@ -148,7 +148,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <a
                     href={productData.technicalSheetUrl}
                     download
-                    className="inline-flex items-center text-[#009FE8] text-lg md:text-xl font-bold uppercase tracking-wider hover:text-white transition-colors group"
+                    className="inline-flex items-center text-[#009FE8] text-lg md:text-[32px] font-bold uppercase tracking-wider hover:text-white transition-colors group"
                   >
                     {productData.technicalSheetText || 'DOWNLOAD TECHNICAL SHEET'}
                     <svg
