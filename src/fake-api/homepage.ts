@@ -570,32 +570,32 @@ export async function getHomepageData(): Promise<HomepageData> {
       cards: [
         {
           id: '1',
-          title: 'CDP A Grade',
+          title: 'Pick Carton, Save Nature',
           description:
-            'Recognized by CDP for leadership in environmental transparency and climate action across our global operations.',
+            'At Lamipak, sustainability is not a side initiative. It is a commitment built into every carton we produce.',
           image: '/latest_press_1.jpg',
-          imageAlt: 'CDP sustainability recognition',
+          imageAlt: 'Pick Carton Save Nature',
           link: '/pick-carton',
           ctaText: 'Learn More',
         },
         {
           id: '2',
-          title: 'LEED Platinum',
+          title: 'LAMIRA',
           description:
-            'Our manufacturing facilities achieve LEED Platinum certification - the highest standard in sustainable building design.',
+            'Lamira was born in the pristine forests of Finland, a place known for its pure landscapes, rich biodiversity...',
           image: '/latest_press_2.jpg',
-          imageAlt: 'LEED Platinum sustainability certification',
-          link: '/certifications-achievements',
+          imageAlt: 'LAMIRA',
+          link: '/lamira',
           ctaText: 'Learn More',
         },
         {
           id: '3',
-          title: 'Our Commitment',
+          title: 'Our Green Efforts',
           description:
-            'Active partnerships with environmental NGOs to drive circular economy initiatives and reduce packaging waste globally.',
+            'At Lamipak, sustainability guides our operations. Through renewable energy and responsible production...',
           image: '/latest_press_3.jpg',
-          imageAlt: 'Our sustainability commitment with partners',
-          link: '/ngos',
+          imageAlt: 'Our Green Efforts',
+          link: '/our-green-efforts',
           ctaText: 'Learn More',
         },
         {
@@ -620,7 +620,7 @@ export async function getHomepageData(): Promise<HomepageData> {
         },
         {
           id: '6',
-          title: '2050 Carbon Net Zero RoadmaP',
+          title: '2050 Carbon Net Zero Roadmap',
           description: '2050 NET ZERO ACROSS THE VALUE CHAIN',
           image: '/banner-slider4.webp',
           imageAlt: '2050 carbon net zero roadmap',
