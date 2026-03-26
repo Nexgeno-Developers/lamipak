@@ -643,34 +643,36 @@ export async function getSubCategoryPage(
         {
           type: 'sustainableSolutions',
           data: {
-            intro: '',
+            intro: `At Lamipak, we are committed to sustainability, continuously investing in eco-friendly innovations to reduce environmental impact. Our diverse portfolio of sustainable packaging solutions includes high-performance sustainable aseptic packaging such as LamiNatural, LamiPure, and LamiPristine.
+            
+            To further support your transition to green packaging, our range is complemented by eco-friendly packaging materials and components like Waterpak, sustainable inks (Temperature & Metallic), and advanced environmentally friendly packaging closure systems like LamiCap. Partner with Lamipak to integrate innovative sustainable packaging solutions into your supply chain and meet the rising demand for responsible, recyclable packaging solutions.`,
             items: [
               {
                 id: 'laminatural',
                 title: 'LamiNatural',
                 description:
-                  'LamiNatural is more than just a package; it is a commitment to sustainability. Lamipak’s first sustainable packaging solution, featuring in a bio-based barrier design and reduced impact in real-world operations.',
-                image: '/product_image_1.jpg',
+                  'LamiNatural is more than just a package it&apos;s a commitment to sustainability, Lamipak’s first sustainable packaging solution. Featuring unbleached brown board and bio-based PE layers for outer surfaces, replacing conventional PE.',
+                image: '/laminatural_image11.webp',
                 imageAlt: 'LamiNatural sustainable packaging',
-                href: '/products/lamisleeve-aseptic-packaging',
+                href: '/',
               },
               {
                 id: 'lamipure',
                 title: 'LamiPure',
                 description:
-                  'LamiPure represents the next evolution in sustainable packaging solutions. Engineered with performance at its core, LamiPure offers aseptic barrier reliability while helping brands reduce their environmental footprint.',
-                image: '/product_image_2.jpg',
+                  'LamiPure represents the next evolution in sustainable packaging solutions, building on the success of LamiNatural. As Lamipak&apos;s first aluminum foil-free barrier layer, LamiPure is poised to revolutionize the industry.',
+                image: '/laminatural_image21.webp',
                 imageAlt: 'LamiPure sustainable packaging',
-                href: '/products/lamipure-sterile-packaging',
+                href: '/',
               },
               {
                 id: 'lamipristine',
                 title: 'LamiPristine',
                 description:
-                  'LamiPristine is an innovative and sustainable aseptic packaging solution by eliminating foil and utilizing unbleached paperboard. By replacing conventional PE barrier layers, LamiPristine supports better circularity in real operations.',
-                image: '/product_image_3.jpg',
+                  'LamiPristine offers an innovative and sustainable aseptic packaging solution by eliminating aluminum foil and utilizing unbleached paperboard. By replacing conventional PE barrier layers with bio-based PE',
+                image: '/laminatural_image31.webp',
                 imageAlt: 'LamiPristine sustainable packaging',
-                href: '/products/lamisleeve-aseptic-packaging',
+                href: '/',
               },
             ],
           },

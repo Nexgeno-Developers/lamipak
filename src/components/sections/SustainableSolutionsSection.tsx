@@ -9,15 +9,28 @@ export function SustainableSolutionsSection({
 }: {
   data: SustainableSolutionsSectionData;
 }) {
+  const introParagraphs =
+    data.intro
+      ?.split(/\r?\n\s*\r?\n/)
+      .map((p) => p.trim())
+      .filter(Boolean) ?? [];
+
   return (
 
     <>
     <section className="bg-gray-50 py-12 md:py-20">
       <div className="container mx-auto px-4">
         {data.intro && (
-          <p className="text-center text-black text-sm md:text-base leading-relaxed mx-auto mb-10 md:mb-12">
-            {data.intro}
-          </p>
+          <>
+            {introParagraphs.map((text, idx) => (
+              <p
+                key={`sustain-intro-${idx}`}
+                className="text-center text-black text-sm md:text-base leading-relaxed mx-auto mb-10 md:mb-12"
+              >
+                {text}
+              </p>
+            ))}
+          </>
         )}
 
         <div className="space-y-12 md:space-y-16">
