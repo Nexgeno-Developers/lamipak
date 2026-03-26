@@ -5,17 +5,18 @@ import { getCanonicalUrl } from '@/config/site';
 import { PageBuilder } from '@/components/pageBuilder/PageBuilder';
 import { getProductDetailPage } from '@/fake-api/page-builder';
 
+const MAIN_CATEGORY = 'packaging' as const;
+
 interface ProductDetailRouteProps {
   params: Promise<{
-    mainCategory: string;
     subCategory: string;
     slug: string;
   }>;
 }
 
 export async function generateMetadata({ params }: ProductDetailRouteProps): Promise<Metadata> {
-  const { mainCategory, subCategory, slug } = await params;
-  const page = await getProductDetailPage(mainCategory, subCategory, slug);
+  const { subCategory, slug } = await params;
+  const page = await getProductDetailPage(MAIN_CATEGORY, subCategory, slug);
 
   if (!page) {
     return {
@@ -24,7 +25,9 @@ export async function generateMetadata({ params }: ProductDetailRouteProps): Pro
     };
   }
 
-  const canonicalUrl = page.seo?.canonical_path ? getCanonicalUrl(page.seo.canonical_path) : getCanonicalUrl(`/${mainCategory}/${subCategory}/${slug}`);
+  const canonicalUrl = page.seo?.canonical_path
+    ? getCanonicalUrl(page.seo.canonical_path)
+    : getCanonicalUrl(`/${MAIN_CATEGORY}/${subCategory}/${slug}`);
 
   return {
     title: page.seo?.meta_title || page.title,
@@ -35,19 +38,18 @@ export async function generateMetadata({ params }: ProductDetailRouteProps): Pro
   };
 }
 
-export default async function ProductDetailRoute({ params }: ProductDetailRouteProps) {
-  const { mainCategory, subCategory, slug } = await params;
-  const page = await getProductDetailPage(mainCategory, subCategory, slug);
+export default async function PackagingProductDetailRoute({ params }: ProductDetailRouteProps) {
+  const { subCategory, slug } = await params;
+  const page = await getProductDetailPage(MAIN_CATEGORY, subCategory, slug);
   if (!page) notFound();
 
   return (
     <PageBuilder
       pageData={page}
       pageContext={{
-        mainCategory,
+        mainCategory: MAIN_CATEGORY,
         subCategory,
       }}
     />
   );
 }
-

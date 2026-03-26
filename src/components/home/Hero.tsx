@@ -116,7 +116,7 @@ export default function Hero({ data }: HeroProps) {
             </div> */}
 
             {/* Main Headline */}
-            <div className="mb-6 max-w-5xl">
+            <div className="lg:max-w-5xl">
               <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight [overflow-wrap:anywhere]">
                 <span className="text-white">{currentSlideData.title}</span>
                 <br />

@@ -5,16 +5,10 @@ import { getMainCategoryPage } from '@/fake-api/page-builder';
 import { getCanonicalUrl } from '@/config/site';
 import { PageBuilder } from '@/components/pageBuilder/PageBuilder';
 
-interface MainCategoryPageProps {
-  params: Promise<{
-    mainCategory: string;
-  }>;
-}
+const MAIN_CATEGORY = 'packaging' as const;
 
-export async function generateMetadata({ params }: MainCategoryPageProps): Promise<Metadata> {
-  const { mainCategory } = await params;
-
-  const page = await getMainCategoryPage(mainCategory);
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getMainCategoryPage(MAIN_CATEGORY);
   if (!page) {
     return {
       title: 'Page Not Found',
@@ -22,7 +16,9 @@ export async function generateMetadata({ params }: MainCategoryPageProps): Promi
     };
   }
 
-  const canonicalUrl = page.seo?.canonical_path ? getCanonicalUrl(page.seo.canonical_path) : getCanonicalUrl(`/${mainCategory}`);
+  const canonicalUrl = page.seo?.canonical_path
+    ? getCanonicalUrl(page.seo.canonical_path)
+    : getCanonicalUrl(`/${MAIN_CATEGORY}`);
 
   return {
     title: page.seo?.meta_title || page.title,
@@ -33,18 +29,16 @@ export async function generateMetadata({ params }: MainCategoryPageProps): Promi
   };
 }
 
-export default async function MainCategoryRoute({ params }: MainCategoryPageProps) {
-  const { mainCategory } = await params;
-  const page = await getMainCategoryPage(mainCategory);
+export default async function PackagingMainRoute() {
+  const page = await getMainCategoryPage(MAIN_CATEGORY);
   if (!page) notFound();
 
   return (
     <PageBuilder
       pageData={page}
       pageContext={{
-        mainCategory,
+        mainCategory: MAIN_CATEGORY,
       }}
     />
   );
 }
-

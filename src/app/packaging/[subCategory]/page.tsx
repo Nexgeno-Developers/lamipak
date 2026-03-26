@@ -5,16 +5,17 @@ import { getCanonicalUrl } from '@/config/site';
 import { PageBuilder } from '@/components/pageBuilder/PageBuilder';
 import { getSubCategoryPage } from '@/fake-api/page-builder';
 
+const MAIN_CATEGORY = 'packaging' as const;
+
 interface SubCategoryPageProps {
   params: Promise<{
-    mainCategory: string;
     subCategory: string;
   }>;
 }
 
 export async function generateMetadata({ params }: SubCategoryPageProps): Promise<Metadata> {
-  const { mainCategory, subCategory } = await params;
-  const page = await getSubCategoryPage(mainCategory, subCategory);
+  const { subCategory } = await params;
+  const page = await getSubCategoryPage(MAIN_CATEGORY, subCategory);
 
   if (!page) {
     return {
@@ -23,7 +24,9 @@ export async function generateMetadata({ params }: SubCategoryPageProps): Promis
     };
   }
 
-  const canonicalUrl = page.seo?.canonical_path ? getCanonicalUrl(page.seo.canonical_path) : getCanonicalUrl(`/${mainCategory}/${subCategory}`);
+  const canonicalUrl = page.seo?.canonical_path
+    ? getCanonicalUrl(page.seo.canonical_path)
+    : getCanonicalUrl(`/${MAIN_CATEGORY}/${subCategory}`);
 
   return {
     title: page.seo?.meta_title || page.title,
@@ -34,19 +37,18 @@ export async function generateMetadata({ params }: SubCategoryPageProps): Promis
   };
 }
 
-export default async function SubCategoryRoute({ params }: SubCategoryPageProps) {
-  const { mainCategory, subCategory } = await params;
-  const page = await getSubCategoryPage(mainCategory, subCategory);
+export default async function PackagingSubCategoryRoute({ params }: SubCategoryPageProps) {
+  const { subCategory } = await params;
+  const page = await getSubCategoryPage(MAIN_CATEGORY, subCategory);
   if (!page) notFound();
 
   return (
     <PageBuilder
       pageData={page}
       pageContext={{
-        mainCategory,
+        mainCategory: MAIN_CATEGORY,
         subCategory,
       }}
     />
   );
 }
-
