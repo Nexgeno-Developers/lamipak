@@ -6,6 +6,7 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const FORM_TYPE_MAP: Record<FormType, string> = {
   subscription: 'subscription',
   get_in_touch: 'get_in_touch',
+  message: 'message',
   contact: 'contact',
 };
 
@@ -19,6 +20,14 @@ const BACKEND_FIELD_MAP: Record<FormType, Record<string, string>> = {
   },
   get_in_touch: {
     name: 'firstName',
+    email: 'emailAddress',
+    phone: 'phoneNumber',
+    message: 'message',
+  },
+  message: {
+    name: 'firstName',
+    first_name: 'firstName',
+    last_name: 'lastName',
     email: 'emailAddress',
     phone: 'phoneNumber',
     message: 'message',
@@ -147,14 +156,12 @@ function buildPayload(
     const message = normalizeString(typed.message);
     const name = [firstName, lastName].filter(Boolean).join(' ').trim();
 
-    if (!firstName) fieldErrors.firstName = 'First name is required.';
-    if (!lastName) fieldErrors.lastName = 'Last name is required.';
-    if (!name) fieldErrors.firstName = 'Full name is required.';
+    if (!name) fieldErrors.firstName = 'Name is required.';
     if (!email) fieldErrors.emailAddress = 'Email address is required.';
     else if (!EMAIL_REGEX.test(email)) fieldErrors.emailAddress = 'Please enter a valid email address.';
     else addMaxLengthError(fieldErrors, 'emailAddress', 'Email address', email, MAX_FIELD_LENGTH);
 
-    if (name) addMaxLengthError(fieldErrors, 'firstName', 'Full name', name, MAX_FIELD_LENGTH);
+    if (name) addMaxLengthError(fieldErrors, 'firstName', 'Name', name, MAX_FIELD_LENGTH);
 
     if (phoneRaw) {
       if (phoneDigits.length < 10 || phoneDigits.length > 15) {
@@ -185,6 +192,52 @@ function buildPayload(
     return {
       payload,
     };
+  }
+
+  if (formType === 'message') {
+    const typed = data as FormDataByType['message'];
+    const firstName = normalizeString(typed.firstName);
+    const lastName = normalizeString(typed.lastName);
+    const email = normalizeString(typed.emailAddress);
+    const { raw: phoneRaw, digits: phoneDigits } = normalizePhone(normalizeString(typed.phoneNumber));
+    const message = normalizeString(typed.message);
+
+    if (!firstName) fieldErrors.firstName = 'First name is required.';
+    if (!lastName) fieldErrors.lastName = 'Last name is required.';
+    if (firstName) addMaxLengthError(fieldErrors, 'firstName', 'First name', firstName, MAX_FIELD_LENGTH);
+    if (lastName) addMaxLengthError(fieldErrors, 'lastName', 'Last name', lastName, MAX_FIELD_LENGTH);
+    if (!email) fieldErrors.emailAddress = 'Email address is required.';
+    else if (!EMAIL_REGEX.test(email)) fieldErrors.emailAddress = 'Please enter a valid email address.';
+    else addMaxLengthError(fieldErrors, 'emailAddress', 'Email address', email, MAX_FIELD_LENGTH);
+
+    if (phoneRaw) {
+      if (phoneDigits.length < 10 || phoneDigits.length > 15) {
+        fieldErrors.phoneNumber = 'Phone number must contain 10 to 15 digits.';
+      }
+    }
+
+    if (message) {
+      addMaxLengthError(fieldErrors, 'message', 'Message', message, MAX_MESSAGE_LENGTH);
+    }
+
+    if (Object.keys(fieldErrors).length) return { fieldErrors };
+
+    const payload: Record<string, unknown> = {
+      form_name: FORM_TYPE_MAP[formType],
+      first_name: firstName,
+      last_name: lastName,
+      email,
+    };
+
+    if (phoneDigits) {
+      payload.phone = phoneDigits;
+    }
+
+    if (message) {
+      payload.message = message;
+    }
+
+    return { payload };
   }
 
   const typed = data as FormDataByType['contact'];
@@ -291,7 +344,7 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!['subscription', 'get_in_touch', 'contact'].includes(formType)) {
+  if (!['subscription', 'get_in_touch', 'message', 'contact'].includes(formType)) {
     return NextResponse.json(
       { ok: false, message: 'Unsupported form type.' },
       { status: 400 },

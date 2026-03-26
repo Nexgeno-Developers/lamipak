@@ -1,10 +1,18 @@
-export type FormType = 'subscription' | 'get_in_touch' | 'contact';
+export type FormType = 'subscription' | 'get_in_touch' | 'message' | 'contact';
 
 export type SubscriptionFormData = {
   email: string;
 };
 
 export type GetInTouchFormData = {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  emailAddress: string;
+  message: string;
+};
+
+export type MessageFormData = {
   firstName: string;
   lastName: string;
   phoneNumber: string;
@@ -30,6 +38,7 @@ export type ContactFormData = {
 export type FormDataByType = {
   subscription: SubscriptionFormData;
   get_in_touch: GetInTouchFormData;
+  message: MessageFormData;
   contact: ContactFormData;
 };
 

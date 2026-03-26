@@ -1,7 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { submitForm } from '@/lib/forms/client';
 
 /**
  * Contact & Sustainability Section Component (Client Component)
@@ -11,23 +13,71 @@ import Link from 'next/link';
  * - Right: Sustainability information
  */
 export default function ContactSustainability() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<{ name?: string; email?: string }>({});
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({ name: '', email: '' });
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    setErrorMessage(null);
+    setFieldErrors({});
+
+    const nameValue = formData.name.trim();
+    const emailValue = formData.email.trim();
+    const nameParts = nameValue.split(/\s+/).filter(Boolean);
+    const firstName = nameParts[0] || '';
+    const lastName = nameParts.slice(1).join(' ');
+
+    const result = await submitForm('get_in_touch', {
+      firstName,
+      lastName,
+      phoneNumber: '',
+      emailAddress: emailValue,
+      message: '',
+    });
+
+    if (result.ok) {
+      router.push('/thank-you?form=get_in_touch');
+      return;
+    }
+
+    if (result.fieldErrors) {
+      const nextErrors: { name?: string; email?: string } = {};
+      if (result.fieldErrors.firstName || result.fieldErrors.lastName || result.fieldErrors.name) {
+        nextErrors.name =
+          result.fieldErrors.firstName ||
+          result.fieldErrors.lastName ||
+          result.fieldErrors.name;
+      }
+      if (result.fieldErrors.emailAddress || result.fieldErrors.email) {
+        nextErrors.email = result.fieldErrors.emailAddress || result.fieldErrors.email;
+      }
+      setFieldErrors(nextErrors);
+    }
+
+    setErrorMessage(result.message);
+    setIsSubmitting(false);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
+    });
+    if (errorMessage) setErrorMessage(null);
+    setFieldErrors((prev) => {
+      if (!prev[e.target.name as 'name' | 'email']) return prev;
+      const next = { ...prev };
+      delete next[e.target.name as 'name' | 'email'];
+      return next;
     });
   };
 
@@ -58,8 +108,13 @@ export default function ContactSustainability() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-6 py-4 bg-white rounded-[50px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base"
+                  maxLength={50}
+                  disabled={isSubmitting}
+                  className="w-full px-6 py-4 bg-white rounded-[50px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base disabled:opacity-70"
                 />
+                {fieldErrors.name ? (
+                  <p className="mt-2 text-sm text-[#B42318]">{fieldErrors.name}</p>
+                ) : null}
               </div>
 
               {/* Email Input */}
@@ -71,16 +126,22 @@ export default function ContactSustainability() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-6 py-4 bg-white rounded-[50px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base"
+                  maxLength={50}
+                  disabled={isSubmitting}
+                  className="w-full px-6 py-4 bg-white rounded-[50px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base disabled:opacity-70"
                 />
+                {fieldErrors.email ? (
+                  <p className="mt-2 text-sm text-[#B42318]">{fieldErrors.email}</p>
+                ) : null}
               </div>
 
               {/* Submit Button */}
               <button
                 type="submit"
-                className="cursor-pointer inline-flex items-center text-[#009FE8] text-base md:text-lg font-bold uppercase tracking-wider hover:text-[#0077B6] transition-colors group"
+                disabled={isSubmitting}
+                className="cursor-pointer inline-flex items-center text-[#009FE8] text-base md:text-lg font-bold uppercase tracking-wider hover:text-[#0077B6] transition-colors group disabled:cursor-not-allowed disabled:opacity-70"
               >
-                SUBMIT
+                {isSubmitting ? 'SUBMITTING...' : 'SUBMIT'}
                 <svg
                   className="w-5 h-5 md:w-6 md:h-6 ml-2 transform group-hover:translate-x-1 transition-transform"
                   fill="none"
@@ -95,6 +156,12 @@ export default function ContactSustainability() {
                   />
                 </svg>
               </button>
+
+              {errorMessage ? (
+                <p className="text-sm text-[#B42318]" role="alert">
+                  {errorMessage}
+                </p>
+              ) : null}
             </form>
           </div>
 

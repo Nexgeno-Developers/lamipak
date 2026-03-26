@@ -54,7 +54,7 @@ export default function ConnectTechnicalExperts({
     setIsSubmitting(true);
     setError(null);
 
-    const result = await submitForm('get_in_touch', {
+    const result = await submitForm('message', {
       firstName: formData.firstName.trim(),
       lastName: formData.lastName.trim(),
       phoneNumber: formData.phoneNumber.trim(),
@@ -63,7 +63,7 @@ export default function ConnectTechnicalExperts({
     });
 
     if (result.ok) {
-      router.push('/thank-you?form=get_in_touch');
+      router.push('/thank-you?form=message');
       return;
     }
 

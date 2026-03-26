@@ -68,6 +68,29 @@ const THANK_YOU_CONTENT: Record<FormType, ThankYouContent> = {
     primaryCta: { text: 'Explore Technical Services', href: '/technical-services' },
     secondaryCta: { text: 'View Products', href: '/products' },
   },
+  message: {
+    kicker: 'Message received',
+    title: 'Thanks for your message',
+    description:
+      'We have your details and will connect you with the right team shortly.',
+    highlight: 'We typically respond within 1-2 business days.',
+    nextSteps: [
+      {
+        title: 'We review your request',
+        detail: 'Your message is routed to the right department.',
+      },
+      {
+        title: 'We follow up quickly',
+        detail: 'Expect a response via email soon.',
+      },
+      {
+        title: 'Add more details anytime',
+        detail: 'Reply to our email if you want to share more context.',
+      },
+    ],
+    primaryCta: { text: 'Back to Home', href: '/' },
+    secondaryCta: { text: 'Explore Products', href: '/products' },
+  },
   contact: {
     kicker: 'Message sent',
     title: 'Thanks for contacting Lamipak',
