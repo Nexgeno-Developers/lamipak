@@ -1435,7 +1435,7 @@ const PAGES: DynamicPageData[] = [
   },
  
   {
-    slug: 'contact',
+    slug: 'contact-us',
     type: 'contact-us',
     title: 'Contact Us',
     content:
@@ -1445,7 +1445,7 @@ const PAGES: DynamicPageData[] = [
       meta_title: 'Contact Us - Get in Touch | Lamipak',
       meta_description:
         'Reach out to Lamipak for inquiries, partnerships, and support.',
-      canonical_path: '/contact',
+      canonical_path: '/contact-us',
       keywords: ['contact', 'Lamipak', 'packaging', 'partnerships', 'support'],
       author: 'Lamipak',
       robots: { index: true, follow: true },
@@ -1873,7 +1873,8 @@ export async function getDynamicPageBySlug(
   // Simulate API delay
   await new Promise((resolve) => setTimeout(resolve, 80));
 
-  const page = PAGES.find((p) => p.slug === slug);
+  const normalizedSlug = slug === 'contact' ? 'contact-us' : slug;
+  const page = PAGES.find((p) => p.slug === normalizedSlug);
   return page ?? null;
 }
 
