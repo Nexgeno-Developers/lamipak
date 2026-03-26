@@ -187,22 +187,19 @@ export function OnePackOneCodeLandingSection({
     <section className="bg-gray-50 pt-20">
       <div className="container mx-auto px-4">
         <div className="text-center">
-          <h1 className="text-[26px] md:text-4xl font-extrabold tracking-tight text-black">
+          <h1 className="text-[26px] md:text-5xl font-extrabold tracking-tight text-black">
             <span>{leftTitle}</span>
             {rightTitle ? (
               <span className="relative inline-block text-[#009FE8] ml-2">
                 {rightTitle}
-                <span
-                  className="absolute -top-3 -right-4 h-3 w-3 rounded-full bg-[#009FE8]"
-                  aria-hidden
-                />
+              
               </span>
             ) : null}
           </h1>
         </div>
 
         {/* Tabs */}
-        <div className="mt-8 grid grid-cols-2 sm:grid-cols-5 gap-3 md:gap-4">
+        <div className="mt-8 pb-6 grid grid-cols-2 sm:grid-cols-5 gap-3 md:gap-4">
           {data.tabs.map((tab) => {
             const isActive = tab.id === activeTab;
             return (

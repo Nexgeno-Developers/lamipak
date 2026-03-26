@@ -132,8 +132,8 @@ export async function getHeaderData(): Promise<HeaderData> {
 
   /** Order matches /packaging category showcase grid */
   const productMenuChildren: NavigationItem[] = [
-    { id: 'p-roll-fed', label: 'Roll-fed', href: '/packaging/roll-fed' },
-    { id: 'p-sleeve-fed', label: 'Sleeve-fed', href: '/packaging/sleeve-fed' },
+    { id: 'p-roll-fed', label: 'Roll Fed', href: '/packaging/roll-fed' },
+    { id: 'p-sleeve-fed', label: 'Sleeve Fed', href: '/packaging/sleeve-fed' },
     { id: 'p-cap-solutions', label: 'Cap Solutions', href: '/packaging/cap-solutions' },
     { id: 'p-straws', label: 'Straws', href: '/packaging/lamistraw' },
     { id: 'p-waterpak', label: 'Waterpak', href: '/packaging/waterpak' },
