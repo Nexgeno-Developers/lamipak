@@ -91,6 +91,9 @@ export interface ApproachData {
 
 export interface VideoBannerData {
   title: string;
+  preTitleBlue?: string;
+  preTitleBlack?: string;
+  preDescription?: string;
   videoUrl?: string;
   ctaText: string;
   ctaLink: string;
@@ -455,6 +458,10 @@ export async function getHomepageData(): Promise<HomepageData> {
     },
     videoBanner: {
       title: 'Innovation in aseptic packaging',
+      preTitleBlue: 'HOW GLOBAL BEVERAGE BRANDS SCALE',
+      preTitleBlack: 'WITH ASEPTIC PRECISION',
+      preDescription:
+        'With advanced manufacturing facilities in China and Indonesia, Lamipak delivers high-quality packaging products to customers across more than 80 countries. Our global operations combine precision engineering, scalable production, and carton packaging solutions to support brands and companies worldwide.',
       videoUrl: 'https://www.youtube.com/watch?v=2Tpppx-X0z0',
       ctaText: 'View how we help global brands',
       ctaLink: '/about-us',
