@@ -53,6 +53,8 @@ export default async function MarketingServicesPage() {
         data={{
           ...companyData.hero,
           title: 'Marketing Service',
+          backgroundImage:
+            overview.heroBackgroundImage || companyData.hero.backgroundImage,
         }}
       />
 
@@ -158,7 +160,7 @@ export default async function MarketingServicesPage() {
                       </p>
                       <Link
                         href={`/marketing-services/${service.slug}`}
-                        className="inline-flex items-center text-sm md:text-[20px] uppercase font-bold text-[#009FE8] hover:text-[#0077B6] transition-colors"
+                        className="inline-flex items-center text-sm md:text-[16px] font-bold text-[#009FE8] hover:text-[#0077B6] transition-colors"
                       >
                         Find out more
                         <span className="ml-2 text-lg leading-none">→</span>
