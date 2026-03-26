@@ -5,6 +5,44 @@ import { fetchTechnicalServicesListingData } from '@/lib/api';
 import ConnectTechnicalExperts from '@/components/technical-services/ConnectTechnicalExperts';
 import CallToAction from '@/components/home/CallToAction';
 import { getCanonicalUrl } from '@/config/site';
+import VideoModalClient from '@/components/common/VideoModalClient';
+
+function getYouTubeId(inputUrl: string): string | null {
+  try {
+    const u = new URL(inputUrl);
+    const host = u.hostname.replace(/^www\./, '');
+
+    let id: string | null = null;
+    if (host === 'youtu.be') {
+      id = u.pathname.split('/').filter(Boolean)[0] || null;
+    } else if (host === 'youtube.com' || host.endsWith('.youtube.com')) {
+      const parts = u.pathname.split('/').filter(Boolean);
+      // /watch?v=ID
+      const v = u.searchParams.get('v');
+      if (v) id = v;
+      // /shorts/ID
+      if (!id && parts[0] === 'shorts' && parts[1]) id = parts[1];
+      // /embed/ID
+      if (!id && parts[0] === 'embed' && parts[1]) id = parts[1];
+    }
+
+    return id;
+  } catch {
+    return null;
+  }
+}
+
+function toYouTubeEmbedUrl(inputUrl: string): string {
+  const id = getYouTubeId(inputUrl);
+  if (!id) return inputUrl;
+  return `https://www.youtube.com/embed/${id}?autoplay=1&controls=1&rel=0&playsinline=1`;
+}
+
+function getYouTubeThumbnail(inputUrl: string): string | null {
+  const id = getYouTubeId(inputUrl);
+  if (!id) return null;
+  return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+}
 
 /**
  * Generate metadata for technical services listing page
@@ -120,23 +158,12 @@ export default async function TechnicalServicesPage() {
               >
                 {/* Video Thumbnail */}
                 <div className="rounded-[50px] relative aspect-video bg-gray-100 overflow-hidden">
-                  <img
-                    src={card.thumbnail}
-                    alt={card.thumbnailAlt}
-                    className="w-full h-full object-cover"
+                  <VideoModalClient
+                    videoUrl={toYouTubeEmbedUrl(card.videoUrl)}
+                    posterUrl={getYouTubeThumbnail(card.videoUrl) || card.thumbnail}
+                    posterAlt={card.thumbnailAlt}
+                    className="absolute inset-0"
                   />
-                  {/* Play Button Overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center bg-opacity-20 hover:bg-opacity-30 transition-opacity">
-                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg">
-                      <svg
-                        className="w-8 h-8 text-[#009FE8] ml-1"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                  </div>
                 </div>
 
                 {/* Card Content */}
@@ -147,7 +174,7 @@ export default async function TechnicalServicesPage() {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-black mb-6 flex-1 leading-relaxed">
+                  <p className="text-black mb-6 flex-1 leading-relaxed line-clamp-4">
                     {card.description}
                   </p>
 
