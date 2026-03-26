@@ -52,7 +52,7 @@ export default async function TechnicalServicesPage() {
           {/* Dark Blue Overlay */}
           <div className="absolute inset-0 bg-[#0e233c52] opacity-90" />
           {/* Blur Effect */}
-          <div className="absolute inset-0 backdrop-blur-sm" />
+          {/* <div className="absolute inset-0 backdrop-blur-sm" /> */}
         </div>
 
         {/* Hero Content */}
@@ -85,11 +85,15 @@ export default async function TechnicalServicesPage() {
           </div>
 
           {/* Right Column - Image (Full Width) */}
-          <div className="relative w-full h-full min-h-[400px] lg:min-h-[600px]">
-            <img
+          <div className="relative w-full h-full">
+            <Image
               src={listingData.introSection.image}
               alt={listingData.introSection.imageAlt}
-              className="w-full h-full object-cover rounded-[50px]"
+              width={600}
+              height={600}
+              className="object-cover rounded-[50px] w-full"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              priority={false}
             />
           </div>
         </div>
@@ -190,13 +194,13 @@ export default async function TechnicalServicesPage() {
             <div className="overflow-x-auto">
               <div className="min-w-[940px] grid grid-cols-[170px_1fr_1fr_1fr] gap-4 items-stretch">
                 <div className="flex flex-col justify-start pt-[62px]">
-                  <div className="h-[56px] flex items-center text-black font-bold text-[26px]">
+                  <div className="h-[56px] flex items-center text-black font-bold text-xl">
                     {listingData.serviceDifferentiation.headerRow2.focus}
                   </div>
                   {listingData.serviceDifferentiation.rows.map((row) => (
                     <div
                       key={`label-${row.category}`}
-                      className="h-[62px] flex items-center text-black font-extrabold text-xl"
+                      className="h-[62px] flex items-center text-black font-bold text-xl"
                     >
                       {row.category.charAt(0) + row.category.slice(1).toLowerCase()}
                     </div>

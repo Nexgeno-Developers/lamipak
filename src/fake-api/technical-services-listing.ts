@@ -97,7 +97,7 @@ export interface TechnicalServicesListingData {
 export function getTechnicalServicesListingData(): TechnicalServicesListingData {
   return {
     heroTitle: 'Technical Service',
-    heroBackgroundImage: '/banner-slider1.jpg',
+    heroBackgroundImage: '/technical_banner.webp',
     introSection: {
       heading: 'Technical Support Service',
       paragraphs: [
