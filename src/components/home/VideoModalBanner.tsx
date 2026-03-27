@@ -11,10 +11,12 @@ export default function VideoModalBanner({
   backgroundImage?: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [playerReady, setPlayerReady] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     if (!isOpen) return;
+    setPlayerReady(false);
     // Autoplay when modal opens
     const v = videoRef.current;
     if (!v) return;
@@ -111,8 +113,15 @@ export default function VideoModalBanner({
               controls
               autoPlay
               playsInline
+              preload="auto"
+              onCanPlay={() => setPlayerReady(true)}
               className="w-full h-auto max-h-[80vh] bg-black rounded-[18px] border border-white/20 shadow-[0_20px_80px_rgba(0,0,0,0.45)]"
             />
+            {!playerReady && (
+              <div className="absolute inset-0 flex items-center justify-center rounded-[18px] bg-black/55">
+                <div className="h-10 w-10 rounded-full border-2 border-white/40 border-t-white animate-spin" />
+              </div>
+            )}
           </div>
         </div>
       )}

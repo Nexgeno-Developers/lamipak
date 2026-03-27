@@ -52,6 +52,7 @@ function getYouTubeEmbedSrc(videoUrl: string): { id: string; src: string } | nul
 export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}) {
   const [data, setData] = useState<VideoBannerData | null>(null);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [playerReady, setPlayerReady] = useState(false);
   const [youtubeThumbVariant, setYoutubeThumbVariant] = useState<'maxresdefault' | 'sddefault' | 'hqdefault'>(
     'maxresdefault',
   );
@@ -68,6 +69,24 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
     // Reset to best quality when video changes
     setYoutubeThumbVariant('maxresdefault');
   }, [data?.videoUrl]);
+
+  useEffect(() => {
+    // Warm up YouTube hosts to reduce modal startup delay.
+    const urls = ['https://www.youtube.com', 'https://www.youtube-nocookie.com', 'https://i.ytimg.com'];
+    const links = urls.map((href) => {
+      const link = document.createElement('link');
+      link.rel = 'preconnect';
+      link.href = href;
+      link.crossOrigin = 'anonymous';
+      document.head.appendChild(link);
+      return link;
+    });
+    return () => {
+      links.forEach((link) => {
+        if (link.parentNode) link.parentNode.removeChild(link);
+      });
+    };
+  }, []);
 
   // Keep hook order stable across renders (avoid early return before calling hooks).
   useEffect(() => {
@@ -145,6 +164,11 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
               </svg>
             </button>
 
+            {!playerReady && (
+              <div className="absolute inset-0 z-[5] flex items-center justify-center bg-black/60">
+                <div className="h-10 w-10 rounded-full border-2 border-white/40 border-t-white animate-spin" />
+              </div>
+            )}
             <iframe
               src={youtube.src}
               title="YouTube video"
@@ -152,6 +176,8 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
               allow="autoplay; encrypted-media; picture-in-picture"
               allowFullScreen={true}
               frameBorder={0}
+              loading="eager"
+              onLoad={() => setPlayerReady(true)}
             ></iframe>
           </div>
         </div>
@@ -166,6 +192,8 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
           controls
           className="w-full h-full object-cover"
           onEnded={() => setIsVideoPlaying(false)}
+          preload="auto"
+          onCanPlay={() => setPlayerReady(true)}
         />
       </div>
     );
@@ -212,7 +240,10 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
           {/* Play Button */}
           <div className="flex-1 flex items-center justify-center">
             <button
-              onClick={() => setIsVideoPlaying(true)}
+              onClick={() => {
+                setPlayerReady(false);
+                setIsVideoPlaying(true);
+              }}
               className="cursor-pointer flex items-center justify-center transition-all group "
               aria-label="Play video"
             >
@@ -234,7 +265,10 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
       {!isVideoPlaying && videoOnly && (
         <div className="relative z-10 h-full flex items-center justify-center">
           <button
-            onClick={() => setIsVideoPlaying(true)}
+            onClick={() => {
+              setPlayerReady(false);
+              setIsVideoPlaying(true);
+            }}
             className="cursor-pointer flex items-center justify-center transition-all group shadow-lg"
             aria-label="Play video"
           >

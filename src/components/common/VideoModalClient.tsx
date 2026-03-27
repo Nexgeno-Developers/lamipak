@@ -26,17 +26,42 @@ export default function VideoModalClient({
   className,
 }: VideoModalClientProps) {
   const [open, setOpen] = useState(false);
+  const [playerReady, setPlayerReady] = useState(false);
   const titleId = useId();
   const modalId = useId();
 
   useEffect(() => {
     if (!open) return;
+    setPlayerReady(false);
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setOpen(false);
     };
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [open]);
+
+  useEffect(() => {
+    // Warm up common video hosts so modal playback starts faster.
+    const urls = [
+      'https://www.youtube.com',
+      'https://www.youtube-nocookie.com',
+      'https://i.ytimg.com',
+      'https://player.vimeo.com',
+    ];
+    const links = urls.map((href) => {
+      const link = document.createElement('link');
+      link.rel = 'preconnect';
+      link.href = href;
+      link.crossOrigin = 'anonymous';
+      document.head.appendChild(link);
+      return link;
+    });
+    return () => {
+      links.forEach((link) => {
+        if (link.parentNode) link.parentNode.removeChild(link);
+      });
+    };
+  }, []);
 
   const isFileVideo = isProbablyMp4(videoUrl) || isProbablyWebm(videoUrl);
 
@@ -112,12 +137,19 @@ export default function VideoModalClient({
 
             <div className="relative w-full bg-black">
               <div className="w-full aspect-video">
+                {!playerReady && (
+                  <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/60">
+                    <div className="h-10 w-10 rounded-full border-2 border-white/40 border-t-white animate-spin" />
+                  </div>
+                )}
                 {isFileVideo ? (
                   <video
                     src={videoUrl}
                     controls
                     autoPlay
+                    preload="auto"
                     className="w-full h-full"
+                    onCanPlay={() => setPlayerReady(true)}
                   />
                 ) : (
                   <iframe
@@ -126,6 +158,8 @@ export default function VideoModalClient({
                     allow="autoplay; fullscreen; picture-in-picture"
                     allowFullScreen
                     title="Video"
+                    loading="eager"
+                    onLoad={() => setPlayerReady(true)}
                   />
                 )}
               </div>
