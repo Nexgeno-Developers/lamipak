@@ -27,7 +27,7 @@ export default function ApproachClient({ data }: ApproachClientProps) {
 
   return (
     <section className="bg-[#f8f8f8] overflow-x-hidden">
-      <div className="container mx-auto px-4 lg:px-0 max-w-full">
+      <div className="container mx-auto px-4 lg:px-0 max-w-full lg:pt-0 pt-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Side - Image */}
           <div className="relative w-full overflow-hidden">
