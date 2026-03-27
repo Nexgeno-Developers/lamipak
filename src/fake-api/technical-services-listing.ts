@@ -120,7 +120,7 @@ export function getTechnicalServicesListingData(): TechnicalServicesListingData 
           description: 'Focused on foundational operational support, this tier includes Preventative Maintenance, Corrective Maintenance, Remote Support, Overall Assessment, Spare Parts, Training.',
           thumbnail: '/technical_video.jpg',
           thumbnailAlt: 'Lami Care Service',
-          videoUrl: 'https://youtube.com/shorts/m6jnXa3kRw4?feature=share',
+          videoUrl: 'https://www.youtube.com/watch?v=owZIf_Opcyw',
           ctaText: 'Discover More',
           ctaLink: '/technical-services/lami-care'
         },
@@ -130,7 +130,7 @@ export function getTechnicalServicesListingData(): TechnicalServicesListingData 
           description: 'This tier include Performance Commitment, Maintenance Management, Machine Volume Conversion, Machine Refurbish & Reconditioning, Machine Installation & Commissioning, Package Volume Customization.',
           thumbnail: '/technical_video.jpg',
           thumbnailAlt: 'LamiPremium Service',
-          videoUrl: 'https://www.youtube.com/watch?v=zB6zq2zb7Oc',
+          videoUrl: 'https://www.youtube.com/watch?v=owZIf_Opcyw',
           ctaText: 'Discover More',
           ctaLink: '/'
         },
