@@ -25,7 +25,7 @@ export function SustainableSolutionsSection({
             {introParagraphs.map((text, idx) => (
               <p
                 key={`sustain-intro-${idx}`}
-                className="text-center text-black text-sm md:text-base leading-relaxed mx-auto mb-10 md:mb-12"
+                className="lg:text-center text-left text-black text-sm md:text-base leading-relaxed mx-auto mb-10 md:mb-12"
               >
                 {text}
               </p>
@@ -45,14 +45,14 @@ export function SustainableSolutionsSection({
                 }`}
               >
                 <div className={reverse ? 'lg:order-2' : ''}>
-                  <h3 className="text-[#009FE8] text-lg md:text-[32px] font-bold tracking-wide mb-4">
+                  <h3 className="text-[#009FE8] text-lg md:text-[32px] font-bold tracking-wide lg:mb-4 mb-2">
                     {item.title}
                   </h3>
-                  <p className="text-black/70 text-sm md:text-base leading-relaxed">
+                  <p className="text-black text-sm md:text-base leading-relaxed">
                     {item.description}
                   </p>
                   {item.href && (
-                    <div className="mt-6">
+                    <div className="lg:mt-6 mt-3">
                       <Link
                         href={item.href}
                         className="text-[#009FE8] text-sm font-semibold hover:opacity-80 transition-opacity inline-flex items-center gap-2"

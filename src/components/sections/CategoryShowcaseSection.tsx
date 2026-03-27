@@ -128,12 +128,10 @@ function ShowcaseCard({ item }: { item: CategoryShowcaseItem }) {
             <span className="text-[10px] font-bold uppercase tracking-widest bg-white text-black px-2.5 py-1 rounded-md">
               {item.badge}
             </span>
-          ) : item.code ? (
-            <span className="text-[10px] font-medium tracking-wide text-black">{item.code}</span>
           ) : null}
         </div>
         <div className="absolute inset-x-0 bottom-0 z-10 p-4 md:p-5">
-          <h3 className="text-[24px] md:text-[24px] font-bold uppercase tracking-tight mb-2 leading-none text-black">
+          <h3 className="text-[22px] md:text-[24px] font-bold uppercase tracking-tight mb-2 leading-none text-black">
             {item.title}
           </h3>
           <p className="text-xs md:text-sm leading-relaxed text-black mb-3 line-clamp-3">{item.description}</p>
@@ -169,11 +167,11 @@ function ShowcaseCard({ item }: { item: CategoryShowcaseItem }) {
 
 export function CategoryShowcaseSection({ data }: { data: CategoryShowcaseSectionData }) {
   return (
-    <section className="bg-gray-50 py-12 md:py-16 lg:py-20">
+    <section className="bg-gray-50 py-10 md:py-16 lg:py-20">
       <div className="container mx-auto px-4">
         {(data.headline || data.intro) && (
           <div className="text-center  mx-auto mb-10 md:mb-14">
-            {data.intro && <p className="text-black text-base md:text-base leading-relaxed">{data.intro}</p>}
+            {data.intro && <p className="text-black text-[14px] md:text-base leading-relaxed">{data.intro}</p>}
           </div>
         )}
 

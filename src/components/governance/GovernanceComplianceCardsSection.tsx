@@ -126,7 +126,7 @@ export default function GovernanceComplianceCardsSection({
                 className="w-full object-cover rounded-[50px]"
                 priority
               />
-              <div className="mt-8 text-black/70 text-sm md:text-base leading-relaxed space-y-4">
+              <div className="mt-8 text-black text-sm md:text-base leading-relaxed space-y-4">
                 {descriptionParagraphs.map((p, idx) => (
                   <p key={`${data.eyebrow}-desc-${idx}`}>{p}</p>
                 ))}

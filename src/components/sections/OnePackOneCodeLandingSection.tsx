@@ -120,13 +120,13 @@ function FeatureBlock({
 }) {
   return (
     <div
-      className='grid grid-cols-1 lg:gap-10 gap-8 lg:grid-cols-2 items-center'
+      className='grid grid-cols-1 lg:gap-10 gap-5 lg:grid-cols-2 items-center'
     >
       <div className={reverse ? 'lg:order-2' : undefined}>
         <div className="">
           <div className="text-5xl md:text-6xl font-extrabold text-[#B7D7EA] leading-none">{feature.number}</div>
-          <div className="min-w-0 py-5">
-            <h3 className="text-lg md:text-3xl font-bold text-black">{feature.title}</h3>
+          <div className="min-w-0 lg:py-5 py-3">
+            <h3 className="text-[22px] md:text-3xl font-bold text-black">{feature.title}</h3>
           </div>
         </div>
         <div className="space-y-3">
@@ -182,7 +182,7 @@ export function OnePackOneCodeLandingSection({
 
   return (
     <>
-    <section className="bg-gray-50 pt-20">
+    <section className="bg-gray-50 lg:pt-20 pt-10">
       <div className="container mx-auto px-4">
         <div className="text-center">
           <h1 className="text-[26px] md:text-5xl font-extrabold tracking-tight text-black">
@@ -225,7 +225,7 @@ export function OnePackOneCodeLandingSection({
       {/* Access points + features */}
       <div className="container w-full px-4 mx-auto">
 
-        <div className="mt-12 space-y-20 w-full">
+        <div className="lg:mt-12 mt-8 lg:space-y-20 space-y-10 w-full">
           {data.features.map((f, idx) => (
             <FeatureBlock key={f.id} feature={f} reverse={idx % 2 === 1} />
           ))}

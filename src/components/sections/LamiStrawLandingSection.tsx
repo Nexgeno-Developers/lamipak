@@ -9,7 +9,7 @@ import CallToAction from '../home/CallToAction';
 
 function IconBase({ children }: { children: React.ReactNode }) {
   return (
-    <div className="h-40 w-40 rounded-[20px] p-[10px] bg-[#B7D7EA] flex items-center justify-center">
+    <div className="lg:h-40 lg:w-40 rounded-[20px] p-[10px] bg-[#B7D7EA] flex items-center justify-center">
       {children}
     </div>
   );
@@ -65,14 +65,14 @@ function StrawCard({
 
   return (
     <div className="bg-[#EDF0F1] rounded-[50px] p-6 flex flex-col">
-      <div className="flex items-start gap-6">
+      <div className="lg:flex items-start gap-6">
         <IconBase>
           {card.image ? (
             <Image
               src={card.image}
               alt={card.imageAlt || card.title}
-              width={130}
-              height={130}
+              width={300}
+              height={300}
               className="h-full w-full object-contain p-[0px] rounded-[20px]"
               priority={false}
             />
@@ -81,11 +81,11 @@ function StrawCard({
           )}
         </IconBase>
         <div className="flex-1">
-          <h3 className="text-black text-lg md:text-xl font-bold leading-snug">
+          <h3 className="lg:mt-0 mt-5 text-black text-lg md:text-xl font-bold leading-snug">
             {card.title}
           </h3>
 
-          <p className="mt-4 text-sm md:text-base text-black leading-relaxed">
+          <p className="lg:mt-4 mt-2 text-sm md:text-base text-black leading-relaxed">
         {card.description}
       </p>
 

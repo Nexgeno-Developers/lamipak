@@ -24,7 +24,7 @@ export function MetallicLnkLandingSection({ data }: { data: MetallicLnkLandingSe
           </div>
 
           <div className="space-y-6">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
+            <h2 className="text-[22px] sm:text-4xl md:text-5xl font-bold text-black leading-tight">
               {data.title}
             </h2>
 
@@ -56,7 +56,7 @@ export function MetallicLnkLandingSection({ data }: { data: MetallicLnkLandingSe
                 ))}
               </div>
 
-              <p className="mt-4 text-sm md:text-base text-black/70 leading-relaxed">{data.productFeaturesDescription}</p>
+              <p className="mt-4 text-sm md:text-base text-black leading-relaxed">{data.productFeaturesDescription}</p>
             </div>
           </div>
         </div>

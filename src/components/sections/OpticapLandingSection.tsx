@@ -25,7 +25,7 @@ export function OpticapLandingSection({ data }: { data: OpticapLandingSectionDat
           </div>
 
           <div className="space-y-6">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
+            <h2 className="text-[22px] sm:text-4xl md:text-5xl font-bold text-black leading-tight">
               {data.title}
             </h2>
 

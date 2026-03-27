@@ -99,7 +99,7 @@ export default function ConnectTechnicalExperts({
       <div className="container mx-auto px-4">
         {/* Section Heading */}
         <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black">
+          <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold text-black">
             {heading.replace(headingHighlight, '').trim()}{' '}
             <span className="text-[#009FE8]">{headingHighlight}</span>
           </h2>
@@ -109,9 +109,9 @@ export default function ConnectTechnicalExperts({
         <div className="bg-white rounded-[50px] overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-[65%_35%] gap-0">
             {/* Left Section - Contact Form */}
-            <div className="p-8 md:p-10 lg:p-12">
+            <div className="pt-8 pb-8 px-6 md:p-10 lg:p-12">
               {/* Form Title */}
-              <h3 className="text-2xl md:text-3xl font-bold text-black mb-8">
+              <h3 className="text-[18px] md:text-3xl font-bold text-black lg:mb-8 mb-4">
                 {formTitle}
               </h3>
 
@@ -129,7 +129,7 @@ export default function ConnectTechnicalExperts({
                       disabled={isSubmitting}
                       required
                       maxLength={50}
-                      className="w-full px-6 py-4 bg-gray-100 rounded-[25px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base disabled:opacity-70"
+                      className="w-full lg:px-6 px-4 lg:py-4 py-3 bg-gray-100 rounded-[25px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base disabled:opacity-70"
                     />
                     {fieldErrors.firstName ? (
                       <p className="mt-2 text-sm text-[#B42318]">{fieldErrors.firstName}</p>
@@ -145,7 +145,7 @@ export default function ConnectTechnicalExperts({
                       disabled={isSubmitting}
                       required
                       maxLength={50}
-                      className="w-full px-6 py-4 bg-gray-100 rounded-[25px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base disabled:opacity-70"
+                      className="w-full lg:px-6 px-4 lg:py-4 py-3 bg-gray-100 rounded-[25px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base disabled:opacity-70"
                     />
                     {fieldErrors.lastName ? (
                       <p className="mt-2 text-sm text-[#B42318]">{fieldErrors.lastName}</p>
@@ -164,7 +164,7 @@ export default function ConnectTechnicalExperts({
                       onChange={handleChange}
                       disabled={isSubmitting}
                       maxLength={20}
-                      className="w-full px-6 py-4 bg-gray-100 rounded-[25px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base disabled:opacity-70"
+                      className="w-full lg:px-6 px-4 lg:py-4 py-3 bg-gray-100 rounded-[25px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base disabled:opacity-70"
                     />
                     {fieldErrors.phoneNumber ? (
                       <p className="mt-2 text-sm text-[#B42318]">{fieldErrors.phoneNumber}</p>
@@ -180,7 +180,7 @@ export default function ConnectTechnicalExperts({
                       disabled={isSubmitting}
                       required
                       maxLength={50}
-                      className="w-full px-6 py-4 bg-gray-100 rounded-[25px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base disabled:opacity-70"
+                      className="w-full lg:px-6 px-4 lg:py-4 py-3 bg-gray-100 rounded-[25px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base disabled:opacity-70"
                     />
                     {fieldErrors.emailAddress ? (
                       <p className="mt-2 text-sm text-[#B42318]">{fieldErrors.emailAddress}</p>

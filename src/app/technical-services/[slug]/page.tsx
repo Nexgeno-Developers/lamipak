@@ -110,7 +110,7 @@ export default async function TechnicalServicePage({ params }: TechnicalServiceP
 
       <main className="min-h-screen bg-gray-50">
         {/* Hero Section */}
-        <section className="relative pt-[220px] pb-[150px] overflow-hidden">
+        <section className="relative lg:pt-[220px] pt-[150px] lg:pb-[150px] pb-[50px] overflow-hidden">
           {/* Background Image with Overlay */}
           <div className="absolute inset-0">
             {serviceData.heroBackgroundImage ? (
@@ -133,7 +133,7 @@ export default async function TechnicalServicePage({ params }: TechnicalServiceP
             <div className="container mx-auto flex-1 flex flex-col justify-center px-4">
               <div className="text-center">
                 {/* Service Title */}
-                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white tracking-tight uppercase">
+                <h1 className="text-[30px] md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white tracking-tight uppercase">
                   {serviceData.title}
                 </h1>
               </div>

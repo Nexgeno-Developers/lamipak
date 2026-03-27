@@ -110,7 +110,7 @@ export default async function CategoryProductsPage({ params }: CategoryPageProps
 
       <main className="min-h-screen bg-gray-50">
         {/* Hero Section */}
-        <section className="relative pt-[220px] pb-[150px] overflow-hidden">
+        <section className="relative lg:pt-[220px] pt-[150px] lg:pb-[150px] pb-[50px] overflow-hidden">
           {/* Background Image with Overlay */}
           <div className="absolute inset-0">
             {category.heroBackgroundImage ? (
@@ -133,7 +133,7 @@ export default async function CategoryProductsPage({ params }: CategoryPageProps
             <div className="container mx-auto flex-1 flex flex-col justify-center px-4">
               <div className="text-center">
                 {/* Category Title */}
-                <h1 className="text-3xl md:text-5xl lg:text-6xl xl:text-6xl font-bold text-white  tracking-tight">
+                <h1 className="text-[30px] md:text-5xl lg:text-6xl xl:text-6xl font-bold text-white  tracking-tight">
                   {category.name}
                 </h1>
 
