@@ -94,7 +94,7 @@ export default function Hero({ data }: HeroProps) {
             />
             {/* Gradient Overlay */}
             <div
-              className="absolute inset-0 bg-gradient-to-r from-[#0E233C]/95 via-[#0C2F56]/60 to-[#087BFF]/10"
+              className="absolute inset-0 bg-gradient-to-r from-[#0E233C]/50 via-[#0C2F56]/50 to-[#087BFF]/10"
              
             />
             {/* Blur Effect - Reduced */}
@@ -123,13 +123,13 @@ export default function Hero({ data }: HeroProps) {
                 <span className="text-[#009FE8]">{currentSlideData.titleHighlight}</span>
               </h1>
 
-              <p className="text-base text-white py-[20px] !leading-[32px] pr-[200px]">
+              <p className="text-base text-white lg:py-[20px] pt-0 pb-0 !leading-[32px] lg:pr-[200px] lg:line-clamp-4 line-clamp-3">
                 {currentSlideData.description}
               </p>
             </div>
 
             {/* CTA Link */}
-            <div className="mb-10">
+            <div className="mb-10 lg:mt-0 mt-3">
               <Link
                 href={currentSlideData.ctaLink}
                 className="inline-flex items-center text-white text-base md:text-lg font-semibold hover:text-[#009FE8] transition-colors group uppercase tracking-wider"

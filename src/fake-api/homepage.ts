@@ -573,7 +573,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'Pick Carton, Save Nature',
           description:
             'At Lamipak, sustainability is not a side initiative. It is a commitment built into every carton we produce.',
-          image: '/latest_press_1.jpg',
+          image: '/pick_cartoon.webp',
           imageAlt: 'Pick Carton Save Nature',
           link: '/pick-carton',
           ctaText: 'Learn More',
@@ -583,7 +583,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'LAMIRA',
           description:
             'Lamira was born in the pristine forests of Finland, a place known for its pure landscapes, rich biodiversity...',
-          image: '/latest_press_2.jpg',
+          image: '/lamira_image.webp',
           imageAlt: 'LAMIRA',
           link: '/lamira',
           ctaText: 'Learn More',
@@ -593,7 +593,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'Our Green Efforts',
           description:
             'At Lamipak, sustainability guides our operations. Through renewable energy and responsible production...',
-          image: '/latest_press_3.jpg',
+          image: '/green_efferts_image.webp',
           imageAlt: 'Our Green Efforts',
           link: '/our-green-efforts',
           ctaText: 'Learn More',
@@ -603,7 +603,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'Certifications & Achievements',
           description:
             'Sustainability is a key part of our long-term strategy with measurable milestones across operations and certifications.',
-          image: '/banner-slider2.webp',
+          image: '/latest_press_3.jpg',
           imageAlt: 'Certifications and achievements in sustainability',
           link: '/certifications-achievements',
           ctaText: 'Learn More',
@@ -613,7 +613,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           title: 'NGOs',
           description:
             'By collaborating with industry partners and recycling alliances, we accelerate responsible packaging transitions.',
-          image: '/banner-slider3.webp',
+          image: '/ngoa_image.webp',
           imageAlt: 'NGO and sustainability collaboration',
           link: '/ngos',
           ctaText: 'Learn More',
@@ -622,7 +622,7 @@ export async function getHomepageData(): Promise<HomepageData> {
           id: '6',
           title: '2050 Carbon Net Zero Roadmap',
           description: '2050 NET ZERO ACROSS THE VALUE CHAIN',
-          image: '/banner-slider4.webp',
+          image: '/roadmap_images.webp',
           imageAlt: '2050 carbon net zero roadmap',
           link: '/2050-carbon-net-zero-roadmap',
           ctaText: 'Learn More',
