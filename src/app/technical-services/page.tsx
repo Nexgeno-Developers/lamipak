@@ -5,6 +5,44 @@ import { fetchTechnicalServicesListingData } from '@/lib/api';
 import ConnectTechnicalExperts from '@/components/technical-services/ConnectTechnicalExperts';
 import CallToAction from '@/components/home/CallToAction';
 import { getCanonicalUrl } from '@/config/site';
+import VideoModalClient from '@/components/common/VideoModalClient';
+
+function getYouTubeId(inputUrl: string): string | null {
+  try {
+    const u = new URL(inputUrl);
+    const host = u.hostname.replace(/^www\./, '');
+
+    let id: string | null = null;
+    if (host === 'youtu.be') {
+      id = u.pathname.split('/').filter(Boolean)[0] || null;
+    } else if (host === 'youtube.com' || host.endsWith('.youtube.com')) {
+      const parts = u.pathname.split('/').filter(Boolean);
+      // /watch?v=ID
+      const v = u.searchParams.get('v');
+      if (v) id = v;
+      // /shorts/ID
+      if (!id && parts[0] === 'shorts' && parts[1]) id = parts[1];
+      // /embed/ID
+      if (!id && parts[0] === 'embed' && parts[1]) id = parts[1];
+    }
+
+    return id;
+  } catch {
+    return null;
+  }
+}
+
+function toYouTubeEmbedUrl(inputUrl: string): string {
+  const id = getYouTubeId(inputUrl);
+  if (!id) return inputUrl;
+  return `https://www.youtube.com/embed/${id}?autoplay=1&controls=1&rel=0&playsinline=1`;
+}
+
+function getYouTubeThumbnail(inputUrl: string): string | null {
+  const id = getYouTubeId(inputUrl);
+  if (!id) return null;
+  return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+}
 
 /**
  * Generate metadata for technical services listing page
@@ -52,7 +90,7 @@ export default async function TechnicalServicesPage() {
           {/* Dark Blue Overlay */}
           <div className="absolute inset-0 bg-[#0e233c52] opacity-90" />
           {/* Blur Effect */}
-          <div className="absolute inset-0 backdrop-blur-sm" />
+          {/* <div className="absolute inset-0 backdrop-blur-sm" /> */}
         </div>
 
         {/* Hero Content */}
@@ -69,10 +107,11 @@ export default async function TechnicalServicesPage() {
       </section>
 
       {/* Technical Support Service Section */}
-      <section className="bg-gray-50 pb-12 ">
+      <section className="bg-gray-50 py-20">
+        <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-center">
           {/* Left Column - Text Content */}
-          <div className="container mx-auto px-4 lg:px-16 xl:px-24 pt-20">
+          <div className="pr-[40px]">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#0e233c] mb-6">
               {listingData.introSection.heading}
             </h2>
@@ -84,13 +123,18 @@ export default async function TechnicalServicesPage() {
           </div>
 
           {/* Right Column - Image (Full Width) */}
-          <div className="relative w-full h-full min-h-[400px] lg:min-h-[600px]">
-            <img
+          <div className="relative w-full h-full">
+            <Image
               src={listingData.introSection.image}
               alt={listingData.introSection.imageAlt}
-              className="w-full h-full object-cover"
+              width={600}
+              height={600}
+              className="object-cover rounded-[50px] w-full"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              priority={false}
             />
           </div>
+        </div>
         </div>
       </section>
 
@@ -114,23 +158,13 @@ export default async function TechnicalServicesPage() {
               >
                 {/* Video Thumbnail */}
                 <div className="rounded-[50px] relative aspect-video bg-gray-100 overflow-hidden">
-                  <img
-                    src={card.thumbnail}
-                    alt={card.thumbnailAlt}
-                    className="w-full h-full object-cover"
+                  <VideoModalClient
+                    videoUrl={toYouTubeEmbedUrl(card.videoUrl)}
+                    modalTitle={`${card.title} Video`}
+                    posterUrl={getYouTubeThumbnail(card.videoUrl) || card.thumbnail}
+                    posterAlt={card.thumbnailAlt}
+                    className="absolute inset-0"
                   />
-                  {/* Play Button Overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center bg-opacity-20 hover:bg-opacity-30 transition-opacity">
-                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg">
-                      <svg
-                        className="w-8 h-8 text-[#009FE8] ml-1"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                  </div>
                 </div>
 
                 {/* Card Content */}
@@ -141,7 +175,7 @@ export default async function TechnicalServicesPage() {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-black mb-6 flex-1 leading-relaxed">
+                  <p className="text-black mb-6 flex-1 leading-relaxed line-clamp-4">
                     {card.description}
                   </p>
 
@@ -173,72 +207,76 @@ export default async function TechnicalServicesPage() {
       </section>
 
       {/* Service Differentiation Section */}
-      <section className="bg-gray-50 py-4 md:py-8 lg:py-12">
+      <section className="bg-gray-50 py-4 md:py-8 lg:pt-12">
         <div className="container mx-auto px-4">
-          <div className="bg-[#009FE8] rounded-[50px] p-8 md:p-12 lg:p-16">
-            {/* Section Title */}
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-8 md:mb-12">
-              {listingData.serviceDifferentiation.heading}
+          <div className="bg-white rounded-[50px] p-6 md:p-16 lg:p-20">
+            <h2 className="text-center text-3xl md:text-4xl lg:text-5xl font-bold mb-8 md:mb-10">
+              <span className="text-[#009FE8]">
+                {listingData.serviceDifferentiation.heading.split(' ')[0]}
+              </span>{' '}
+              <span className="text-black">
+                {listingData.serviceDifferentiation.heading.split(' ').slice(1).join(' ')}
+              </span>
             </h2>
 
-            {/* Comparison Table */}
             <div className="overflow-x-auto">
-              <table className="w-full text-white">
-                {/* Header Row 1 */}
-                <thead>
-                  <tr className="border-b border-[#3DBEF9] border-opacity-30">
-                    <th className="text-left py-4 font-semibold text-lg md:text-xl">
-                      {listingData.serviceDifferentiation.headerRow1.empty}
-                    </th>
-                    <th className="text-center py-4 font-bold text-lg md:text-xl uppercase">
-                      {listingData.serviceDifferentiation.headerRow1.lamiCare}
-                    </th>
-                    <th className="text-center py-4 font-bold text-lg md:text-xl uppercase">
-                      {listingData.serviceDifferentiation.headerRow1.lamiPremium}
-                    </th>
-                    <th className="text-center py-4 font-bold text-lg md:text-xl uppercase">
-                      {listingData.serviceDifferentiation.headerRow1.lamiPartner}
-                    </th>
-                  </tr>
-                  {/* Header Row 2 */}
-                  <tr className="border-b border-[#3DBEF9] border-opacity-30">
-                    <th className="text-left py-4 font-semibold text-base md:text-lg">
-                      {listingData.serviceDifferentiation.headerRow2.focus}
-                    </th>
-                    <th className="text-center py-4 font-semibold text-base md:text-lg">
-                      {listingData.serviceDifferentiation.headerRow2.stability}
-                    </th>
-                    <th className="text-center py-4 font-semibold text-base md:text-lg">
-                      {listingData.serviceDifferentiation.headerRow2.performance}
-                    </th>
-                    <th className="text-center py-4 font-semibold text-base md:text-lg">
-                      {listingData.serviceDifferentiation.headerRow2.transformation}
-                    </th>
-                  </tr>
-                </thead>
-                {/* Data Rows */}
-                <tbody>
-                  {listingData.serviceDifferentiation.rows.map((row, index) => (
-                    <tr
-                      key={index}
-                      className={`border-b border-[#3DBEF9] border-opacity-20 ${index === listingData.serviceDifferentiation.rows.length - 1 ? '' : ''}`}
+              <div className="min-w-[940px] grid grid-cols-[170px_1fr_1fr_1fr] gap-4 items-stretch">
+                <div className="flex flex-col justify-start pt-[62px]">
+                  <div className="h-[56px] flex items-center text-black font-bold text-xl">
+                    {listingData.serviceDifferentiation.headerRow2.focus}
+                  </div>
+                  {listingData.serviceDifferentiation.rows.map((row) => (
+                    <div
+                      key={`label-${row.category}`}
+                      className="h-[62px] flex items-center text-black font-bold text-xl"
                     >
-                      <td className="py-4  font-bold text-base md:text-lg uppercase">
-                        {row.category}
-                      </td>
-                      <td className="py-4 text-center text-base md:text-lg">
-                        {row.lamiCare}
-                      </td>
-                      <td className="py-4  text-center text-base md:text-lg">
-                        {row.lamiPremium}
-                      </td>
-                      <td className="py-4 text-center text-base md:text-lg">
-                        {row.lamiPartner}
-                      </td>
-                    </tr>
+                      {row.category.charAt(0) + row.category.slice(1).toLowerCase()}
+                    </div>
                   ))}
-                </tbody>
-              </table>
+                </div>
+
+                <div className="rounded-[16px] bg-[#009FE8] text-white px-6 py-5 border border-[#009FE8]">
+                  <h3 className="text-2xl font-extrabold uppercase mb-5">
+                    {listingData.serviceDifferentiation.headerRow1.lamiCare}
+                  </h3>
+                  <div className="h-[56px] flex items-center text-lg">
+                    {listingData.serviceDifferentiation.headerRow2.stability}
+                  </div>
+                  {listingData.serviceDifferentiation.rows.map((row) => (
+                    <div key={`care-${row.category}`} className="h-[62px] flex items-center text-lg">
+                      {row.lamiCare}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="rounded-[16px] bg-white text-black px-6 py-5 border border-[#E5E7EB]">
+                  <h3 className="text-2xl font-extrabold uppercase text-[#E0262D] mb-5">
+                    {listingData.serviceDifferentiation.headerRow1.lamiPremium}
+                  </h3>
+                  <div className="h-[56px] flex items-center text-lg">
+                    {listingData.serviceDifferentiation.headerRow2.performance}
+                  </div>
+                  {listingData.serviceDifferentiation.rows.map((row) => (
+                    <div key={`premium-${row.category}`} className="h-[62px] flex items-center text-lg">
+                      {row.lamiPremium}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="rounded-[16px] bg-white text-black px-6 py-5 border border-[#E5E7EB]">
+                  <h3 className="text-2xl font-extrabold uppercase text-[#4338CA] mb-5">
+                    {listingData.serviceDifferentiation.headerRow1.lamiPartner}
+                  </h3>
+                  <div className="h-[56px] flex items-center text-lg">
+                    {listingData.serviceDifferentiation.headerRow2.transformation}
+                  </div>
+                  {listingData.serviceDifferentiation.rows.map((row) => (
+                    <div key={`partner-${row.category}`} className="h-[62px] flex items-center text-lg">
+                      {row.lamiPartner}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>

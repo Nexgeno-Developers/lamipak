@@ -91,6 +91,9 @@ export interface ApproachData {
 
 export interface VideoBannerData {
   title: string;
+  preTitleBlue?: string;
+  preTitleBlack?: string;
+  preDescription?: string;
   videoUrl?: string;
   ctaText: string;
   ctaLink: string;
@@ -144,8 +147,8 @@ export interface SustainabilityWorkCard {
   id: string;
   title: string;
   description: string;
-  icon: 'A+' | 'star' | 'checkmark';
-  iconShape: 'square' | 'circle' | 'shield';
+  image: string;
+  imageAlt: string;
   link: string;
   ctaText: string;
 }
@@ -455,6 +458,10 @@ export async function getHomepageData(): Promise<HomepageData> {
     },
     videoBanner: {
       title: 'Innovation in aseptic packaging',
+      preTitleBlue: 'HOW GLOBAL BEVERAGE BRANDS SCALE',
+      preTitleBlack: 'WITH ASEPTIC PRECISION',
+      preDescription:
+        'With advanced manufacturing facilities in China and Indonesia, Lamipak delivers high-quality packaging products to customers across more than 80 countries. Our global operations combine precision engineering, scalable production, and carton packaging solutions to support brands and companies worldwide.',
       videoUrl: 'https://www.youtube.com/watch?v=2Tpppx-X0z0',
       ctaText: 'View how we help global brands',
       ctaLink: '/about-us',
@@ -529,8 +536,8 @@ export async function getHomepageData(): Promise<HomepageData> {
         {
           id: '1',
           title: 'LamiNatural',
-          label: 'Bio-Based Materials',
-          description: 'Plant-derived polymer packaging with full aseptic barrier performance and reduced carbon footprint.',
+          label: 'Responsibly sourced paperboard',
+          description: 'Sustainable aseptic carton packaging made from renewable materials and responsibly sourced paperboard, offering strong barrier protection for food and beverages while reducing environmental impact carbon footprint.',
           image: '/LamiNatural1.webp', // Replace with actual LamiNatural product image
           imageAlt: 'LamiNatural - Green carton package with leaf design',
           link: '/',
@@ -539,8 +546,8 @@ export async function getHomepageData(): Promise<HomepageData> {
         {
           id: '2',
           title: 'LamiPure',
-          label: 'Bio-Based Materials',
-          description: 'Plant-derived polymer packaging with full aseptic barrier performance and reduced carbon footprint.',
+          label: 'Aluminum foil-free technology',
+          description: 'LamiPure delivers aluminum foil-free aseptic carton packaging with bio-based materials, supporting sustainable packaging solutions while reducing carbon emissions for food and beverage products.',
           image: '/LamiNatural2.webp', // Replace with actual LamiPure product image
           imageAlt: 'LamiPure - White carton package with blue water pattern',
           link: '/',
@@ -549,8 +556,8 @@ export async function getHomepageData(): Promise<HomepageData> {
         {
           id: '3',
           title: 'Papers',
-          label: 'Bio-Based Materials',
-          description: 'Plant-derived polymer packaging with full aseptic barrier performance and reduced carbon footprint.',
+          label: 'Sustainable Paper Straws',
+          description: 'Eco-friendly paper straws designed to replace plastic, made from renewable materials with food-grade safety and reliable performance.',
           image: '/LamiNatural3.webp', // Replace with actual Papers product image
           imageAlt: 'Papers - Paper straws in blue liquid',
           link: '/',
@@ -564,54 +571,59 @@ export async function getHomepageData(): Promise<HomepageData> {
         {
           id: '1',
           title: 'Pick Carton, Save Nature',
-          description: 'At Lamipak, sustainability is not a side initiative. It is a commitment built into every carton we produce.',
-          icon: 'A+',
-          iconShape: 'square',
+          description:
+            'At Lamipak, sustainability is not a side initiative. It is a commitment built into every carton we produce.',
+          image: '/latest_press_1.jpg',
+          imageAlt: 'Pick Carton Save Nature',
           link: '/pick-carton',
           ctaText: 'Learn More',
         },
         {
           id: '2',
           title: 'LAMIRA',
-          description: 'Lamira was born in the pristine forests of Finland, a place known for its pure landscapes, rich biodiversity...',
-          icon: 'star',
-          iconShape: 'circle',
+          description:
+            'Lamira was born in the pristine forests of Finland, a place known for its pure landscapes, rich biodiversity...',
+          image: '/latest_press_2.jpg',
+          imageAlt: 'LAMIRA',
           link: '/lamira',
           ctaText: 'Learn More',
         },
         {
           id: '3',
-          title: 'Our Green Efforts',
-          description: 'At Lamipak, sustainability guides our operations. Through renewable energy and responsible production...',
-          icon: 'checkmark',
-          iconShape: 'shield',
+          title: 'Our Green Efforts',
+          description:
+            'At Lamipak, sustainability guides our operations. Through renewable energy and responsible production...',
+          image: '/latest_press_3.jpg',
+          imageAlt: 'Our Green Efforts',
           link: '/our-green-efforts',
           ctaText: 'Learn More',
         },
         {
           id: '4',
           title: 'Certifications & Achievements',
-          description: 'Sustainability is a key part of our long-term strategy. We have taken important steps to reduce our environmental impact...',
-          icon: 'checkmark',
-          iconShape: 'circle',
+          description:
+            'Sustainability is a key part of our long-term strategy with measurable milestones across operations and certifications.',
+          image: '/banner-slider2.webp',
+          imageAlt: 'Certifications and achievements in sustainability',
           link: '/certifications-achievements',
           ctaText: 'Learn More',
         },
         {
           id: '5',
           title: 'NGOs',
-          description: 'At Lamipak, sustainability is a shared responsibility. By collaborating with industry partners, recycling alliances...',
-          icon: 'star',
-          iconShape: 'square',
+          description:
+            'By collaborating with industry partners and recycling alliances, we accelerate responsible packaging transitions.',
+          image: '/banner-slider3.webp',
+          imageAlt: 'NGO and sustainability collaboration',
           link: '/ngos',
           ctaText: 'Learn More',
         },
         {
           id: '6',
-          title: '2050 Carbon Net Zero RoadmaP',
+          title: '2050 Carbon Net Zero Roadmap',
           description: '2050 NET ZERO ACROSS THE VALUE CHAIN',
-          icon: 'star',
-          iconShape: 'square',
+          image: '/banner-slider4.webp',
+          imageAlt: '2050 carbon net zero roadmap',
           link: '/2050-carbon-net-zero-roadmap',
           ctaText: 'Learn More',
         },

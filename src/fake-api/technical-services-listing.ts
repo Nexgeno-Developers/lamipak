@@ -15,6 +15,8 @@ export interface ServiceTierCard {
   description: string;
   thumbnail: string;
   thumbnailAlt: string;
+  /** YouTube/watch/shorts URL (will be converted to an embed URL for modal playback) */
+  videoUrl: string;
   ctaText: string;
   ctaLink: string;
 }
@@ -97,7 +99,7 @@ export interface TechnicalServicesListingData {
 export function getTechnicalServicesListingData(): TechnicalServicesListingData {
   return {
     heroTitle: 'Technical Service',
-    heroBackgroundImage: '/banner-slider1.jpg',
+    heroBackgroundImage: '/technical_banner.webp',
     introSection: {
       heading: 'Technical Support Service',
       paragraphs: [
@@ -118,6 +120,7 @@ export function getTechnicalServicesListingData(): TechnicalServicesListingData 
           description: 'Focused on foundational operational support, this tier includes Preventative Maintenance, Corrective Maintenance, Remote Support, Overall Assessment, Spare Parts, Training.',
           thumbnail: '/technical_video.jpg',
           thumbnailAlt: 'Lami Care Service',
+          videoUrl: 'https://youtube.com/shorts/m6jnXa3kRw4?feature=share',
           ctaText: 'Discover More',
           ctaLink: '/technical-services/lami-care'
         },
@@ -127,8 +130,9 @@ export function getTechnicalServicesListingData(): TechnicalServicesListingData 
           description: 'This tier include Performance Commitment, Maintenance Management, Machine Volume Conversion, Machine Refurbish & Reconditioning, Machine Installation & Commissioning, Package Volume Customization.',
           thumbnail: '/technical_video.jpg',
           thumbnailAlt: 'LamiPremium Service',
+          videoUrl: 'https://www.youtube.com/watch?v=zB6zq2zb7Oc',
           ctaText: 'Discover More',
-          ctaLink: '/technical-services/lami-premium'
+          ctaLink: '/'
         },
         {
           id: '3',
@@ -136,8 +140,9 @@ export function getTechnicalServicesListingData(): TechnicalServicesListingData 
           description: 'It includes Operational cost commitment, Digital Solution (31 Smart Version), Automation Service, New Format Customization, Machine Start-up, Plant Components.',
           thumbnail: '/technical_video.jpg',
           thumbnailAlt: 'LamiPartner Service',
+          videoUrl: 'https://www.youtube.com/watch?v=owZIf_Opcyw',
           ctaText: 'Discover More',
-          ctaLink: '/technical-services/lami-partner'
+          ctaLink: '/'
         }
       ]
     },

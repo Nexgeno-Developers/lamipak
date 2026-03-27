@@ -6,6 +6,7 @@
  */
 
 export interface MarketingServicesOverview {
+  heroBackgroundImage?: string;
   heading: string;
   description: string;
   image: string;
@@ -47,10 +48,11 @@ export async function getMarketingServicesOverviewData(): Promise<MarketingServi
   await new Promise((resolve) => setTimeout(resolve, 50));
 
   return {
+    heroBackgroundImage: '/marketing_banner.webp',
     heading: '360 Marketing Support Service',
     description:
       'Introducing Lamipak Market Support Service, a 360-degree marketing solution catering to the diverse needs of the client through business intelligence, recipe support, creative consultancy, and sales & distribution. With a holistic approach, we leverage insights, formulation expertise, and efficient routes to market to guide customers from initial concepts to compelling go-to-market products. Lamipak is committed to empowering businesses, ensuring a seamless journey from concept to market success in today’s dynamic and competitive landscape.',
-    image: '/3d_images1.jpg',
+    image: '/360_marketing_banner.webp',
     imageAlt: 'Lamipak 360 marketing support visualization',
     statsHeading: 'Empowering Your Business Journey With',
     statsSubheading: 'End-To-End Marketing Excellence',

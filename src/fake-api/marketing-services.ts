@@ -158,7 +158,7 @@ const MARKETING_SERVICES: MarketingServiceData[] = [
     description:
       'From idea to pilot, we help align product recipes with processing requirements, packaging specifications, and desired eating or drinking experience. This ensures that new products are technically robust, commercially viable, and consistently deliver the intended sensory profile to consumers.',
     heroBackgroundImage: '/marketing_banner.jpg',
-    listingImage: '/recipe_support.jpg',
+    listingImage: '/recipt_support.jpg',
     listingImageAlt: 'Scientist conducting laboratory tests on food sample',
     icon: '/icons/go_to_market.svg',
     badge: 'Technical',
@@ -197,7 +197,7 @@ const MARKETING_SERVICES: MarketingServiceData[] = [
     description:
       'By combining category experience, consumer understanding, and creative thinking, we shape messaging, visual language, and activation ideas that stand out while remaining practical for execution. The result is work that inspires your teams and resonates with consumers across multiple touchpoints.',
     heroBackgroundImage: '/marketing_banner.jpg',
-    listingImage: '/creative_images.jpg',
+    listingImage: '/creative_consultancy.jpg',
     listingImageAlt: 'Creative team collaborating over design concepts',
     icon: '/icons/insights_design.svg',
     badge: 'Creative',
@@ -236,7 +236,7 @@ const MARKETING_SERVICES: MarketingServiceData[] = [
     description:
       'We collaborate with commercial and logistics teams to connect packaging decisions with route‑to‑market realities. From pack size architecture and case design to merchandising and trade stories, we help you make choices that improve efficiency while unlocking new channels and outlets.',
     heroBackgroundImage: '/marketing_banner.jpg',
-    listingImage: '/sales_images.jpg',
+    listingImage: '/sales_distribution.jpg',
     listingImageAlt: 'Warehouse with stacked boxes ready for distribution',
     icon: '/icons/sales_distribution.svg',
     badge: 'Commercial',

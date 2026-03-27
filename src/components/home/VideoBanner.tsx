@@ -150,7 +150,26 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
   })();
 
   return (
-    <section className="relative min-h-[70dvh] h-[100dvh] md:h-screen md:min-h-0 overflow-hidden">
+    <>
+      {!videoOnly && (data.preTitleBlue || data.preTitleBlack || data.preDescription) && (
+        <section className="bg-gray-50 py-8 md:py-10">
+          <div className="container mx-auto px-4">
+            <div className="p-6 md:p-10 text-center">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
+                {data.preTitleBlue ? <span className="text-[#009FE8]">{data.preTitleBlue}</span> : null}{' '}
+                {data.preTitleBlack ? <span className="text-black">{data.preTitleBlack}</span> : null}
+              </h2>
+              {data.preDescription ? (
+                <p className="mt-4 text-sm md:text-base text-black leading-relaxed max-w-5xl mx-auto">
+                  {data.preDescription}
+                </p>
+              ) : null}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section className="relative min-h-[70dvh] h-[100dvh] md:h-screen md:min-h-0 overflow-hidden">
       {/* Background Video/GIF - Autoplay - Hidden when video is playing */}
       {!isVideoPlaying && (
         <div className="absolute inset-0">
@@ -168,13 +187,6 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
       {/* Content - Hidden when video is playing */}
       {!isVideoPlaying && !videoOnly && (
         <div className="relative z-10 h-full flex flex-col items-center px-4">
-          {/* Main Title - Top */}
-          <div className="pt-8 md:pt-20 lg:pt-20">
-            <h2 className="text-3xl md:text-4xl lg:text-[50px] font-bold text-white text-center">
-              {data.title}
-            </h2>
-          </div>
-
           {/* Play Button */}
           <div className="flex-1 flex items-center justify-center">
             <button
@@ -192,28 +204,7 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
             </button>
           </div>
 
-          {/* CTA Link - Bottom */}
-          <div className="pb-10 md:pb-20">
-            <Link
-              href={data.ctaLink}
-              className="inline-flex items-center text-white text-lg md:text-[32px] font-medium hover:text-[#009FE8] transition-colors group"
-            >
-              {data.ctaText}
-              <svg
-                className="w-5 h-5 md:w-6 md:h-6 ml-2 transform group-hover:translate-x-1 transition-transform"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </Link>
-          </div>
+          
         </div>
       )}
 
@@ -235,6 +226,7 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
           </button>
         </div>
       )}
-    </section>
+      </section>
+    </>
   );
 }

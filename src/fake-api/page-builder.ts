@@ -106,6 +106,8 @@ export type CategoryShowcaseItem = {
   description: string;
   ctaLabel: string;
   href: string;
+  image?: string;
+  imageAlt?: string;
   /** If true, opens href in a new tab */
   external?: boolean;
   variant?: 'default' | 'highlight';
@@ -368,6 +370,8 @@ export async function getMainCategoryPage(
                 'Optimized for high-speed filling lines, our roll-fed aseptic material offers superior barrier properties and shelf-life stability.',
               ctaLabel: 'Technical specs',
               href: '/aseptic-pakaging-solutions/roll-fed/',
+              image: '/roll_fed_product_2.webp',
+              imageAlt: 'Roll-fed product',
               iconId: 'roll',
             },
             {
@@ -378,6 +382,8 @@ export async function getMainCategoryPage(
                 'Versatile pre-formed sleeves designed for flexible manufacturing environments, providing rapid changeover capabilities.',
               ctaLabel: 'Technical specs',
               href: '/aseptic-pakaging-solutions/sleeve-fed/',
+              image: '/roll_fed_product_3.webp',
+              imageAlt: 'Sleeve-fed product',
               iconId: 'sleeve',
             },
             {
@@ -388,6 +394,8 @@ export async function getMainCategoryPage(
                 'Precision-engineered closures ensuring leak-proof sealing and intuitive opening experiences for end consumers.',
               ctaLabel: 'Technical specs',
               href: '/aseptic-pakaging-solutions/cap-solutions/',
+              image: '/roll_fed_product_4.webp',
+              imageAlt: 'Cap solutions product',
               iconId: 'cap',
             },
             {
@@ -398,6 +406,8 @@ export async function getMainCategoryPage(
                 'Paper and bio-plastic straw alternatives that integrate seamlessly with our drink packaging formats without compromising user experience.',
               ctaLabel: 'Impact report',
               href: '/aseptic-pakaging-solutions/lamistraw/',
+              image: '/roll_fed_product_5.webp',
+              imageAlt: 'Sustainable straws',
               variant: 'highlight',
               iconId: 'straw',
             },
@@ -409,6 +419,8 @@ export async function getMainCategoryPage(
                 'Specifically engineered for still water, providing a low-carbon alternative to PET bottles with exceptional freshness retention.',
               ctaLabel: 'Technical specs',
               href: '/aseptic-pakaging-solutions/waterpak/',
+              image: '/roll_fed_preimium_2.webp',
+              imageAlt: 'Waterpak packaging',
               iconId: 'water',
             },
             {
@@ -419,6 +431,8 @@ export async function getMainCategoryPage(
                 'Crafted with an outer bio-based polymer coating and unbleached paperboard, LamiNatural boasts a significantly lower carbon footprint throughout...',
               ctaLabel: 'Technical specs',
               href: '/aseptic-pakaging-solutions/sustainable-solutions/',
+              image: '/roll_fed_preimium_3.webp',
+              imageAlt: 'Sustainable packaging',
               iconId: 'sustainable',
             },
             {
@@ -429,6 +443,8 @@ export async function getMainCategoryPage(
                 "Lamipak's metallic ink solutions provide a premium visual finish while maintaining strict food-grade safety standards for aseptic carton packaging.",
               ctaLabel: 'Technical specs',
               href: '/aseptic-pakaging-solutions/metallic-lnk/',
+              image: '/roll_fed_preimium_4.webp',
+              imageAlt: 'Metallic ink packaging',
               iconId: 'metallic',
             },
             {
@@ -439,6 +455,8 @@ export async function getMainCategoryPage(
                 'Digital co-printing, traceability, and consumer engagement through a single code on-pack — connecting brands with shoppers while supporting compliance and loyalty.',
               ctaLabel: 'Technical specs',
               href: '/aseptic-pakaging-solutions/one-pack-one-code/',
+              image: '/roll_fed_preimium_5.webp',
+              imageAlt: 'One Pack One Code packaging',
               iconId: 'code',
             },
           ],
