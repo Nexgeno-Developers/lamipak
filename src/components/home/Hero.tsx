@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import type { Hero } from '@/fake-api/homepage';
 
@@ -12,6 +13,7 @@ export default function Hero({ data }: HeroProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [failedSlideIds, setFailedSlideIds] = useState<Record<string, boolean>>({});
 
   const slides = data.slides;
   const totalSlides = slides.length;
@@ -20,7 +22,7 @@ export default function Hero({ data }: HeroProps) {
   useEffect(() => {
     const imagePromises = slides.map((slide) => {
       return new Promise((resolve, reject) => {
-        const img = new Image();
+        const img = new window.Image();
         img.onload = resolve;
         img.onerror = reject;
         img.src = slide.backgroundImage;
@@ -81,17 +83,21 @@ export default function Hero({ data }: HeroProps) {
               index === currentSlide ? 'opacity-100 z-0' : 'opacity-0 z-[-1] pointer-events-none'
             }`}
           >
-            {/* Background Image using img tag */}
-            <img
-              src={slide.backgroundImage}
-              alt={slide.category}
-              className="absolute inset-0 w-full h-full object-cover"
-              loading={index === 0 ? 'eager' : 'lazy'}
-              onError={(e) => {
-                console.error('Image failed to load:', slide.backgroundImage);
-                (e.target as HTMLImageElement).style.display = 'none';
-              }}
-            />
+            {/* Background Image */}
+            {!failedSlideIds[slide.id] && (
+              <Image
+                src={slide.backgroundImage}
+                alt={slide.category}
+                fill
+                className="object-cover"
+                sizes="100vw"
+                priority={index === 0}
+                onError={() => {
+                  console.error('Image failed to load:', slide.backgroundImage);
+                  setFailedSlideIds((prev) => ({ ...prev, [slide.id]: true }));
+                }}
+              />
+            )}
             {/* Gradient Overlay */}
             <div
               className="absolute inset-0 bg-gradient-to-r from-[#0E233C]/50 via-[#0C2F56]/50 to-[#087BFF]/10"
@@ -117,13 +123,13 @@ export default function Hero({ data }: HeroProps) {
 
             {/* Main Headline */}
             <div className="lg:max-w-5xl">
-              <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight [overflow-wrap:anywhere]">
+              <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight [overflow-wrap:anywhere] lg:mb-0 mb-3">
                 <span className="text-white">{currentSlideData.title}</span>
                 <br />
                 <span className="text-[#009FE8]">{currentSlideData.titleHighlight}</span>
               </h1>
 
-              <p className="text-base text-white lg:py-[20px] pt-0 pb-0 !leading-[32px] lg:pr-[200px] lg:line-clamp-4 line-clamp-3">
+              <p className="lg:text-base text-sm text-white lg:py-[20px] pt-0 pb-0 lg:!leading-[32px] !leading-[24px]  lg:pr-[200px] lg:line-clamp-4 line-clamp-3">
                 {currentSlideData.description}
               </p>
             </div>
