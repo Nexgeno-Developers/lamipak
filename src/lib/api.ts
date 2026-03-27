@@ -137,6 +137,10 @@ type CompanyProfile = {
   instagramUrl?: string;
   xUrl?: string;
   linkedinUrl?: string;
+  facebookUrl?: string;
+  youtubeUrl?: string;
+  tiktokUrl?: string;
+  vimeoUrl?: string;
   googleMapImage?: string;
   breadcrumbImage?: string;
 };
@@ -281,6 +285,26 @@ async function fetchCompanyProfile(): Promise<CompanyProfile | null> {
         (item) => !!item && typeof item === 'object' && typeof item.linkedin_url === 'string',
       )?.linkedin_url as string | undefined;
 
+    const facebookUrl =
+      raw.meta?.find(
+        (item) => !!item && typeof item === 'object' && typeof item.facebook_url === 'string',
+      )?.facebook_url as string | undefined;
+
+    const youtubeUrl =
+      raw.meta?.find(
+        (item) => !!item && typeof item === 'object' && typeof item.youtube_url === 'string',
+      )?.youtube_url as string | undefined;
+
+    const tiktokUrl =
+      raw.meta?.find(
+        (item) => !!item && typeof item === 'object' && typeof item.tiktok_url === 'string',
+      )?.tiktok_url as string | undefined;
+
+    const vimeoUrl =
+      raw.meta?.find(
+        (item) => !!item && typeof item === 'object' && typeof item.vimeo_url === 'string',
+      )?.vimeo_url as string | undefined;
+
     return {
       name: raw.name || undefined,
       logo: normalizeApiAssetUrl(rawLogoUrl),
@@ -295,6 +319,10 @@ async function fetchCompanyProfile(): Promise<CompanyProfile | null> {
       instagramUrl,
       xUrl,
       linkedinUrl,
+      facebookUrl,
+      youtubeUrl,
+      tiktokUrl,
+      vimeoUrl,
       googleMapImage: normalizeApiAssetUrl(rawGoogleMapUrl),
       breadcrumbImage: normalizeApiAssetUrl(rawHeroBannerUrl),
     };
@@ -375,6 +403,27 @@ export async function fetchHeaderData(): Promise<HeaderData> {
   };
 }
 
+function mergeFooterSocialLinks(fallback: SocialLink[], profile: CompanyProfile | null): SocialLink[] {
+  if (!profile) return fallback;
+
+  const overrideByIcon: Partial<Record<string, string | undefined>> = {
+    x: profile.xUrl,
+    twitter: profile.xUrl,
+    linkedin: profile.linkedinUrl,
+    facebook: profile.facebookUrl,
+    instagram: profile.instagramUrl,
+    youtube: profile.youtubeUrl,
+    tiktok: profile.tiktokUrl,
+    vimeo: profile.vimeoUrl,
+  };
+
+  return fallback.map((link) => {
+    const key = link.icon || '';
+    const next = overrideByIcon[key];
+    return next ? { ...link, href: next } : link;
+  });
+}
+
 /**
  * Fetches footer data
  * 
@@ -394,15 +443,6 @@ export async function fetchFooterData(): Promise<FooterData> {
   if (!companyProfile) {
     return fallback;
   }
-
-  const contactSummary = [
-    companyProfile.address,
-    companyProfile.phone,
-    companyProfile.email,
-    companyProfile.website,
-  ]
-    .filter(Boolean)
-    .join(' | ');
 
   const contactLinks = [
     companyProfile.address
@@ -436,33 +476,6 @@ export async function fetchFooterData(): Promise<FooterData> {
         )
       : fallback.columns;
 
-  const socialLinks: SocialLink[] = [
-    companyProfile.instagramUrl
-      ? {
-          id: 'api-social-instagram',
-          platform: 'Instagram',
-          href: companyProfile.instagramUrl,
-          icon: 'instagram',
-        }
-      : null,
-    companyProfile.xUrl
-      ? {
-          id: 'api-social-x',
-          platform: 'X',
-          href: companyProfile.xUrl,
-          icon: 'twitter',
-        }
-      : null,
-    companyProfile.linkedinUrl
-      ? {
-          id: 'api-social-linkedin',
-          platform: 'LinkedIn',
-          href: companyProfile.linkedinUrl,
-          icon: 'linkedin',
-        }
-      : null,
-  ].filter(Boolean) as SocialLink[];
-
   return {
     ...fallback,
     logo: {
@@ -470,9 +483,9 @@ export async function fetchFooterData(): Promise<FooterData> {
       text: companyProfile.name || fallback.logo.text,
       image: companyProfile.logo || fallback.logo.image,
     },
-    description: contactSummary || fallback.description,
+    description: fallback.description,
     columns: mappedColumns,
-    socialLinks: socialLinks.length > 0 ? socialLinks : fallback.socialLinks,
+    socialLinks: mergeFooterSocialLinks(fallback.socialLinks ?? [], companyProfile),
   };
 }
 

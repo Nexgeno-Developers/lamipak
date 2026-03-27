@@ -302,30 +302,13 @@ export async function getFooterData(): Promise<FooterData> {
       },
     ],
     socialLinks: [
-      {
-        id: '1',
-        platform: 'Twitter',
-        href: 'https://twitter.com',
-        icon: 'twitter',
-      },
-      {
-        id: '2',
-        platform: 'Facebook',
-        href: 'https://facebook.com',
-        icon: 'facebook',
-      },
-      {
-        id: '3',
-        platform: 'Instagram',
-        href: 'https://instagram.com',
-        icon: 'instagram',
-      },
-      {
-        id: '4',
-        platform: 'YouTube',
-        href: 'https://youtube.com',
-        icon: 'youtube',
-      },
+      { id: 's-x', platform: 'X', href: 'https://x.com', icon: 'x' },
+      { id: 's-li', platform: 'LinkedIn', href: 'https://www.linkedin.com', icon: 'linkedin' },
+      { id: 's-fb', platform: 'Facebook', href: 'https://www.facebook.com', icon: 'facebook' },
+      { id: 's-ig', platform: 'Instagram', href: 'https://www.instagram.com', icon: 'instagram' },
+      { id: 's-yt', platform: 'YouTube', href: 'https://www.youtube.com', icon: 'youtube' },
+      { id: 's-tt', platform: 'TikTok', href: 'https://www.tiktok.com', icon: 'tiktok' },
+      { id: 's-vm', platform: 'Vimeo', href: 'https://vimeo.com', icon: 'vimeo' },
     ],
     copyright: `© ${new Date().getFullYear()} Lamipak. All Rights Reserved.`,
   };

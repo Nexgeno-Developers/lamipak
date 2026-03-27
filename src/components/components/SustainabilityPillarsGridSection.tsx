@@ -147,7 +147,7 @@ export default function SustainabilityPillarsGridSection({ data }: Sustainabilit
                   <Icon color={accent} />
                 </div>
                 <h3 className="text-base font-semibold text-black md:text-lg">{item.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-gray-600 md:text-[0.9375rem]">
+                <p className="mt-3 text-sm leading-relaxed text-black md:text-base">
                   {item.description}
                 </p>
               </article>

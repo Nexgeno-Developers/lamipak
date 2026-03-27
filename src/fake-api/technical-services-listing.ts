@@ -192,7 +192,7 @@ export function getTechnicalServicesListingData(): TechnicalServicesListingData 
           image: '/driving_image_1.jpg',
           imageAlt: 'Spare Parts Service',
           ctaText: 'Discover More',
-          ctaLink: '/technical-services/spare-parts'
+          ctaLink: '/'
         },
         {
           id: '2',
@@ -201,7 +201,7 @@ export function getTechnicalServicesListingData(): TechnicalServicesListingData 
           image: '/driving_image_2.jpg',
           imageAlt: 'Lamipak Value Added Engineering',
           ctaText: 'Discover More',
-          ctaLink: '/technical-services/value-added-engineering'
+          ctaLink: '/'
         },
         {
           id: '3',
@@ -210,7 +210,7 @@ export function getTechnicalServicesListingData(): TechnicalServicesListingData 
           image: '/driving_image_3.jpg',
           imageAlt: 'R&D Center',
           ctaText: 'Discover More',
-          ctaLink: '/technical-services/rd-center'
+          ctaLink: '/'
         },
         {
           id: '4',
@@ -219,7 +219,7 @@ export function getTechnicalServicesListingData(): TechnicalServicesListingData 
           image: '/driving_image_4.jpg',
           imageAlt: 'Pilot Plan',
           ctaText: 'Discover More',
-          ctaLink: '/technical-services/pilot-plan'
+          ctaLink: '/'
         }
       ]
     },
