@@ -86,16 +86,16 @@ export default function VideoModalClient({
           role="dialog"
           aria-modal="true"
           aria-labelledby={titleId}
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-[#071426]/55 backdrop-blur-[4px]"
         >
           <button
             type="button"
-            className="absolute inset-0 bg-black/60"
+            className="absolute inset-0"
             onClick={() => setOpen(false)}
             aria-label="Close video"
           />
 
-          <div className="relative z-[101] w-full max-w-5xl rounded-2xl bg-black overflow-hidden shadow-2xl">
+          <div className="relative z-[101] w-full max-w-5xl rounded-2xl bg-black overflow-hidden border border-white/20 shadow-[0_20px_80px_rgba(0,0,0,0.45)]">
             <div className="flex items-center justify-between px-4 py-3 bg-[#0E233C]">
               <p id={titleId} className="text-white text-sm font-semibold">
                 {modalTitle}

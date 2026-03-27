@@ -123,11 +123,17 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
     if (youtube) {
       return (
         <div
-          className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100] bg-[#071426]/55 backdrop-blur-[4px] flex items-center justify-center p-4"
           role="dialog"
           aria-modal="true"
         >
-          <div className="relative w-full max-w-5xl aspect-video bg-black rounded-[18px] overflow-hidden">
+          <button
+            type="button"
+            className="absolute inset-0"
+            onClick={() => setIsVideoPlaying(false)}
+            aria-label="Close video"
+          />
+          <div className="relative w-full max-w-5xl aspect-video bg-black rounded-[18px] overflow-hidden border border-white/20 shadow-[0_20px_80px_rgba(0,0,0,0.45)]">
             <button
               type="button"
               onClick={() => setIsVideoPlaying(false)}

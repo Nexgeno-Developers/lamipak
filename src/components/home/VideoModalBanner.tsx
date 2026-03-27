@@ -83,10 +83,16 @@ export default function VideoModalBanner({
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100] bg-[#071426]/55 backdrop-blur-[4px] flex items-center justify-center p-4"
           role="dialog"
           aria-modal="true"
         >
+          <button
+            type="button"
+            className="absolute inset-0"
+            onClick={() => setIsOpen(false)}
+            aria-label="Close video"
+          />
           <div className="relative w-full max-w-5xl">
             <button
               type="button"
@@ -105,7 +111,7 @@ export default function VideoModalBanner({
               controls
               autoPlay
               playsInline
-              className="w-full h-auto max-h-[80vh] bg-black rounded-[18px]"
+              className="w-full h-auto max-h-[80vh] bg-black rounded-[18px] border border-white/20 shadow-[0_20px_80px_rgba(0,0,0,0.45)]"
             />
           </div>
         </div>
