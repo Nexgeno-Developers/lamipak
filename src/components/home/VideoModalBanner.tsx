@@ -66,7 +66,7 @@ export default function VideoModalBanner({
           <button
             type="button"
             onClick={() => setIsOpen(true)}
-            className="cursor-pointer w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center transition-all group "
+            className="cursor-pointer flex items-center justify-center transition-all group "
             aria-label="Play video"
           >
             <Image
@@ -74,7 +74,7 @@ export default function VideoModalBanner({
               alt=""
               width={100}
               height={100}
-              className="group-hover:scale-110 transition-transform w-[80px]"
+              className="group-hover:scale-110 transition-transform w-[100px]"
               aria-hidden
             />
           </button>

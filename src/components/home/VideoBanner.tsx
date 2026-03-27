@@ -52,6 +52,9 @@ function getYouTubeEmbedSrc(videoUrl: string): { id: string; src: string } | nul
 export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}) {
   const [data, setData] = useState<VideoBannerData | null>(null);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [youtubeThumbVariant, setYoutubeThumbVariant] = useState<'maxresdefault' | 'sddefault' | 'hqdefault'>(
+    'maxresdefault',
+  );
 
   useEffect(() => {
     async function loadData() {
@@ -60,6 +63,11 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
     }
     loadData();
   }, []);
+
+  useEffect(() => {
+    // Reset to best quality when video changes
+    setYoutubeThumbVariant('maxresdefault');
+  }, [data?.videoUrl]);
 
   // Keep hook order stable across renders (avoid early return before calling hooks).
   useEffect(() => {
@@ -81,9 +89,16 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
     if (youtube) {
       return (
         <img
-          src={`https://img.youtube.com/vi/${youtube.id}/hqdefault.jpg`}
+          src={`https://img.youtube.com/vi/${youtube.id}/${youtubeThumbVariant}.jpg`}
           alt=""
           className="absolute inset-0 w-full h-full object-cover"
+          onError={() => {
+            setYoutubeThumbVariant((current) => {
+              if (current === 'maxresdefault') return 'sddefault';
+              if (current === 'sddefault') return 'hqdefault';
+              return current;
+            });
+          }}
         />
       );
     }
@@ -192,7 +207,7 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
           <div className="flex-1 flex items-center justify-center">
             <button
               onClick={() => setIsVideoPlaying(true)}
-              className="cursor-pointer w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center transition-all group "
+              className="cursor-pointer flex items-center justify-center transition-all group "
               aria-label="Play video"
             >
               <Image
@@ -200,7 +215,7 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
                 alt=""
                 width={100}
                 height={100}
-                className="group-hover:scale-110 transition-transform w-[80px]"
+                className="group-hover:scale-110 transition-transform w-[100px]"
               />
             </button>
           </div>
@@ -214,7 +229,7 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
         <div className="relative z-10 h-full flex items-center justify-center">
           <button
             onClick={() => setIsVideoPlaying(true)}
-            className="cursor-pointer w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center transition-all group shadow-lg"
+            className="cursor-pointer flex items-center justify-center transition-all group shadow-lg"
             aria-label="Play video"
           >
             <Image
@@ -222,7 +237,7 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
               alt=""
               width={100}
               height={100}
-              className="group-hover:scale-110 transition-transform w-[80px]"
+              className="group-hover:scale-110 transition-transform w-[100px]"
             />
           </button>
         </div>
