@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRef, type ReactElement } from 'react';
+import { type ReactElement } from 'react';
 import type { CategoryShowcaseSectionData, CategoryShowcaseItem } from '@/fake-api/page-builder';
 
 function IconRoll() {
@@ -168,15 +168,6 @@ function ShowcaseCard({ item }: { item: CategoryShowcaseItem }) {
 }
 
 export function CategoryShowcaseSection({ data }: { data: CategoryShowcaseSectionData }) {
-  const scrollerRef = useRef<HTMLDivElement>(null);
-
-  const scrollBy = (dir: -1 | 1) => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    const amount = Math.min(el.clientWidth * 0.85, 400) * dir;
-    el.scrollBy({ left: amount, behavior: 'smooth' });
-  };
-
   return (
     <section className="bg-gray-50 py-12 md:py-16 lg:py-20">
       <div className="container mx-auto px-4">
@@ -186,12 +177,9 @@ export function CategoryShowcaseSection({ data }: { data: CategoryShowcaseSectio
           </div>
         )}
 
-        <div
-          ref={scrollerRef}
-          className="flex md:grid md:grid-cols-3 gap-4 md:gap-4 overflow-x-auto md:overflow-visible pb-2 md:pb-0 snap-x snap-mandatory md:snap-none scrollbar-hide -mx-1 px-1"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-4">
           {data.items.map((item) => (
-            <div key={item.id} className="min-w-[min(100%,320px)] md:min-w-0 snap-center shrink-0 md:shrink">
+            <div key={item.id}>
               <ShowcaseCard item={item} />
             </div>
           ))}
