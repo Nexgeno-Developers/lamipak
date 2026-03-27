@@ -92,7 +92,7 @@ export default function GovernanceSecurityTrustSection({
             {data.eyebrow}
           </div>
 
-          <h2 className="mt-2 text-3xl md:text-5xl font-bold leading-tight">
+          <h2 className="mt-2 text-[24px] md:text-5xl font-bold leading-tight">
             <span className="text-[#009FE8]">{data.titleBlue}</span>{' '}
             <span className="text-black">{data.title}</span>
           </h2>
@@ -100,7 +100,7 @@ export default function GovernanceSecurityTrustSection({
           <div className="mt-6 grid grid-cols-1 lg:grid-cols-[48%_52%] gap-8 items-start">
             <div className="space-y-4 text-black">
               {data.leftParagraphs.map((p) => (
-                <p key={p} className="text-gray-800 leading-relaxed">
+                <p key={p} className="text-[14px] md:text-base text-black leading-relaxed">
                   {p}
                 </p>
               ))}
@@ -110,7 +110,7 @@ export default function GovernanceSecurityTrustSection({
               {data.cards.map((card) => (
                 <div
                   key={card.id}
-                  className="bg-[#EDF0F1] rounded-[50px] px-5 py-4"
+                  className="bg-[#EDF0F1] rounded-[28px] md:rounded-[50px] px-5 py-4"
                 >
                   <div className="flex items-center gap-3">
                     <div className="text-[#009FE8] mt-0.5">
@@ -121,7 +121,7 @@ export default function GovernanceSecurityTrustSection({
                       <p className="text-sm md:text-base font-bold text-black">
                         {card.title}
                       </p>
-                      <p className="text-xs md:text-sm text-gray-700 mt-1 leading-snug">
+                      <p className="text-[12px] md:text-sm text-black mt-1 leading-snug">
                         {card.description}
                       </p>
                     </div>
@@ -136,12 +136,12 @@ export default function GovernanceSecurityTrustSection({
               {data.stats.map((stat) => (
                 <div
                   key={stat.id}
-                  className="bg-[#EDF0F1] rounded-[50px] px-4 py-16 text-center"
+                  className="bg-[#EDF0F1] rounded-[28px] md:rounded-[50px] px-4 py-10 md:py-16 text-center"
                 >
-                  <div className="text-black font-extrabold text-[42px] leading-none">
+                  <div className="text-black font-extrabold text-[28px] md:text-[42px] leading-none">
                     {stat.value}
                   </div>
-                  <div className="mt-3 text-sm text-gray-800 leading-snug">
+                  <div className="mt-3 text-[14px] md:text-sm text-black leading-snug">
                     {stat.label}
                   </div>
                 </div>

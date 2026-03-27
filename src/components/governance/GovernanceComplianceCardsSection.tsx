@@ -111,7 +111,7 @@ export default function GovernanceComplianceCardsSection({
             {data.eyebrow}
           </div>
 
-          <h2 className="mt-2 text-3xl md:text-5xl font-bold leading-tight">
+          <h2 className="mt-2 text-[24px] md:text-5xl font-bold leading-tight">
             <span className="text-[#009FE8]">{data.titleBlue}</span>{' '}
             <span className="text-black">{data.title}</span>
           </h2>
@@ -123,10 +123,10 @@ export default function GovernanceComplianceCardsSection({
                 alt={data.imageAlt}
                 width={1600}
                 height={900}
-                className="w-full object-cover rounded-[50px]"
+                className="w-full object-cover rounded-[28px] md:rounded-[50px]"
                 priority
               />
-              <div className="mt-8 text-black text-sm md:text-base leading-relaxed space-y-4">
+              <div className="mt-6 md:mt-8 text-black text-[14px] md:text-base leading-relaxed space-y-4">
                 {descriptionParagraphs.map((p, idx) => (
                   <p key={`${data.eyebrow}-desc-${idx}`}>{p}</p>
                 ))}
@@ -137,7 +137,7 @@ export default function GovernanceComplianceCardsSection({
               {data.cards.map((card) => (
                 <div
                   key={card.id}
-                  className="bg-[#EEF2F3] rounded-[50px] px-6 py-4"
+                  className="bg-[#EEF2F3] rounded-[28px] md:rounded-[50px] px-6 py-4"
                 >
                   <div className="flex items-center gap-3">
                     <div className="mt-0.5 shrink-0">
@@ -148,7 +148,7 @@ export default function GovernanceComplianceCardsSection({
                       <p className="text-sm md:text-base font-bold text-black">
                         {card.title}
                       </p>
-                      <p className="text-xs md:text-sm text-gray-700 mt-1 leading-snug">
+                      <p className="text-[12px] md:text-sm text-black mt-1 leading-snug">
                         {card.description}
                       </p>
                     </div>

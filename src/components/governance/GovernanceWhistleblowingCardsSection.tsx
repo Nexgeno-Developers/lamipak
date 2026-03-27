@@ -74,24 +74,24 @@ export default function GovernanceWhistleblowingCardsSection({
   data: GovernanceWhistleblowingCardsSectionData;
 }) {
   return (
-    <section className="bg-gray-50 py-8 md:pb-12 pt-20">
+    <section className="bg-gray-50 py-8 md:pb-12 pt-10 md:pt-20">
       <div className="container mx-auto px-4">
         <div className="">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {data.cards.map((card) => (
               <div
                 key={card.id}
-                className="bg-[#EDF0F1] rounded-[50px] px-8 py-16 text-center"
+                className="bg-[#EDF0F1] rounded-[28px] md:rounded-[50px] px-6 md:px-8 py-10 md:py-16 text-center"
               >
                 <div className="text-[#009FE8] flex justify-center">
                   {renderCardIcon(card.iconId)}
                 </div>
 
-                <div className="mt-6 text-black font-bold text-[36px]">
+                <div className="mt-5 text-black font-bold text-[24px] md:text-[36px] leading-tight">
                   {card.title}
                 </div>
 
-                <p className="mt-3 text-xs md:text-base text-black leading-snug mx-auto">
+                <p className="mt-3 text-[14px] md:text-base text-black leading-snug mx-auto">
                   {card.description}
                 </p>
               </div>

@@ -33,13 +33,13 @@ type FrameworkCardProps = {
 
 function FrameworkCard({ title, subtitle, icon }: FrameworkCardProps) {
   return (
-    <div className="bg-[#EDF0F1] rounded-[50px] p-5 flex items-center gap-4">
+    <div className="bg-[#EDF0F1] rounded-[28px] md:rounded-[50px] p-4 md:p-5 flex items-center gap-4">
       <div className="flex items-center justify-center text-[#009FE8] shrink-0">
         {icon}
       </div>
       <div className="pt-1">
-        <p className="text-base md:text-lg font-bold text-black">{title}</p>
-        <p className="text-xs md:text-sm text-gray-700 mt-1 leading-snug">{subtitle}</p>
+        <p className="text-[14px] md:text-lg font-bold text-black leading-snug">{title}</p>
+        <p className="text-[12px] md:text-sm text-black mt-1 leading-snug">{subtitle}</p>
       </div>
     </div>
   );
@@ -138,25 +138,25 @@ export default function GovernanceFrameworkSection({
               {data.eyebrow}
             </div>
 
-            <h2 className="mt-4 text-[22px] md:text-5xl font-bold text-black leading-tight">
+            <h2 className="mt-3 text-[24px] md:text-5xl font-bold text-black leading-tight">
               {data.title}
             </h2>
 
-            <p className="mt-6 text-gray-700 leading-relaxed ">
+            <p className="mt-4 md:mt-6 text-[14px] md:text-base text-gray-700 leading-relaxed">
               {data.description}
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
               <a
                 href={data.primaryCta.href}
-                className="inline-flex items-center justify-center rounded-full bg-[#009FE8] text-white font-bold px-7 py-3 hover:bg-[#0077B6] transition-colors"
+                className="inline-flex items-center justify-center rounded-full bg-[#009FE8] text-white font-bold px-6 md:px-7 py-3 hover:bg-[#0077B6] transition-colors text-sm md:text-base"
               >
                 {data.primaryCta.text}
               </a>
 
               <Link
                 href={data.secondaryCta.href}
-                className="inline-flex items-center justify-center rounded-full border border-[#009FE8] text-[#009FE8] font-bold px-7 py-3 hover:bg-[#009FE8] hover:text-white transition-colors"
+                className="inline-flex items-center justify-center rounded-full border border-[#009FE8] text-[#009FE8] font-bold px-6 md:px-7 py-3 hover:bg-[#009FE8] hover:text-white transition-colors text-sm md:text-base"
               >
                 {data.secondaryCta.text}
               </Link>

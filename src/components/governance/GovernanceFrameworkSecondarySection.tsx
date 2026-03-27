@@ -12,13 +12,13 @@ type FrameworkCardProps = {
 
 function FrameworkCard({ title, subtitle, icon }: FrameworkCardProps) {
   return (
-    <div className="bg-[#EDF0F1] rounded-[50px] p-5 flex items-center gap-4">
+    <div className="bg-[#EDF0F1] rounded-[28px] md:rounded-[50px] p-4 md:p-5 flex items-center gap-4">
       <div className="flex items-center justify-center text-[#009FE8] shrink-0">
         {icon}
       </div>
       <div className="pt-1">
-        <p className="text-base md:text-lg font-bold text-black">{title}</p>
-        <p className="text-xs md:text-sm text-gray-700 mt-1 leading-snug">
+        <p className="text-[14px] md:text-lg font-bold text-black leading-snug">{title}</p>
+        <p className="text-[12px] md:text-sm text-black mt-1 leading-snug">
           {subtitle}
         </p>
       </div>
@@ -176,11 +176,11 @@ export default function GovernanceFrameworkSecondarySection({
               {resolved.eyebrow}
             </div>
 
-            <h2 className="mt-4 text-[22px] md:text-5xl font-bold text-black leading-tight">
+            <h2 className="mt-3 text-[24px] md:text-5xl font-bold text-black leading-tight">
               {resolved.title}
             </h2>
 
-            <div className="mt-6 text-gray-700 leading-relaxed space-y-5">
+            <div className="mt-4 md:mt-6 text-[14px] md:text-base text-black leading-relaxed space-y-4 md:space-y-5">
               {resolved.description.map((p) => (
                 <p key={p}>{p}</p>
               ))}

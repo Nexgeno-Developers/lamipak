@@ -119,11 +119,11 @@ export default function GovernanceGrcSection({
             {resolved.eyebrow}
           </div>
 
-          <h2 className="mt-3 text-3xl md:text-5xl font-bold text-black leading-tight">
+          <h2 className="mt-3 text-[24px] md:text-5xl font-bold text-black leading-tight">
             {resolved.title}
           </h2>
 
-          <p className="mt-6 text-black leading-relaxed">
+          <p className="mt-4 md:mt-6 text-[14px] md:text-base text-black leading-relaxed">
             {resolved.description}
           </p>
 
@@ -131,7 +131,7 @@ export default function GovernanceGrcSection({
             {resolved.cards.map((card) => (
               <div
                 key={card.id}
-                className="bg-[#EDF0F1] rounded-[50px] px-5 py-6 text-center"
+                className="bg-[#EDF0F1] rounded-[28px] md:rounded-[50px] px-5 py-6 text-center"
               >
                 <div className="flex justify-center text-[#009FE8]">
                   {renderIcon(card.iconId)}
@@ -140,7 +140,7 @@ export default function GovernanceGrcSection({
                 <h3 className="mt-5 text-[15px] md:text-base font-bold text-black">
                   {card.title}
                 </h3>
-                <p className="mt-4 text-[13px] md:text-sm text-gray-700 leading-relaxed">
+                <p className="mt-4 text-[13px] md:text-sm text-black leading-relaxed">
                   {card.description}
                 </p>
               </div>
