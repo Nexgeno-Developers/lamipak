@@ -71,6 +71,7 @@ import {
   normalizeMarketingPathKey,
 } from '@/config/marketing-service-detail-pages';
 import { cache } from 'react';
+import { unstable_cache } from 'next/cache';
 
 // Re-export types for convenience
 export type {
@@ -234,6 +235,88 @@ async function fetchCompanyPageById(id: number): Promise<CompanyPageApiData | nu
   if (!response.ok) return null;
   const payload = (await response.json()) as CompanyPageApiEnvelope;
   return payload?.data ?? null;
+}
+
+/**
+ * Optional backend: `GET /v1/page/slug/...` when the API supports lookup by CMS slug.
+ */
+async function fetchCompanyPageBySlugPath(slugPath: string): Promise<CompanyPageApiData | null> {
+  const trimmed = slugPath.replace(/^\/+|\/+$/g, '');
+  if (!trimmed) return null;
+  const encoded = encodeURIComponent(trimmed);
+  const paths = [`/v1/page/slug/${encoded}`, `/v1/page/by-slug/${encoded}`];
+  if (trimmed.includes('/')) {
+    paths.push(`/v1/page/slug/${trimmed}`);
+  }
+  for (const p of paths) {
+    try {
+      const response = await fetch(buildCompanyApiUrl(p), {
+        next: { revalidate: 60 },
+      });
+      if (!response.ok) continue;
+      const payload = (await response.json()) as CompanyPageApiEnvelope;
+      const data = payload?.data ?? null;
+      if (data && typeof data === 'object') return data;
+    } catch {
+      // ignore network errors
+    }
+  }
+  return null;
+}
+
+/** Parses `MARKETING_SERVICE_DETAIL_PAGE_ID_RANGE`: `1-40`, `6,7,8`, `1-10,15-20`. Default `1-60` when unset; empty string = off. */
+function parseMarketingDetailPageIdRange(): number[] {
+  const raw = process.env.MARKETING_SERVICE_DETAIL_PAGE_ID_RANGE;
+  const s = raw === undefined ? '1-60' : raw.trim();
+  if (s === '') return [];
+  const out = new Set<number>();
+  const cap = 500;
+  for (const part of s.split(',')) {
+    const p = part.trim();
+    if (!p) continue;
+    const rangeMatch = p.match(/^(\d+)\s*-\s*(\d+)$/);
+    if (rangeMatch) {
+      const a = Number(rangeMatch[1]);
+      const b = Number(rangeMatch[2]);
+      const lo = Math.min(a, b);
+      const hi = Math.min(Math.max(a, b), cap);
+      for (let i = Math.max(1, lo); i <= hi; i++) out.add(i);
+    } else {
+      const n = Number(p);
+      if (Number.isInteger(n) && n > 0 && n <= cap) out.add(n);
+    }
+  }
+  return [...out].sort((a, b) => a - b);
+}
+
+const getMarketingServiceDetailPageIdsResolvedInner = unstable_cache(
+  async (): Promise<number[]> => {
+    const manual = getMarketingServiceDetailCandidatePageIds();
+    const fromRange = parseMarketingDetailPageIdRange();
+    const found = new Set<number>(manual);
+    for (const id of fromRange) {
+      const row = await fetchCompanyPageById(id);
+      if (row?.layout === 'marketing_service_detail' && row.meta) {
+        found.add(id);
+      }
+    }
+    return [...found].sort((a, b) => a - b);
+  },
+  [
+    'marketing-service-detail-page-ids-resolved',
+    process.env.MARKETING_SERVICE_DETAIL_PAGE_ID_RANGE ?? 'default',
+    process.env.MARKETING_SERVICE_DETAIL_PAGE_IDS ?? '',
+    process.env.MARKETING_SERVICE_DETAIL_PAGE_CANDIDATE_IDS ?? '',
+  ],
+  {
+    revalidate: 120,
+    tags: ['cms-marketing-service-detail-pages'],
+  },
+);
+
+/** Manual map + env ids + optional id-range scan for `marketing_service_detail` pages (cached). */
+async function getMarketingServiceDetailPageIdsResolved(): Promise<number[]> {
+  return getMarketingServiceDetailPageIdsResolvedInner();
 }
 
 function stripHtml(html: string): string {
@@ -1302,10 +1385,69 @@ export async function getAllMarketingServices(): Promise<MarketingServiceData[]>
 }
 
 /**
+ * Listing page rows: keeps local copy fields (title, copy, images) but sets `cmsDetailPath`
+ * from `GET /v1/page/:id` → `slug` so “Find out more” matches the CMS URL exactly.
+ */
+export const fetchMarketingServicesForListing = cache(async function fetchMarketingServicesForListing(): Promise<
+  MarketingServiceData[]
+> {
+  const [services, listingPath] = await Promise.all([
+    getAllMarketingServices(),
+    getMarketingServicesListingPath(),
+  ]);
+  const listingSeg = normalizeMarketingPathKey(listingPath);
+
+  const resolvedIds = await getMarketingServiceDetailPageIdsResolved();
+  const detailRows: { id: number; row: CompanyPageApiData }[] = [];
+  for (const id of resolvedIds) {
+    const row = await fetchCompanyPageById(id);
+    if (row?.layout === 'marketing_service_detail' && row.meta) {
+      detailRows.push({ id, row });
+    }
+  }
+
+  const pathnameByPageId = new Map<number, string>();
+  for (const { id, row } of detailRows) {
+    const p = cmsSlugToListingPath(pickString(row.slug));
+    if (p) pathnameByPageId.set(id, p);
+  }
+
+  const resolvePageId = (service: MarketingServiceData): number | null => {
+    if (
+      service.cmsDetailPageId != null &&
+      pathnameByPageId.has(service.cmsDetailPageId)
+    ) {
+      return service.cmsDetailPageId;
+    }
+    let pid = getMarketingServiceDetailPageId(service.slug);
+    if (pid != null) return pid;
+    if (listingSeg) {
+      pid = getMarketingServiceDetailPageId(`${listingSeg}/${service.slug}`);
+      if (pid != null) return pid;
+    }
+    for (const { id, row } of detailRows) {
+      const apiSlug = pickString(row.slug);
+      const last = apiSlug.split('/').filter(Boolean).pop();
+      if (last && last === service.slug) return id;
+    }
+    return null;
+  };
+
+  return services.map((service) => {
+    const pid = resolvePageId(service);
+    if (pid == null) return service;
+    const href = pathnameByPageId.get(pid);
+    if (!href) return service;
+    return { ...service, cmsDetailPath: href };
+  });
+});
+
+/**
  * Fetches single marketing service by slug (`/marketing-services/[slug]` or nested CMS path).
  * 1) Static path→id map → `GET /v1/page/:id`
- * 2) Candidate page ids: same response must have `slug` equal to the requested path (so CMS URL changes apply without redeploying)
- * 3) Fake data for legacy single-segment slugs when CMS does not match
+ * 2) Optional `GET /v1/page/slug/...` when the backend supports slug lookup
+ * 3) Resolved page ids (manual map + env + id-range scan for `marketing_service_detail`) — `slug` must match URL
+ * 4) Fake data for legacy single-segment slugs when CMS does not match
  */
 export const fetchMarketingServiceData = cache(async function fetchMarketingServiceData(
   slug: string,
@@ -1326,7 +1468,16 @@ export const fetchMarketingServiceData = cache(async function fetchMarketingServ
     }
   }
 
-  for (const id of getMarketingServiceDetailCandidatePageIds()) {
+  if (normalized.includes('/')) {
+    const bySlug = await fetchCompanyPageBySlugPath(normalized);
+    if (bySlug) {
+      const mapped = mapRowToDetail(bySlug);
+      if (mapped) return mapped;
+    }
+  }
+
+  const resolvedIds = await getMarketingServiceDetailPageIdsResolved();
+  for (const id of resolvedIds) {
     if (pageIdFromMap != null && id === pageIdFromMap) continue;
     const row = await fetchCompanyPageById(id);
     if (!row) continue;

@@ -24,6 +24,8 @@ export interface MarketingServiceData {
   slug: string;
   /** Canonical path from CMS `slug`, e.g. `/marketing-support-service/market-intelligence` */
   cmsDetailPath?: string;
+  /** When set, listing “Find out more” uses `GET /v1/page/:id` → `slug` as href (survives CMS slug renames). */
+  cmsDetailPageId?: number;
   title: string;
   shortDescription: string;
   description: string;
@@ -62,6 +64,7 @@ export interface MarketingServiceData {
 const MARKETING_SERVICES: MarketingServiceData[] = [
   {
     slug: 'market-intelligence',
+    cmsDetailPageId: 2,
     title: 'Market Intelligence',
     shortDescription:
       'Lamipak provides strategic market intelligence to help brands navigate the evolving beverage and dairy landscape. Our team analyzes global industry trends, consumer behavior, and emerging market opportunities to guide product positioning and packaging decisions. Through continuous research and competitive benchmarking, we help partners make informed choices that align with market demand and future growth potential.',

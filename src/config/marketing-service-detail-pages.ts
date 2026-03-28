@@ -3,9 +3,12 @@
  * Use full API `slug` when nested, e.g. `marketing-support-service/market-intelligence`.
  * Single-segment keys (e.g. `market-intelligence`) are legacy aliases for `/marketing-services/...` redirects.
  *
+ * **Auto-discovery:** set `MARKETING_SERVICE_DETAIL_PAGE_ID_RANGE` (e.g. `1-50`) so the app scans
+ * those numeric ids and treats any `layout: marketing_service_detail` as a detail page — new CMS
+ * pages work without editing this file. Empty value disables scanning (manual ids only).
+ *
  * If the CMS **slug** changes, the site still resolves detail pages by matching the request path
- * to `GET /v1/page/:id` → `data.slug` for every id in `getMarketingServiceDetailCandidatePageIds()`
- * (defaults + env). Add new page ids via `MARKETING_SERVICE_DETAIL_PAGE_CANDIDATE_IDS`.
+ * to `GET /v1/page/:id` → `data.slug` for every resolved candidate id (defaults + env + range scan).
  *
  * Override path→id via `MARKETING_SERVICE_DETAIL_PAGE_IDS` JSON, e.g.
  * `{"marketing-support-service/market-intelligence":2,"recipe-support":3}`

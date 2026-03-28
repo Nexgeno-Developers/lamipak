@@ -5,7 +5,7 @@ import Image from 'next/image';
 import LatestNewsClient from '@/components/marketing/LatestNewsClient';
 import {
   fetchCompanyData,
-  getAllMarketingServices,
+  fetchMarketingServicesForListing,
   fetchMarketingServicesOverviewData,
   fetchMarketingLatestNews,
   fetchMarketingPressNews,
@@ -82,7 +82,7 @@ export default async function MarketingServicesListingPage() {
   const [companyData, marketingServices, overview, marketingNews, marketingPress, listingPath] =
     await Promise.all([
       fetchCompanyData(),
-      getAllMarketingServices(),
+      fetchMarketingServicesForListing(),
       fetchMarketingServicesOverviewData(),
       fetchMarketingLatestNews(),
       fetchMarketingPressNews(),
@@ -204,7 +204,7 @@ export default async function MarketingServicesListingPage() {
                         {service.shortDescription}
                       </p>
                       <Link
-                        href={`${listingPath}/${service.slug}`}
+                        href={service.cmsDetailPath ?? `${listingPath}/${service.slug}`}
                         className="inline-flex items-center text-sm md:text-[16px] font-bold text-[#009FE8] hover:text-[#0077B6] transition-colors"
                       >
                         Find out more
