@@ -5,6 +5,8 @@
  * Replace with real API calls when the backend is ready.
  */
 
+import type { MarketingServicesSeo } from '@/fake-api/marketing-services-overview';
+
 export interface MarketingServiceSEO {
   meta_title: string;
   meta_description: string;
@@ -20,6 +22,8 @@ export interface MarketingServiceHighlight {
 
 export interface MarketingServiceData {
   slug: string;
+  /** Canonical path from CMS `slug`, e.g. `/marketing-support-service/market-intelligence` */
+  cmsDetailPath?: string;
   title: string;
   shortDescription: string;
   description: string;
@@ -48,6 +52,8 @@ export interface MarketingServiceData {
     }>;
   };
   seo: MarketingServiceSEO;
+  /** Full CMS `seo` when loaded from API (`marketing_service_detail`) */
+  cmsSeo?: MarketingServicesSeo;
   highlights: MarketingServiceHighlight[];
   /** CMS `video_url` (YouTube, mp4, etc.) — passed to `VideoBanner` when set */
   videoUrl?: string;

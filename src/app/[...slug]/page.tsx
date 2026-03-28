@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import type { Metadata } from 'next';
 import type { ComponentType } from 'react';
 import { getCanonicalUrl } from '@/config/site';
@@ -18,10 +18,17 @@ import {
   getDynamicPageBySlug,
   type DynamicPageData,
 } from '@/fake-api/dynamic-pages';
-import { getMarketingServicesListingPath } from '@/lib/api';
+import {
+  fetchMarketingServiceData,
+  fetchMarketingServicesOverviewData,
+  getMarketingServicesListingPath,
+  shouldTryFetchMarketingServiceDetail,
+} from '@/lib/api';
 import MarketingServicesListingPage, {
   generateMarketingServicesListingMetadata,
 } from '@/components/marketing/MarketingServicesListingPage';
+import MarketingServiceDetailView from '@/components/marketing/MarketingServiceDetailView';
+import { generateMarketingServiceDetailMetadata } from '@/components/marketing/generateMarketingServiceDetailMetadata';
 
 interface PageProps {
   params: Promise<{
@@ -54,6 +61,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const listingPath = await getMarketingServicesListingPath();
   if (listingPath === `/${fullSlug}`) {
     return generateMarketingServicesListingMetadata();
+  }
+
+  if (await shouldTryFetchMarketingServiceDetail(fullSlug)) {
+    const serviceData = await fetchMarketingServiceData(fullSlug);
+    if (serviceData) {
+      const pathForCanonical = serviceData.cmsDetailPath ?? `/${fullSlug}`;
+      return generateMarketingServiceDetailMetadata(serviceData, pathForCanonical);
+    }
   }
 
   const data = await fetchPageData(fullSlug);
@@ -104,9 +119,31 @@ export default async function DynamicPage({ params }: PageProps) {
   const { slug } = await params;
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
 
-  const listingPath = await getMarketingServicesListingPath();
-  if (listingPath === `/${fullSlug}`) {
+  const listingPathCheck = await getMarketingServicesListingPath();
+  if (listingPathCheck === `/${fullSlug}`) {
     return <MarketingServicesListingPage />;
+  }
+
+  if (await shouldTryFetchMarketingServiceDetail(fullSlug)) {
+    const [serviceData, overview, listingPath] = await Promise.all([
+      fetchMarketingServiceData(fullSlug),
+      fetchMarketingServicesOverviewData(),
+      getMarketingServicesListingPath(),
+    ]);
+    if (serviceData) {
+      const currentPath = `/${fullSlug}`.replace(/\/+$/, '') || '/';
+      const canonical = serviceData.cmsDetailPath?.replace(/\/+$/, '') || currentPath;
+      if (serviceData.cmsDetailPath && canonical !== currentPath) {
+        permanentRedirect(serviceData.cmsDetailPath);
+      }
+      return (
+        <MarketingServiceDetailView
+          serviceData={serviceData}
+          overview={overview}
+          listingPath={listingPath}
+        />
+      );
+    }
   }
 
   const data = await fetchPageData(fullSlug);

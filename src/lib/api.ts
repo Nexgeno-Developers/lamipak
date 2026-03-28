@@ -65,7 +65,11 @@ import {
 } from '@/fake-api/packaging-pages';
 import { getDynamicPageBySlug as fakeGetDynamicPageBySlug } from '@/fake-api/dynamic-pages';
 import { getCanonicalUrl } from '@/config/site';
-import { getMarketingServiceDetailPageId } from '@/config/marketing-service-detail-pages';
+import {
+  getMarketingServiceDetailCandidatePageIds,
+  getMarketingServiceDetailPageId,
+  normalizeMarketingPathKey,
+} from '@/config/marketing-service-detail-pages';
 import { cache } from 'react';
 
 // Re-export types for convenience
@@ -195,7 +199,8 @@ type CmsPageSeoRaw = {
   title?: string | null;
   description?: string | null;
   keywords?: string | null;
-  schema?: string | null;
+  /** CMS may send JSON-LD as a string or a parsed object */
+  schema?: string | null | Record<string, unknown>;
   canonical_url?: string | null;
   robots_index?: string | null;
   robots_follow?: string | null;
@@ -302,7 +307,12 @@ function mapMarketingSeoFromApi(raw: CmsPageSeoRaw | null | undefined): Marketin
     title: raw.title?.trim() || null,
     description: raw.description?.trim() || null,
     keywords: raw.keywords?.trim() || null,
-    schema: typeof raw.schema === 'string' ? raw.schema : null,
+    schema:
+      typeof raw.schema === 'string'
+        ? raw.schema
+        : raw.schema != null && typeof raw.schema === 'object'
+          ? JSON.stringify(raw.schema)
+          : null,
     canonicalUrl: raw.canonical_url?.trim() || null,
     robotsIndex: raw.robots_index?.trim() || null,
     robotsFollow: raw.robots_follow?.trim() || null,
@@ -376,10 +386,24 @@ function parseTitleDescriptionIconBlocks(
 
 function mapMarketingServiceDetailPage(
   row: CompanyPageApiData,
-  routeSlug: string,
+  pathKeyForFallback: string,
 ): MarketingServiceData | null {
   const meta = row.meta;
   if (!meta || typeof meta !== 'object') return null;
+
+  const apiSlug = pickString(row.slug);
+  const slugSegments = apiSlug.split('/').filter(Boolean);
+  const fallbackSegments = pathKeyForFallback.split('/').filter(Boolean);
+  const lastSegment =
+    slugSegments.length > 0
+      ? slugSegments[slugSegments.length - 1]!
+      : fallbackSegments.length > 0
+        ? fallbackSegments[fallbackSegments.length - 1]!
+        : 'service';
+
+  const cmsPath =
+    cmsSlugToListingPath(apiSlug) ||
+    (pathKeyForFallback.includes('/') ? cmsSlugToListingPath(pathKeyForFallback) : null);
 
   const shortSummaryImage = extractMediaUrl(meta.short_summary_image);
   const heroImage = extractMediaUrl(meta.hero_image) || shortSummaryImage;
@@ -427,10 +451,13 @@ function mapMarketingServiceDetailPage(
   const metaDesc =
     pickString(seoRaw?.description) || shortSummaryDesc || stripHtml(heroDescHtml) || pageTitle;
   const canonicalPath =
-    pickString(seoRaw?.canonical_url) || `/marketing-services/${routeSlug}`;
+    pickString(seoRaw?.canonical_url) || cmsPath || `/marketing-services/${lastSegment}`;
+
+  const cmsSeoFull = mapMarketingSeoFromApi(row.seo ?? undefined);
 
   return {
-    slug: routeSlug,
+    slug: lastSegment,
+    cmsDetailPath: cmsPath ?? undefined,
     title: pageTitle,
     shortDescription: shortSummaryDesc || stripHtml(heroDescHtml),
     description: stripHtml(heroDescHtml) || shortSummaryDesc,
@@ -452,6 +479,7 @@ function mapMarketingServiceDetailPage(
       meta_description: metaDesc,
       canonical_url: canonicalPath,
     },
+    ...(cmsSeoFull ? { cmsSeo: cmsSeoFull } : {}),
     highlights,
     ...(videoUrlRaw ? { videoUrl: videoUrlRaw } : {}),
   };
@@ -538,6 +566,29 @@ export async function getMarketingServicesListingPath(): Promise<string> {
   if (payload) return payload.listingPath;
   return '/marketing-services';
 }
+
+/**
+ * Whether to load marketing service detail from CMS for this path.
+ * Uses the static path→id map, or any URL under the marketing listing `slug` prefix
+ * (e.g. `marketing-support-service/...` from the API) so CMS slug changes still resolve.
+ */
+/** When listing CMS path is unavailable, still treat these parent segments as detail pages */
+const FALLBACK_MARKETING_DETAIL_PARENT_SEGMENTS = ['marketing-support-service'];
+
+export const shouldTryFetchMarketingServiceDetail = cache(async function shouldTryFetchMarketingServiceDetail(
+  fullSlug: string,
+): Promise<boolean> {
+  const normalized = normalizeMarketingPathKey(fullSlug);
+  if (!normalized) return false;
+  if (getMarketingServiceDetailPageId(fullSlug) != null) return true;
+  const listingPath = await getMarketingServicesListingPath();
+  const prefix = normalizeMarketingPathKey(listingPath);
+  if (prefix && normalized.startsWith(`${prefix}/`)) return true;
+  for (const seg of FALLBACK_MARKETING_DETAIL_PARENT_SEGMENTS) {
+    if (normalized.startsWith(`${seg}/`)) return true;
+  }
+  return false;
+});
 
 /**
  * Checks if we should use the real API or fake API
@@ -1251,27 +1302,46 @@ export async function getAllMarketingServices(): Promise<MarketingServiceData[]>
 }
 
 /**
- * Fetches single marketing service by slug (`/marketing-services/[slug]`).
- * When `getMarketingServiceDetailPageId(slug)` returns a CMS page id and `layout` is
- * `marketing_service_detail`, loads `GET /v1/page/:id`; otherwise fake API.
+ * Fetches single marketing service by slug (`/marketing-services/[slug]` or nested CMS path).
+ * 1) Static path→id map → `GET /v1/page/:id`
+ * 2) Candidate page ids: same response must have `slug` equal to the requested path (so CMS URL changes apply without redeploying)
+ * 3) Fake data for legacy single-segment slugs when CMS does not match
  */
 export const fetchMarketingServiceData = cache(async function fetchMarketingServiceData(
   slug: string,
 ): Promise<MarketingServiceData | null> {
-  if (useRealAPI()) {
-    throw new Error('Real API not yet implemented');
-  }
+  const normalized = normalizeMarketingPathKey(slug);
 
-  const pageId = getMarketingServiceDetailPageId(slug);
-  if (pageId != null) {
-    const row = await fetchCompanyPageById(pageId);
-    if (row?.layout === 'marketing_service_detail' && row.meta) {
-      const mapped = mapMarketingServiceDetailPage(row, slug);
+  const mapRowToDetail = (row: CompanyPageApiData): MarketingServiceData | null => {
+    if (row.layout !== 'marketing_service_detail' || !row.meta) return null;
+    return mapMarketingServiceDetailPage(row, slug) ?? null;
+  };
+
+  const pageIdFromMap = getMarketingServiceDetailPageId(slug);
+  if (pageIdFromMap != null) {
+    const row = await fetchCompanyPageById(pageIdFromMap);
+    if (row) {
+      const mapped = mapRowToDetail(row);
       if (mapped) return mapped;
     }
   }
 
-  return fakeGetMarketingServiceData(slug);
+  for (const id of getMarketingServiceDetailCandidatePageIds()) {
+    if (pageIdFromMap != null && id === pageIdFromMap) continue;
+    const row = await fetchCompanyPageById(id);
+    if (!row) continue;
+    const apiSlug = pickString(row.slug);
+    if (!apiSlug || normalizeMarketingPathKey(apiSlug) !== normalized) continue;
+    const mapped = mapRowToDetail(row);
+    if (mapped) return mapped;
+  }
+
+  const lastSegment = slug.split('/').filter(Boolean).pop() || slug;
+  if (slug.includes('/')) {
+    return null;
+  }
+
+  return fakeGetMarketingServiceData(lastSegment);
 });
 
 /**

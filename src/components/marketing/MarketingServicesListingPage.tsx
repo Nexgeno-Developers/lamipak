@@ -79,13 +79,14 @@ export async function generateMarketingServicesListingMetadata(): Promise<Metada
  * Renders at `/marketing-services` or at the CMS `slug` path when configured.
  */
 export default async function MarketingServicesListingPage() {
-  const [companyData, marketingServices, overview, marketingNews, marketingPress] =
+  const [companyData, marketingServices, overview, marketingNews, marketingPress, listingPath] =
     await Promise.all([
       fetchCompanyData(),
       getAllMarketingServices(),
       fetchMarketingServicesOverviewData(),
       fetchMarketingLatestNews(),
       fetchMarketingPressNews(),
+      getMarketingServicesListingPath(),
     ]);
 
   return (
@@ -203,7 +204,7 @@ export default async function MarketingServicesListingPage() {
                         {service.shortDescription}
                       </p>
                       <Link
-                        href={`/marketing-services/${service.slug}`}
+                        href={`${listingPath}/${service.slug}`}
                         className="inline-flex items-center text-sm md:text-[16px] font-bold text-[#009FE8] hover:text-[#0077B6] transition-colors"
                       >
                         Find out more
