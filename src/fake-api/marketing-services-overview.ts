@@ -15,7 +15,10 @@ export interface MarketingServicesOverview {
   };
   heroBackgroundImage?: string;
   heading: string;
+  /** Plain text / fallback when `heroDescriptionHtml` is not set */
   description: string;
+  /** CMS `hero_description` HTML for the 360° intro block (e.g. `<p>…<br>…</p>`) */
+  heroDescriptionHtml?: string;
   image: string;
   imageAlt: string;
   statsHeading: string;

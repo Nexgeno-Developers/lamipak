@@ -18,6 +18,10 @@ import {
   getDynamicPageBySlug,
   type DynamicPageData,
 } from '@/fake-api/dynamic-pages';
+import { getMarketingServicesListingPath } from '@/lib/api';
+import MarketingServicesListingPage, {
+  generateMarketingServicesListingMetadata,
+} from '@/components/marketing/MarketingServicesListingPage';
 
 interface PageProps {
   params: Promise<{
@@ -46,6 +50,11 @@ async function fetchPageData(fullSlug: string) {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
+
+  const listingPath = await getMarketingServicesListingPath();
+  if (listingPath !== '/marketing-services' && listingPath === `/${fullSlug}`) {
+    return generateMarketingServicesListingMetadata();
+  }
 
   const data = await fetchPageData(fullSlug);
 
@@ -94,6 +103,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function DynamicPage({ params }: PageProps) {
   const { slug } = await params;
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
+
+  const listingPath = await getMarketingServicesListingPath();
+  if (listingPath !== '/marketing-services' && listingPath === `/${fullSlug}`) {
+    return <MarketingServicesListingPage />;
+  }
 
   const data = await fetchPageData(fullSlug);
 

@@ -1,7 +1,12 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { fetchMarketingServiceData, getAllMarketingServiceSlugs, fetchMarketingServicesOverviewData } from '@/lib/api';
+import {
+  fetchMarketingServiceData,
+  getAllMarketingServiceSlugs,
+  fetchMarketingServicesOverviewData,
+  getMarketingServicesListingPath,
+} from '@/lib/api';
 import { getCanonicalUrl } from '@/config/site';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import CallToAction from '@/components/home/CallToAction';
@@ -57,9 +62,10 @@ export default async function MarketingServiceDetailsPage(
   { params }: MarketingServicePageProps,
 ) {
   const { slug } = await params;
-  const [serviceData, overview] = await Promise.all([
+  const [serviceData, overview, listingPath] = await Promise.all([
     fetchMarketingServiceData(slug),
     fetchMarketingServicesOverviewData(),
+    getMarketingServicesListingPath(),
   ]);
 
   if (!serviceData) {
@@ -81,7 +87,7 @@ export default async function MarketingServiceDetailsPage(
         <div className="container mx-auto px-4 py-4">
           <Breadcrumbs
             items={[
-              { label: 'Marketing Services', href: '/marketing-services' },
+              { label: 'Marketing Services', href: listingPath },
               { label: serviceData.title },
             ]}
           />

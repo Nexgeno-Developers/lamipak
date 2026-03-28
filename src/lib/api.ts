@@ -79,7 +79,11 @@ export type {
   CareerJob,
   PackagingPageData,
 };
-import { getHeaderData as fakeGetHeaderData, type HeaderData } from '@/fake-api/layout';
+import {
+  getHeaderData as fakeGetHeaderData,
+  type HeaderData,
+  type NavigationItem,
+} from '@/fake-api/layout';
 import {
   getFooterData as fakeGetFooterData,
   type FooterData,
@@ -275,10 +279,12 @@ function mapMarketingServicesPageToOverview(
   const heroTitle = pickString(meta.hero_title);
   const shortSummaryTitle = pickString(meta.short_summary_title);
   const shortSummaryDesc = pickString(meta.short_summary_description);
-  const heroDescHtml = pickString(meta.hero_description);
+  const heroDescRaw =
+    typeof meta.hero_description === 'string' ? meta.hero_description.trim() : '';
+  const heroDescriptionHtml = heroDescRaw ? heroDescRaw : undefined;
   const description =
     shortSummaryDesc ||
-    (heroDescHtml ? stripHtml(heroDescHtml) : '') ||
+    (heroDescRaw ? stripHtml(heroDescRaw) : '') ||
     fallback.description;
 
   const highlightsTitle = pickString(meta.highlights_title);
@@ -300,6 +306,7 @@ function mapMarketingServicesPageToOverview(
     heroBackgroundImage: breadcrumbUrl || heroImageUrl || fallback.heroBackgroundImage,
     heading: heroTitle || shortSummaryTitle || fallback.heading,
     description,
+    heroDescriptionHtml,
     image: heroImageUrl || fallback.image,
     imageAlt: heroTitle || shortSummaryTitle || pickString(data.title) || fallback.imageAlt,
     statsHeading: statsHeading || fallback.statsHeading,
@@ -308,21 +315,50 @@ function mapMarketingServicesPageToOverview(
   };
 }
 
-async function fetchCompanyMarketingServicesPage(): Promise<MarketingServicesOverview | null> {
-  const pageId = Number(MARKETING_SERVICES_PAGE_ID);
-  if (Number.isNaN(pageId) || pageId < 1) return null;
+/** Normalize CMS page slug to a pathname (e.g. `servies/marketing-service` → `/servies/marketing-service`). */
+function cmsSlugToListingPath(slug: string | undefined | null): string | null {
+  const s = typeof slug === 'string' ? slug.trim() : '';
+  if (!s) return null;
+  const clean = s.replace(/^\/+|\/+$/g, '');
+  if (!clean) return null;
+  return `/${clean}`;
+}
 
-  const response = await fetch(buildCompanyApiUrl(`/v1/page/${pageId}`), {
-    next: { revalidate: 60 },
-  });
-  if (!response.ok) return null;
+type MarketingServicesCmsPayload = {
+  overview: MarketingServicesOverview;
+  /** Canonical pathname for the listing page from API `slug` */
+  listingPath: string;
+};
 
-  const payload = (await response.json()) as CompanyPageApiEnvelope;
-  const row = payload?.data;
-  if (!row || row.layout !== 'marketing_services' || !row.meta) return null;
+const getMarketingServicesCmsPayload = cache(
+  async (): Promise<MarketingServicesCmsPayload | null> => {
+    const pageId = Number(MARKETING_SERVICES_PAGE_ID);
+    if (Number.isNaN(pageId) || pageId < 1) return null;
 
-  const fallback = await fakeGetMarketingServicesOverviewData();
-  return mapMarketingServicesPageToOverview(row, fallback);
+    const response = await fetch(buildCompanyApiUrl(`/v1/page/${pageId}`), {
+      next: { revalidate: 60 },
+    });
+    if (!response.ok) return null;
+
+    const payload = (await response.json()) as CompanyPageApiEnvelope;
+    const row = payload?.data;
+    if (!row || row.layout !== 'marketing_services' || !row.meta) return null;
+
+    const fallback = await fakeGetMarketingServicesOverviewData();
+    const overview = mapMarketingServicesPageToOverview(row, fallback);
+    const listingPath = cmsSlugToListingPath(row.slug) ?? '/marketing-services';
+
+    return { overview, listingPath };
+  },
+);
+
+/**
+ * Public URL path for the marketing services listing (from CMS `slug`, else `/marketing-services`).
+ */
+export async function getMarketingServicesListingPath(): Promise<string> {
+  const payload = await getMarketingServicesCmsPayload();
+  if (payload) return payload.listingPath;
+  return '/marketing-services';
 }
 
 /**
@@ -518,9 +554,23 @@ export async function fetchPageData(slug: string): Promise<PageData | null> {
   return fakeGetPageData(slug);
 }
 
+/** Rewrites `/marketing-services` nav hrefs to the CMS listing path (nested menus included). */
+function withMarketingServicesListingHref(
+  items: NavigationItem[],
+  listingPath: string,
+): NavigationItem[] {
+  return items.map((item) => ({
+    ...item,
+    href: item.href === '/marketing-services' ? listingPath : item.href,
+    children: item.children?.length
+      ? withMarketingServicesListingHref(item.children, listingPath)
+      : item.children,
+  }));
+}
+
 /**
  * Fetches header data
- * 
+ *
  * @returns Promise<HeaderData>
  */
 export async function fetchHeaderData(): Promise<HeaderData> {
@@ -531,20 +581,27 @@ export async function fetchHeaderData(): Promise<HeaderData> {
     // return response.json();
     throw new Error('Real API not yet implemented');
   }
-  
-  const fallback = await fakeGetHeaderData();
-  const companyProfile = await fetchCompanyProfile();
-  if (!companyProfile) {
-    return fallback;
-  }
+
+  const [fallback, companyProfile, listingPath] = await Promise.all([
+    fakeGetHeaderData(),
+    fetchCompanyProfile(),
+    getMarketingServicesListingPath(),
+  ]);
+
+  const base: HeaderData = !companyProfile
+    ? fallback
+    : {
+        ...fallback,
+        logo: {
+          ...fallback.logo,
+          text: companyProfile.name || fallback.logo.text,
+          image: companyProfile.logo || fallback.logo.image,
+        },
+      };
 
   return {
-    ...fallback,
-    logo: {
-      ...fallback.logo,
-      text: companyProfile.name || fallback.logo.text,
-      image: companyProfile.logo || fallback.logo.image,
-    },
+    ...base,
+    navigation: withMarketingServicesListingHref(base.navigation, listingPath),
   };
 }
 
@@ -910,8 +967,8 @@ export async function getAllCareerJobSlugs(): Promise<string[]> {
  * page `layout` is `marketing_services`; otherwise falls back to fake data.
  */
 export const fetchMarketingServicesOverviewData = cache(async function fetchMarketingServicesOverviewData(): Promise<MarketingServicesOverview> {
-  const fromApi = await fetchCompanyMarketingServicesPage();
-  if (fromApi) return fromApi;
+  const payload = await getMarketingServicesCmsPayload();
+  if (payload) return payload.overview;
   return fakeGetMarketingServicesOverviewData();
 });
 
