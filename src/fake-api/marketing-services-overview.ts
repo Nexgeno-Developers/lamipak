@@ -5,14 +5,30 @@
  * and latest news slider on the marketing services listing page.
  */
 
+/** Mirrors Laravel page `seo` JSON for the marketing services listing */
+export interface MarketingServicesSeo {
+  title?: string | null;
+  description?: string | null;
+  keywords?: string | null;
+  /** JSON-LD or JSON string for `<script type="application/ld+json">` */
+  schema?: string | null;
+  canonicalUrl?: string | null;
+  robotsIndex?: string | null;
+  robotsFollow?: string | null;
+  ogTitle?: string | null;
+  ogDescription?: string | null;
+  ogImageUrl?: string | null;
+  twitterTitle?: string | null;
+  twitterDescription?: string | null;
+  twitterImageUrl?: string | null;
+  sitemapPriority?: string | null;
+}
+
 export interface MarketingServicesOverview {
   /** Hero H1 when wired from CMS (e.g. page title) */
   pageTitle?: string;
-  /** Optional SEO from CMS page payload */
-  seo?: {
-    title?: string | null;
-    description?: string | null;
-  };
+  /** SEO from CMS `data.seo` on the marketing listing page */
+  seo?: MarketingServicesSeo;
   heroBackgroundImage?: string;
   heading: string;
   /** Plain text / fallback when `heroDescriptionHtml` is not set */

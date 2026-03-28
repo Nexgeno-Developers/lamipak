@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
 
   const listingPath = await getMarketingServicesListingPath();
-  if (listingPath !== '/marketing-services' && listingPath === `/${fullSlug}`) {
+  if (listingPath === `/${fullSlug}`) {
     return generateMarketingServicesListingMetadata();
   }
 
@@ -105,7 +105,7 @@ export default async function DynamicPage({ params }: PageProps) {
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
 
   const listingPath = await getMarketingServicesListingPath();
-  if (listingPath !== '/marketing-services' && listingPath === `/${fullSlug}`) {
+  if (listingPath === `/${fullSlug}`) {
     return <MarketingServicesListingPage />;
   }
 

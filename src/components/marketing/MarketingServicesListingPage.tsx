@@ -11,7 +11,7 @@ import {
   fetchMarketingPressNews,
   getMarketingServicesListingPath,
 } from '@/lib/api';
-import { getCanonicalUrl } from '@/config/site';
+import { resolveSeoCanonicalUrl, SITE_CONFIG } from '@/config/site';
 import CallToAction from '@/components/home/CallToAction';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
 import ConnectTechnicalExperts from '@/components/technical-services/ConnectTechnicalExperts';
@@ -24,22 +24,52 @@ export async function generateMarketingServicesListingMetadata(): Promise<Metada
     fetchMarketingServicesOverviewData(),
     getMarketingServicesListingPath(),
   ]);
-  const title = overview.seo?.title?.trim()
-    ? `${overview.seo.title} | Lamipak`
-    : 'Marketing Services | Lamipak';
-  const description = overview.seo?.description?.trim() || defaultDescription;
-  const canonical = getCanonicalUrl(listingPath);
+  const seo = overview.seo;
+  /** `<title>`: use CMS `seo.title` exactly (no site suffix). Fallback when API has no SEO block. */
+  const rawTitle = seo?.title?.trim();
+  const documentTitle = rawTitle
+    ? rawTitle
+    : `Marketing Services | ${SITE_CONFIG.name}`;
+  /** `<meta name="description">`: exact CMS `seo.description` */
+  const description = seo?.description?.trim() || defaultDescription;
+  const canonical = resolveSeoCanonicalUrl(seo?.canonicalUrl ?? null, listingPath);
+
+  /** `<meta name="keywords">`: exact CMS string (not re-split) */
+  const keywordsRaw = seo?.keywords?.trim();
+
+  const robots =
+    seo?.robotsIndex || seo?.robotsFollow
+      ? {
+          index: seo.robotsIndex?.toLowerCase() !== 'noindex',
+          follow: seo.robotsFollow?.toLowerCase() !== 'nofollow',
+        }
+      : undefined;
+
+  const ogTitle = seo?.ogTitle?.trim() || rawTitle || 'Marketing Services';
+  const ogDesc = seo?.ogDescription?.trim() || description;
+  const twTitle = seo?.twitterTitle?.trim() || ogTitle;
+  const twDesc = seo?.twitterDescription?.trim() || ogDesc;
+  const ogImage = seo?.ogImageUrl?.trim();
+  const twImage = seo?.twitterImageUrl?.trim() || ogImage;
+
   return {
-    title,
+    title: { absolute: documentTitle },
     description,
-    alternates: {
-      canonical,
-    },
+    ...(keywordsRaw ? { keywords: keywordsRaw } : {}),
+    ...(robots ? { robots } : {}),
+    alternates: { canonical },
     openGraph: {
-      title,
-      description,
+      title: ogTitle,
+      description: ogDesc,
       url: canonical,
       type: 'website',
+      ...(ogImage ? { images: [{ url: ogImage }] } : {}),
+    },
+    twitter: {
+      card: twImage ? 'summary_large_image' : 'summary',
+      title: twTitle,
+      description: twDesc,
+      ...(twImage ? { images: [twImage] } : {}),
     },
   };
 }
@@ -60,6 +90,12 @@ export default async function MarketingServicesListingPage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
+      {overview.seo?.schema ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: overview.seo.schema }}
+        />
+      ) : null}
       <CompanyHero
         data={{
           ...companyData.hero,

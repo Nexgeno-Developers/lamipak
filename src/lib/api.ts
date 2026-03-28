@@ -38,6 +38,7 @@ import {
   getMarketingLatestNews as fakeGetMarketingLatestNews,
   getMarketingPressNews as fakeGetMarketingPressNews,
   type MarketingServicesOverview,
+  type MarketingServicesSeo,
   type MarketingNewsItem,
 } from '@/fake-api/marketing-services-overview';
 import {
@@ -74,6 +75,7 @@ export type {
   CompanyData,
   MarketingServiceData,
   MarketingServicesOverview,
+  MarketingServicesSeo,
   MarketingNewsItem,
   CareersListingData,
   CareerJob,
@@ -187,16 +189,30 @@ function extractMediaUrl(value: unknown): string | undefined {
 
 const MARKETING_SERVICES_PAGE_ID = process.env.MARKETING_SERVICES_PAGE_ID || '1';
 
+type CmsPageSeoRaw = {
+  title?: string | null;
+  description?: string | null;
+  keywords?: string | null;
+  schema?: string | null;
+  canonical_url?: string | null;
+  robots_index?: string | null;
+  robots_follow?: string | null;
+  og_title?: string | null;
+  og_description?: string | null;
+  og_image?: unknown;
+  twitter_title?: string | null;
+  twitter_description?: string | null;
+  twitter_image?: unknown;
+  sitemap_priority?: string | number | null;
+};
+
 type CompanyPageApiData = {
   id?: number;
   slug?: string;
   title?: string | null;
   layout?: string | null;
   meta?: Record<string, unknown> | null;
-  seo?: {
-    title?: string | null;
-    description?: string | null;
-  } | null;
+  seo?: CmsPageSeoRaw | null;
 };
 
 type CompanyPageApiEnvelope = {
@@ -268,6 +284,45 @@ function parseHighlightsItems(
   return out;
 }
 
+function mapMarketingSeoFromApi(raw: CmsPageSeoRaw | null | undefined): MarketingServicesSeo | undefined {
+  if (!raw || typeof raw !== 'object') return undefined;
+  const out: MarketingServicesSeo = {
+    title: raw.title?.trim() || null,
+    description: raw.description?.trim() || null,
+    keywords: raw.keywords?.trim() || null,
+    schema: typeof raw.schema === 'string' ? raw.schema : null,
+    canonicalUrl: raw.canonical_url?.trim() || null,
+    robotsIndex: raw.robots_index?.trim() || null,
+    robotsFollow: raw.robots_follow?.trim() || null,
+    ogTitle: raw.og_title?.trim() || null,
+    ogDescription: raw.og_description?.trim() || null,
+    ogImageUrl: extractMediaUrl(raw.og_image),
+    twitterTitle: raw.twitter_title?.trim() || null,
+    twitterDescription: raw.twitter_description?.trim() || null,
+    twitterImageUrl: extractMediaUrl(raw.twitter_image),
+    sitemapPriority:
+      raw.sitemap_priority != null && String(raw.sitemap_priority).trim() !== ''
+        ? String(raw.sitemap_priority)
+        : null,
+  };
+  const has =
+    out.title ||
+    out.description ||
+    out.keywords ||
+    out.schema ||
+    out.canonicalUrl ||
+    out.robotsIndex ||
+    out.robotsFollow ||
+    out.ogTitle ||
+    out.ogDescription ||
+    out.ogImageUrl ||
+    out.twitterTitle ||
+    out.twitterDescription ||
+    out.twitterImageUrl ||
+    out.sitemapPriority;
+  return has ? out : undefined;
+}
+
 function mapMarketingServicesPageToOverview(
   data: CompanyPageApiData,
   fallback: MarketingServicesOverview,
@@ -297,12 +352,7 @@ function mapMarketingServicesPageToOverview(
   return {
     ...fallback,
     pageTitle: pickString(data.title) || fallback.pageTitle,
-    seo: data.seo
-      ? {
-          title: data.seo.title ?? null,
-          description: data.seo.description ?? null,
-        }
-      : undefined,
+    seo: mapMarketingSeoFromApi(data.seo ?? undefined),
     heroBackgroundImage: breadcrumbUrl || heroImageUrl || fallback.heroBackgroundImage,
     heading: heroTitle || shortSummaryTitle || fallback.heading,
     description,
