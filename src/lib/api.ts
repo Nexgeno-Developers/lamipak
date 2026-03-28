@@ -32,6 +32,7 @@ import {
   getMarketingServiceData as fakeGetMarketingServiceData,
   getAllMarketingServiceSlugs as fakeGetAllMarketingServiceSlugs,
   type MarketingServiceData,
+  type MarketingServiceHighlight,
 } from '@/fake-api/marketing-services';
 import {
   getMarketingServicesOverviewData as fakeGetMarketingServicesOverviewData,
@@ -64,6 +65,7 @@ import {
 } from '@/fake-api/packaging-pages';
 import { getDynamicPageBySlug as fakeGetDynamicPageBySlug } from '@/fake-api/dynamic-pages';
 import { getCanonicalUrl } from '@/config/site';
+import { getMarketingServiceDetailPageId } from '@/config/marketing-service-detail-pages';
 import { cache } from 'react';
 
 // Re-export types for convenience
@@ -219,6 +221,16 @@ type CompanyPageApiEnvelope = {
   data?: CompanyPageApiData | null;
 };
 
+async function fetchCompanyPageById(id: number): Promise<CompanyPageApiData | null> {
+  if (!Number.isInteger(id) || id < 1) return null;
+  const response = await fetch(buildCompanyApiUrl(`/v1/page/${id}`), {
+    next: { revalidate: 60 },
+  });
+  if (!response.ok) return null;
+  const payload = (await response.json()) as CompanyPageApiEnvelope;
+  return payload?.data ?? null;
+}
+
 function stripHtml(html: string): string {
   return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
 }
@@ -323,6 +335,128 @@ function mapMarketingSeoFromApi(raw: CmsPageSeoRaw | null | undefined): Marketin
   return has ? out : undefined;
 }
 
+function splitDetailHeroTitle(full: string): { heading: string; headingHighlight: string } {
+  const m = full.match(/^(.+?)\s+with\s+(.+)$/i);
+  if (m) return { heading: m[1].trim(), headingHighlight: m[2].trim() };
+  return { heading: '', headingHighlight: full.trim() };
+}
+
+function buildIntroParagraphsFromHeroHtml(shortSummary: string, heroHtml: string): string[] {
+  if (heroHtml.trim()) {
+    return stripHtml(heroHtml.replace(/<br\s*\/?>/gi, '\n'))
+      .split(/\n+/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }
+  if (shortSummary.trim()) return [shortSummary.trim()];
+  return [];
+}
+
+function parseTitleDescriptionIconBlocks(
+  raw: unknown,
+  idPrefix: string,
+): Array<{ id: string; title: string; body: string; icon?: string }> {
+  if (!raw || typeof raw !== 'object') return [];
+  const o = raw as Record<string, unknown>;
+  const titles = coerceStringArray(o.title);
+  const bodies = coerceStringArray(o.description);
+  const iconsRaw = Array.isArray(o.icon) ? o.icon : [];
+  const n = Math.max(titles.length, bodies.length, iconsRaw.length);
+  const out: Array<{ id: string; title: string; body: string; icon?: string }> = [];
+  for (let i = 0; i < n; i++) {
+    out.push({
+      id: `${idPrefix}-${i}`,
+      title: titles[i] || '',
+      body: bodies[i] || '',
+      icon: extractMediaUrl(iconsRaw[i]),
+    });
+  }
+  return out.filter((x) => x.title || x.body);
+}
+
+function mapMarketingServiceDetailPage(
+  row: CompanyPageApiData,
+  routeSlug: string,
+): MarketingServiceData | null {
+  const meta = row.meta;
+  if (!meta || typeof meta !== 'object') return null;
+
+  const shortSummaryImage = extractMediaUrl(meta.short_summary_image);
+  const heroImage = extractMediaUrl(meta.hero_image) || shortSummaryImage;
+  const breadcrumb = extractMediaUrl(meta.breadcrumb_image);
+
+  const heroTitleStr = pickString(meta.hero_title);
+  const shortTitle = pickString(meta.short_summary_title);
+  const { heading, headingHighlight } = splitDetailHeroTitle(
+    heroTitleStr || shortTitle || pickString(row.title) || '',
+  );
+
+  const shortSummaryDesc = pickString(meta.short_summary_description);
+  const heroDescHtml = typeof meta.hero_description === 'string' ? meta.hero_description.trim() : '';
+  const paragraphs = buildIntroParagraphsFromHeroHtml(shortSummaryDesc, heroDescHtml);
+
+  const videoUrlRaw = pickString(meta.video_url);
+  const heroNav = pickString(meta.hero_navigation_url);
+
+  const hlBlocks = parseTitleDescriptionIconBlocks(meta.highlights_items, 'hl');
+  const highlights: MarketingServiceHighlight[] = hlBlocks.map((b) => ({
+    id: b.id,
+    title: b.title,
+    description: b.body,
+    icon: b.icon,
+  }));
+
+  const bjBlocks = parseTitleDescriptionIconBlocks(meta.brand_journey_items, 'bj');
+  const brandJourney =
+    bjBlocks.length > 0
+      ? {
+          heading: 'Elevate Your',
+          headingHighlight: 'Brand Journey',
+          items: bjBlocks.map((b) => ({
+            id: b.id,
+            title: b.title,
+            subtitle: b.body,
+            icon: b.icon || '',
+          })),
+        }
+      : undefined;
+
+  const seoRaw = row.seo;
+  const pageTitle = pickString(row.title) || 'Marketing Service';
+  const metaTitle = pickString(seoRaw?.title) || pageTitle;
+  const metaDesc =
+    pickString(seoRaw?.description) || shortSummaryDesc || stripHtml(heroDescHtml) || pageTitle;
+  const canonicalPath =
+    pickString(seoRaw?.canonical_url) || `/marketing-services/${routeSlug}`;
+
+  return {
+    slug: routeSlug,
+    title: pageTitle,
+    shortDescription: shortSummaryDesc || stripHtml(heroDescHtml),
+    description: stripHtml(heroDescHtml) || shortSummaryDesc,
+    heroBackgroundImage: breadcrumb || heroImage,
+    listingImage: shortSummaryImage || heroImage || '',
+    listingImageAlt: shortTitle || pageTitle,
+    introSection: {
+      heading,
+      headingHighlight,
+      paragraphs,
+      image: heroImage || shortSummaryImage || '',
+      imageAlt: shortTitle || pageTitle,
+      ctaText: 'Learn more',
+      ctaLink: heroNav || '#',
+    },
+    brandJourney,
+    seo: {
+      meta_title: metaTitle,
+      meta_description: metaDesc,
+      canonical_url: canonicalPath,
+    },
+    highlights,
+    ...(videoUrlRaw ? { videoUrl: videoUrlRaw } : {}),
+  };
+}
+
 function mapMarketingServicesPageToOverview(
   data: CompanyPageApiData,
   fallback: MarketingServicesOverview,
@@ -385,13 +519,7 @@ const getMarketingServicesCmsPayload = cache(
     const pageId = Number(MARKETING_SERVICES_PAGE_ID);
     if (Number.isNaN(pageId) || pageId < 1) return null;
 
-    const response = await fetch(buildCompanyApiUrl(`/v1/page/${pageId}`), {
-      next: { revalidate: 60 },
-    });
-    if (!response.ok) return null;
-
-    const payload = (await response.json()) as CompanyPageApiEnvelope;
-    const row = payload?.data;
+    const row = await fetchCompanyPageById(pageId);
     if (!row || row.layout !== 'marketing_services' || !row.meta) return null;
 
     const fallback = await fakeGetMarketingServicesOverviewData();
@@ -1123,27 +1251,28 @@ export async function getAllMarketingServices(): Promise<MarketingServiceData[]>
 }
 
 /**
- * Fetches single marketing service by slug
- *
- * @param slug - The marketing service slug
- * @returns Promise<MarketingServiceData | null>
+ * Fetches single marketing service by slug (`/marketing-services/[slug]`).
+ * When `getMarketingServiceDetailPageId(slug)` returns a CMS page id and `layout` is
+ * `marketing_service_detail`, loads `GET /v1/page/:id`; otherwise fake API.
  */
-export async function fetchMarketingServiceData(
+export const fetchMarketingServiceData = cache(async function fetchMarketingServiceData(
   slug: string,
 ): Promise<MarketingServiceData | null> {
   if (useRealAPI()) {
-    // TODO: Replace with real API call when Laravel backend is ready
-    // const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.marketingService(slug)}`);
-    // if (!response.ok) {
-    //   if (response.status === 404) return null;
-    //   throw new Error('Failed to fetch marketing service data');
-    // }
-    // return response.json();
     throw new Error('Real API not yet implemented');
   }
 
+  const pageId = getMarketingServiceDetailPageId(slug);
+  if (pageId != null) {
+    const row = await fetchCompanyPageById(pageId);
+    if (row?.layout === 'marketing_service_detail' && row.meta) {
+      const mapped = mapMarketingServiceDetailPage(row, slug);
+      if (mapped) return mapped;
+    }
+  }
+
   return fakeGetMarketingServiceData(slug);
-}
+});
 
 /**
  * Gets all marketing service slugs (for static generation)

@@ -9,6 +9,8 @@ import type { VideoBannerData } from '@/fake-api/homepage';
 
 interface VideoBannerProps {
   videoOnly?: boolean; // If true, hides text and CTA, shows only video
+  /** When set, uses this URL instead of loading the homepage video banner */
+  videoUrl?: string;
 }
 
 function parseYouTubeId(url: string): string | null {
@@ -50,8 +52,12 @@ function getYouTubeEmbedSrc(videoUrl: string): { id: string; src: string } | nul
  * 
  * Fetches homepage data and renders the video banner with play functionality.
  */
-export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}) {
-  const [data, setData] = useState<VideoBannerData | null>(null);
+export default function VideoBanner({ videoOnly = false, videoUrl: videoUrlProp }: VideoBannerProps = {}) {
+  const [data, setData] = useState<VideoBannerData | null>(() => {
+    const v = videoUrlProp?.trim();
+    if (v) return { title: '', ctaText: '', ctaLink: '', videoUrl: v };
+    return null;
+  });
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [playerReady, setPlayerReady] = useState(false);
   const [youtubeThumbVariant, setYoutubeThumbVariant] = useState<'maxresdefault' | 'sddefault' | 'hqdefault'>(
@@ -59,12 +65,21 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
   );
 
   useEffect(() => {
+    const v = videoUrlProp?.trim();
+    if (v) {
+      setData({ title: '', ctaText: '', ctaLink: '', videoUrl: v });
+      return;
+    }
+    let cancelled = false;
     async function loadData() {
       const homepageData = await fetchHomepageData();
-      setData(homepageData.videoBanner);
+      if (!cancelled) setData(homepageData.videoBanner);
     }
     loadData();
-  }, []);
+    return () => {
+      cancelled = true;
+    };
+  }, [videoUrlProp]);
 
   useEffect(() => {
     // Reset to best quality when video changes

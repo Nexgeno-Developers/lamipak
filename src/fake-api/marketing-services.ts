@@ -49,6 +49,8 @@ export interface MarketingServiceData {
   };
   seo: MarketingServiceSEO;
   highlights: MarketingServiceHighlight[];
+  /** CMS `video_url` (YouTube, mp4, etc.) — passed to `VideoBanner` when set */
+  videoUrl?: string;
 }
 
 const MARKETING_SERVICES: MarketingServiceData[] = [

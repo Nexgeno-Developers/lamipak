@@ -7,7 +7,7 @@ import {
   fetchMarketingServicesOverviewData,
   getMarketingServicesListingPath,
 } from '@/lib/api';
-import { getCanonicalUrl } from '@/config/site';
+import { resolveSeoCanonicalUrl } from '@/config/site';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import CallToAction from '@/components/home/CallToAction';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
@@ -39,12 +39,13 @@ export async function generateMetadata(
     };
   }
 
-  const canonicalUrl = serviceData.seo.canonical_url
-    ? getCanonicalUrl(serviceData.seo.canonical_url)
-    : getCanonicalUrl(`/marketing-services/${slug}`);
+  const canonicalUrl = resolveSeoCanonicalUrl(
+    serviceData.seo.canonical_url ?? null,
+    `/marketing-services/${slug}`,
+  );
 
   return {
-    title: serviceData.seo.meta_title,
+    title: { absolute: serviceData.seo.meta_title },
     description: serviceData.seo.meta_description,
     alternates: {
       canonical: canonicalUrl,
@@ -186,7 +187,7 @@ export default async function MarketingServiceDetailsPage(
         </section>
       )}
 
-<VideoBanner videoOnly={true} />
+<VideoBanner videoOnly={true} videoUrl={serviceData.videoUrl} />
        
 
 
