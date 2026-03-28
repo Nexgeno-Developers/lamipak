@@ -1412,6 +1412,18 @@ export const fetchMarketingServicesForListing = cache(async function fetchMarket
     if (p) pathnameByPageId.set(id, p);
   }
 
+  /** CMS last path segment may be `recipe-support11` while the listing row still uses `recipe-support`. */
+  const cmsSlugLastSegmentMatchesServiceSlug = (
+    apiLastSegment: string,
+    serviceSlug: string,
+  ): boolean => {
+    if (apiLastSegment === serviceSlug) return true;
+    if (!apiLastSegment.startsWith(serviceSlug)) return false;
+    if (apiLastSegment.length === serviceSlug.length) return true;
+    const next = apiLastSegment[serviceSlug.length];
+    return next === '-' || next === '_' || /\d/.test(next);
+  };
+
   const resolvePageId = (service: MarketingServiceData): number | null => {
     if (
       service.cmsDetailPageId != null &&
@@ -1428,7 +1440,14 @@ export const fetchMarketingServicesForListing = cache(async function fetchMarket
     for (const { id, row } of detailRows) {
       const apiSlug = pickString(row.slug);
       const last = apiSlug.split('/').filter(Boolean).pop();
-      if (last && last === service.slug) return id;
+      if (last && cmsSlugLastSegmentMatchesServiceSlug(last, service.slug)) return id;
+    }
+    const titleKey = service.title.trim().toLowerCase();
+    if (titleKey) {
+      for (const { id, row } of detailRows) {
+        const t = pickString(row.title).toLowerCase();
+        if (t && t === titleKey) return id;
+      }
     }
     return null;
   };
