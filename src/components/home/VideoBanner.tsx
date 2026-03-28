@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import PlayVideoIcon from '@/components/common/PlayVideoIcon';
 import { useState, useEffect } from 'react';
 import { fetchHomepageData } from '@/lib/api';
 import type { VideoBannerData } from '@/fake-api/homepage';
@@ -247,13 +248,7 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
               className="cursor-pointer flex items-center justify-center transition-all group "
               aria-label="Play video"
             >
-              <Image
-                src="/play_icon_image.png"
-                alt=""
-                width={100}
-                height={100}
-                className="group-hover:scale-110 transition-transform lg:w-[100px] w-[60px]"
-              />
+              <PlayVideoIcon variant="hero" />
             </button>
           </div>
 
@@ -272,13 +267,7 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
             className="cursor-pointer flex items-center justify-center transition-all group shadow-lg"
             aria-label="Play video"
           >
-            <Image
-              src="/play_icon_image.png"
-              alt=""
-              width={100}
-              height={100}
-              className="group-hover:scale-110 transition-transform lg:w-[100px] w-[60px]"
-            />
+            <PlayVideoIcon variant="hero" />
           </button>
         </div>
       )}

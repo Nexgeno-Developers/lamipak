@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useId, useState } from 'react';
-import Image from 'next/image';
+import PlayVideoIcon from '@/components/common/PlayVideoIcon';
 
 type VideoModalClientProps = {
   /** Video URL: mp4/webm or YouTube/Vimeo embed link */
@@ -70,7 +70,7 @@ export default function VideoModalClient({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="relative w-full h-full overflow-hidden focus:outline-none cursor-pointer"
+        className="group relative w-full h-full overflow-hidden focus:outline-none cursor-pointer"
         aria-haspopup="dialog"
         aria-expanded={open}
         aria-controls={open ? modalId : undefined}
@@ -87,19 +87,8 @@ export default function VideoModalClient({
         )}
         <div className="absolute inset-0 bg-[#0E233C] opacity-35" />
 
-        <span className="absolute inset-0 flex items-center justify-center">
-          <span className="w-20 h-20 rounded-full bg-white/40 backdrop-blur-sm flex items-center justify-center">
-            <span className="w-16 h-16 rounded-full bg-white/50 flex items-center justify-center">
-              <Image
-                src="/play_icon_image.png"
-                alt=""
-                width={32}
-                height={32}
-                className="w-8 h-8"
-                aria-hidden
-              />
-            </span>
-          </span>
+        <span className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <PlayVideoIcon variant="card" />
         </span>
 
         <span className="sr-only">Play video</span>

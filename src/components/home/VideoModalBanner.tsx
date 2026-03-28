@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import Image from 'next/image';
+import PlayVideoIcon from '@/components/common/PlayVideoIcon';
 
 export default function VideoModalBanner({
   videoUrl,
@@ -71,14 +71,7 @@ export default function VideoModalBanner({
             className="cursor-pointer flex items-center justify-center transition-all group "
             aria-label="Play video"
           >
-            <Image
-              src="/play_icon_image.png"
-              alt=""
-              width={100}
-              height={100}
-              className="group-hover:scale-110 transition-transform lg:w-[100px] w-[60px]"
-              aria-hidden
-            />
+            <PlayVideoIcon variant="hero" />
           </button>
         </div>
       </section>

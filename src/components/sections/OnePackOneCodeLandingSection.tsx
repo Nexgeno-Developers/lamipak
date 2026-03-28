@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import type { OnePackOneCodeLandingSectionData, OnePackOneCodeTabId } from '@/fake-api/page-builder';
 import Image from 'next/image';
+import type { OnePackOneCodeLandingSectionData, OnePackOneCodeTabId } from '@/fake-api/page-builder';
+import PlayVideoIcon from '@/components/common/PlayVideoIcon';
 import VideoModalBanner from '../home/VideoModalBanner';
 import CallToAction from '../home/CallToAction';
 import NewsletterSubscription from '../home/NewsletterSubscription';
@@ -66,7 +67,7 @@ function PlayOverlayButton() {
       className="h-12 w-12 rounded-full bg-white/90 text-black flex items-center justify-center shadow-lg"
       aria-label="Play video"
     >
-      <Image src="/play_icon_image.png" alt="" width={20} height={20} aria-hidden />
+      <PlayVideoIcon variant="compact" />
     </button>
   );
 }
