@@ -1384,9 +1384,34 @@ export async function getAllMarketingServices(): Promise<MarketingServiceData[]>
   return fakeGetAllMarketingServices();
 }
 
+/** Override listing card title, copy, and image from each detail page’s `meta` short summary fields. */
+function mergeCmsShortSummaryIntoListingRow(
+  service: MarketingServiceData,
+  row: CompanyPageApiData,
+): Partial<MarketingServiceData> {
+  const meta = row.meta;
+  if (!meta || typeof meta !== 'object') return {};
+  const m = meta as Record<string, unknown>;
+  const summaryTitle = pickString(m.short_summary_title);
+  const summaryDescRaw = pickString(m.short_summary_description);
+  const summaryImg = extractMediaUrl(m.short_summary_image);
+  const patch: Partial<MarketingServiceData> = {};
+  if (summaryTitle) patch.title = summaryTitle;
+  if (summaryDescRaw) {
+    patch.shortDescription = summaryDescRaw.includes('<')
+      ? stripHtml(summaryDescRaw)
+      : summaryDescRaw;
+  }
+  if (summaryImg) {
+    patch.listingImage = summaryImg;
+    patch.listingImageAlt = summaryTitle || pickString(row.title) || service.title;
+  }
+  return patch;
+}
+
 /**
- * Listing page rows: keeps local copy fields (title, copy, images) but sets `cmsDetailPath`
- * from `GET /v1/page/:id` → `slug` so “Find out more” matches the CMS URL exactly.
+ * Listing page rows: merges `short_summary_title`, `short_summary_description`, `short_summary_image`
+ * from matched `GET /v1/page/:id` detail `meta`, and sets `cmsDetailPath` from API `slug`.
  */
 export const fetchMarketingServicesForListing = cache(async function fetchMarketingServicesForListing(): Promise<
   MarketingServiceData[]
@@ -1447,6 +1472,9 @@ export const fetchMarketingServicesForListing = cache(async function fetchMarket
       for (const { id, row } of detailRows) {
         const t = pickString(row.title).toLowerCase();
         if (t && t === titleKey) return id;
+        const meta = row.meta as Record<string, unknown> | undefined;
+        const st = meta ? pickString(meta.short_summary_title).toLowerCase() : '';
+        if (st && st === titleKey) return id;
       }
     }
     return null;
@@ -1455,9 +1483,18 @@ export const fetchMarketingServicesForListing = cache(async function fetchMarket
   return services.map((service) => {
     const pid = resolvePageId(service);
     if (pid == null) return service;
+    const detail = detailRows.find((d) => d.id === pid);
     const href = pathnameByPageId.get(pid);
-    if (!href) return service;
-    return { ...service, cmsDetailPath: href };
+
+    let next: MarketingServiceData = { ...service };
+    if (detail?.row) {
+      const patch = mergeCmsShortSummaryIntoListingRow(service, detail.row);
+      next = { ...next, ...patch };
+    }
+    if (href) {
+      next = { ...next, cmsDetailPath: href };
+    }
+    return next;
   });
 });
 
