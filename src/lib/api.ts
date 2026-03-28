@@ -1410,8 +1410,10 @@ function mergeCmsShortSummaryIntoListingRow(
 }
 
 /**
- * Listing page rows: merges `short_summary_title`, `short_summary_description`, `short_summary_image`
- * from matched `GET /v1/page/:id` detail `meta`, and sets `cmsDetailPath` from API `slug`.
+ * Listing page rows:
+ * - When the CMS exposes ≥1 `marketing_service_detail` page in the resolved id set, the grid shows
+ *   **exactly those pages** (2 in API → 2 rows). Ordered by numeric page id.
+ * - Otherwise falls back to the local mock list merged with CMS where possible (offline / no detail pages).
  */
 export const fetchMarketingServicesForListing = cache(async function fetchMarketingServicesForListing(): Promise<
   MarketingServiceData[]
@@ -1431,11 +1433,31 @@ export const fetchMarketingServicesForListing = cache(async function fetchMarket
     }
   }
 
+  detailRows.sort((a, b) => a.id - b.id);
+
   const pathnameByPageId = new Map<number, string>();
   for (const { id, row } of detailRows) {
     const p = cmsSlugToListingPath(pickString(row.slug));
     if (p) pathnameByPageId.set(id, p);
   }
+
+  if (detailRows.length > 0) {
+    const fromCms: MarketingServiceData[] = [];
+    for (const { id, row } of detailRows) {
+      const pathKey = pickString(row.slug) || `page-${id}`;
+      const mapped = mapMarketingServiceDetailPage(row, pathKey);
+      if (!mapped) continue;
+      const patch = mergeCmsShortSummaryIntoListingRow(mapped, row);
+      const href = pathnameByPageId.get(id) ?? mapped.cmsDetailPath;
+      fromCms.push({
+        ...mapped,
+        ...patch,
+        cmsDetailPageId: id,
+        cmsDetailPath: href ?? mapped.cmsDetailPath,
+      });
+    }
+    if (fromCms.length > 0) return fromCms;
+  } 
 
   /** CMS last path segment may be `recipe-support11` while the listing row still uses `recipe-support`. */
   const cmsSlugLastSegmentMatchesServiceSlug = (
