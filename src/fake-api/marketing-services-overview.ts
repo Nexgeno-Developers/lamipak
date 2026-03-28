@@ -6,6 +6,13 @@
  */
 
 export interface MarketingServicesOverview {
+  /** Hero H1 when wired from CMS (e.g. page title) */
+  pageTitle?: string;
+  /** Optional SEO from CMS page payload */
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+  };
   heroBackgroundImage?: string;
   heading: string;
   description: string;

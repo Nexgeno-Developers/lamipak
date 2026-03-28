@@ -63,6 +63,7 @@ import {
 } from '@/fake-api/packaging-pages';
 import { getDynamicPageBySlug as fakeGetDynamicPageBySlug } from '@/fake-api/dynamic-pages';
 import { getCanonicalUrl } from '@/config/site';
+import { cache } from 'react';
 
 // Re-export types for convenience
 export type {
@@ -178,6 +179,150 @@ function extractMediaUrl(value: unknown): string | undefined {
     if (typeof urlValue === 'string') return urlValue;
   }
   return undefined;
+}
+
+const MARKETING_SERVICES_PAGE_ID = process.env.MARKETING_SERVICES_PAGE_ID || '1';
+
+type CompanyPageApiData = {
+  id?: number;
+  slug?: string;
+  title?: string | null;
+  layout?: string | null;
+  meta?: Record<string, unknown> | null;
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+  } | null;
+};
+
+type CompanyPageApiEnvelope = {
+  data?: CompanyPageApiData | null;
+};
+
+function stripHtml(html: string): string {
+  return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function pickString(v: unknown): string {
+  return typeof v === 'string' ? v.trim() : '';
+}
+
+function splitHighlightsTitle(full: string): { heading: string; sub: string } {
+  const m = full.match(/^(.+?)\s+with\s+(.+)$/i);
+  if (m) return { heading: m[1].trim(), sub: m[2].trim() };
+  return { heading: full.trim(), sub: '' };
+}
+
+function coerceStringArray(v: unknown): string[] {
+  if (!Array.isArray(v)) return [];
+  return v.filter((x): x is string => typeof x === 'string');
+}
+
+function parseHighlightsItems(
+  raw: unknown,
+): MarketingServicesOverview['stats'] {
+  if (raw == null) return [];
+  let parsed: Record<string, unknown>;
+  if (typeof raw === 'string') {
+    try {
+      parsed = JSON.parse(raw) as Record<string, unknown>;
+    } catch {
+      return [];
+    }
+  } else if (typeof raw === 'object') {
+    parsed = raw as Record<string, unknown>;
+  } else {
+    return [];
+  }
+  const icons = coerceStringArray(parsed.icon ?? parsed.Icon);
+  const values = coerceStringArray(parsed.value);
+  const titles = coerceStringArray(parsed.title);
+  const n = Math.max(values.length, titles.length, icons.length);
+  if (n === 0) return [];
+  const fallbacks = ['/globe_icon.svg', '/suppoer_icon.svg', '/employee.svg', '/process.svg'];
+  const out: MarketingServicesOverview['stats'] = [];
+  for (let i = 0; i < n; i++) {
+    const value = values[i] ?? '';
+    const label = titles[i] ?? '';
+    if (!value && !label) continue;
+    const iconRaw = icons[i];
+    let iconUrl: string;
+    if (iconRaw && /^https?:\/\//i.test(iconRaw)) {
+      iconUrl = iconRaw;
+    } else if (iconRaw && /\.(svg|png|jpe?g|webp|gif)$/i.test(iconRaw)) {
+      iconUrl = normalizeApiAssetUrl(iconRaw) ?? iconRaw;
+    } else {
+      iconUrl = fallbacks[i % fallbacks.length];
+    }
+    out.push({
+      id: `highlight-${i}`,
+      icon: iconUrl,
+      value,
+      label,
+    });
+  }
+  return out;
+}
+
+function mapMarketingServicesPageToOverview(
+  data: CompanyPageApiData,
+  fallback: MarketingServicesOverview,
+): MarketingServicesOverview {
+  const meta = data.meta ?? {};
+  const breadcrumbUrl = extractMediaUrl(meta.breadcrumb_image);
+  const heroImageUrl = extractMediaUrl(meta.hero_image);
+  /** Section heading beside the 360° graphic — CMS `hero_title` */
+  const heroTitle = pickString(meta.hero_title);
+  const shortSummaryTitle = pickString(meta.short_summary_title);
+  const shortSummaryDesc = pickString(meta.short_summary_description);
+  const heroDescHtml = pickString(meta.hero_description);
+  const description =
+    shortSummaryDesc ||
+    (heroDescHtml ? stripHtml(heroDescHtml) : '') ||
+    fallback.description;
+
+  const highlightsTitle = pickString(meta.highlights_title);
+  const { heading: statsHeading, sub: statsSubheading } = highlightsTitle
+    ? splitHighlightsTitle(highlightsTitle)
+    : { heading: fallback.statsHeading, sub: fallback.statsSubheading };
+
+  const parsedStats = parseHighlightsItems(meta.highlights_items);
+
+  return {
+    ...fallback,
+    pageTitle: pickString(data.title) || fallback.pageTitle,
+    seo: data.seo
+      ? {
+          title: data.seo.title ?? null,
+          description: data.seo.description ?? null,
+        }
+      : undefined,
+    heroBackgroundImage: breadcrumbUrl || heroImageUrl || fallback.heroBackgroundImage,
+    heading: heroTitle || shortSummaryTitle || fallback.heading,
+    description,
+    image: heroImageUrl || fallback.image,
+    imageAlt: heroTitle || shortSummaryTitle || pickString(data.title) || fallback.imageAlt,
+    statsHeading: statsHeading || fallback.statsHeading,
+    statsSubheading: statsSubheading || fallback.statsSubheading,
+    stats: parsedStats.length > 0 ? parsedStats : fallback.stats,
+  };
+}
+
+async function fetchCompanyMarketingServicesPage(): Promise<MarketingServicesOverview | null> {
+  const pageId = Number(MARKETING_SERVICES_PAGE_ID);
+  if (Number.isNaN(pageId) || pageId < 1) return null;
+
+  const response = await fetch(buildCompanyApiUrl(`/v1/page/${pageId}`), {
+    next: { revalidate: 60 },
+  });
+  if (!response.ok) return null;
+
+  const payload = (await response.json()) as CompanyPageApiEnvelope;
+  const row = payload?.data;
+  if (!row || row.layout !== 'marketing_services' || !row.meta) return null;
+
+  const fallback = await fakeGetMarketingServicesOverviewData();
+  return mapMarketingServicesPageToOverview(row, fallback);
 }
 
 /**
@@ -760,21 +905,15 @@ export async function getAllCareerJobSlugs(): Promise<string[]> {
 }
 
 /**
- * Fetches marketing services overview content (listing hero section)
- *
- * @returns Promise<MarketingServicesOverview>
+ * Fetches marketing services overview content (listing hero section).
+ * Uses CMS `GET /v1/page/:id` (see `MARKETING_SERVICES_PAGE_ID`, default `1`) when the
+ * page `layout` is `marketing_services`; otherwise falls back to fake data.
  */
-export async function fetchMarketingServicesOverviewData(): Promise<MarketingServicesOverview> {
-  if (useRealAPI()) {
-    // TODO: Replace with real API call when Laravel backend is ready
-    // const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.marketingServicesOverview}`);
-    // if (!response.ok) throw new Error('Failed to fetch marketing services overview');
-    // return response.json();
-    throw new Error('Real API not yet implemented');
-  }
-
+export const fetchMarketingServicesOverviewData = cache(async function fetchMarketingServicesOverviewData(): Promise<MarketingServicesOverview> {
+  const fromApi = await fetchCompanyMarketingServicesPage();
+  if (fromApi) return fromApi;
   return fakeGetMarketingServicesOverviewData();
-}
+});
 
 /**
  * Fetches latest marketing news for marketing services listing page

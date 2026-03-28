@@ -15,21 +15,29 @@ import CallToAction from '@/components/home/CallToAction';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
 import ConnectTechnicalExperts from '@/components/technical-services/ConnectTechnicalExperts';
 
-export const metadata: Metadata = {
-  title: 'Marketing Services | Lamipak',
-  description:
-    'Discover Lamipak marketing support services including brand strategy, 360° go‑to‑market campaigns, and insight‑driven packaging design.',
-  alternates: {
-    canonical: getCanonicalUrl('/marketing-services'),
-  },
-  openGraph: {
-    title: 'Marketing Services | Lamipak',
-    description:
-      'Explore Lamipak 360° marketing services that connect brand, packaging, and commercial activation.',
-    url: getCanonicalUrl('/marketing-services'),
-    type: 'website',
-  },
-};
+const defaultDescription =
+  'Discover Lamipak marketing support services including brand strategy, 360° go‑to‑market campaigns, and insight‑driven packaging design.';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const overview = await fetchMarketingServicesOverviewData();
+  const title = overview.seo?.title?.trim()
+    ? `${overview.seo.title} | Lamipak`
+    : 'Marketing Services | Lamipak';
+  const description = overview.seo?.description?.trim() || defaultDescription;
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: getCanonicalUrl('/marketing-services'),
+    },
+    openGraph: {
+      title,
+      description,
+      url: getCanonicalUrl('/marketing-services'),
+      type: 'website',
+    },
+  };
+}
 
 /**
  * Marketing Services Listing Page
@@ -52,7 +60,7 @@ export default async function MarketingServicesPage() {
       <CompanyHero
         data={{
           ...companyData.hero,
-          title: 'Marketing Service',
+          title: overview.pageTitle ?? 'Marketing Service',
           backgroundImage:
             overview.heroBackgroundImage || companyData.hero.backgroundImage,
         }}
@@ -63,12 +71,14 @@ export default async function MarketingServicesPage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-[40%_50%] gap-[80px] items-center">
             {/* Left – Image from API */}
-            <div className="w-full">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+            <div className="w-full overflow-hidden rounded-[32px]">
+              <Image
                 src={overview.image}
                 alt={overview.imageAlt}
-                className="w-full h-auto object-cover rounded-[32px]"
+                width={1600}
+                height={1200}
+                className="h-auto w-full max-w-full rounded-[32px]"
+                sizes="(max-width: 1024px) 100vw, 40vw"
               />
             </div>
 
