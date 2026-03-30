@@ -662,6 +662,41 @@ function normalizeTechnicalPageBlocks(raw: unknown): Record<string, unknown>[] {
   return [];
 }
 
+/** CMS may send `differentiation_items` as a JSON string. */
+function parseDifferentiationItemsObject(raw: unknown): Record<string, unknown> | null {
+  if (raw == null) return null;
+  if (typeof raw === 'string') {
+    const s = raw.trim();
+    if (!s) return null;
+    try {
+      const p = JSON.parse(s) as unknown;
+      if (p && typeof p === 'object' && !Array.isArray(p)) return p as Record<string, unknown>;
+    } catch {
+      return null;
+    }
+    return null;
+  }
+  if (typeof raw === 'object' && !Array.isArray(raw)) return raw as Record<string, unknown>;
+  return null;
+}
+
+/** Laravel may return true arrays or `{ "0": "a", "1": "b" }` style objects. */
+function coerceCmsStringArray(v: unknown): string[] {
+  if (Array.isArray(v)) {
+    return v.map((x) => technicalMetaString(x));
+  }
+  if (v && typeof v === 'object' && !Array.isArray(v)) {
+    const o = v as Record<string, unknown>;
+    const keys = Object.keys(o).filter((k) => /^\d+$/.test(k));
+    if (keys.length > 0) {
+      return keys
+        .sort((a, b) => Number(a) - Number(b))
+        .map((k) => technicalMetaString(o[k]));
+    }
+  }
+  return [];
+}
+
 function mapTechnicalPageBlocksToOperationalCards(
   blocks: Record<string, unknown>[],
   fallbackCards: OperationalSuccessCard[],
@@ -699,31 +734,35 @@ function parseTechnicalDifferentiationFromMeta(
   heading: string,
   fallback: TechnicalServicesListingData['serviceDifferentiation'],
 ): TechnicalServicesListingData['serviceDifferentiation'] {
-  if (!raw || typeof raw !== 'object') return { ...fallback, heading };
-  const o = raw as Record<string, unknown>;
-  const row1 = Array.isArray(o.row_1) ? o.row_1 : [];
-  const row2 = Array.isArray(o.row_2) ? o.row_2 : [];
-  const title1 = Array.isArray(o.title_1) ? o.title_1 : [];
-  const title2 = Array.isArray(o.title_2) ? o.title_2 : [];
+  const o = parseDifferentiationItemsObject(raw);
+  if (!o) return { ...fallback, heading };
 
-  const lamiCareHeader = technicalMetaString(row2[0]) || fallback.headerRow1.lamiCare;
-  const lamiPremHeader = technicalMetaString(title1[0]) || fallback.headerRow1.lamiPremium;
-  const lamiPartHeader = technicalMetaString(title2[0]) || fallback.headerRow1.lamiPartner;
+  const row1 = coerceCmsStringArray(o.row_1);
+  const row2 = coerceCmsStringArray(o.row_2);
+  const title1 = coerceCmsStringArray(o.title_1);
+  const title2 = coerceCmsStringArray(o.title_2);
 
-  const focus = technicalMetaString(row1[1]) || fallback.headerRow2.focus;
-  const stability = technicalMetaString(row2[1]) || fallback.headerRow2.stability;
-  const performance = technicalMetaString(title1[1]) || fallback.headerRow2.performance;
-  const transformation = technicalMetaString(title2[1]) || fallback.headerRow2.transformation;
+  const n = Math.min(row1.length, row2.length, title1.length, title2.length);
+  if (n < 3) return { ...fallback, heading };
+
+  const lamiCareHeader = row2[0] || fallback.headerRow1.lamiCare;
+  const lamiPremHeader = title1[0] || fallback.headerRow1.lamiPremium;
+  const lamiPartHeader = title2[0] || fallback.headerRow1.lamiPartner;
+
+  const focus = row1[1] || fallback.headerRow2.focus;
+  const stability = row2[1] || fallback.headerRow2.stability;
+  const performance = title1[1] || fallback.headerRow2.performance;
+  const transformation = title2[1] || fallback.headerRow2.transformation;
 
   const rows: ServiceDifferentiationRow[] = [];
-  for (let i = 2; i <= 4; i++) {
-    const category = technicalMetaString(row1[i]);
+  for (let i = 2; i < n; i++) {
+    const category = row1[i];
     if (!category) continue;
     rows.push({
       category,
-      lamiCare: technicalMetaString(row2[i]),
-      lamiPremium: technicalMetaString(title1[i]),
-      lamiPartner: technicalMetaString(title2[i]),
+      lamiCare: row2[i] ?? '',
+      lamiPremium: title1[i] ?? '',
+      lamiPartner: title2[i] ?? '',
     });
   }
   if (rows.length === 0) return { ...fallback, heading };
@@ -751,7 +790,7 @@ function mapTechnicalServicesListingPage(
   fallback: TechnicalServicesListingData,
 ): TechnicalServicesListingData {
   const meta = row.meta;
-  if (!meta || typeof meta !== 'object') return fallback;
+  if (!meta || typeof meta !== 'object' || Array.isArray(meta)) return fallback;
   const m = meta as Record<string, unknown>;
 
   const heroBg = extractMediaUrl(m.breadcrumb_image);
