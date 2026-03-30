@@ -437,8 +437,26 @@ function splitDetailHeroTitle(full: string): { heading: string; headingHighlight
   return { heading: '', headingHighlight: full.trim() };
 }
 
+/** One string per `<p>...</p>` so CMS hero HTML maps to separate intro paragraphs. */
+function splitHeroHtmlByPTags(heroHtml: string): string[] {
+  const trimmed = heroHtml.trim();
+  if (!trimmed) return [];
+  const re = /<p[^>]*>([\s\S]*?)<\/p>/gi;
+  const parts: string[] = [];
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(trimmed)) !== null) {
+    const inner = stripHtml(m[1])
+      .replace(/\s+/g, ' ')
+      .trim();
+    if (inner) parts.push(inner);
+  }
+  return parts;
+}
+
 function buildIntroParagraphsFromHeroHtml(shortSummary: string, heroHtml: string): string[] {
   if (heroHtml.trim()) {
+    const fromP = splitHeroHtmlByPTags(heroHtml);
+    if (fromP.length > 0) return fromP;
     return stripHtml(heroHtml.replace(/<br\s*\/?>/gi, '\n'))
       .split(/\n+/)
       .map((s) => s.trim())
