@@ -15,7 +15,9 @@ import ContactUsPage from '@/components/ContactUsPage';
 import GovernanceManagementPage from '@/components/GovernanceManagementPage';
 import { PageBuilder } from '@/components/pageBuilder/PageBuilder';
 import { fetchProductCategoriesPage } from '@/lib/api/product_categories';
+import { fetcProductCategoryLayout5Page } from '@/lib/api/product_category_layout_5';
 import { buildApiMetadata } from '@/components/seo/buildApiMetadata';
+import { getSubCategoryPage } from '@/fake-api/page-builder';
 
 import {
   getDynamicPageBySlug,
@@ -27,6 +29,8 @@ interface PageProps {
     slug: string[]; // ✅ FIXED (array for nested routes)
   }>;
 }
+
+const PACKAGING_MAIN = 'packaging' as const;
 
 const componentMap: Record<string, ComponentType<{ data: DynamicPageData }>> = {
   lamira1: LamiraPage,
@@ -57,6 +61,27 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: apiPage.title,
       seo: apiPage.seo,
     });
+  }
+
+  const layout5Page = await fetcProductCategoryLayout5Page(fullSlug);
+  if (layout5Page) {
+    return buildApiMetadata({
+      slug: layout5Page.slug,
+      title: layout5Page.title,
+      seo: layout5Page.seo,
+    });
+  }
+
+  const subCategoryMock =
+    slug?.length === 1 ? await getSubCategoryPage(PACKAGING_MAIN, slug[0]) : null;
+  if (subCategoryMock) {
+    return {
+      title: subCategoryMock.seo?.meta_title || subCategoryMock.title,
+      description: subCategoryMock.seo?.meta_description,
+      alternates: {
+        canonical: getCanonicalUrl(`/${slug[0]}`),
+      },
+    };
   }
 
   const data = await fetchPageData(fullSlug);
@@ -117,6 +142,34 @@ export default async function DynamicPage({ params }: PageProps) {
         }}
       />
     );
+  }
+
+  const layout5Page = await fetcProductCategoryLayout5Page(fullSlug);
+  if (layout5Page) {
+    return (
+      <PageBuilder
+        pageData={layout5Page.pageData as any}
+        pageContext={{
+          mainCategory: PACKAGING_MAIN,
+          subCategory: layout5Page.slug,
+        }}
+      />
+    );
+  }
+
+  if (slug?.length === 1) {
+    const subCategoryPage = await getSubCategoryPage(PACKAGING_MAIN, slug[0]);
+    if (subCategoryPage) {
+      return (
+        <PageBuilder
+          pageData={subCategoryPage}
+          pageContext={{
+            mainCategory: PACKAGING_MAIN,
+            subCategory: slug[0],
+          }}
+        />
+      );
+    }
   }
 
   const data = await fetchPageData(fullSlug);
