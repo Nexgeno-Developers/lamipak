@@ -13,6 +13,9 @@ import CarbonNetZeroRoadmapPage from '@/components/CarbonNetZeroRoadmapPage';
 import OurCompanyDynamicPage from '@/components/OurCompanyDynamicPage';
 import ContactUsPage from '@/components/ContactUsPage';
 import GovernanceManagementPage from '@/components/GovernanceManagementPage';
+import { PageBuilder } from '@/components/pageBuilder/PageBuilder';
+import { fetchProductCategoriesPage } from '@/lib/api/product_categories';
+import { buildApiMetadata } from '@/components/seo/buildApiMetadata';
 
 import {
   getDynamicPageBySlug,
@@ -46,6 +49,15 @@ async function fetchPageData(fullSlug: string) {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
+
+  const apiPage = await fetchProductCategoriesPage(fullSlug);
+  if (apiPage) {
+    return buildApiMetadata({
+      slug: apiPage.slug,
+      title: apiPage.title,
+      seo: apiPage.seo,
+    });
+  }
 
   const data = await fetchPageData(fullSlug);
 
@@ -94,6 +106,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function DynamicPage({ params }: PageProps) {
   const { slug } = await params;
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
+
+  const apiPage = await fetchProductCategoriesPage(fullSlug);
+  if (apiPage) {
+    return (
+      <PageBuilder
+        pageData={apiPage.pageData as any}
+        pageContext={{
+          mainCategory: apiPage.slug,
+        }}
+      />
+    );
+  }
 
   const data = await fetchPageData(fullSlug);
 
