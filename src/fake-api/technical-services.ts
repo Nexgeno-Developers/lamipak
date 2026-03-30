@@ -99,7 +99,7 @@ const technicalServices: TechnicalServiceData[] = [
         id: '1',
         title: 'Preventive Maintenance',
         description: 'Proactive maintenance services designed to enhance equipment reliability, extend operational lifespan, and ensure consistent performance of aseptic packaging systems and solutions.',
-        image: '/images/technical-services/preventive-maintenance.jpg',
+        image: '/banner-slide-8.webp',
         imageAlt: 'Preventive Maintenance Team'
       },
       {

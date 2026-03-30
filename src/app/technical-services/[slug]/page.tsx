@@ -187,7 +187,7 @@ export default async function TechnicalServicePage({ params }: TechnicalServiceP
                     {serviceData.title}
                   </h2>
                   {serviceData.introSection.detailedDescription ? (
-                    <p className="text-lg md:text-xl text-black leading-relaxed">
+                    <p className="text-base md:text-xl text-black leading-relaxed">
                       {serviceData.introSection.detailedDescription}
                     </p>
                   ) : (
