@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
         protocol: 'http',
         hostname: 'backend-lamipak.webtesting.pw',
       },
+      {
+        protocol: 'https',
+        hostname: 'lamipak.webtesting.pw',
+      },
+      {
+        protocol: 'http',
+        hostname: 'lamipak.webtesting.pw',
+      },
     ],
   },
 };
