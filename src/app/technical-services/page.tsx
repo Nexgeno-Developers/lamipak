@@ -1,10 +1,13 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { fetchTechnicalServicesListingData } from '@/lib/api';
+import {
+  fetchTechnicalServicesListingData,
+  getTechnicalServicesListingCmsPayload,
+} from '@/lib/api';
 import ConnectTechnicalExperts from '@/components/technical-services/ConnectTechnicalExperts';
 import CallToAction from '@/components/home/CallToAction';
-import { getCanonicalUrl } from '@/config/site';
+import { resolveSeoCanonicalUrl, SITE_CONFIG } from '@/config/site';
 import VideoModalClient from '@/components/common/VideoModalClient';
 
 function getYouTubeId(inputUrl: string): string | null {
@@ -44,21 +47,58 @@ function getYouTubeThumbnail(inputUrl: string): string | null {
   return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
 }
 
+const defaultTechnicalListingDescription =
+  'Explore Lamipak technical support services: line optimisation, maintenance tiers, and operational excellence across aseptic packaging.';
+
 /**
- * Generate metadata for technical services listing page
+ * Generate metadata for technical services listing page (CMS `technical_services` when available).
  */
 export async function generateMetadata(): Promise<Metadata> {
+  const payload = await getTechnicalServicesListingCmsPayload();
+  const seo = payload?.seo;
+  const listingPath = payload?.listingPath ?? '/technical-services';
+
+  const rawTitle = seo?.title?.trim();
+  const documentTitle = rawTitle
+    ? rawTitle
+    : `Technical Services | ${SITE_CONFIG.name}`;
+  const description = seo?.description?.trim() || defaultTechnicalListingDescription;
+  const canonical = resolveSeoCanonicalUrl(seo?.canonicalUrl ?? null, listingPath);
+  const keywordsRaw = seo?.keywords?.trim();
+
+  const robots =
+    seo?.robotsIndex || seo?.robotsFollow
+      ? {
+          index: seo.robotsIndex?.toLowerCase() !== 'noindex',
+          follow: seo.robotsFollow?.toLowerCase() !== 'nofollow',
+        }
+      : undefined;
+
+  const ogTitle = seo?.ogTitle?.trim() || rawTitle || documentTitle;
+  const ogDesc = seo?.ogDescription?.trim() || description;
+  const twTitle = seo?.twitterTitle?.trim() || ogTitle;
+  const twDesc = seo?.twitterDescription?.trim() || ogDesc;
+  const ogImage = seo?.ogImageUrl?.trim();
+  const twImage = seo?.twitterImageUrl?.trim() || ogImage;
+
   return {
-    title: 'Technical Services | Lamipak - Expert Packaging Solutions',
-    description: 'Explore our comprehensive technical services including product development, technical consultation, quality assurance, and pilot plant services.',
-    alternates: {
-      canonical: getCanonicalUrl('/technical-services'),
-    },
+    title: { absolute: documentTitle },
+    description,
+    ...(keywordsRaw ? { keywords: keywordsRaw } : {}),
+    ...(robots ? { robots } : {}),
+    alternates: { canonical },
     openGraph: {
-      title: 'Technical Services | Lamipak',
-      description: 'Expert technical services for innovative packaging solutions',
-      url: getCanonicalUrl('/technical-services'),
+      title: ogTitle,
+      description: ogDesc,
+      url: canonical,
       type: 'website',
+      ...(ogImage ? { images: [{ url: ogImage }] } : {}),
+    },
+    twitter: {
+      card: twImage ? 'summary_large_image' : 'summary',
+      title: twTitle,
+      description: twDesc,
+      ...(twImage ? { images: [twImage] } : {}),
     },
   };
 }
@@ -70,10 +110,19 @@ export async function generateMetadata(): Promise<Metadata> {
  * All data is fetched server-side from the API.
  */
 export default async function TechnicalServicesPage() {
-  const listingData = await fetchTechnicalServicesListingData();
+  const [listingData, cmsPayload] = await Promise.all([
+    fetchTechnicalServicesListingData(),
+    getTechnicalServicesListingCmsPayload(),
+  ]);
 
   return (
     <main className="min-h-screen bg-gray-50">
+      {cmsPayload?.seo?.schema ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: cmsPayload.seo.schema }}
+        />
+      ) : null}
       {/* Hero Section */}
       <section className="relative lg:pt-[220px] pt-[150px] lg:pb-[150px] pb-[50px] overflow-hidden">
         {/* Background Image with Overlay */}
@@ -301,13 +350,13 @@ export default async function TechnicalServicesPage() {
                 className="bg-white rounded-[50px] overflow-hidden transition-all duration-300 flex flex-col h-full p-[15px]"
               >
                 {/* Card Image */}
-                <div className="relative w-full h-auto overflow-hidden bg-gray-100 rounded-[50px]">
+                <div className="relative w-full h-auto overflow-hidden bg-gray-100 rounded-[50px] ">
                   <Image
                     src={card.image}
                     alt={card.imageAlt}
                     width={800}
                     height={600}
-                    className="w-full h-auto object-cover"
+                    className="w-full h-[200px] object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
                 </div>
@@ -320,7 +369,7 @@ export default async function TechnicalServicesPage() {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-black mb-2 flex-1 leading-relaxed">
+                  <p className="text-black mb-2 flex-1 leading-relaxed line-clamp-4 capitalize">
                     {card.description}
                   </p>
 

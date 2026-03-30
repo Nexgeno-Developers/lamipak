@@ -44,7 +44,9 @@ import {
 } from '@/fake-api/marketing-services-overview';
 import {
   getTechnicalServicesListingData as fakeGetTechnicalServicesListingData,
-  type TechnicalServicesListingData
+  type TechnicalServicesListingData,
+  type OperationalSuccessCard,
+  type ServiceDifferentiationRow,
 } from '@/fake-api/technical-services-listing';
 import {
   getCompanyData as fakeGetCompanyData,
@@ -195,6 +197,7 @@ function extractMediaUrl(value: unknown): string | undefined {
 }
 
 const MARKETING_SERVICES_PAGE_ID = process.env.MARKETING_SERVICES_PAGE_ID || '1';
+const TECHNICAL_SERVICES_PAGE_ID = process.env.TECHNICAL_SERVICES_PAGE_ID || '9';
 
 type CmsPageSeoRaw = {
   title?: string | null;
@@ -609,6 +612,243 @@ function mapMarketingServicesPageToOverview(
     stats: parsedStats.length > 0 ? parsedStats : fallback.stats,
   };
 }
+
+function technicalMetaString(v: unknown): string {
+  if (typeof v === 'string') return v.trim();
+  if (v != null && typeof v !== 'object') return String(v).trim();
+  return '';
+}
+
+function technicalUpgradeHeadingParts(
+  full: string,
+  fallback: TechnicalServicesListingData['upgradeSection'],
+): Pick<TechnicalServicesListingData['upgradeSection'], 'heading' | 'headingHighlight'> {
+  const t = full.trim();
+  if (!t) return { heading: fallback.heading, headingHighlight: fallback.headingHighlight };
+  const fh = fallback.headingHighlight;
+  if (t.includes(fh)) {
+    return { heading: t, headingHighlight: fh };
+  }
+  const words = t.split(/\s+/);
+  return {
+    heading: t,
+    headingHighlight: words.slice(0, Math.min(3, words.length)).join(' '),
+  };
+}
+
+function technicalOperationalHeadingParts(
+  full: string,
+  fallback: TechnicalServicesListingData['operationalSuccess'],
+): Pick<TechnicalServicesListingData['operationalSuccess'], 'heading' | 'headingHighlight'> {
+  const t = full.trim();
+  if (!t) return { heading: fallback.heading, headingHighlight: fallback.headingHighlight };
+  const fh = fallback.headingHighlight;
+  if (t.startsWith(fh)) {
+    return { heading: t, headingHighlight: fh };
+  }
+  const words = t.split(/\s+/);
+  return {
+    heading: t,
+    headingHighlight: words.slice(0, Math.min(2, words.length)).join(' '),
+  };
+}
+
+function normalizeTechnicalPageBlocks(raw: unknown): Record<string, unknown>[] {
+  if (!raw) return [];
+  if (Array.isArray(raw)) {
+    return raw.filter((x): x is Record<string, unknown> => !!x && typeof x === 'object');
+  }
+  if (typeof raw === 'object') return [raw as Record<string, unknown>];
+  return [];
+}
+
+function mapTechnicalPageBlocksToOperationalCards(
+  blocks: Record<string, unknown>[],
+  fallbackCards: OperationalSuccessCard[],
+): OperationalSuccessCard[] {
+  if (blocks.length === 0) return fallbackCards;
+  return blocks.map((b, idx) => {
+    const id = b.id != null ? String(b.id) : `block-${idx}`;
+    const title =
+      pickString(b.title) || pickString(b.short_summary_title) || `Service ${idx + 1}`;
+    const desc = pickString(b.short_summary_description) || '';
+    const img =
+      extractMediaUrl(b.short_summary_image) ||
+      fallbackCards[idx % fallbackCards.length]?.image ||
+      '';
+    const slug = pickString(b.slug);
+    const ctaLink = slug
+      ? slug.startsWith('/')
+        ? slug
+        : `/${slug}`
+      : fallbackCards[idx % fallbackCards.length]?.ctaLink || '/';
+    return {
+      id,
+      title,
+      description: desc,
+      image: img,
+      imageAlt: title,
+      ctaText: 'Discover More',
+      ctaLink,
+    };
+  });
+}
+
+function parseTechnicalDifferentiationFromMeta(
+  raw: unknown,
+  heading: string,
+  fallback: TechnicalServicesListingData['serviceDifferentiation'],
+): TechnicalServicesListingData['serviceDifferentiation'] {
+  if (!raw || typeof raw !== 'object') return { ...fallback, heading };
+  const o = raw as Record<string, unknown>;
+  const row1 = Array.isArray(o.row_1) ? o.row_1 : [];
+  const row2 = Array.isArray(o.row_2) ? o.row_2 : [];
+  const title1 = Array.isArray(o.title_1) ? o.title_1 : [];
+  const title2 = Array.isArray(o.title_2) ? o.title_2 : [];
+
+  const lamiCareHeader = technicalMetaString(row2[0]) || fallback.headerRow1.lamiCare;
+  const lamiPremHeader = technicalMetaString(title1[0]) || fallback.headerRow1.lamiPremium;
+  const lamiPartHeader = technicalMetaString(title2[0]) || fallback.headerRow1.lamiPartner;
+
+  const focus = technicalMetaString(row1[1]) || fallback.headerRow2.focus;
+  const stability = technicalMetaString(row2[1]) || fallback.headerRow2.stability;
+  const performance = technicalMetaString(title1[1]) || fallback.headerRow2.performance;
+  const transformation = technicalMetaString(title2[1]) || fallback.headerRow2.transformation;
+
+  const rows: ServiceDifferentiationRow[] = [];
+  for (let i = 2; i <= 4; i++) {
+    const category = technicalMetaString(row1[i]);
+    if (!category) continue;
+    rows.push({
+      category,
+      lamiCare: technicalMetaString(row2[i]),
+      lamiPremium: technicalMetaString(title1[i]),
+      lamiPartner: technicalMetaString(title2[i]),
+    });
+  }
+  if (rows.length === 0) return { ...fallback, heading };
+
+  return {
+    heading,
+    headerRow1: {
+      empty: '',
+      lamiCare: lamiCareHeader,
+      lamiPremium: lamiPremHeader,
+      lamiPartner: lamiPartHeader,
+    },
+    headerRow2: {
+      focus,
+      stability,
+      performance,
+      transformation,
+    },
+    rows,
+  };
+}
+
+function mapTechnicalServicesListingPage(
+  row: CompanyPageApiData,
+  fallback: TechnicalServicesListingData,
+): TechnicalServicesListingData {
+  const meta = row.meta;
+  if (!meta || typeof meta !== 'object') return fallback;
+  const m = meta as Record<string, unknown>;
+
+  const heroBg = extractMediaUrl(m.breadcrumb_image);
+  const heroTitle = pickString(row.title) || pickString(m.short_summary_title) || fallback.heroTitle;
+
+  const introHeading =
+    pickString(m.hero_title) || pickString(m.short_summary_title) || fallback.introSection.heading;
+  const shortSummaryDesc = pickString(m.short_summary_description);
+  const heroDescHtml = typeof m.hero_description === 'string' ? m.hero_description.trim() : '';
+  let paragraphs = buildIntroParagraphsFromHeroHtml(shortSummaryDesc, heroDescHtml);
+  if (paragraphs.length === 0) paragraphs = [...fallback.introSection.paragraphs];
+  const introImage =
+    extractMediaUrl(m.hero_image) ||
+    extractMediaUrl(m.short_summary_image) ||
+    fallback.introSection.image;
+  const introAlt = introHeading || fallback.introSection.imageAlt;
+
+  const upgradeFull = pickString(m.upgrade_expand_title);
+  const upgradeParts = upgradeFull
+    ? technicalUpgradeHeadingParts(upgradeFull, fallback.upgradeSection)
+    : {
+        heading: fallback.upgradeSection.heading,
+        headingHighlight: fallback.upgradeSection.headingHighlight,
+      };
+
+  const diffHeading =
+    pickString(m.differentiation_title) || fallback.serviceDifferentiation.heading;
+  const serviceDifferentiation = parseTechnicalDifferentiationFromMeta(
+    m.differentiation_items,
+    diffHeading,
+    fallback.serviceDifferentiation,
+  );
+
+  const opHeadingRaw = pickString(m.operational_title);
+  const opParts = opHeadingRaw
+    ? technicalOperationalHeadingParts(opHeadingRaw, fallback.operationalSuccess)
+    : {
+        heading: fallback.operationalSuccess.heading,
+        headingHighlight: fallback.operationalSuccess.headingHighlight,
+      };
+  const blocks = normalizeTechnicalPageBlocks(m.page_blocks);
+  const operationalCards = mapTechnicalPageBlocksToOperationalCards(
+    blocks,
+    fallback.operationalSuccess.cards,
+  );
+
+  return {
+    heroTitle,
+    heroBackgroundImage: heroBg || fallback.heroBackgroundImage,
+    introSection: {
+      heading: introHeading,
+      paragraphs,
+      image: introImage,
+      imageAlt: introAlt,
+    },
+    upgradeSection: {
+      ...fallback.upgradeSection,
+      heading: upgradeParts.heading,
+      headingHighlight: upgradeParts.headingHighlight,
+    },
+    serviceDifferentiation,
+    operationalSuccess: {
+      ...fallback.operationalSuccess,
+      heading: opParts.heading,
+      headingHighlight: opParts.headingHighlight,
+      cards: operationalCards,
+    },
+    connectSection: fallback.connectSection,
+  };
+}
+
+type TechnicalServicesListingCmsPayload = {
+  listing: TechnicalServicesListingData;
+  listingPath: string;
+  seo?: MarketingServicesSeo;
+};
+
+export const getTechnicalServicesListingCmsPayload = cache(
+  async (): Promise<TechnicalServicesListingCmsPayload | null> => {
+    const pageId = Number(TECHNICAL_SERVICES_PAGE_ID);
+    if (Number.isNaN(pageId) || pageId < 1) return null;
+
+    const row = await fetchCompanyPageById(pageId);
+    if (!row || row.layout !== 'technical_services' || !row.meta) return null;
+
+    const fallback = fakeGetTechnicalServicesListingData();
+    const listing = mapTechnicalServicesListingPage(row, fallback);
+    const listingPath = cmsSlugToListingPath(pickString(row.slug)) ?? '/technical-services';
+    const seo = mapMarketingSeoFromApi(row.seo ?? undefined);
+
+    return {
+      listing,
+      listingPath,
+      ...(seo ? { seo } : {}),
+    };
+  },
+);
 
 /** Normalize CMS page slug to a pathname (e.g. `servies/marketing-service` → `/servies/marketing-service`). */
 function cmsSlugToListingPath(slug: string | undefined | null): string | null {
@@ -1173,21 +1413,14 @@ export async function getAllTechnicalServiceSlugs(): Promise<string[]> {
 }
 
 /**
- * Fetches technical services listing page data
- * 
- * @returns Promise<TechnicalServicesListingData>
+ * Fetches technical services listing page data.
+ * Uses CMS `GET /v1/page/:id` when `layout` is `technical_services` (`TECHNICAL_SERVICES_PAGE_ID`, default `9`).
  */
-export async function fetchTechnicalServicesListingData(): Promise<TechnicalServicesListingData> {
-  if (useRealAPI()) {
-    // TODO: Replace with real API call when Laravel backend is ready
-    // const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.technicalServicesListing}`);
-    // if (!response.ok) throw new Error('Failed to fetch technical services listing data');
-    // return response.json();
-    throw new Error('Real API not yet implemented');
-  }
-  
+export const fetchTechnicalServicesListingData = cache(async function fetchTechnicalServicesListingData(): Promise<TechnicalServicesListingData> {
+  const payload = await getTechnicalServicesListingCmsPayload();
+  if (payload) return payload.listing;
   return fakeGetTechnicalServicesListingData();
-}
+});
 
 /**
  * Fetches company/about us page data
