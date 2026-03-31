@@ -22,6 +22,7 @@ import { fetcProductCategoryLayout3Page } from '@/lib/api/product_category_layou
 import { fetcProductCategoryLayout4Page } from '@/lib/api/product_category_layout_4';
 import { fetchProductData } from '@/lib/api';
 import { fetchProductLayoutPage } from '@/lib/api/product_layout_products';
+import { fetchSustainabilityLayout1Page } from '@/lib/api/sustainability_layout_1';
 import { buildApiMetadata } from '@/components/seo/buildApiMetadata';
 import { getSubCategoryPage } from '@/fake-api/page-builder';
 import ProductDetailLayout from '@/components/products/ProductDetailLayout';
@@ -40,7 +41,7 @@ interface PageProps {
 const PACKAGING_MAIN = 'packaging' as const;
 
 const componentMap: Record<string, ComponentType<{ data: DynamicPageData }>> = {
-  lamira1: LamiraPage,
+  lamira: LamiraPage,
   green: GreenEffortsPage,
   certifications: CertificationsAchievementsPage,
   ngos: NgosPage,
@@ -112,6 +113,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       slug: layout3Page.slug,
       title: layout3Page.title,
       seo: layout3Page.seo,
+    });
+  }
+
+  const sustainability1Page = await fetchSustainabilityLayout1Page(fullSlug);
+  if (sustainability1Page) {
+    return buildApiMetadata({
+      slug: sustainability1Page.slug,
+      title: sustainability1Page.title,
+      seo: sustainability1Page.seo,
     });
   }
   
@@ -324,6 +334,11 @@ export default async function DynamicPage({ params }: PageProps) {
         }}
       />
     );
+  }
+
+  const sustainability1Page = await fetchSustainabilityLayout1Page(fullSlug);
+  if (sustainability1Page) {
+    return <PickCartoonPage data={sustainability1Page.pageData} />;
   }
   
   const productSlug = slug?.[slug.length - 1];
