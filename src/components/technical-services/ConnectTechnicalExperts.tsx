@@ -14,8 +14,8 @@ type FormState = {
 };
 
 interface ConnectTechnicalExpertsProps {
-  heading: string;
-  headingHighlight: string;
+  heading?: string;
+  headingHighlight?: string;
   formTitle: string;
   illustrationImage: string;
   illustrationAlt: string;
@@ -27,8 +27,8 @@ interface ConnectTechnicalExpertsProps {
  * Displays a contact form section with illustration.
  */
 export default function ConnectTechnicalExperts({
-  heading,
-  headingHighlight,
+  heading = '',
+  headingHighlight = '',
   formTitle,
   illustrationImage,
   illustrationAlt
@@ -98,12 +98,14 @@ export default function ConnectTechnicalExperts({
     <section className="bg-gray-50 py-4 md:py-8 lg:py-12">
       <div className="container mx-auto px-4">
         {/* Section Heading */}
-        <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold text-black">
-            {heading.replace(headingHighlight, '').trim()}{' '}
-            <span className="text-[#009FE8]">{headingHighlight}</span>
-          </h2>
-        </div>
+        {(heading || headingHighlight) && headingHighlight ? (
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold text-black">
+              {heading.replace(headingHighlight, '').trim()}{' '}
+              <span className="text-[#009FE8]">{headingHighlight}</span>
+            </h2>
+          </div>
+        ) : null}
 
         {/* Main Card */}
         <div className="bg-white rounded-[50px] overflow-hidden">
