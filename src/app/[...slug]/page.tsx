@@ -18,8 +18,10 @@ import { fetchProductCategoriesPage } from '@/lib/api/product_categories';
 import { fetcProductCategoryLayout5Page } from '@/lib/api/product_category_layout_5';
 import { fetcProductCategoryLayout1Page } from '@/lib/api/product_category_layout_1';
 import { fetcProductCategoryLayout4Page } from '@/lib/api/product_category_layout_4';
+import { fetchProductData } from '@/lib/api';
 import { buildApiMetadata } from '@/components/seo/buildApiMetadata';
 import { getSubCategoryPage } from '@/fake-api/page-builder';
+import ProductDetailLayout from '@/components/products/ProductDetailLayout';
 
 import {
   getDynamicPageBySlug,
@@ -90,6 +92,39 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: layout4Page.title,
       seo: layout4Page.seo,
     });
+  }
+
+  const productSlug = slug?.[slug.length - 1];
+  if (productSlug) {
+    const productData = await fetchProductData(productSlug);
+    if (productData) {
+      const canonicalUrl = productData.seo.canonical_url
+        ? getCanonicalUrl(productData.seo.canonical_url)
+        : getCanonicalUrl(`/${fullSlug}`);
+
+      return {
+        title: productData.seo.meta_title,
+        description: productData.seo.meta_description,
+        alternates: {
+          canonical: canonicalUrl,
+        },
+        openGraph: {
+          title: productData.seo.og_title || productData.seo.meta_title,
+          description: productData.seo.og_description || productData.seo.meta_description,
+          images: productData.seo.og_image ? [productData.seo.og_image] : [productData.image],
+          url: canonicalUrl,
+          type: 'website',
+        },
+        twitter: {
+          card:
+            (productData.seo.twitter_card as 'summary_large_image' | 'summary' | 'player' | 'app') ||
+            'summary_large_image',
+          title: productData.seo.twitter_title || productData.seo.meta_title,
+          description: productData.seo.twitter_description || productData.seo.meta_description,
+          images: productData.seo.twitter_image ? [productData.seo.twitter_image] : [productData.image],
+        },
+      };
+    }
   }
 
   const subCategoryMock =
@@ -201,6 +236,14 @@ export default async function DynamicPage({ params }: PageProps) {
         }}
       />
     );
+  }
+
+  const productSlug = slug?.[slug.length - 1];
+  if (productSlug) {
+    const productData = await fetchProductData(productSlug);
+    if (productData) {
+      return <ProductDetailLayout product={productData} slugPath={fullSlug} />;
+    }
   }
 
   if (slug?.length === 1) {
