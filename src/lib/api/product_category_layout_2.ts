@@ -1,4 +1,17 @@
-import type { SustainableSolutionsSectionData } from '@/fake-api/page-builder';
+export type SustainableSolutionItem = {
+  id: string;
+  title: string;
+  description: string;
+  image?: string;
+  imageAlt?: string;
+  href?: string;
+};
+
+export type SustainableSolutionsSectionData = {
+  intro?: string;
+  items: SustainableSolutionItem[];
+  videoUrl?: string;
+};
 
 type ProductCategoryLayout2ApiResponse = {
   data?: {
@@ -32,6 +45,24 @@ type ProductCategoryLayout2ApiResponse = {
       twitter_image?: { url?: string | null } | null;
       sitemap_priority?: string | null;
     };
+    autofetch?: {
+      sustainable_products?:
+        | {
+            id?: number;
+            title?: string;
+            slug?: string;
+            short_summary_image?: { url?: string };
+            short_summary_description?: string;
+          }
+        | Array<{
+            id?: number;
+            title?: string;
+            slug?: string;
+            short_summary_image?: { url?: string };
+            short_summary_description?: string;
+          }>
+        | null;
+    };
   };
 };
 
@@ -60,31 +91,66 @@ function breadcrumbsForPage(slug: string, title: string) {
   ];
 }
 
+function toArray<T>(value: T | T[] | null | undefined): T[] {
+  if (!value) return [];
+  return Array.isArray(value) ? value : [value];
+}
+
+function slugToHref(slug?: string) {
+  if (!slug) return undefined;
+  const cleaned = slug.replace(/^\/+|\/+$/g, '');
+  return cleaned ? `/${cleaned}/` : undefined;
+}
+
 function buildSustainableSectionData(params: {
   title: string;
+  slug: string;
   meta?: ProductCategoryLayout2ApiResponse['data'] extends { meta?: infer M } ? M : never;
+  autofetch?: ProductCategoryLayout2ApiResponse['data'] extends { autofetch?: infer A }
+    ? A
+    : never;
   content?: string;
 }): SustainableSolutionsSectionData | null {
-  const { title, meta, content } = params;
+  const { title, slug, meta, autofetch, content } = params;
 
   const introSourceHtml = meta?.hero_description || content || '';
   const intro = stripHtml(introSourceHtml);
 
-  const itemDescription =
-    stripHtml(meta?.short_summary_description) || intro || stripHtml(content);
-  const itemImage = meta?.short_summary_icon?.url || meta?.banner_images?.url || undefined;
+  const rawProducts = toArray(autofetch?.sustainable_products);
+  const items = rawProducts
+    .map((item, idx) => {
+      const itemTitle = item.title?.trim() || `${meta?.hero_title || title} ${idx + 1}`;
+      const itemDescription = stripHtml(item.short_summary_description);
+      const itemImage = item.short_summary_image?.url || undefined;
+      const itemHref = slugToHref(item.slug);
 
-  const items = [];
+      if (!itemDescription && !itemImage && !itemTitle) return null;
 
-  if (itemDescription || itemImage) {
-    items.push({
-      id: 'sustainable-main',
-      title: meta?.hero_title || title,
-      description: itemDescription,
-      image: itemImage,
-      imageAlt: meta?.hero_title || title,
-      href: undefined,
-    });
+      return {
+        id: String(item.id ?? `sustainable-${idx}`),
+        title: itemTitle,
+        description: itemDescription,
+        image: itemImage,
+        imageAlt: itemTitle,
+        href: itemHref,
+      };
+    })
+    .filter(Boolean) as SustainableSolutionsSectionData['items'];
+
+  if (items.length === 0) {
+    const fallbackDescription =
+      stripHtml(meta?.short_summary_description) || intro || stripHtml(content);
+    const fallbackImage = meta?.short_summary_icon?.url || meta?.banner_images?.url || undefined;
+
+    if (fallbackDescription || fallbackImage) {
+      items.push({
+        id: 'sustainable-main',
+        title: meta?.hero_title || title,
+        description: fallbackDescription,
+        image: fallbackImage,
+        imageAlt: meta?.hero_title || title,
+      });
+    }
   }
 
   if (!intro && items.length === 0) {
@@ -94,6 +160,7 @@ function buildSustainableSectionData(params: {
   return {
     intro: intro || undefined,
     items,
+    videoUrl: meta?.video_url?.trim() || undefined,
   };
 }
 
@@ -103,7 +170,10 @@ export async function fetcProductCategoryLayout2Page(slug: string) {
 
   try {
     const apiSlugPath = buildPageApiPath(slug);
-    const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
+    const res = await fetch(
+      `${baseUrl}/v1/page/${apiSlugPath}?autofetch=sustainable_products`,
+      { cache: 'no-store' },
+    );
     if (!res.ok) return null;
 
     const { data } = (await res.json()) as ProductCategoryLayout2ApiResponse;
@@ -116,7 +186,9 @@ export async function fetcProductCategoryLayout2Page(slug: string) {
 
     const sustainableSectionData = buildSustainableSectionData({
       title: data.title,
+      slug: data.slug,
       meta,
+      autofetch: data.autofetch,
       content: data.content,
     });
 
