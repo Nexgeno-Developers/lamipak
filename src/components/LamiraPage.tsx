@@ -7,10 +7,10 @@ import LamiraSpecialAbilitiesSection from '@/components/components/LamiraSpecial
 import LamiraLovesSection from '@/components/components/LamiraLovesSection';
 import LamiraSharedGuideSection from '@/components/components/LamiraSharedGuideSection';
 import LamiraSocialWorldMomentsSection from '@/components/components/LamiraSocialWorldMomentsSection';
-import type { DynamicPageData } from '@/fake-api/dynamic-pages';
+import type { LamiraPageData } from '@/lib/api/sustainability_layout_2';
 
 export interface LamiraPageProps {
-  data: DynamicPageData;
+  data: LamiraPageData;
 }
 
 export default function LamiraPage({ data }: LamiraPageProps) {
@@ -19,8 +19,7 @@ export default function LamiraPage({ data }: LamiraPageProps) {
       <CompanyHero
         data={{
           title: data.title,
-          backgroundImage:
-            typeof data.heroBackgroundImage === 'string' ? data.heroBackgroundImage : '/about_banner.jpg',
+          backgroundImage: data.heroBackgroundImage || '/about_banner.jpg',
         }}
       />
 
