@@ -37,6 +37,8 @@ import { getSubCategoryPage } from '@/fake-api/page-builder';
 import ProductDetailLayout from '@/components/products/ProductDetailLayout';
 import { AboutUsPageSection } from '@/components/sections/AboutUsPageSection';
 import { fetchAboutUsLayout1Page } from '@/lib/api/about_us_layout_1';
+import { fetchAboutUsLayout2Page } from '@/lib/api/about_us_layout_2';
+import { IntroductionPageSection } from '@/components/sections/IntroductionPageSection';
 
 import {
   getDynamicPageBySlug,
@@ -79,6 +81,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       slug: aboutLayout.slug,
       title: aboutLayout.title,
       seo: aboutLayout.seo || {},
+    });
+  }
+
+  const introductionLayout = await fetchAboutUsLayout2Page(fullSlug);
+  if (introductionLayout) {
+    return buildApiMetadata({
+      slug: introductionLayout.slug,
+      title: introductionLayout.title,
+      seo: introductionLayout.seo || {},
     });
   }
 
@@ -329,6 +340,11 @@ export default async function DynamicPage({ params }: PageProps) {
         videoUrl={aboutLayout.page.videoUrl}
       />
     );
+  }
+
+  const introductionLayout = await fetchAboutUsLayout2Page(fullSlug);
+  if (introductionLayout) {
+    return <IntroductionPageSection data={introductionLayout.page} />;
   }
 
   const apiPage = await fetchProductCategoriesPage(fullSlug);
