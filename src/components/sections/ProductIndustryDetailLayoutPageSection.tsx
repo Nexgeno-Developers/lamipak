@@ -1,0 +1,188 @@
+import Image from 'next/image';
+import Link from 'next/link';
+import LatestInsights from '@/components/home/LatestInsights';
+import ContactSustainability from '@/components/products/ContactSustainability';
+import TechnicalConsultationCTA from '@/components/products/TechnicalConsultationCTA';
+import CategoryGlobalImpact from '@/components/products/CategoryGlobalImpact';
+import type { ProductIndustryDetailPageData } from '@/lib/api/product_industry_detail_layout';
+
+export default function ProductIndustryDetailLayoutPageSection({
+  data,
+}: {
+  data: ProductIndustryDetailPageData;
+}) {
+  return (
+    <main className="min-h-screen bg-gray-50">
+      {/* Hero */}
+      <section className="relative lg:pt-[220px] pt-[150px] lg:pb-[150px] pb-[50px] overflow-hidden">
+        <div className="absolute inset-0">
+          {data.heroBackgroundImage ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={data.heroBackgroundImage}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          ) : (
+            <div className="absolute inset-0 bg-gray-800" />
+          )}
+        </div>
+
+        <div className="relative z-10 h-full flex flex-col">
+          <div className="container mx-auto flex-1 flex flex-col justify-center px-4">
+            <div className="text-center">
+              <h1 className="text-[30px] md:text-5xl lg:text-6xl xl:text-6xl font-bold text-white tracking-tight">
+                {data.title}
+              </h1>
+              {data.shortDescription ? (
+                <p className="text-center text-lg md:text-xl lg:text-2xl text-white mb-8 leading-relaxed max-w-3xl mx-auto mt-6">
+                  {data.shortDescription}
+                </p>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Support Section */}
+      <section className="bg-gray-50 py-12 md:pt-24 md:pb-12 pb-8">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <p className="text-sm md:text-base text-[#009FE8] uppercase tracking-wide mb-2">
+              {data.support.subtitle}
+            </p>
+
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+              <span className="text-[#009FE8]">{data.support.title}</span>
+            </h2>
+
+            {data.support.description ? (
+              <p className="text-lg md:text-xl text-black mb-8 md:mb-12 max-w-4xl mx-auto leading-relaxed">
+                {data.support.description}
+              </p>
+            ) : null}
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-8 justify-items-center">
+              {data.support.items.map((item) => (
+                <div
+                  key={item.id}
+                  className="text-start group bg-[#EDF0F1] rounded-[50px] overflow-hidden transition-all duration-300 flex flex-col h-full p-[15px] w-full"
+                >
+                  <div className="relative w-full aspect-square overflow-hidden bg-white rounded-[50px] mb-4">
+                    {item.image ? (
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        className="object-contain group-hover:scale-105 transition-transform duration-300"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 20vw"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-gray-100" />
+                    )}
+                  </div>
+
+                  <div className="flex-1 flex flex-col pl-3 pr-3">
+                    <h3 className="text-lg md:text-xl font-bold text-black mb-2 pt-3">
+                      {item.title}
+                    </h3>
+                    {item.description ? (
+                      <p className="text-sm md:text-base text-gray-600 mb-2 flex-1 line-clamp-2">
+                        {item.description}
+                      </p>
+                    ) : null}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pilot Plant CTA */}
+      {data.pilotPlantCta ? <TechnicalConsultationCTA data={data.pilotPlantCta} /> : null}
+
+      {/* Global Impact */}
+      {data.globalImpact ? (
+        <CategoryGlobalImpact
+          data={{
+            label: data.globalImpact.label,
+            heading: data.globalImpact.heading,
+            image: data.globalImpact.image,
+            imageAlt: data.globalImpact.imageAlt,
+            features: data.globalImpact.features,
+          }}
+        />
+      ) : null}
+
+      {/* Recommended Products */}
+      {data.recommendedProducts.length ? (
+        <section className="bg-gray-50 py-8 md:py-12">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between mb-8 md:mb-12 relative">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
+                <span className="text-[#009FE8]">Recommended</span>{' '}
+                <span className="text-black">Products</span>
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+              {data.recommendedProducts.map((p) => (
+                <Link
+                  key={p.id}
+                  href={`/${p.slug}`}
+                  className="text-start group bg-[#EDF0F1] rounded-[50px] overflow-hidden transition-all duration-300 flex flex-col h-full p-[15px] w-full"
+                >
+                  <div className="relative w-full aspect-square overflow-hidden bg-white rounded-[50px] mb-4">
+                    {p.image ? (
+                      <Image
+                        src={p.image}
+                        alt={p.title}
+                        fill
+                        className="object-contain group-hover:scale-105 transition-transform duration-300"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-gray-100" />
+                    )}
+                  </div>
+
+                  <div className="flex-1 flex flex-col pl-3 pr-3">
+                    <h3 className="text-lg md:text-xl font-bold text-black mb-2 group-hover:text-[#009FE8] transition-colors pt-3">
+                      {p.title}
+                    </h3>
+                    {p.description ? (
+                      <p className="text-sm md:text-base text-gray-600 mb-2 flex-1 line-clamp-3">
+                        {p.description}
+                      </p>
+                    ) : null}
+                    <div className="flex items-center text-[#009FE8] text-sm md:text-base font-medium group-hover:text-[#0077B6] transition-colors mb-4">
+                      Explore
+                      <svg
+                        className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M17 8l4 4m0 0l-4 4m4-4H3"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <LatestInsights />
+      <ContactSustainability />
+    </main>
+  );
+}
+

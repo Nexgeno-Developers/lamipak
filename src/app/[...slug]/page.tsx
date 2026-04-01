@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import type { ComponentType } from 'react';
 import { getCanonicalUrl } from '@/config/site';
 
+import type { ProductCategory } from '@/lib/api';
+import { getCategoryBySlug, getProductsByCategory } from '@/lib/api';
 import LamiraPage from '@/components/LamiraPage';
 import GreenEffortsPage from '@/components/GreenEffortsPage';
 import CmsPage from '@/components/CmsPage';
@@ -44,6 +46,9 @@ import { fetchAboutUsLayout3Page } from '@/lib/api/about_us_layout_3';
 import { VisionMissionLayoutPageSection } from '@/components/sections/VisionMissionLayoutPageSection';
 import { fetchAboutUsLayout4Page } from '@/lib/api/about_us_layout_4';
 import GovernanceManagementLayoutPageSection from '@/components/sections/GovernanceManagementLayoutPageSection';
+import ProductCategoryPageSection from '@/components/sections/ProductCategoryPageSection';
+import { fetchProductIndustryDetailLayoutPage } from '@/lib/api/product_industry_detail_layout';
+import ProductIndustryDetailLayoutPageSection from '@/components/sections/ProductIndustryDetailLayoutPageSection';
 
 import {
   getDynamicPageBySlug,
@@ -79,6 +84,84 @@ async function fetchPageData(fullSlug: string) {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
+
+  const industryLayout = await fetchProductIndustryDetailLayoutPage(fullSlug);
+  if (industryLayout) {
+    return buildApiMetadata({
+      slug: industryLayout.slug,
+      title: industryLayout.title,
+      seo: industryLayout.seo || {},
+    });
+  }
+
+  if (fullSlug.startsWith('products/category/')) {
+    const categorySlug = fullSlug.replace(/^products\/category\//, '').split('/')[0] || '';
+    const category = await getCategoryBySlug(categorySlug);
+    if (!category) {
+      return {
+        title: 'Category Not Found',
+        description: 'The requested category could not be found.',
+      };
+    }
+
+    const seo = (category as any).seo as any;
+    const canonicalUrl = seo?.canonical_url
+      ? getCanonicalUrl(seo.canonical_url)
+      : getCanonicalUrl(`/products/category/${categorySlug}`);
+
+    return {
+      title:
+        seo?.meta_title ||
+        `${(category as any).name} | Lamipak - Premium Packaging Solutions`,
+      description:
+        seo?.meta_description ||
+        (category as any).description ||
+        `Explore our ${(category as any).name.toLowerCase()} products and solutions.`,
+      alternates: {
+        canonical: canonicalUrl,
+      },
+      openGraph: {
+        title:
+          seo?.og_title ||
+          seo?.meta_title ||
+          `${(category as any).name} | Lamipak`,
+        description:
+          seo?.og_description ||
+          seo?.meta_description ||
+          (category as any).description ||
+          `Explore our ${(category as any).name.toLowerCase()} products.`,
+        images: seo?.og_image
+          ? [seo.og_image]
+          : (category as any).image
+            ? [(category as any).image]
+            : [],
+        url: canonicalUrl,
+        type: 'website',
+      },
+      twitter: {
+        card:
+          (seo?.twitter_card as
+            | 'summary_large_image'
+            | 'summary'
+            | 'player'
+            | 'app') || 'summary_large_image',
+        title:
+          seo?.twitter_title ||
+          seo?.meta_title ||
+          `${(category as any).name} | Lamipak`,
+        description:
+          seo?.twitter_description ||
+          seo?.meta_description ||
+          (category as any).description ||
+          `Explore our ${(category as any).name.toLowerCase()} products.`,
+        images: seo?.twitter_image
+          ? [seo.twitter_image]
+          : (category as any).image
+            ? [(category as any).image]
+            : [],
+      },
+    };
+  }
 
   const governanceLayout = await fetchAboutUsLayout4Page(fullSlug);
   if (governanceLayout) {
@@ -363,6 +446,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function DynamicPage({ params }: PageProps) {
   const { slug } = await params;
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
+
+  const industryLayout = await fetchProductIndustryDetailLayoutPage(fullSlug);
+  if (industryLayout) {
+    return <ProductIndustryDetailLayoutPageSection data={industryLayout.page} />;
+  }
+
+  if (fullSlug.startsWith('products/category/')) {
+    const categorySlug = fullSlug.replace(/^products\/category\//, '').split('/')[0] || '';
+    const category = (await getCategoryBySlug(categorySlug)) as ProductCategory | null;
+    if (!category) notFound();
+    const products = await getProductsByCategory(categorySlug);
+    return <ProductCategoryPageSection category={category} products={products} />;
+  }
 
   const governanceLayout = await fetchAboutUsLayout4Page(fullSlug);
   if (governanceLayout) {
