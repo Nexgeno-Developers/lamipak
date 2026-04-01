@@ -66,6 +66,9 @@ type ProductCategoryLayout2ApiResponse = {
   };
 };
 
+type Layout2Meta = NonNullable<ProductCategoryLayout2ApiResponse['data']>['meta'];
+type Layout2Autofetch = NonNullable<ProductCategoryLayout2ApiResponse['data']>['autofetch'];
+
 function stripHtml(value?: string | null): string {
   if (!value) return '';
   return value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -105,10 +108,8 @@ function slugToHref(slug?: string) {
 function buildSustainableSectionData(params: {
   title: string;
   slug: string;
-  meta?: ProductCategoryLayout2ApiResponse['data'] extends { meta?: infer M } ? M : never;
-  autofetch?: ProductCategoryLayout2ApiResponse['data'] extends { autofetch?: infer A }
-    ? A
-    : never;
+  meta?: Layout2Meta;
+  autofetch?: Layout2Autofetch;
   content?: string;
 }): SustainableSolutionsSectionData | null {
   const { title, slug, meta, autofetch, content } = params;
