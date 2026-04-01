@@ -169,9 +169,27 @@ function pickHeadingHighlight(heading: string) {
 
 function safeParagraphsFromHtml(html?: string) {
   if (!html) return [];
-  const cleaned = stripHtml(html);
-  if (!cleaned) return [];
-  return [cleaned];
+
+  // Prefer extracting <p> blocks so we preserve paragraph breaks.
+  const paras: string[] = [];
+  const re = /<p\b[^>]*>([\s\S]*?)<\/p>/gi;
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(html))) {
+    const text = stripHtml(match[1]);
+    if (text) paras.push(text);
+  }
+
+  if (paras.length > 0) return paras;
+
+  // Fallback: treat <br> and newlines as paragraph separators.
+  const fallback = html
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/\r\n/g, '\n')
+    .split(/\n{2,}/g)
+    .map((chunk) => stripHtml(chunk))
+    .filter(Boolean);
+
+  return fallback;
 }
 
 export async function fetchTechnicalServicesLayoutPage(slug: string) {
