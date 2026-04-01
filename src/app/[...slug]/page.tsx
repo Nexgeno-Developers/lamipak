@@ -39,6 +39,9 @@ import { AboutUsPageSection } from '@/components/sections/AboutUsPageSection';
 import { fetchAboutUsLayout1Page } from '@/lib/api/about_us_layout_1';
 import { fetchAboutUsLayout2Page } from '@/lib/api/about_us_layout_2';
 import { IntroductionPageSection } from '@/components/sections/IntroductionPageSection';
+import { VisionMissionPageSection } from '@/components/sections/VisionMissionPageSection';
+import { fetchAboutUsLayout3Page } from '@/lib/api/about_us_layout_3';
+import { VisionMissionLayoutPageSection } from '@/components/sections/VisionMissionLayoutPageSection';
 
 import {
   getDynamicPageBySlug,
@@ -75,6 +78,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
 
+  if (fullSlug === 'vision-mission') {
+    const page = await fetchAboutUsLayout3Page(fullSlug);
+    if (page) {
+      return buildApiMetadata({
+        slug: page.slug,
+        title: page.title,
+        seo: page.seo || {},
+      });
+    }
+  }
+
   const aboutLayout = await fetchAboutUsLayout1Page(fullSlug);
   if (aboutLayout) {
     return buildApiMetadata({
@@ -90,6 +104,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       slug: introductionLayout.slug,
       title: introductionLayout.title,
       seo: introductionLayout.seo || {},
+    });
+  }
+
+  const visionLayout = await fetchAboutUsLayout3Page(fullSlug);
+  if (visionLayout) {
+    return buildApiMetadata({
+      slug: visionLayout.slug,
+      title: visionLayout.title,
+      seo: visionLayout.seo || {},
     });
   }
 
@@ -329,6 +352,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function DynamicPage({ params }: PageProps) {
   const { slug } = await params;
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
+
+  if (fullSlug === 'vision-mission') {
+    const page = await fetchAboutUsLayout3Page(fullSlug);
+    if (page) return <VisionMissionLayoutPageSection data={page.page} />;
+
+    const data = await fetchPageData('vision-mission');
+    if (!data) notFound();
+    return <VisionMissionPageSection data={data} />;
+  }
 
   const aboutLayout = await fetchAboutUsLayout1Page(fullSlug);
   if (aboutLayout) {
