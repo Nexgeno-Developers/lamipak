@@ -3,6 +3,8 @@ import NewsletterSubscription from '@/components/home/NewsletterSubscription';
 import { HeroWithBreadcrumbsSection } from '@/components/sections/HeroWithBreadcrumbsSection';
 import Image from 'next/image';
 import Link from 'next/link';
+import LatestNewsClient, { type MarketingNewsItem } from '@/components/marketing/LatestNewsClient';
+import { fetchMarketingLatestNews, fetchMarketingPressNews } from '@/lib/api';
 
 export type MarketingHighlight = {
   id: string;
@@ -33,11 +35,16 @@ export type MarketingServicesLayoutPageData = {
   services: MarketingServiceListItem[];
 };
 
-export default function MarketingServicesLayoutPage({
+export default async function MarketingServicesLayoutPage({
   data,
 }: {
   data: MarketingServicesLayoutPageData;
 }) {
+  const [trendItems, pressItems] = await Promise.all([
+    fetchMarketingLatestNews().catch(() => [] as MarketingNewsItem[]),
+    fetchMarketingPressNews().catch(() => [] as MarketingNewsItem[]),
+  ]);
+
   return (
     <main className="min-h-screen bg-gray-50">
       <HeroWithBreadcrumbsSection
@@ -182,6 +189,9 @@ export default function MarketingServicesLayoutPage({
           </div>
         </section>
       )}
+
+      {/* Latest News (static for now; uses local fallback data) */}
+      <LatestNewsClient trendItems={trendItems} pressItems={pressItems} />
 
       <CallToAction />
       <NewsletterSubscription />
