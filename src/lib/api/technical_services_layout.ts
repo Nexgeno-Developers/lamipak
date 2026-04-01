@@ -42,6 +42,7 @@ type TechnicalServicesApiResponse = {
             slug?: string;
             short_summary_icon?: Media;
             short_summary_image?: Media;
+            short_summary_video_url?: string;
             short_summary_title?: string;
             short_summary_description?: string;
           }
@@ -51,6 +52,7 @@ type TechnicalServicesApiResponse = {
             slug?: string;
             short_summary_icon?: Media;
             short_summary_image?: Media;
+            short_summary_video_url?: string;
             short_summary_title?: string;
             short_summary_description?: string;
           }>
@@ -234,7 +236,7 @@ export async function fetchTechnicalServicesLayoutPage(slug: string) {
             description: stripHtml(item.short_summary_description) || '',
             thumbnail: mediaUrl(item.short_summary_icon) || mediaUrl(item.short_summary_image),
             thumbnailAlt: title,
-            videoUrl: '',
+            videoUrl: typeof item.short_summary_video_url === 'string' ? item.short_summary_video_url.trim() : '',
             ctaText: 'Discover More',
             ctaLink: slugToHref(itemSlug),
           };

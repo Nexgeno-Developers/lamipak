@@ -88,14 +88,14 @@ export default function VideoModalClient({
         <div className="absolute inset-0 bg-[#0E233C] opacity-35" />
 
         <span className="absolute inset-0 flex items-center justify-center">
-          <span className="w-20 h-20 rounded-full bg-white/40 backdrop-blur-sm flex items-center justify-center">
-            <span className="w-16 h-16 rounded-full bg-white/50 flex items-center justify-center">
+          <span className="">
+            <span className="">
               <Image
                 src="/play_icon_image.png"
                 alt=""
-                width={32}
-                height={32}
-                className="w-8 h-8"
+                width={100}
+                height={100}
+                className="w-[70px] h-[70px]"
                 aria-hidden
               />
             </span>

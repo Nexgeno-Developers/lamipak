@@ -40,6 +40,14 @@ function getYouTubeThumbnail(inputUrl: string): string | null {
   return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
 }
 
+function isEmbeddableVideoUrl(inputUrl: string): boolean {
+  const url = inputUrl.trim();
+  if (!url) return false;
+  if (/\.mp4(\?|#|$)/i.test(url) || /\.webm(\?|#|$)/i.test(url)) return true;
+  if (/youtube\.com\/embed\//i.test(url) || /player\.vimeo\.com\/video\//i.test(url)) return true;
+  return Boolean(getYouTubeId(url));
+}
+
 export default async function TechnicalServicesLayoutPage({
   data,
 }: {
@@ -124,7 +132,7 @@ export default async function TechnicalServicesLayoutPage({
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               {data.upgradeSection.cards.map((card) => {
-                const hasVideo = Boolean(card.videoUrl);
+                const hasVideo = Boolean(card.videoUrl) && isEmbeddableVideoUrl(card.videoUrl);
                 const poster =
                   (card.videoUrl ? getYouTubeThumbnail(card.videoUrl) : null) ||
                   card.thumbnail ||
