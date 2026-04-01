@@ -78,8 +78,8 @@ export default function VideoModalBanner({
           ) : (
             <div className="absolute inset-0 w-full h-full bg-gray-800" />
           )}
-          <div className="absolute inset-0 bg-[#0e233c3d]" />
-          <div className="absolute inset-0 backdrop-blur-sm" />
+          {/* <div className="absolute inset-0 bg-[#0e233c3d]" /> */}
+          {/* <div className="absolute inset-0 backdrop-blur-sm" /> */}
         </div>
 
         <div className="absolute inset-0 flex items-center justify-center">

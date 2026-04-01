@@ -225,7 +225,7 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
         <div className="absolute inset-0">
           {backgroundInnerEl}
           {/* Dark Overlay */}
-          <div className="absolute inset-0 bg-[#0e233c3d]" />
+          {/* <div className="absolute inset-0 bg-[#0e233c3d]" /> */}
           {/* Blur Effect */}
           {/* <div className="absolute inset-0 backdrop-blur-sm" /> */}
         </div>
