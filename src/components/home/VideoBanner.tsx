@@ -8,6 +8,8 @@ import type { VideoBannerData } from '@/fake-api/homepage';
 
 interface VideoBannerProps {
   videoOnly?: boolean; // If true, hides text and CTA, shows only video
+  /** Optional: override video URL instead of homepage video */
+  videoUrl?: string;
 }
 
 function parseYouTubeId(url: string): string | null {
@@ -49,7 +51,7 @@ function getYouTubeEmbedSrc(videoUrl: string): { id: string; src: string } | nul
  * 
  * Fetches homepage data and renders the video banner with play functionality.
  */
-export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}) {
+export default function VideoBanner({ videoOnly = false, videoUrl }: VideoBannerProps = {}) {
   const [data, setData] = useState<VideoBannerData | null>(null);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [playerReady, setPlayerReady] = useState(false);
@@ -59,11 +61,20 @@ export default function VideoBanner({ videoOnly = false }: VideoBannerProps = {}
 
   useEffect(() => {
     async function loadData() {
+      if (videoUrl) {
+        setData({
+          title: '',
+          ctaText: '',
+          ctaLink: '',
+          videoUrl,
+        });
+        return;
+      }
       const homepageData = await fetchHomepageData();
       setData(homepageData.videoBanner);
     }
     loadData();
-  }, []);
+  }, [videoUrl]);
 
   useEffect(() => {
     // Reset to best quality when video changes

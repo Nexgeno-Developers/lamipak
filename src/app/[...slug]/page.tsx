@@ -35,6 +35,8 @@ import TechnicalServiceDetailLayoutPage from '../../components/pages/TechnicalSe
 import { buildApiMetadata } from '@/components/seo/buildApiMetadata';
 import { getSubCategoryPage } from '@/fake-api/page-builder';
 import ProductDetailLayout from '@/components/products/ProductDetailLayout';
+import { AboutUsPageSection } from '@/components/sections/AboutUsPageSection';
+import { fetchAboutUsLayout1Page } from '@/lib/api/about_us_layout_1';
 
 import {
   getDynamicPageBySlug,
@@ -70,6 +72,15 @@ async function fetchPageData(fullSlug: string) {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
+
+  const aboutLayout = await fetchAboutUsLayout1Page(fullSlug);
+  if (aboutLayout) {
+    return buildApiMetadata({
+      slug: aboutLayout.slug,
+      title: aboutLayout.title,
+      seo: aboutLayout.seo || {},
+    });
+  }
 
   const apiPage = await fetchProductCategoriesPage(fullSlug);
   if (apiPage) {
@@ -307,6 +318,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function DynamicPage({ params }: PageProps) {
   const { slug } = await params;
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
+
+  const aboutLayout = await fetchAboutUsLayout1Page(fullSlug);
+  if (aboutLayout) {
+    return (
+      <AboutUsPageSection
+        hero={aboutLayout.page.hero}
+        statistics={aboutLayout.page.statistics}
+        journey={aboutLayout.page.journey}
+        videoUrl={aboutLayout.page.videoUrl}
+      />
+    );
+  }
 
   const apiPage = await fetchProductCategoriesPage(fullSlug);
   if (apiPage) {
