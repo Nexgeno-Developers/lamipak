@@ -119,8 +119,8 @@ export default function MarketingServiceDetailLayoutPage({
 
       {/* Video */}
       {data.videoUrl ? (
-        <section className="bg-gray-50 py-4 md:py-8">
-          <div className="container mx-auto px-4">
+        <section className="bg-gray-50 py-4 md:pb-8">
+          <div className="">
             <ProductCategoryVideoEmbed videoUrl={data.videoUrl} />
           </div>
         </section>
