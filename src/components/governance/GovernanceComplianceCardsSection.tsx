@@ -24,6 +24,7 @@ export type GovernanceComplianceCardsSectionData = {
     title: string;
     description: string;
     iconId: GovernanceComplianceCardIconId;
+    iconUrl?: string;
   }>;
 };
 
@@ -51,7 +52,18 @@ function IconOutline({
   );
 }
 
-function renderCardIcon(iconId: GovernanceComplianceCardIconId) {
+function renderCardIcon(iconId: GovernanceComplianceCardIconId, iconUrl?: string) {
+  if (iconUrl) {
+    return (
+      <Image
+        src={iconUrl}
+        alt=""
+        width={30}
+        height={30}
+        className="w-[30px] h-[30px] object-contain"
+      />
+    );
+  }
   switch (iconId) {
     case 'supplier':
       return (
@@ -141,7 +153,7 @@ export default function GovernanceComplianceCardsSection({
                 >
                   <div className="flex items-center gap-3">
                     <div className="mt-0.5 shrink-0">
-                      {renderCardIcon(card.iconId)}
+                      {renderCardIcon(card.iconId, card.iconUrl)}
                     </div>
 
                     <div>

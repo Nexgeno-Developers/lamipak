@@ -42,6 +42,8 @@ import { IntroductionPageSection } from '@/components/sections/IntroductionPageS
 import { VisionMissionPageSection } from '@/components/sections/VisionMissionPageSection';
 import { fetchAboutUsLayout3Page } from '@/lib/api/about_us_layout_3';
 import { VisionMissionLayoutPageSection } from '@/components/sections/VisionMissionLayoutPageSection';
+import { fetchAboutUsLayout4Page } from '@/lib/api/about_us_layout_4';
+import GovernanceManagementLayoutPageSection from '@/components/sections/GovernanceManagementLayoutPageSection';
 
 import {
   getDynamicPageBySlug,
@@ -77,6 +79,15 @@ async function fetchPageData(fullSlug: string) {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
+
+  const governanceLayout = await fetchAboutUsLayout4Page(fullSlug);
+  if (governanceLayout) {
+    return buildApiMetadata({
+      slug: governanceLayout.slug,
+      title: governanceLayout.title,
+      seo: governanceLayout.seo || {},
+    });
+  }
 
   if (fullSlug === 'vision-mission') {
     const page = await fetchAboutUsLayout3Page(fullSlug);
@@ -352,6 +363,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function DynamicPage({ params }: PageProps) {
   const { slug } = await params;
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
+
+  const governanceLayout = await fetchAboutUsLayout4Page(fullSlug);
+  if (governanceLayout) {
+    return (
+      <GovernanceManagementLayoutPageSection
+        data={governanceLayout.page}
+        activePath={`/${fullSlug}`}
+      />
+    );
+  }
 
   const visionLayout = await fetchAboutUsLayout3Page(fullSlug);
   if (visionLayout) {

@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export type GovernanceFrameworkIconId =
   | 'framework'
@@ -14,6 +15,7 @@ export type GovernanceFrameworkCardData = {
   title: string;
   subtitle: string;
   iconId: GovernanceFrameworkIconId;
+  iconUrl?: string;
 };
 
 export type GovernanceFrameworkSectionData = {
@@ -67,7 +69,18 @@ function IconOutline({
   );
 }
 
-function renderIcon(iconId: GovernanceFrameworkIconId) {
+function renderIcon(iconId: GovernanceFrameworkIconId, iconUrl?: string) {
+  if (iconUrl) {
+    return (
+      <Image
+        src={iconUrl}
+        alt=""
+        width={30}
+        height={30}
+        className="w-[30px] h-[30px] object-contain"
+      />
+    );
+  }
   switch (iconId) {
     case 'framework':
       return (
@@ -169,7 +182,7 @@ export default function GovernanceFrameworkSection({
                 key={card.id}
                 title={card.title}
                 subtitle={card.subtitle}
-                icon={renderIcon(card.iconId)}
+                icon={renderIcon(card.iconId, card.iconUrl)}
               />
             ))}
           </div>

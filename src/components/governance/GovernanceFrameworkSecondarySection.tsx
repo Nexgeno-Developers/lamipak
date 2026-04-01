@@ -3,6 +3,7 @@ import type {
   GovernanceFrameworkCardData,
   GovernanceFrameworkIconId,
 } from '@/components/governance/GovernanceFrameworkSection';
+import Image from 'next/image';
 
 type FrameworkCardProps = {
   title: string;
@@ -103,7 +104,18 @@ const DEFAULT_DATA: GovernanceFrameworkSecondarySectionData = {
   ],
 };
 
-function renderIcon(iconId: GovernanceFrameworkIconId) {
+function renderIcon(iconId: GovernanceFrameworkIconId, iconUrl?: string) {
+  if (iconUrl) {
+    return (
+      <Image
+        src={iconUrl}
+        alt=""
+        width={30}
+        height={30}
+        className="w-[30px] h-[30px] object-contain"
+      />
+    );
+  }
   switch (iconId) {
     case 'framework':
       return (
@@ -193,7 +205,7 @@ export default function GovernanceFrameworkSecondarySection({
                 key={card.id}
                 title={card.title}
                 subtitle={card.subtitle}
-                icon={renderIcon(card.iconId)}
+                icon={renderIcon(card.iconId, card.iconUrl)}
               />
             ))}
           </div>

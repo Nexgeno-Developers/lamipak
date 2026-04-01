@@ -5,6 +5,7 @@ export type GovernanceGrcCardData = {
   title: string;
   description: string;
   iconId: GovernanceGrcIconId;
+  iconUrl?: string;
 };
 
 export type GovernanceGrcSectionData = {
@@ -14,7 +15,20 @@ export type GovernanceGrcSectionData = {
   cards: GovernanceGrcCardData[];
 };
 
-function renderIcon(iconId: GovernanceGrcIconId) {
+import Image from 'next/image';
+
+function renderIcon(iconId: GovernanceGrcIconId, iconUrl?: string) {
+  if (iconUrl) {
+    return (
+      <Image
+        src={iconUrl}
+        alt=""
+        width={40}
+        height={40}
+        className="w-10 h-10 object-contain"
+      />
+    );
+  }
   const common = {
     viewBox: '0 0 24 24',
     fill: 'none',
@@ -134,7 +148,7 @@ export default function GovernanceGrcSection({
                 className="bg-[#EDF0F1] rounded-[28px] md:rounded-[50px] px-5 py-6 text-center"
               >
                 <div className="flex justify-center text-[#009FE8]">
-                  {renderIcon(card.iconId)}
+                  {renderIcon(card.iconId, card.iconUrl)}
                 </div>
 
                 <h3 className="mt-5 text-[15px] md:text-base font-bold text-black">
