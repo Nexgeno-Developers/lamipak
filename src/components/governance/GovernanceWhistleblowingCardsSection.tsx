@@ -12,6 +12,7 @@ export type GovernanceWhistleblowingCardsSectionData = {
     title: string;
     description: string;
     iconId: GovernanceWhistleblowingCardsIconId;
+    iconUrl?: string;
   }>;
 };
 
@@ -37,7 +38,20 @@ function IconOutline({
   );
 }
 
-function renderCardIcon(iconId: GovernanceWhistleblowingCardsIconId) {
+import Image from 'next/image';
+
+function renderCardIcon(iconId: GovernanceWhistleblowingCardsIconId, iconUrl?: string) {
+  if (iconUrl) {
+    return (
+      <Image
+        src={iconUrl}
+        alt=""
+        width={34}
+        height={34}
+        className="w-[34px] h-[34px] object-contain"
+      />
+    );
+  }
   switch (iconId) {
     case 'confidentiality':
       return (
@@ -84,7 +98,7 @@ export default function GovernanceWhistleblowingCardsSection({
                 className="bg-[#EDF0F1] rounded-[28px] md:rounded-[50px] px-6 md:px-8 py-10 md:py-16 text-center"
               >
                 <div className="text-[#009FE8] flex justify-center">
-                  {renderCardIcon(card.iconId)}
+                  {renderCardIcon(card.iconId, card.iconUrl)}
                 </div>
 
                 <div className="mt-5 text-black font-bold text-[24px] md:text-[36px] leading-tight">

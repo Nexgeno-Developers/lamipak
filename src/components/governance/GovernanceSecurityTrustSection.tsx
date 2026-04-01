@@ -10,6 +10,7 @@ export type GovernanceSecurityTrustCard = {
   title: string;
   description: string;
   iconId: GovernanceSecurityTrustIconId;
+  iconUrl?: string;
 };
 
 export type GovernanceSecurityTrustSectionData = {
@@ -48,7 +49,20 @@ function IconOutline({
   );
 }
 
-function renderCardIcon(iconId: GovernanceSecurityTrustIconId) {
+import Image from 'next/image';
+
+function renderCardIcon(iconId: GovernanceSecurityTrustIconId, iconUrl?: string) {
+  if (iconUrl) {
+    return (
+      <Image
+        src={iconUrl}
+        alt=""
+        width={30}
+        height={30}
+        className="w-[30px] h-[30px] object-contain"
+      />
+    );
+  }
   switch (iconId) {
     case 'confidentiality':
       return (
@@ -114,7 +128,7 @@ export default function GovernanceSecurityTrustSection({
                 >
                   <div className="flex items-center gap-3">
                     <div className="text-[#009FE8] mt-0.5">
-                      {renderCardIcon(card.iconId)}
+                      {renderCardIcon(card.iconId, card.iconUrl)}
                     </div>
 
                     <div>
