@@ -353,13 +353,9 @@ export default async function DynamicPage({ params }: PageProps) {
   const { slug } = await params;
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
 
-  if (fullSlug === 'vision-mission') {
-    const page = await fetchAboutUsLayout3Page(fullSlug);
-    if (page) return <VisionMissionLayoutPageSection data={page.page} />;
-
-    const data = await fetchPageData('vision-mission');
-    if (!data) notFound();
-    return <VisionMissionPageSection data={data} />;
+  const visionLayout = await fetchAboutUsLayout3Page(fullSlug);
+  if (visionLayout) {
+    return <VisionMissionLayoutPageSection data={visionLayout.page} />;
   }
 
   const aboutLayout = await fetchAboutUsLayout1Page(fullSlug);
@@ -377,6 +373,13 @@ export default async function DynamicPage({ params }: PageProps) {
   const introductionLayout = await fetchAboutUsLayout2Page(fullSlug);
   if (introductionLayout) {
     return <IntroductionPageSection data={introductionLayout.page} />;
+  }
+
+  // Back-compat fallback for older fake API slugs.
+  if (fullSlug === 'vision-mission') {
+    const data = await fetchPageData('vision-mission');
+    if (!data) notFound();
+    return <VisionMissionPageSection data={data} />;
   }
 
   const apiPage = await fetchProductCategoriesPage(fullSlug);
