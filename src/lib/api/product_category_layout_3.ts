@@ -177,8 +177,6 @@ export async function fetcProductCategoryLayout3Page(slug: string) {
             type: 'lamiStrawLanding',
             data: landingData,
           },
-          { type: 'callToAction' },
-          { type: 'newsletterSubscription' },
         ],
       },
     };
