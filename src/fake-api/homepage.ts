@@ -104,7 +104,10 @@ export interface CommercialServiceCard {
   imageAlt: string;
   ctaText: string;
   ctaLink: string;
-  icon: 'gear' | 'megaphone'; // Icon type
+  /** CMS icon (e.g. SVG URL); when set, used instead of `icon` glyphs */
+  iconUrl?: string;
+  /** Fallback inline icon when `iconUrl` is absent */
+  icon: 'gear' | 'megaphone';
 }
 
 export interface CommercialServicesData {

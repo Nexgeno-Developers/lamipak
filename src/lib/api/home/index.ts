@@ -274,6 +274,8 @@ function mapServiceToCard(
   const imageUrl = svc.short_summary_image?.url?.trim();
   if (!imageUrl) return null;
 
+  const iconFromApi = svc.short_summary_icon?.url?.trim();
+
   return {
     id: String(id ?? slug),
     title: (svc.short_summary_title || svc.title || '').trim() || 'Service',
@@ -282,6 +284,7 @@ function mapServiceToCard(
     imageAlt: (svc.title || svc.short_summary_title || 'Service').trim(),
     ctaText: 'Read More',
     ctaLink: slug ? `/${slug.replace(/^\/+/, '')}` : '/services',
+    ...(iconFromApi ? { iconUrl: iconFromApi } : {}),
     icon,
   };
 }
