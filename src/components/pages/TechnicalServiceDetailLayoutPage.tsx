@@ -86,9 +86,10 @@ export default function TechnicalServiceDetailLayoutPage({
                 {data.title}
               </h2>
               {data.introDescriptionHtml ? (
-                <div
+                <RichText
+                  as="div"
+                  html={data.introDescriptionHtml}
                   className="text-lg md:text-xl text-black leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: data.introDescriptionHtml }}
                 />
               ) : (
                 <RichText

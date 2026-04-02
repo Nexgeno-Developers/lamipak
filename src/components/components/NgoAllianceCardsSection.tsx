@@ -1,4 +1,5 @@
 import type { NgoAllianceCardsSectionData } from '@/lib/api/sustainability_layout_5';
+import { RichText } from '@/components/common/RichText';
 
 export interface NgoAllianceCardsSectionProps {
   data: NgoAllianceCardsSectionData;
@@ -10,7 +11,7 @@ export default function NgoAllianceCardsSection({ data }: NgoAllianceCardsSectio
       <div className="container mx-auto px-4">
         <div className="grid gap-6 md:grid-cols-3 md:gap-6 lg:gap-8">
           {data.cards.map((card) => (
-            <div key={card.id} dangerouslySetInnerHTML={{ __html: card.html }} />
+            <RichText key={card.id} as="div" html={card.html} />
           ))}
         </div>
       </div>

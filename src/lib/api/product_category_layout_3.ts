@@ -1,3 +1,5 @@
+import { decodeHtmlEntities } from '@/lib/htmlText';
+
 export type LamiStrawIconId = 'u' | 'telescope' | 'i' | 'flow';
 
 export type LamiStrawCardItem = {
@@ -73,8 +75,26 @@ function slugToHref(slug?: string) {
 }
 
 function splitToParagraphs(html?: string | null): string[] {
-  const text = stripHtml(html);
-  if (!text) return [];
+  if (!html) return [];
+
+  // 1) Prefer explicit <p> blocks if the editor stored real paragraphs.
+  const pRe = /<p\b[^>]*>([\s\S]*?)<\/p>/gi;
+  const matches = [...html.matchAll(pRe)];
+  if (matches.length) {
+    return matches
+      .map((m) => decodeHtmlEntities(stripHtml(m[1])).trim())
+      .filter(Boolean);
+  }
+
+  // 2) Fallback for editor variants that use <br> tags or plain text newlines.
+  const decoded = decodeHtmlEntities(html);
+  const normalized = decoded
+    .replace(/<br\s*\/?>\s*<br\s*\/?>/gi, '\n\n')
+    .replace(/<br\s*\/?>/gi, '\n');
+
+  // Remove any remaining HTML tags but keep newlines.
+  const text = normalized.replace(/<[^>]+>/g, '');
+
   return text
     .split(/\r?\n\s*\r?\n/)
     .map((p) => p.trim())
