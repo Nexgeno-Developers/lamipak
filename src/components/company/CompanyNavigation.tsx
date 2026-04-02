@@ -67,7 +67,7 @@ export default function CompanyNavigation({ data, activePath }: CompanyNavigatio
                 className="flex flex-col items-center group transition-transform hover:scale-105 min-w-0"
               >
                 {/* Circular Icon Container */}
-                <div className={`w-20 h-20 md:w-[180px] md:h-[180px] rounded-full flex items-center justify-center mb-2 md:mb-3 transition-colors ${
+                <div className={`w-20 h-20 md:w-[180px] md:h-[180px] rounded-full flex items-center justify-center mb-2 md:mb-6 transition-colors ${
                   isActive
                     ? 'bg-[#009FE8]'
                     : 'bg-[#EDF0F1] '

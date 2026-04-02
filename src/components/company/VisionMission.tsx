@@ -63,7 +63,7 @@ export default function VisionMission({ data }: VisionMissionProps) {
 
         {/* Lower Section - Content Overlay */}
         <div className="relative pb-4 md:pb-12 lg:pb-16 pt-8 md:pt-12 lg:pt-16">
-          <div className="container w-[92%] mx-auto bg-[#009FE8CC] lg:p-[60px] px-[15px] py-[30px] rounded-[50px] lg:backdrop-blur-[35px]">
+          <div className="container w-[92%] mx-auto bg-[#009fe863] lg:p-[60px] px-[15px] py-[30px] rounded-[50px] lg:backdrop-blur-[35px]">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
               {/* Left Column - Tagline and Description */}
               <div className="lg:col-span-1 flex flex-col justify-center">
@@ -80,7 +80,7 @@ export default function VisionMission({ data }: VisionMissionProps) {
                 <div className="bg-[#ffffffde] rounded-2xl p-6 md:p-8 shadow-lg h-full">
                   {/* Icon */}
                   <div className="mb-4 md:mb-6 flex items-center">
-                    <div className="text-[#009FE8] mr-3">
+                    <div className="text-[#333] mr-3">
                       {getIcon(data.vision.icon)}
                     </div>
                     {/* Blue drop shape */}
@@ -104,7 +104,7 @@ export default function VisionMission({ data }: VisionMissionProps) {
                 <div className="bg-[#ffffffde]  rounded-2xl p-6 md:p-8 shadow-lg h-full">
                   {/* Icon */}
                   <div className="mb-4 md:mb-6 flex items-center">
-                    <div className="text-[#009FE8] mr-3">
+                    <div className="text-[#333] mr-3">
                       {getIcon(data.mission.icon)}
                     </div>
                     {/* Blue drop shape */}

@@ -98,8 +98,8 @@ export default function OurValues({ data }: OurValuesProps) {
             </div>
 
             {/* Caption */}
-            <div className="bg-gray-100 rounded-lg p-4 md:p-6 lg:mt-[-110px] mt-[-30px] relative z-10">
-              <p className="text-[14px] md:text-base text-black leading-relaxed">
+            <div className="bg-[#EDF0F1] rounded-lg p-4 md:p-6 lg:mt-[-110px] mt-[-30px] relative z-10">
+              <p className="text-[14px] md:text-base text-black leading-relaxed text-center">
                 {selectedValue.caption}
               </p>
             </div>

@@ -34,7 +34,7 @@ export function VisionMissionLayoutPageSection({
       <VisionMission data={data.visionMission} />
       <OurValues data={data.ourValues} />
 
-      <div className="pt-0 md:pt-12 bg-gray-50">
+      <div className="pt-0 md:pt-4 bg-gray-50">
         <CallToAction />
       </div>
       <NewsletterSubscription />
