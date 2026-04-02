@@ -3,7 +3,7 @@ import type { ComponentType } from 'react';
 import type { CarbonNetZeroPillarsSectionData } from '@/lib/api/sustainability_layout_6';
 
 type SectionData = CarbonNetZeroPillarsSectionData;
-type IconKey = SectionData['items'][number]['icon'];
+type IconKey = NonNullable<SectionData['items'][number]['icon']>;
 
 function IconCarbonVerification({ color }: { color: string }) {
   return (
@@ -138,14 +138,24 @@ export default function SustainabilityPillarsGridSection({ data }: Sustainabilit
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {data.items.map((item) => {
-            const Icon = ICON_MAP[item.icon];
+            const iconKey: IconKey = item.icon ?? 'carbon_verification';
+            const Icon = ICON_MAP[iconKey];
             return (
               <article
                 key={item.id}
                 className="rounded-[50px] p-6  md:p-8 bg-[#EDF0F1]"
               >
-                <div className="mb-4">
-                  <Icon color={accent} />
+                <div className="mb-4 flex h-12 items-center">
+                  {item.iconImageUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={item.iconImageUrl}
+                      alt=""
+                      className="h-12 w-12 object-contain"
+                    />
+                  ) : (
+                    <Icon color={accent} />
+                  )}
                 </div>
                 <h3 className="text-base font-semibold text-black md:text-lg">{item.title}</h3>
                 <RichText

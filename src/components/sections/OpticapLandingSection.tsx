@@ -5,6 +5,7 @@ import ConnectTechnicalExperts from '@/components/technical-services/ConnectTech
 import { ProductCategoryVideoEmbed } from '@/components/sections/ProductCategoryVideoEmbed';
 import CallToAction from '../home/CallToAction';
 import NewsletterSubscription from '../home/NewsletterSubscription';
+import { RichText } from '@/components/common/RichText';
 
 export function OpticapLandingSection({ data }: { data: OpticapLandingSectionData }) {
   const hasHtmlIntro = Boolean(data.descriptionHtml?.trim());
@@ -40,9 +41,10 @@ export function OpticapLandingSection({ data }: { data: OpticapLandingSectionDat
               </h2>
 
               {hasHtmlIntro ? (
-                <div
+                <RichText
+                  as="div"
                   className="space-y-4 text-sm md:text-base text-black leading-relaxed [&_p]:mb-4 [&_strong]:font-bold"
-                  dangerouslySetInnerHTML={{ __html: data.descriptionHtml! }}
+                  html={data.descriptionHtml!}
                 />
               ) : (
                 <div className="space-y-4">
@@ -80,9 +82,10 @@ export function OpticapLandingSection({ data }: { data: OpticapLandingSectionDat
                 </div>
 
                 {data.productFeaturesDescriptionHtml?.trim() ? (
-                  <div
+                  <RichText
+                    as="div"
                     className="mt-4 text-sm md:text-base text-black leading-relaxed [&_p]:mb-3 [&_strong]:font-bold"
-                    dangerouslySetInnerHTML={{ __html: data.productFeaturesDescriptionHtml }}
+                    html={data.productFeaturesDescriptionHtml}
                   />
                 ) : (
                   <p className="mt-4 text-sm md:text-base text-black leading-relaxed">

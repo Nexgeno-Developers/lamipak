@@ -1,3 +1,4 @@
+import { RichText } from '@/components/common/RichText';
 import type { CarbonNetZeroRoadmapSectionData } from '@/lib/api/sustainability_layout_6';
 
 type SectionData = CarbonNetZeroRoadmapSectionData;
@@ -69,27 +70,44 @@ export default function CarbonNeutralityRoadmapSection({ data }: CarbonNeutralit
 
           <div className="relative z-10 grid gap-14 md:grid-cols-3 md:gap-8 lg:gap-10">
             {data.milestones.map((m) => {
-              const Icon = ICONS[m.icon];
+              const iconKey = m.icon ?? 'target';
+              const Icon = ICONS[iconKey];
               return (
                 <div key={m.id} className="flex flex-col items-center text-center">
                   <div
                     className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full md:h-[5.25rem] md:w-[5.25rem]"
                     style={{ backgroundColor: circleBg }}
                   >
-                    <Icon color={accent} />
+                    {m.iconImageUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={m.iconImageUrl}
+                        alt=""
+                        className="h-8 w-8 object-contain md:h-9 md:w-9"
+                      />
+                    ) : (
+                      <Icon color={accent} />
+                    )}
                   </div>
                   <p className="mt-5 text-xl font-bold md:text-2xl" style={{ color: accent }}>
                     {m.year}
                   </p>
                   <h3 className="mt-2 text-base font-bold text-black md:text-lg">{m.title}</h3>
-                  <ul className="mt-4 max-w-[280px] space-y-2.5 text-left text-sm leading-snug text-black md:text-[0.9375rem]">
-                    {m.bullets.map((line, idx) => (
-                      <li key={idx} className="flex gap-2.5">
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-900" aria-hidden />
-                        <span>{line}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {m.descriptionHtml ? (
+                    <RichText
+                      html={m.descriptionHtml}
+                      className="mt-4 w-full max-w-[280px] text-left text-sm leading-snug text-black md:text-[0.9375rem]"
+                    />
+                  ) : (
+                    <ul className="mt-4 max-w-[280px] space-y-2.5 text-left text-sm leading-snug text-black md:text-[0.9375rem]">
+                      {(m.bullets ?? []).map((line, idx) => (
+                        <li key={idx} className="flex gap-2.5">
+                          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-900" aria-hidden />
+                          <span>{line}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               );
             })}
@@ -100,11 +118,22 @@ export default function CarbonNeutralityRoadmapSection({ data }: CarbonNeutralit
           className="mx-auto mt-14 max-w-xl rounded-full px-2 py-4 text-center md:mt-12 md:px-4 md:py-5"
           style={{ backgroundColor: barBg }}
         >
-          <a href={data.summaryBarUrl} target="_blank" rel="noopener noreferrer" className="block">
+          {data.summaryBarUrl?.trim() ? (
+            <a
+              href={data.summaryBarUrl.trim()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block"
+            >
+              <p className="text-sm font-bold uppercase tracking-wide text-white md:text-[22px]">
+                {data.summaryBarText}
+              </p>
+            </a>
+          ) : (
             <p className="text-sm font-bold uppercase tracking-wide text-white md:text-[22px]">
               {data.summaryBarText}
             </p>
-          </a>
+          )}
         </div>
       </div>
     </section>

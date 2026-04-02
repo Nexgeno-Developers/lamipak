@@ -6,6 +6,7 @@ import { HeroWithBreadcrumbsSection } from '@/components/sections/HeroWithBreadc
 import type { MarketingServiceDetailPageData } from '@/lib/api/marketing_service_detail_layout';
 import { ProductCategoryVideoEmbed } from '@/components/sections/ProductCategoryVideoEmbed';
 import ConnectTechnicalExperts from '@/components/technical-services/ConnectTechnicalExperts';
+import { RichText } from '@/components/common/RichText';
 
 export default function MarketingServiceDetailLayoutPage({
   data,
@@ -45,9 +46,10 @@ export default function MarketingServiceDetailLayoutPage({
                 {data.introTitle}
               </h2>
               {data.heroDescriptionHtml ? (
-                <div
+                <RichText
+                  as="div"
                   className="text-base md:text-lg text-black leading-relaxed mb-6"
-                  dangerouslySetInnerHTML={{ __html: data.heroDescriptionHtml }}
+                  html={data.heroDescriptionHtml}
                 />
               ) : (
                 <p className="text-base md:text-lg text-black leading-relaxed mb-6">

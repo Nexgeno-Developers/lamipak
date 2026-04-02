@@ -1,4 +1,5 @@
 import type { GreenPhotovoltaicProjectSectionData } from '@/lib/api/sustainability_layout_3';
+import { RichText } from '@/components/common/RichText';
 
 export interface GreenPhotovoltaicProjectSectionProps {
   data: GreenPhotovoltaicProjectSectionData;
@@ -10,7 +11,7 @@ export default function GreenPhotovoltaicProjectSection({
   return (
     <>
       {data.htmlItems.map((html, idx) => (
-        <div key={idx} dangerouslySetInnerHTML={{ __html: html }} />
+        <RichText key={idx} as="div" html={html} />
       ))}
     </>
   );

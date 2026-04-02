@@ -76,9 +76,10 @@ export default async function MarketingServicesLayoutPage({
                 {data.heroTitle}
               </h2>
               {data.heroDescriptionHtml ? (
-                <div
+                <RichText
+                  as="div"
+                  html={data.heroDescriptionHtml}
                   className="text-base text-black leading-relaxed mb-4 md:mb-6"
-                  dangerouslySetInnerHTML={{ __html: data.heroDescriptionHtml }}
                 />
               ) : null}
             </div>

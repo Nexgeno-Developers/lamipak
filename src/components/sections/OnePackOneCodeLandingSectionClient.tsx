@@ -109,7 +109,7 @@ function FeatureBlock({
         </div>
         <div className="space-y-3">
           {feature.bullets.map((b, idx) => (
-            <p key={`${feature.id}-${idx}`} className="flex items-start gap-3 text-sm md:text-base text-black/70">
+            <p key={`${feature.id}-${idx}`} className="flex items-start gap-3 text-sm md:text-base text-black">
               <span className="leading-relaxed">{b}</span>
             </p>
           ))}
@@ -163,11 +163,10 @@ export default function OnePackOneCodeLandingSectionClient({
         </div>
       </section>
 
-      <section className="bg-white">
+      
         <div className="container mx-auto px-4 py-4">
           <HeroBreadcrumbs items={data.breadcrumbs} />
         </div>
-      </section>
 
       <section className="bg-gray-50 pb-12">
         <div className="container mx-auto px-4">

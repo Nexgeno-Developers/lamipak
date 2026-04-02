@@ -114,14 +114,17 @@ function buildSustainableSectionData(params: {
 }): SustainableSolutionsSectionData | null {
   const { title, slug, meta, autofetch, content } = params;
 
-  const introSourceHtml = meta?.hero_description || content || '';
-  const intro = stripHtml(introSourceHtml);
+  // Keep editor HTML (including <p> tags) so frontend can render
+  // real paragraph breaks and decode entities like &amp;.
+  const intro = (meta?.hero_description ?? content ?? '').trim();
 
   const rawProducts = toArray(autofetch?.sustainable_products);
   const items = rawProducts
     .map((item, idx) => {
       const itemTitle = item.title?.trim() || `${meta?.hero_title || title} ${idx + 1}`;
-      const itemDescription = stripHtml(item.short_summary_description);
+      // Keep the editor HTML/plain text as-is.
+      // RichText handles entity decoding + paragraph breaks.
+      const itemDescription = (item.short_summary_description ?? '').trim();
       const itemImage = item.short_summary_image?.url || undefined;
       const itemHref = slugToHref(item.slug);
 
@@ -139,8 +142,7 @@ function buildSustainableSectionData(params: {
     .filter(Boolean) as SustainableSolutionsSectionData['items'];
 
   if (items.length === 0) {
-    const fallbackDescription =
-      stripHtml(meta?.short_summary_description) || intro || stripHtml(content);
+    const fallbackDescription = (meta?.short_summary_description ?? intro ?? content ?? '').trim();
     const fallbackImage = meta?.short_summary_icon?.url || meta?.banner_images?.url || undefined;
 
     if (fallbackDescription || fallbackImage) {
