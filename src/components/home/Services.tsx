@@ -1,4 +1,5 @@
 import type { Service } from '@/fake-api/homepage';
+import { RichText } from '@/components/common/RichText';
 
 interface ServicesProps {
   services: Service[];
@@ -23,7 +24,7 @@ export default function Services({ services }: ServicesProps) {
               <h3 className="text-xl font-semibold mb-3 text-black">
                 {service.title}
               </h3>
-              <p className="text-gray-600">{service.description}</p>
+              <RichText as="div" html={service.description} className="text-gray-600" />
             </div>
           ))}
         </div>

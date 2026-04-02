@@ -8,6 +8,7 @@ import NewsletterSubscription from '@/components/home/NewsletterSubscription';
 import VerticalTabsFeatures from '@/components/technical-services/VerticalTabsFeatures';
 import ConnectTechnicalExperts from '@/components/technical-services/ConnectTechnicalExperts';
 import type { TechnicalServiceDetailPageData } from '@/lib/api/technical_service_detail_layout';
+import { RichText } from '@/components/common/RichText';
 
 export default function TechnicalServiceDetailLayoutPage({
   data,
@@ -90,7 +91,11 @@ export default function TechnicalServiceDetailLayoutPage({
                   dangerouslySetInnerHTML={{ __html: data.introDescriptionHtml }}
                 />
               ) : (
-                <p className="text-lg md:text-xl text-black leading-relaxed">{data.introDescription}</p>
+                <RichText
+                  as="div"
+                  html={data.introDescription}
+                  className="text-lg md:text-xl text-black leading-relaxed"
+                />
               )}
             </div>
           </div>
@@ -140,7 +145,11 @@ export default function TechnicalServiceDetailLayoutPage({
                     <h3 className="text-xl md:text-2xl font-bold text-[#009FE8] mb-4">
                       {item.title}
                     </h3>
-                    <p className="text-black mb-2 flex-1 leading-relaxed">{item.description}</p>
+                    <RichText
+                      as="div"
+                      html={item.description}
+                      className="text-black mb-2 flex-1 leading-relaxed"
+                    />
                     <div className="inline-flex items-center text-[#009FE8] font-medium hover:text-[#0077B6] transition-colors group">
                       Discover More
                       <svg

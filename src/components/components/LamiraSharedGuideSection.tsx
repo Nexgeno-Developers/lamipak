@@ -1,3 +1,5 @@
+import { RichText } from '@/components/common/RichText';
+
 export interface LamiraSharedGuideSectionData {
   image: string;
   imageAlt: string;
@@ -34,9 +36,11 @@ export default function LamiraSharedGuideSection({
               <span className="text-[#00A0E3]">{data.headingHighlight}</span>
               {data.headingSuffix ? ` ${data.headingSuffix}` : ''}
             </h2>
-            <p className="mt-4 text-sm md:text-base text-black leading-relaxed">
-              {data.description}
-            </p>
+            <RichText
+              as="div"
+              html={data.description}
+              className="mt-4 text-sm md:text-base text-black leading-relaxed"
+            />
           </div>
         </div>
       </div>

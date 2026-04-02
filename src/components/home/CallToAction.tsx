@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { fetchHomepageData } from '@/lib/api';
+import { RichText } from '@/components/common/RichText';
 
 /**
  * Call to Action Component (Server Component)
@@ -21,9 +22,11 @@ export default async function CallToAction() {
                 <span className="text-black">{data.heading}</span>{' '}
                 <span className="text-[#009FE8]">{data.headingHighlight}</span>
               </h2>
-              <p className="text-black text-[14px] md:text-lg">
-                {data.description}
-              </p>
+              <RichText
+                as="div"
+                html={data.description}
+                className="text-black text-[14px] md:text-lg"
+              />
             </div>
 
             {/* Right Side - CTA Button */}

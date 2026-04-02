@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import LatestNewsClient, { type MarketingNewsItem } from '@/components/marketing/LatestNewsClient';
 import { fetchMarketingLatestNews, fetchMarketingPressNews } from '@/lib/api';
+import { RichText } from '@/components/common/RichText';
 
 export type MarketingHighlight = {
   id: string;
@@ -157,9 +158,11 @@ export default async function MarketingServicesLayoutPage({
                           {item.title}
                         </h3>
                         {item.description ? (
-                          <p className="text-base text-black leading-relaxed mb-4 md:mb-6">
-                            {item.description}
-                          </p>
+                          <RichText
+                            as="div"
+                            html={item.description}
+                            className="text-base text-black leading-relaxed mb-4 md:mb-6"
+                          />
                         ) : null}
                         <Link
                           href={item.href}

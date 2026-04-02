@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { type ReactElement } from 'react';
 import type { CategoryShowcaseSectionData, CategoryShowcaseItem } from '@/fake-api/page-builder';
+import { RichText } from '@/components/common/RichText';
 
 function IconRoll() {
   return (
@@ -134,7 +135,10 @@ function ShowcaseCard({ item }: { item: CategoryShowcaseItem }) {
           <h3 className="text-[22px] md:text-[24px] font-bold uppercase tracking-tight mb-2 leading-none text-black">
             {item.title}
           </h3>
-          <p className="text-xs md:text-sm leading-relaxed text-black mb-3 line-clamp-3">{item.description}</p>
+          <RichText
+            html={item.description}
+            className="text-xs md:text-sm leading-relaxed text-black mb-3 line-clamp-3"
+          />
           <div className="text-[11px] font-bold uppercase tracking-wider text-[#55C8FF]">
             {item.ctaLabel}
             <span className="inline-block ml-1" aria-hidden>
@@ -162,6 +166,7 @@ function ShowcaseCard({ item }: { item: CategoryShowcaseItem }) {
     <Link href={item.href} className={cardClass}>
       {inner}
     </Link>
+    
   );
 }
 
@@ -171,7 +176,13 @@ export function CategoryShowcaseSection({ data }: { data: CategoryShowcaseSectio
       <div className="container mx-auto px-4">
         {(data.headline || data.intro) && (
           <div className="text-center  mx-auto mb-10 md:mb-14">
-            {data.intro && <p className="text-black text-[14px] md:text-base leading-relaxed">{data.intro}</p>}
+            {data.intro && (
+              <RichText
+                as="div"
+                html={data.intro}
+                className="text-black text-[14px] md:text-base leading-relaxed"
+              />
+            )}
           </div>
         )}
 

@@ -1,3 +1,4 @@
+import { RichText } from '@/components/common/RichText';
 import type { ComponentType } from 'react';
 import type { CarbonNetZeroPillarsSectionData } from '@/lib/api/sustainability_layout_6';
 
@@ -147,9 +148,11 @@ export default function SustainabilityPillarsGridSection({ data }: Sustainabilit
                   <Icon color={accent} />
                 </div>
                 <h3 className="text-base font-semibold text-black md:text-lg">{item.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-black md:text-base">
-                  {item.description}
-                </p>
+                <RichText
+                  as="div"
+                  html={item.description}
+                  className="mt-3 text-sm leading-relaxed text-black md:text-base"
+                />
               </article>
             );
           })}

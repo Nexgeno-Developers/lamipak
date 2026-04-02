@@ -1,4 +1,5 @@
 import type { ProductDetailsSectionData } from '@/fake-api/page-builder';
+import { RichText } from '@/components/common/RichText';
 
 export function ProductDetailsSection({ data }: { data: ProductDetailsSectionData }) {
   return (
@@ -18,15 +19,19 @@ export function ProductDetailsSection({ data }: { data: ProductDetailsSectionDat
           <div className="min-w-0">
             <h2 className="text-3xl md:text-4xl font-bold text-black">{data.title}</h2>
             {data.shortDescription && (
-              <p className="mt-4 text-black/80 text-base md:text-lg leading-relaxed">
-                {data.shortDescription}
-              </p>
+              <RichText
+                as="div"
+                html={data.shortDescription}
+                className="mt-4 text-black/80 text-base md:text-lg leading-relaxed"
+              />
             )}
 
             {data.description && (
-              <div className="mt-6 text-black/80 leading-relaxed text-base md:text-lg">
-                {data.description}
-              </div>
+              <RichText
+                as="div"
+                html={data.description}
+                className="mt-6 text-black/80 leading-relaxed text-base md:text-lg"
+              />
             )}
 
             {data.technicalSheetUrl && (

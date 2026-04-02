@@ -5,6 +5,7 @@ import VideoModalClient from '@/components/common/VideoModalClient';
 import CallToAction from '@/components/home/CallToAction';
 import ConnectTechnicalExperts from '@/components/technical-services/ConnectTechnicalExperts';
 import type { TechnicalServicesLayoutPageData } from '@/lib/api/technical_services_layout';
+import { RichText } from '@/components/common/RichText';
 
 function getYouTubeId(inputUrl: string): string | null {
   try {
@@ -321,7 +322,11 @@ export default async function TechnicalServicesLayoutPage({
                     <h3 className="text-xl md:text-2xl font-bold text-[#009FE8] mb-4">
                       {card.title}
                     </h3>
-                    <p className="text-black mb-2 flex-1 leading-relaxed">{card.description}</p>
+                    <RichText
+                      as="div"
+                      html={card.description}
+                      className="text-black mb-2 flex-1 leading-relaxed"
+                    />
                     <Link
                       href={card.ctaLink}
                       className="inline-flex items-center text-[#009FE8] font-medium hover:text-[#0077B6] transition-colors group"

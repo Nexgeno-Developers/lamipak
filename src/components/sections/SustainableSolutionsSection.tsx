@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { SustainableSolutionsSectionData } from '@/lib/api/product_category_layout_2';
 import { ProductCategoryVideoEmbed } from './ProductCategoryVideoEmbed';
+import { RichText } from '@/components/common/RichText';
 
 export function SustainableSolutionsSection({
   data,
@@ -49,9 +50,11 @@ export function SustainableSolutionsSection({
                       <h3 className="text-[#009FE8] text-lg md:text-[32px] font-bold tracking-wide lg:mb-4 mb-2">
                         {item.title}
                       </h3>
-                      <p className="text-black text-sm md:text-base leading-relaxed">
-                        {item.description}
-                      </p>
+                      <RichText
+                        as="div"
+                        html={item.description}
+                        className="text-black text-sm md:text-base leading-relaxed"
+                      />
                       {item.href && (
                         <div className="lg:mt-6 mt-3">
                           <Link

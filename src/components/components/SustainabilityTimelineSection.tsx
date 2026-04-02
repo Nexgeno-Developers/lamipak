@@ -1,3 +1,4 @@
+import { RichText } from '@/components/common/RichText';
 import type { SustainabilityTimelineSectionData } from '@/lib/api/sustainability_layout_4';
 
 type SectionData = SustainabilityTimelineSectionData;
@@ -53,9 +54,11 @@ export default function SustainabilityTimelineSection({ data }: SustainabilityTi
                 <div className="min-w-0 flex-1 pt-0.5">
                   <p className="text-sm font-medium text-gray-400 md:text-base">{item.year}</p>
                   <h3 className="mt-1 text-lg font-bold text-black md:text-xl">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-black md:text-base">
-                    {item.description}
-                  </p>
+                  <RichText
+                    as="div"
+                    html={item.description}
+                    className="mt-2 text-sm leading-relaxed text-black md:text-base"
+                  />
                 </div>
               </div>
             </li>

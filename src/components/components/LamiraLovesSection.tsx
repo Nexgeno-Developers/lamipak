@@ -1,3 +1,5 @@
+import { RichText } from '@/components/common/RichText';
+
 export interface LamiraLovesSectionData {
   headingPrefix?: string;
   headingHighlight: string;
@@ -46,9 +48,11 @@ export default function LamiraLovesSection({ data }: LamiraLovesSectionProps) {
               </div>
 
               <h3 className="mt-6 text-xl md:text-2xl font-bold text-[#00A0E3]">{item.title}</h3>
-              <p className="mt-2 text-sm md:text-base text-[#1f2937] leading-relaxed mb-4">
-                {item.description}
-              </p>
+              <RichText
+                as="div"
+                html={item.description}
+                className="mt-2 text-sm md:text-base text-[#1f2937] leading-relaxed mb-4"
+              />
             </article>
           ))}
         </div>

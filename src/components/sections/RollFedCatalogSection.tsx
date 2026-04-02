@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { ProductCategoryVideoEmbed } from '@/components/sections/ProductCategoryVideoEmbed';
 import CallToAction from '../home/CallToAction';
 import NewsletterSubscription from '../home/NewsletterSubscription';
+import { RichText } from '@/components/common/RichText';
 
 type RollFedCatalogProduct = {
   id: string;
@@ -80,9 +81,9 @@ export function RollFedCatalogSection({ data }: { data: RollFedCatalogSectionPro
       <p className="text-[#009FE8] text-xs md:text-sm font-semibold text-center tracking-wider uppercase mb-5">
         {data.eyebrow}
       </p>
-        <p className="text-center text-black text-sm md:text-base leading-relaxed  mx-auto">
-          {data.intro}
-        </p>
+        <div className="text-center text-black text-sm md:text-base leading-relaxed mx-auto">
+          <RichText html={data.intro} />
+        </div>
 
 
         <ProductGrid title={data.standardTitle} products={data.standardProducts} />

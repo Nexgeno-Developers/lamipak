@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import type { GreenBuildingCertificationsSectionData } from '@/lib/api/sustainability_layout_4';
+import { RichText } from '@/components/common/RichText';
 
 type SectionData = GreenBuildingCertificationsSectionData;
 
@@ -86,7 +87,11 @@ export default function GreenBuildingCertificationsSection({ data }: GreenBuildi
                   <span className="text-sm font-medium text-gray-500 md:text-base">{card.year}</span>
                 </div>
 
-                <p className="text-sm leading-relaxed text-black md:text-base">{card.description}</p>
+                <RichText
+                  as="div"
+                  html={card.description}
+                  className="text-sm leading-relaxed text-black md:text-base"
+                />
 
                 {card.badgeImages && card.badgeImages.length > 0 ? (
                   <div className="flex flex-wrap items-center gap-3 pt-5">

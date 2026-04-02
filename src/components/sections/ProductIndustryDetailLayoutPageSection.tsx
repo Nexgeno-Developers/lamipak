@@ -5,6 +5,7 @@ import ContactSustainability from '@/components/products/ContactSustainability';
 import TechnicalConsultationCTA from '@/components/products/TechnicalConsultationCTA';
 import CategoryGlobalImpact from '@/components/products/CategoryGlobalImpact';
 import type { ProductIndustryDetailPageData } from '@/lib/api/product_industry_detail_layout';
+import { RichText } from '@/components/common/RichText';
 
 export default function ProductIndustryDetailLayoutPageSection({
   data,
@@ -35,9 +36,11 @@ export default function ProductIndustryDetailLayoutPageSection({
                 {data.title}
               </h1>
               {data.shortDescription ? (
-                <p className="text-center text-lg md:text-xl lg:text-2xl text-white mb-8 leading-relaxed max-w-3xl mx-auto mt-6">
-                  {data.shortDescription}
-                </p>
+                <RichText
+                  as="div"
+                  html={data.shortDescription}
+                  className="text-center text-lg md:text-xl lg:text-2xl text-white mb-8 leading-relaxed max-w-3xl mx-auto mt-6"
+                />
               ) : null}
             </div>
           </div>
@@ -57,9 +60,11 @@ export default function ProductIndustryDetailLayoutPageSection({
             </h2>
 
             {data.support.description ? (
-              <p className="text-lg md:text-xl text-black mb-8 md:mb-12 max-w-4xl mx-auto leading-relaxed">
-                {data.support.description}
-              </p>
+              <RichText
+                as="div"
+                html={data.support.description}
+                className="text-lg md:text-xl text-black mb-8 md:mb-12 max-w-4xl mx-auto leading-relaxed"
+              />
             ) : null}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-8 justify-items-center">
@@ -87,9 +92,11 @@ export default function ProductIndustryDetailLayoutPageSection({
                       {item.title}
                     </h3>
                     {item.description ? (
-                      <p className="text-sm md:text-base text-gray-600 mb-2 flex-1 line-clamp-2">
-                        {item.description}
-                      </p>
+                      <RichText
+                        as="div"
+                        html={item.description}
+                        className="text-sm md:text-base text-gray-600 mb-2 flex-1 line-clamp-2"
+                      />
                     ) : null}
                   </div>
                 </div>
@@ -152,9 +159,11 @@ export default function ProductIndustryDetailLayoutPageSection({
                       {p.title}
                     </h3>
                     {p.description ? (
-                      <p className="text-sm md:text-base text-gray-600 mb-2 flex-1 line-clamp-3">
-                        {p.description}
-                      </p>
+                      <RichText
+                        as="div"
+                        html={p.description}
+                        className="text-sm md:text-base text-gray-600 mb-2 flex-1 line-clamp-3"
+                      />
                     ) : null}
                     <div className="flex items-center text-[#009FE8] text-sm md:text-base font-medium group-hover:text-[#0077B6] transition-colors mb-4">
                       Explore

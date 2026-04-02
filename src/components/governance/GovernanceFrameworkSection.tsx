@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { RichText } from '@/components/common/RichText';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -155,9 +156,11 @@ export default function GovernanceFrameworkSection({
               {data.title}
             </h2>
 
-            <p className="mt-4 md:mt-6 text-[14px] md:text-base text-gray-700 leading-relaxed">
-              {data.description}
-            </p>
+            <RichText
+              as="div"
+              html={data.description}
+              className="mt-4 md:mt-6 text-[14px] md:text-base text-gray-700 leading-relaxed"
+            />
 
             <div className="mt-10 flex flex-wrap gap-4">
               <a

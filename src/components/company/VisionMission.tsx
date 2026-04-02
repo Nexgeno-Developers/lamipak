@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import type { VisionMissionSection } from '@/fake-api/company';
+import { RichText } from '@/components/common/RichText';
 
 interface VisionMissionProps {
   data: VisionMissionSection;
@@ -70,9 +71,11 @@ export default function VisionMission({ data }: VisionMissionProps) {
                 <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight">
                   {data.tagline}
                 </h2>
-                <p className="text-[14px] md:text-lg text-white/90 leading-relaxed">
-                  {data.description}
-                </p>
+                <RichText
+                  as="div"
+                  html={data.description}
+                  className="text-[14px] md:text-lg text-white/90 leading-relaxed"
+                />
               </div>
 
               {/* Middle Column - Vision Box */}

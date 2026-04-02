@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import type { OurValuesSection } from '@/fake-api/company';
+import { RichText } from '@/components/common/RichText';
 
 interface OurValuesProps {
   data: OurValuesSection;
@@ -31,9 +32,11 @@ export default function OurValues({ data }: OurValuesProps) {
           <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold text-[#009FE8] mb-4">
             {data.heading}
           </h2>
-          <p className="text-[14px] md:text-lg text-black max-w-3xl mx-auto">
-            {data.description}
-          </p>
+          <RichText
+            as="div"
+            html={data.description}
+            className="text-[14px] md:text-lg text-black max-w-3xl mx-auto"
+          />
         </div>
 
         {/* Content Grid */}

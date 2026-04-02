@@ -4,6 +4,7 @@ import CompanyHero from '@/components/company/CompanyHero';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import CallToAction from '@/components/home/CallToAction';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
+import { RichText } from '@/components/common/RichText';
 import type { DynamicPageData } from '@/fake-api/dynamic-pages';
 
 export interface PickCartoonPageProps {
@@ -67,9 +68,11 @@ export default function PickCartoonPage({ data }: PickCartoonPageProps) {
                       </div>
 
                       
-                      <p className="text-base md:text-lg text-black leading-relaxed mt-8">
-                        {item.description}
-                      </p>
+                      <RichText
+                        as="div"
+                        html={item.description}
+                        className="text-base md:text-lg text-black leading-relaxed mt-8"
+                      />
                     </div>
                   ))}
                 </div>
@@ -117,9 +120,11 @@ export default function PickCartoonPage({ data }: PickCartoonPageProps) {
                     ) : null}
                   </h2>
                   {section.description ? (
-                    <p className="mt-3 text-base text-black mb-6 leading-relaxed">
-                      {section.description}
-                    </p>
+                    <RichText
+                      as="div"
+                      html={section.description}
+                      className="mt-3 text-base text-black mb-6 leading-relaxed"
+                    />
                   ) : null}
                 </div>
 
@@ -144,9 +149,11 @@ export default function PickCartoonPage({ data }: PickCartoonPageProps) {
                       </div>
                       <div className="px-5 pb-6 pt-4">
                         <h3 className="text-[24px] font-bold text-[#009FE8]">{item.title}</h3>
-                        <p className="mt-2 text-base text-black leading-relaxed mb-4">
-                          {item.description}
-                        </p>
+                        <RichText
+                          as="div"
+                          html={item.description}
+                          className="mt-2 text-base text-black leading-relaxed mb-4"
+                        />
                       </div>
                     </div>
                   ))}
@@ -270,9 +277,11 @@ export default function PickCartoonPage({ data }: PickCartoonPageProps) {
                   </div>
                 </div>
 
-                <p className="mx-auto mt-6 max-w-5xl text-center text-[10px] md:text-base text-black leading-relaxed">
-                  {section.description}
-                </p>
+                <RichText
+                  as="div"
+                  html={section.description}
+                  className="mx-auto mt-6 max-w-5xl text-center text-[10px] md:text-base text-black leading-relaxed"
+                />
 
                 {section.ctaLink ? (
                   <div className="mt-4 text-center">
