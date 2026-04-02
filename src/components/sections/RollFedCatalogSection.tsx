@@ -24,10 +24,11 @@ type RollFedCatalogSectionPropsData = {
 };
 
 function ProductCard({ product }: { product: RollFedCatalogProduct }) {
+  const href = product.slug?.startsWith('/') ? product.slug : `/${product.slug}`;
   return (
     <Link
       // href={`/products/${product.slug}`}
-      href='/'
+      href={href}
       className="rounded-[50px] bg-[#EDF0F1] p-5 md:p-[20px] flex flex-col transition-all"
     >
       <div className="relative rounded-[50px] flex items-center justify-center">
