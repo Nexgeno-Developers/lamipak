@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { RichText } from '@/components/common/RichText';
 
 export interface LamiraMeetSectionData {
   titlePrefix?: string;
@@ -7,6 +8,8 @@ export interface LamiraMeetSectionData {
   subtitle: string;
   storyTitle: string;
   paragraphs: string[];
+  /** Optional editor HTML body (supports h3/h4/p etc). */
+  bodyHtml?: string;
   image: string;
   imageAlt: string;
 }
@@ -42,15 +45,32 @@ export default function LamiraMeetSection({ data }: LamiraMeetSectionProps) {
               <span className="text-[#00A0E3]">{renderAsteriskBold(data.titleHighlight)}</span>
             </h2>
 
-            <h3 className="mt-4 text-xl md:text-2xl font-bold text-black">
-              {renderAsteriskBold(data.storyTitle)}
-            </h3>
+            {data.subtitle ? (
+              <p className="mt-3 text-sm md:text-base text-black leading-relaxed">
+                {renderAsteriskBold(data.subtitle)}
+              </p>
+            ) : null}
 
-            <div className="mt-4 space-y-4 text-sm md:text-base text-black leading-relaxed">
-              {data.paragraphs.map((paragraph, idx) => (
-                <p key={idx}>{renderAsteriskBold(paragraph)}</p>
-              ))}
-            </div>
+            {/* <h3 className="mt-4 text-xl md:text-2xl font-bold text-black">
+              {renderAsteriskBold(data.storyTitle)}
+            </h3> */}
+
+            {data.bodyHtml?.trim() ? (
+              <RichText
+                as="div"
+                html={data.bodyHtml}
+                className="mt-4 text-sm md:text-base text-black leading-relaxed
+                  [&_h3]:mt-4 [&_h3]:text-xl [&_h3]:md:text-2xl [&_h3]:font-bold
+                  [&_h4]:mt-4 [&_h4]:text-lg [&_h4]:md:text-xl [&_h4]:font-bold
+                  [&_p]:mt-2 [&_p]:leading-relaxed"
+              />
+            ) : (
+              <div className="mt-4 space-y-4 text-sm md:text-base text-black leading-relaxed">
+                {data.paragraphs.map((paragraph, idx) => (
+                  <p key={idx}>{renderAsteriskBold(paragraph)}</p>
+                ))}
+              </div>
+            )}
 
           </div>
 

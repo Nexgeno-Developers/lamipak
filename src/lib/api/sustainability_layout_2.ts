@@ -84,7 +84,10 @@ function extractStoryTitleAndMeetContent(heroDescriptionHtml: string): {
   subtitle: string;
   storyTitle: string;
   paragraphs: string[];
+  bodyHtml?: string;
 } {
+  const hasHeadingTags = /<h[3-6]\b/i.test(heroDescriptionHtml);
+
   const strongRegex = /<strong[^>]*>([\s\S]*?)<\/strong>/i;
   const strongMatch = strongRegex.exec(heroDescriptionHtml);
 
@@ -92,18 +95,42 @@ function extractStoryTitleAndMeetContent(heroDescriptionHtml: string): {
     ? decodeHtmlEntities(strongMatch[1].replace(/<[^>]+>/g, ' ').trim())
     : '';
 
-  // Treat hero_description body as ONE block (per requirement),
-  // but still extract the <strong>Story title</strong>.
   const heroWithoutStrong = strongMatch
     ? heroDescriptionHtml.replace(strongRegex, '')
     : heroDescriptionHtml;
+
+  // If the editor provided headings (<h3>/<h4>...), preserve the HTML
+  // so the frontend can render those tags exactly.
+  if (hasHeadingTags) {
+    // Extract first <p> as subtitle if present, and remove it from bodyHtml.
+    const firstPRe = /<p\b[^>]*>([\s\S]*?)<\/p>/i;
+    const firstPMatch = firstPRe.exec(heroWithoutStrong);
+    const subtitle = firstPMatch ? stripHtml(firstPMatch[1]) : '';
+    const bodyHtml = firstPMatch
+      ? heroWithoutStrong.replace(firstPMatch[0], '').trim()
+      : heroWithoutStrong.trim();
+
+    return {
+      subtitle: decodeHtmlEntities(subtitle),
+      storyTitle: '',
+      paragraphs: [],
+      bodyHtml,
+    };
+  }
+
   const bodyText = htmlToTextPreservingBreaks(heroWithoutStrong);
-  const bodySingle = bodyText.replace(/\s+/g, ' ').trim();
+  const bodyParagraphs = splitParagraphsFromText(bodyText).map((p) => decodeHtmlEntities(p));
+
+  // Convention used in the CMS copy:
+  // first paragraph = subtitle (short hook), remaining = story paragraphs.
+  const subtitle = bodyParagraphs.length >= 2 ? bodyParagraphs[0] : '';
+  const paragraphs = bodyParagraphs.length >= 2 ? bodyParagraphs.slice(1) : bodyParagraphs;
 
   return {
-    subtitle: '',
+    subtitle,
     storyTitle: storyTitleClean ? `*${storyTitleClean}*` : 'Lamira’s Story',
-    paragraphs: bodySingle ? [bodySingle] : [stripHtml(heroDescriptionHtml)],
+    paragraphs: paragraphs.length ? paragraphs : [stripHtml(heroDescriptionHtml)],
+    bodyHtml: undefined,
   };
 }
 
@@ -193,7 +220,7 @@ export async function fetchSustainabilityLayout2Page(slug: string): Promise<{
     const heroBackgroundImage = meta.breadcrumb_image?.url || '/pick_cartoon_banner.webp';
 
     const heroDescriptionHtml = meta.hero_description || '';
-    const { subtitle, storyTitle, paragraphs } = extractStoryTitleAndMeetContent(heroDescriptionHtml);
+    const { subtitle, storyTitle, paragraphs, bodyHtml } = extractStoryTitleAndMeetContent(heroDescriptionHtml);
 
     const meet: LamiraMeetSectionData = {
       titlePrefix: undefined,
@@ -202,6 +229,7 @@ export async function fetchSustainabilityLayout2Page(slug: string): Promise<{
       subtitle,
       storyTitle,
       paragraphs: paragraphs.length ? paragraphs : [stripHtml(data.content)],
+      bodyHtml,
       image: heroImage,
       imageAlt: heroTitle,
     };
