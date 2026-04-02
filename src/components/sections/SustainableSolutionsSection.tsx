@@ -9,12 +9,15 @@ export function SustainableSolutionsSection({
 }: {
   data: SustainableSolutionsSectionData;
 }) {
+  const intro = data.intro ?? '';
+  const introHasHtml = /<[^>]+>/.test(intro);
 
-  const introParagraphs =
-    data.intro
-      ?.split(/\r?\n\s*\r?\n/)
-      .map((p) => p.trim())
-      .filter(Boolean) ?? [];
+  const introParagraphs = !introHasHtml
+    ? intro
+        .split(/\r?\n\s*\r?\n/)
+        .map((p) => p.trim())
+        .filter(Boolean)
+    : [];
 
 
   return (
@@ -22,16 +25,24 @@ export function SustainableSolutionsSection({
     <>
       <section className="bg-gray-50 py-12 md:py-20">
         <div className="container mx-auto px-4">
-          {data.intro && (
+          {intro && (
             <>
-              {introParagraphs.map((text, idx) => (
-                <p
-                  key={`sustain-intro-${idx}`}
+              {introHasHtml ? (
+                <RichText
+                  as="div"
+                  html={intro}
                   className="lg:text-center text-left text-black text-sm md:text-base leading-relaxed mx-auto mb-10 md:mb-12"
-                >
-                  {text}
-                </p>
-              ))}
+                />
+              ) : (
+                introParagraphs.map((text, idx) => (
+                  <p
+                    key={`sustain-intro-${idx}`}
+                    className="lg:text-center text-left text-black text-sm md:text-base leading-relaxed mx-auto mb-10 md:mb-12"
+                  >
+                    {text}
+                  </p>
+                ))
+              )}
             </>
           )}
 

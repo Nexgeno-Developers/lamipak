@@ -1,4 +1,4 @@
-import type { ElementType } from 'react';
+import type { ElementType, ReactElement } from 'react';
 import { decodeHtmlEntities } from '@/lib/htmlText';
 
 type RichTextProps = {
@@ -29,7 +29,7 @@ export function RichText({ html, className, as: Tag = 'div' }: RichTextProps) {
   if (parts.length === 0) return null;
 
   const isInline = Tag === 'span' || Tag === 'a';
-  const nodes: Array<string | JSX.Element> = [];
+  const nodes: Array<string | ReactElement> = [];
 
   parts.forEach((p, pi) => {
     const lines = p.split('\n');
