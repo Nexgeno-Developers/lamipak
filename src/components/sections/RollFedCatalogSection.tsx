@@ -45,7 +45,7 @@ function ProductCard({ product }: { product: RollFedCatalogProduct }) {
         )}
       </div>
       <h3 className="mt-6 text-lg font-bold text-black">{product.title}</h3>
-      <p className="mt-1 text-sm text-black leading-relaxed pb-0">{product.sizes}</p>
+      <p className="mt-1 text-sm text-black leading-relaxed mb-3 line-clamp-2">{product.sizes}</p>
     </Link>
   );
 }

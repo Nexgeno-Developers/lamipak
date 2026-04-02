@@ -3,9 +3,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { type ReactElement } from 'react';
-import { usePathname } from 'next/navigation';
 import type { CategoryShowcaseSectionData, CategoryShowcaseItem } from '@/fake-api/page-builder';
 import { RichText } from '@/components/common/RichText';
+import { normalizePackagingCategoryHref } from '@/lib/normalizePackagingCategoryHref';
 
 function IconRoll() {
   return (
@@ -102,24 +102,8 @@ const iconById: Record<NonNullable<CategoryShowcaseItem['iconId']>, () => ReactE
 };
 
 function ShowcaseCard({ item }: { item: CategoryShowcaseItem }) {
-  const pathname = usePathname();
-
   const rawHref = item.href?.trim() || '';
-  // Ensure the href is an absolute path.
-  // Without this, Next.js treats it as relative and can create duplicated paths like:
-  // `/aseptic-pakaging-solutions/aseptic-pakaging-solutions/<slug>`.
-  let normalizedHref = rawHref.startsWith('/') ? rawHref : `/${rawHref}`;
-
-  // Collapse duplicated first segment:
-  // `/aseptic-pakaging-solutions/aseptic-pakaging-solutions/metalic-ink`
-  // -> `/aseptic-pakaging-solutions/metalic-ink`
-  normalizedHref = normalizedHref.replace(/^\/([^\/]+)\/\1\//, '/$1/');
-
-  // Extra safety: if current pathname equals the duplicated base, collapse too.
-  const base = pathname?.replace(/\/+$/, '') || '';
-  if (base && base !== '/' && normalizedHref.startsWith(`${base}/${base}/`)) {
-    normalizedHref = normalizedHref.replace(`${base}/${base}/`, `${base}/`);
-  }
+  const normalizedHref = normalizePackagingCategoryHref(rawHref);
 
   const Icon = item.iconId ? iconById[item.iconId] : IconRoll;
   const isHighlight = item.variant === 'highlight';
