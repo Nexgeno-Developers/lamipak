@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { CareersListingData } from '@/lib/api';
+import type { CareerLandingPageData, CareerJob } from '@/lib/api/career_layout';
 import CompanyHero from '@/components/company/CompanyHero';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import VideoModalClient from '@/components/common/VideoModalClient';
@@ -10,7 +10,7 @@ import CallToAction from '@/components/home/CallToAction';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
 
 export interface CareerLandingPageProps {
-  data: CareersListingData;
+  data: CareerLandingPageData;
 }
 
 export default function CareerLandingPage({ data }: CareerLandingPageProps) {
@@ -38,12 +38,6 @@ export default function CareerLandingPage({ data }: CareerLandingPageProps) {
                   {data.heroSplit.heading}{' '}
                   <span className="text-[#009FE8]">{data.heroSplit.headingHighlight}</span>
                 </h2>
-
-                <div className="space-y-5 text-sm leading-relaxed text-black md:text-base">
-                  {data.heroSplit.paragraphs.map((p, i) => (
-                    <p key={i}>{p}</p>
-                  ))}
-                </div>
 
                 <p className="mt-8 text-base font-semibold text-[#0E233C] md:text-lg">
                   {data.heroSplit.emphasis}
@@ -101,16 +95,25 @@ export default function CareerLandingPage({ data }: CareerLandingPageProps) {
                   <p className="mt-5 text-center font-semibold text-[#0E233C]">
                     {data.leadershipMessage.name}{' '}
                     <span className="font-normal text-gray-600">
-                      {data.leadershipMessage.role ? `| ${data.leadershipMessage.role}` : ''}
+                      {data.leadershipMessage.role
+                        ? `| ${data.leadershipMessage.role}`
+                        : ''}
                     </span>
                   </p>
                 </div>
 
                 <div className="max-w-3xl">
                   <h2 className="mb-5 text-2xl font-bold text-[#0E233C] md:text-3xl lg:text-5xl">
-                    {data.leadershipMessage.heading}{' '}
-                    <span className="text-[#009FE8]">{data.leadershipMessage.headingHighlight}</span> To
-                    Packaging
+                    {data.leadershipMessage.headingHighlight ? (
+                      <>
+                        {data.leadershipMessage.heading}{' '}
+                        <span className="text-[#009FE8]">
+                          {data.leadershipMessage.headingHighlight}
+                        </span>
+                      </>
+                    ) : (
+                      data.leadershipMessage.heading
+                    )}
                   </h2>
                   <div className="space-y-5 text-sm leading-relaxed text-black md:text-base">
                     {data.leadershipMessage.paragraphs.map((p, i) => (
@@ -131,7 +134,9 @@ export default function CareerLandingPage({ data }: CareerLandingPageProps) {
               <div className="container mx-auto px-4">
                 <div className="mx-auto max-w-3xl text-center">
                   <h2 className="text-2xl font-bold text-[#0E233C] md:text-3xl lg:text-5xl">
-                    <span className="text-[#009FE8]">{data.verticalFeaturesHeader.heading}</span>{' '}
+                    <span className="text-[#009FE8]">
+                      {data.verticalFeaturesHeader.heading}
+                    </span>{' '}
                     {data.verticalFeaturesHeader.headingHighlight}
                   </h2>
                   <p className="mt-3 text-sm text-gray-600 md:text-base">
@@ -150,10 +155,15 @@ export default function CareerLandingPage({ data }: CareerLandingPageProps) {
           <div className="container mx-auto px-4">
             <div className="mx-auto mb-10 max-w-4xl text-center md:mb-12">
               <h2 className="text-2xl font-bold leading-tight text-[#0E233C] md:text-3xl lg:text-5xl">
-                <span className="text-[#009FE8]">{data.expertsSection.heading}</span>{' '}
-                {data.expertsSection.headingHighlight}, {data.expertsSection.headingSuffix}
+                <span className="text-[#009FE8]">
+                  {data.expertsSection.heading}
+                </span>{' '}
+                {data.expertsSection.headingHighlight},{' '}
+                {data.expertsSection.headingSuffix}
               </h2>
-              <p className="mt-4 text-sm text-gray-600 md:text-base">{data.expertsSection.description}</p>
+              <p className="mt-4 text-sm text-gray-600 md:text-base">
+                {data.expertsSection.description}
+              </p>
             </div>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">

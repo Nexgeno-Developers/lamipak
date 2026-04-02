@@ -1,12 +1,10 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import type { ComponentType } from 'react';
-import { cache } from 'react';
 import { getCanonicalUrl } from '@/config/site';
 
 import type { ProductCategory } from '@/lib/api';
 import {
-  fetchCareersListingData,
   getCategoryBySlug,
   getProductsByCategory,
 } from '@/lib/api';
@@ -35,6 +33,7 @@ import { fetchSustainabilityLayout3Page } from '@/lib/api/sustainability_layout_
 import { fetchSustainabilityLayout4Page } from '@/lib/api/sustainability_layout_4';
 import { fetchSustainabilityLayout5Page } from '@/lib/api/sustainability_layout_5';
 import { fetchSustainabilityLayout6Page } from '@/lib/api/sustainability_layout_6';
+import { fetchCareerLayoutPage } from '@/lib/api/career_layout';
 import { fetchMarketingServicesLayoutPage } from '@/lib/api/marketing_services_layout';
 import MarketingServicesLayoutPage from '@/components/pages/MarketingServicesLayoutPage';
 import { fetchMarketingServiceDetailLayoutPage } from '@/lib/api/marketing_service_detail_layout';
@@ -65,8 +64,6 @@ import {
 } from '@/fake-api/dynamic-pages';
 import CareerLandingPage from '@/components/CareerLandingPage';
 
-const getCareersListingCached = cache(async () => fetchCareersListingData());
-
 interface PageProps {
   params: Promise<{
     slug: string[]; // ✅ FIXED (array for nested routes)
@@ -95,22 +92,6 @@ async function fetchPageData(fullSlug: string) {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
-
-  if (fullSlug === 'career') {
-    const data = await getCareersListingCached();
-    const canonicalUrl = getCanonicalUrl('/career');
-    return {
-      title: data.seo.meta_title,
-      description: data.seo.meta_description,
-      alternates: { canonical: canonicalUrl },
-      openGraph: {
-        title: data.seo.meta_title,
-        description: data.seo.meta_description,
-        url: canonicalUrl,
-        type: 'website',
-      },
-    };
-  }
 
   const industryLayout = await fetchProductIndustryDetailLayoutPage(fullSlug);
   if (industryLayout) {
@@ -345,6 +326,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     });
   }
 
+  const careerPage = await fetchCareerLayoutPage(fullSlug);
+  if (careerPage) {
+    return buildApiMetadata({
+      slug: careerPage.slug,
+      title: careerPage.title,
+      seo: careerPage.seo,
+    });
+  }
+
   const marketingServicesLayout = await fetchMarketingServicesLayoutPage(fullSlug);
   if (marketingServicesLayout) {
     return buildApiMetadata({
@@ -509,11 +499,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function DynamicPage({ params }: PageProps) {
   const { slug } = await params;
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
-
-  if (fullSlug === 'career') {
-    const data = await getCareersListingCached();
-    return <CareerLandingPage data={data} />;
-  }
 
   const industryLayout = await fetchProductIndustryDetailLayoutPage(fullSlug);
   if (industryLayout) {
@@ -698,6 +683,11 @@ export default async function DynamicPage({ params }: PageProps) {
   const sustainability6Page = await fetchSustainabilityLayout6Page(fullSlug);
   if (sustainability6Page) {
     return <CarbonNetZeroRoadmapPage data={sustainability6Page.pageData} />;
+  }
+
+  const careerLayoutPage = await fetchCareerLayoutPage(fullSlug);
+  if (careerLayoutPage) {
+    return <CareerLandingPage data={careerLayoutPage.pageData} />;
   }
   
   const productSlug = slug?.[slug.length - 1];
