@@ -8,6 +8,7 @@ import type { GovernanceWhistleblowingSectionData } from '@/components/governanc
 import type { GovernanceWhistleblowingCardsSectionData } from '@/components/governance/GovernanceWhistleblowingCardsSection';
 
 type Media = { url?: string | null } | null | undefined;
+import { decodeHtmlEntities, normalizeText } from '@/lib/htmlText';
 
 type AboutUsLayout4ApiResponse = {
   data?: {
@@ -102,15 +103,16 @@ function buildPageApiPath(slug: string) {
 
 function stripHtml(value?: string) {
   if (!value) return '';
-  return value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  return normalizeText(value.replace(/<[^>]+>/g, ' '));
 }
 
 function paragraphsFromHtml(html?: string): string[] {
   if (!html) return [];
+  const decodedHtml = decodeHtmlEntities(html);
   const paras: string[] = [];
   const re = /<p\b[^>]*>([\s\S]*?)<\/p>/gi;
   let match: RegExpExecArray | null;
-  while ((match = re.exec(html))) {
+  while ((match = re.exec(decodedHtml))) {
     const inner = match[1]
       .replace(/<br\s*\/?>/gi, '\n')
       .replace(/\r\n/g, '\n');
@@ -121,7 +123,7 @@ function paragraphsFromHtml(html?: string): string[] {
     paras.push(...parts);
   }
   if (paras.length) return paras;
-  const text = stripHtml(html);
+  const text = stripHtml(decodedHtml);
   return text ? [text] : [];
 }
 

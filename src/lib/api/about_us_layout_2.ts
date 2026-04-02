@@ -1,4 +1,5 @@
 import type { AboutUsQuadrantSection } from '@/fake-api/company';
+import { decodeHtmlEntities, normalizeText } from '@/lib/htmlText';
 
 type Media = { url?: string | null } | null | undefined;
 
@@ -39,16 +40,17 @@ function buildPageApiPath(slug: string) {
 
 function stripHtml(value?: string) {
   if (!value) return '';
-  return value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  return normalizeText(value.replace(/<[^>]+>/g, ' '));
 }
 
 function safeParagraphsFromHtml(html?: string) {
   if (!html) return [];
+  const decodedHtml = decodeHtmlEntities(html);
 
   const paras: string[] = [];
   const re = /<p\b[^>]*>([\s\S]*?)<\/p>/gi;
   let match: RegExpExecArray | null;
-  while ((match = re.exec(html))) {
+  while ((match = re.exec(decodedHtml))) {
     // Preserve paragraph breaks inside a single <p> by splitting on <br><br>
     const inner = match[1]
       .replace(/<br\s*\/?>/gi, '\n')
@@ -62,7 +64,7 @@ function safeParagraphsFromHtml(html?: string) {
 
   if (paras.length > 0) return paras;
 
-  const fallback = html
+  const fallback = decodedHtml
     .replace(/<br\s*\/?>/gi, '\n')
     .replace(/\r\n/g, '\n')
     .split(/\n{2,}/g)

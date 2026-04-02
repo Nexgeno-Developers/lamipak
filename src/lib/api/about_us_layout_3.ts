@@ -1,4 +1,5 @@
 import type { OurValuesSection, VisionMissionSection } from '@/fake-api/company';
+import { normalizeText } from '@/lib/htmlText';
 
 type Media = { url?: string | null } | null | undefined;
 
@@ -44,7 +45,7 @@ function buildPageApiPath(slug: string) {
 
 function stripHtml(value?: string) {
   if (!value) return '';
-  return value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  return normalizeText(value.replace(/<[^>]+>/g, ' '));
 }
 
 function mediaUrl(media?: Media): string | undefined {

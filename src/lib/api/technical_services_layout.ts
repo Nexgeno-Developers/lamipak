@@ -127,6 +127,8 @@ export type TechnicalServicesLayoutPageData = {
   };
 };
 
+import { decodeHtmlEntities, normalizeText } from '@/lib/htmlText';
+
 function buildPageApiPath(slug: string) {
   return slug
     .split('/')
@@ -148,7 +150,7 @@ function mediaUrl(media?: Media) {
 
 function stripHtml(value?: string) {
   if (!value) return '';
-  return value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  return normalizeText(value.replace(/<[^>]+>/g, ' '));
 }
 
 function toArray<T>(value: T | T[] | null | undefined): T[] {
@@ -171,12 +173,13 @@ function pickHeadingHighlight(heading: string) {
 
 function safeParagraphsFromHtml(html?: string) {
   if (!html) return [];
+  const decodedHtml = decodeHtmlEntities(html);
 
   // Prefer extracting <p> blocks so we preserve paragraph breaks.
   const paras: string[] = [];
   const re = /<p\b[^>]*>([\s\S]*?)<\/p>/gi;
   let match: RegExpExecArray | null;
-  while ((match = re.exec(html))) {
+  while ((match = re.exec(decodedHtml))) {
     const text = stripHtml(match[1]);
     if (text) paras.push(text);
   }
@@ -184,7 +187,7 @@ function safeParagraphsFromHtml(html?: string) {
   if (paras.length > 0) return paras;
 
   // Fallback: treat <br> and newlines as paragraph separators.
-  const fallback = html
+  const fallback = decodedHtml
     .replace(/<br\s*\/?>/gi, '\n')
     .replace(/\r\n/g, '\n')
     .split(/\n{2,}/g)
