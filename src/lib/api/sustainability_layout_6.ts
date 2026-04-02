@@ -12,8 +12,14 @@ export interface CarbonNetZeroRoadmapSectionData {
     id: string;
     year: string;
     title: string;
-    icon: 'target' | 'trend' | 'leaf';
-    bullets: string[];
+    /** Inline SVG / PNG from CMS when present */
+    iconImageUrl?: string;
+    /** Fallback built-in icon when no `iconImageUrl` */
+    icon?: 'target' | 'trend' | 'leaf';
+    /** Plain bullet lines when CMS did not send HTML */
+    bullets?: string[];
+    /** Raw HTML from CMS (e.g. `<ul>` with Tailwind classes) */
+    descriptionHtml?: string;
   }>;
   summaryBarText: string;
   summaryBarUrl?: string;
@@ -32,7 +38,8 @@ export interface CarbonNetZeroPillarsSectionData {
     id: string;
     title: string;
     description: string;
-    icon:
+    iconImageUrl?: string;
+    icon?:
       | 'carbon_verification'
       | 'efficiency_innovation'
       | 'renewable_electricity'
@@ -45,6 +52,16 @@ export interface CarbonNetZeroPillarsSectionData {
   sectionBackgroundColor?: string;
 }
 
+type MediaRef = { id?: number; filename?: string; url?: string };
+
+type RepeaterBlock = {
+  itration?: string[];
+  icon?: Array<string | MediaRef>;
+  title?: string[];
+  year?: string[];
+  description?: string[];
+};
+
 type Sustainability6ApiResponse = {
   data?: {
     slug: string;
@@ -53,11 +70,12 @@ type Sustainability6ApiResponse = {
     is_active?: boolean;
     layout?: string;
     meta?: {
-      breadcrumb_image?: { id?: number; filename?: string; url?: string };
+      breadcrumb_image?: MediaRef;
       path_title?: string;
-      path_items?: string;
+      /** Object from CMS (repeater) or legacy JSON string */
+      path_items?: string | RepeaterBlock;
       sustainability_section_title?: string;
-      sustainability_section_items?: string;
+      sustainability_section_items?: string | RepeaterBlock;
       Net_Zero_Target_text?: string;
       Net_Zero_Target_url?: string;
     };
@@ -82,12 +100,37 @@ function safeJsonParse<T>(value: string | undefined): T | null {
   }
 }
 
+function parseRepeaterBlock(raw: string | RepeaterBlock | undefined): RepeaterBlock | null {
+  if (raw == null) return null;
+  if (typeof raw === 'object') return raw;
+  if (typeof raw === 'string') return safeJsonParse<RepeaterBlock>(raw);
+  return null;
+}
+
+function iconEntryUrl(entry: string | MediaRef | undefined): string | undefined {
+  if (!entry) return undefined;
+  if (typeof entry === 'string') return entry.trim() || undefined;
+  return entry.url?.trim() || undefined;
+}
+
+function normalizePageTitle(title: string): string {
+  return title
+    .replace(/\u2028|\u2029/g, ' ')
+    .replace(/\r\n|\n|\r/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function extractBulletsFromHtml(html: string): string[] {
   const items = html.match(/<li[^>]*>([\s\S]*?)<\/li>/gi);
   if (!items) return [];
   return items
     .map((li) => li.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim())
     .filter(Boolean);
+}
+
+function hasHtmlTags(s: string): boolean {
+  return /<[^>]+>/.test(s);
 }
 
 function splitHeading(title: string): { first: string; rest: string } {
@@ -129,25 +172,33 @@ export async function fetchSustainabilityLayout6Page(slug: string): Promise<{
 
     const pathHeading = splitHeading(meta.path_title || 'Path To Carbon Neutrality');
 
-    const pathItems = safeJsonParse<{
-      itration?: string[];
-      icon?: string[];
-      title?: string[];
-      year?: string[];
-      description?: string[];
-    }>(meta.path_items);
-
+    const pathItems = parseRepeaterBlock(meta.path_items);
     const pathYears = pathItems?.year || [];
     const pathTitles = pathItems?.title || [];
     const pathDescriptions = pathItems?.description || [];
+    const pathIcons = pathItems?.icon || [];
 
-    const milestones = pathYears.map((year, idx) => ({
-      id: `m-${year}`,
-      year,
-      title: pathTitles[idx] || '',
-      icon: ROADMAP_ICONS[idx] || 'target' as const,
-      bullets: extractBulletsFromHtml(pathDescriptions[idx] || ''),
-    }));
+    const milestones = pathYears.map((year, idx) => {
+      const desc = pathDescriptions[idx] || '';
+      const iconImageUrl = iconEntryUrl(pathIcons[idx]);
+      const html = hasHtmlTags(desc);
+
+      const bulletsPlain = (() => {
+        if (!desc.trim()) return [];
+        const fromLi = extractBulletsFromHtml(desc);
+        return fromLi.length ? fromLi : [desc.trim()];
+      })();
+
+      return {
+        id: `m-${year}-${idx}`,
+        year,
+        title: pathTitles[idx] || '',
+        iconImageUrl,
+        icon: (ROADMAP_ICONS[idx] ?? 'target') as 'target' | 'trend' | 'leaf',
+        descriptionHtml: html ? desc : undefined,
+        bullets: html ? undefined : bulletsPlain,
+      };
+    });
 
     const roadmapSection: CarbonNetZeroRoadmapSectionData = {
       headingBlack: pathHeading.first,
@@ -166,21 +217,17 @@ export async function fetchSustainabilityLayout6Page(slug: string): Promise<{
       meta.sustainability_section_title || 'Key Sustainability Pillar',
     );
 
-    const pillarItems = safeJsonParse<{
-      itration?: string[];
-      icon?: string[];
-      title?: string[];
-      description?: string[];
-    }>(meta.sustainability_section_items);
-
+    const pillarItems = parseRepeaterBlock(meta.sustainability_section_items);
     const pillarTitles = pillarItems?.title || [];
     const pillarDescriptions = pillarItems?.description || [];
+    const pillarIcons = pillarItems?.icon || [];
 
     const pillars = pillarTitles.map((title, idx) => ({
       id: `pillar-${idx}`,
       title,
       description: pillarDescriptions[idx] || '',
-      icon: PILLAR_ICONS[idx] || 'carbon_verification' as const,
+      iconImageUrl: iconEntryUrl(pillarIcons[idx]),
+      icon: (PILLAR_ICONS[idx] ?? 'carbon_verification') as (typeof PILLAR_ICONS)[number],
     }));
 
     const pillarsSection: CarbonNetZeroPillarsSectionData | undefined = pillars.length
@@ -197,8 +244,10 @@ export async function fetchSustainabilityLayout6Page(slug: string): Promise<{
 
     const breadcrumbImage = meta.breadcrumb_image?.url || '/pick_cartoon_banner.webp';
 
+    const displayTitle = normalizePageTitle(data.title);
+
     const pageData: CarbonNetZeroRoadmapPageData = {
-      title: data.title,
+      title: displayTitle,
       heroBackgroundImage: breadcrumbImage,
       carbonNetZeroRoadmapSection: roadmapSection,
       carbonNetZeroPillarsSection: pillarsSection,
@@ -206,7 +255,7 @@ export async function fetchSustainabilityLayout6Page(slug: string): Promise<{
 
     return {
       slug: data.slug,
-      title: data.title,
+      title: displayTitle,
       seo,
       pageData,
     };
