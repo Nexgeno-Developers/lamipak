@@ -13,11 +13,13 @@ export function AboutUsPageSection({
   statistics,
   journey,
   videoUrl,
+  activePath,
 }: {
   hero: CompanyHeroData;
   statistics: CompanyStatistic[];
   journey: JourneyData;
   videoUrl?: string;
+  activePath?: string;
 }) {
   return (
     <main className="min-h-screen bg-gray-50">
@@ -27,7 +29,7 @@ export function AboutUsPageSection({
           <Breadcrumbs items={[{ label: 'About us' }]} />
         </div>
       </section>
-      <CompanyNavigationServer activePath="/about-us" />
+      <CompanyNavigationServer activePath={activePath || '/about-us'} />
       <CompanyStatistics statistics={statistics} />
       <JourneyClient data={journey} />
       <VideoBanner videoOnly={true} videoUrl={videoUrl} />

@@ -7,7 +7,13 @@ import CallToAction from '@/components/home/CallToAction';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
 import type { AboutUsLayout3PageData } from '@/lib/api/about_us_layout_3';
 
-export function VisionMissionLayoutPageSection({ data }: { data: AboutUsLayout3PageData }) {
+export function VisionMissionLayoutPageSection({
+  data,
+  activePath,
+}: {
+  data: AboutUsLayout3PageData;
+  activePath?: string;
+}) {
   return (
     <main className="min-h-screen bg-gray-50">
       <CompanyHero
@@ -23,7 +29,7 @@ export function VisionMissionLayoutPageSection({ data }: { data: AboutUsLayout3P
         </div>
       </section>
 
-      <CompanyNavigationServer activePath="/vision-mission" />
+      <CompanyNavigationServer activePath={activePath || '/vision-mission'} />
 
       <VisionMission data={data.visionMission} />
       <OurValues data={data.ourValues} />

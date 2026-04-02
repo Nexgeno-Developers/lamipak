@@ -512,7 +512,7 @@ export default async function DynamicPage({ params }: PageProps) {
 
   const visionLayout = await fetchAboutUsLayout3Page(fullSlug);
   if (visionLayout) {
-    return <VisionMissionLayoutPageSection data={visionLayout.page} />;
+    return <VisionMissionLayoutPageSection data={visionLayout.page} activePath={`/${fullSlug}`} />;
   }
 
   const aboutLayout = await fetchAboutUsLayout1Page(fullSlug);
@@ -523,13 +523,14 @@ export default async function DynamicPage({ params }: PageProps) {
         statistics={aboutLayout.page.statistics}
         journey={aboutLayout.page.journey}
         videoUrl={aboutLayout.page.videoUrl}
+        activePath={`/${fullSlug}`}
       />
     );
   }
 
   const introductionLayout = await fetchAboutUsLayout2Page(fullSlug);
   if (introductionLayout) {
-    return <IntroductionPageSection data={introductionLayout.page} />;
+    return <IntroductionPageSection data={introductionLayout.page} activePath={`/${fullSlug}`} />;
   }
 
   // Back-compat fallback for older fake API slugs.

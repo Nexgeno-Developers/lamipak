@@ -107,7 +107,7 @@ export default function CompanyStatistics({ statistics }: CompanyStatisticsProps
   };
 
   return (
-    <section id="company-statistics" className="py-4 md:py-12 bg-gray-50">
+    <section id="company-statistics" className="py-4 md:pb-12 md:pt-0 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-8">
           {statistics.map((stat) => (

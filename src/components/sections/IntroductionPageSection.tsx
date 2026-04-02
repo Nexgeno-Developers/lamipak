@@ -6,7 +6,13 @@ import CallToAction from '@/components/home/CallToAction';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
 import type { AboutUsLayout2PageData } from '@/lib/api/about_us_layout_2';
 
-export function IntroductionPageSection({ data }: { data: AboutUsLayout2PageData }) {
+export function IntroductionPageSection({
+  data,
+  activePath,
+}: {
+  data: AboutUsLayout2PageData;
+  activePath?: string;
+}) {
   return (
     <main className="min-h-screen bg-gray-50">
       <CompanyHero
@@ -16,7 +22,7 @@ export function IntroductionPageSection({ data }: { data: AboutUsLayout2PageData
         }}
       />
 
-      <CompanyNavigationServer activePath="/introduction" />
+      <CompanyNavigationServer activePath={activePath || '/introduction'} />
 
       <AboutUsQuadrant
         data={data.quadrant}

@@ -62,26 +62,26 @@ export const COMPANY_SUB_NAVIGATION: CompanyNavigation = {
       id: '1',
       icon: 'info',
       label: 'About us',
-      href: '/about-us',
+      href: '/about-lamipak/about-company',
     },
     {
       id: '2',
       icon: 'globe',
       label: 'Introduction',
-      href: '/introduction',
+      href: '/about-lamipak/introduction',
     },
     
     {
       id: '3',
       icon: 'vision',
       label: 'Vision & Mission',
-      href: '/vision-mission',
+      href: '/about-lamipak/mission-vision-values',
     },
     {
       id: '4',
       icon: 'building',
       label: 'Governance',
-      href: '/governance-management',
+      href: '/about-lamipak/governance-and-management',
     },
     // {
     //   id: '4',
