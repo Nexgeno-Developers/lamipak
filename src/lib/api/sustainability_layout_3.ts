@@ -1,3 +1,5 @@
+import { decodeHtmlEntities } from '@/lib/htmlText';
+
 export interface GreenEffortsPageData {
   title: string;
   heroBackgroundImage: string;
@@ -13,8 +15,14 @@ export interface GreenSustainabilityVisionSectionData {
   cards: Array<{
     id: string;
     title: string;
-    icon: 'globe' | 'social' | 'product' | 'business';
-    bullets: Array<{
+    /** CMS `hero_items.image[].url` when present */
+    iconImageUrl?: string;
+    /** Fallback when no image */
+    icon?: 'globe' | 'social' | 'product' | 'business';
+    /** Raw HTML from CMS (`hero_items.description[]`) */
+    descriptionHtml?: string;
+    /** Legacy / fake-api structured bullets */
+    bullets?: Array<{
       parts: Array<{ text: string; bold?: boolean }>;
     }>;
   }>;
@@ -46,9 +54,9 @@ type Sustainability3ApiResponse = {
       breadcrumb_image?: { id?: number; filename?: string; url?: string };
       hero_title?: string;
       hero_description_intro?: string;
-      hero_items?: {
+      hero_items?: string | {
         itration?: string[];
-        image?: Array<{ id?: number; filename?: string; url?: string }>;
+        image?: Array<{ id?: number; filename?: string; url?: string } | string>;
         title?: string[];
         description?: string[];
       };
@@ -84,12 +92,43 @@ function safeJsonParse<T>(value: string | undefined): T | null {
   }
 }
 
+type HeroItemsBlock = {
+  itration?: string[];
+  image?: Array<{ id?: number; filename?: string; url?: string } | string>;
+  title?: string[];
+  description?: string[];
+};
+
+function parseHeroItems(
+  raw: NonNullable<NonNullable<Sustainability3ApiResponse['data']>['meta']>['hero_items'],
+): HeroItemsBlock | null {
+  if (raw == null) return null;
+  if (typeof raw === 'string') {
+    return safeJsonParse<HeroItemsBlock>(raw);
+  }
+  if (typeof raw === 'object') {
+    return raw as HeroItemsBlock;
+  }
+  return null;
+}
+
+function heroImageUrl(entry: { id?: number; filename?: string; url?: string } | string | undefined) {
+  if (!entry) return undefined;
+  if (typeof entry === 'string') return entry.trim() || undefined;
+  return entry.url?.trim() || undefined;
+}
+
+function hasHtmlTags(s: string): boolean {
+  return /<[^>]+>/.test(s);
+}
+
 function parseHtmlDescriptionToBullets(
   html: string,
 ): Array<{ parts: Array<{ text: string; bold?: boolean }> }> {
-  const paragraphs = html.match(/<p[^>]*>[\s\S]*?<\/p>/gi);
+  const decoded = decodeHtmlEntities(html);
+  const paragraphs = decoded.match(/<p[^>]*>[\s\S]*?<\/p>/gi);
   if (!paragraphs) {
-    const cleaned = stripHtml(html);
+    const cleaned = stripHtml(decoded);
     return cleaned ? [{ parts: [{ text: cleaned }] }] : [];
   }
 
@@ -141,20 +180,32 @@ export async function fetchSustainabilityLayout3Page(slug: string): Promise<{
     const meta = data.meta || {};
     const seo = (data.seo || {}) as Record<string, unknown>;
 
-    const heroItems = meta.hero_items;
+    const heroItems = parseHeroItems(meta.hero_items);
     const heroTitles = heroItems?.title || [];
     const heroDescriptions = heroItems?.description || [];
+    const heroImages = heroItems?.image || [];
 
     const visionCards = heroTitles
       .map((title, idx) => {
-        const icon = ICON_MAP[idx] || 'globe';
-        const htmlDesc = heroDescriptions[idx] || '';
-        const bullets = parseHtmlDescriptionToBullets(htmlDesc);
-        if (!bullets.length) return null;
+        const rawTitle = (title || '').trim();
+        if (!rawTitle) return null;
+
+        const htmlDesc = (heroDescriptions[idx] || '').trim();
+        const iconImageUrl = heroImageUrl(heroImages[idx]);
+        const icon = ICON_MAP[idx] ?? 'globe';
+        const html = hasHtmlTags(htmlDesc);
+
+        const bullets = html ? undefined : parseHtmlDescriptionToBullets(htmlDesc || rawTitle);
+        const descriptionHtml = html ? htmlDesc : undefined;
+
+        if (!descriptionHtml && !bullets?.length) return null;
+
         return {
           id: `vision-card-${idx}`,
-          title: title.toUpperCase(),
+          title: rawTitle.toUpperCase(),
           icon: icon as (typeof ICON_MAP)[number],
+          iconImageUrl,
+          descriptionHtml,
           bullets,
         };
       })
@@ -182,13 +233,13 @@ export async function fetchSustainabilityLayout3Page(slug: string): Promise<{
       projectHtmlItems.length ? { htmlItems: projectHtmlItems } : undefined;
 
     const journeyImageId = meta.sustainability_journey_image;
-    const heroImages = heroItems?.image || [];
     let journeyImage = '/our_green_left_image.webp';
     if (journeyImageId) {
-      const matchedImage = heroImages.find(
-        (img) => String(img.id) === String(journeyImageId),
-      );
-      if (matchedImage?.url) {
+      const matchedImage = heroImages.find((img) => {
+        if (typeof img === 'string') return false;
+        return String(img.id) === String(journeyImageId);
+      });
+      if (matchedImage && typeof matchedImage === 'object' && matchedImage.url) {
         journeyImage = matchedImage.url;
       }
     }

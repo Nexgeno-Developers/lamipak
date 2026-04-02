@@ -1,3 +1,4 @@
+import { RichText } from '@/components/common/RichText';
 import type { GreenSustainabilityVisionSectionData } from '@/lib/api/sustainability_layout_3';
 
 type SectionData = GreenSustainabilityVisionSectionData;
@@ -124,7 +125,8 @@ export default function GreenSustainabilityVisionSection({ data }: GreenSustaina
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
           {data.cards.map((card) => {
-            const Icon = ICONS[card.icon];
+            const iconKey = card.icon ?? 'globe';
+            const Icon = ICONS[iconKey];
             return (
               <article
                 key={card.id}
@@ -135,27 +137,43 @@ export default function GreenSustainabilityVisionSection({ data }: GreenSustaina
                   style={{ backgroundColor: BRAND_BLUE }}
                 >
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center text-white">
-                    <Icon className="h-9 w-9" />
+                    {card.iconImageUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={card.iconImageUrl}
+                        alt=""
+                        className="h-9 w-9 object-contain brightness-0 invert"
+                      />
+                    ) : (
+                      <Icon className="h-9 w-9" />
+                    )}
                   </span>
                   <h3 className="text-left text-[11px] font-bold uppercase leading-tight tracking-wide text-white sm:text-xs">
                     {card.title}
                   </h3>
                 </div>
                 <div className="flex flex-1 flex-col gap-3 px-4 py-5 sm:px-5">
-                  {card.bullets.map((bullet, idx) => (
-                    <p key={idx} className="text-sm leading-relaxed text-gray-800">
-                      <span className="mr-1 font-medium text-black">&gt;</span>
-                      {bullet.parts.map((part, i) =>
-                        part.bold ? (
-                          <strong key={i} className="font-semibold text-black">
-                            {part.text}
-                          </strong>
-                        ) : (
-                          <span key={i}>{part.text}</span>
-                        ),
-                      )}
-                    </p>
-                  ))}
+                  {card.descriptionHtml ? (
+                    <RichText
+                      html={card.descriptionHtml}
+                      className="flex flex-col gap-3 [&_p]:text-sm [&_p]:leading-relaxed [&_p]:text-gray-800"
+                    />
+                  ) : (
+                    (card.bullets ?? []).map((bullet, idx) => (
+                      <p key={idx} className="text-sm leading-relaxed text-gray-800">
+                        <span className="mr-1 font-medium text-black">&gt;</span>
+                        {bullet.parts.map((part, i) =>
+                          part.bold ? (
+                            <strong key={i} className="font-semibold text-black">
+                              {part.text}
+                            </strong>
+                          ) : (
+                            <span key={i}>{part.text}</span>
+                          ),
+                        )}
+                      </p>
+                    ))
+                  )}
                 </div>
               </article>
             );
