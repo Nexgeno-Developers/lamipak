@@ -230,9 +230,9 @@ export async function fetchSustainabilityLayout4Page(slug: string): Promise<{
     const timelineSection: SustainabilityTimelineSectionData | undefined =
       timelineItems.length
         ? {
-            headingBlue: `${timelineHeading.blue} `,
-            headingBlack: timelineHeading.black,
-            subtitle: meta.timeline_description || '',
+            headingBlue: formatBoldText(`${timelineHeading.blue} `),
+            headingBlack: formatBoldText(timelineHeading.black),
+            subtitle: formatBoldText(meta.timeline_description || ''),
             accentColor: '#00AEEF',
             backgroundColor: '#f8f9fa',
             items: timelineItems,

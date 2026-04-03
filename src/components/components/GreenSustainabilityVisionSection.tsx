@@ -1,3 +1,4 @@
+import { formatBoldText } from '@/lib/htmlText';
 import { RichText } from '@/components/common/RichText';
 import type { GreenSustainabilityVisionSectionData } from '@/lib/api/sustainability_layout_3';
 
@@ -114,10 +115,7 @@ export default function GreenSustainabilityVisionSection({ data }: GreenSustaina
     <section className="bg-gray-50 py-8 md:py-12">
       <div className="container mx-auto px-4">
         <header className="mb-12 text-center md:mb-14">
-          <h2 className="text-2xl font-bold tracking-tight text-black md:text-3xl lg:text-5xl">
-            <span style={{ color: BRAND_BLUE }}>{data.headingBrand}</span>{' '}
-            <span className="font-bold">{data.headingRest}</span>
-          </h2>
+          <h2 className="text-2xl font-bold tracking-tight text-black md:text-3xl lg:text-5xl" dangerouslySetInnerHTML={{ __html: data.heading }} />
           <p className="mx-auto mt-4 max-w-4xl text-sm leading-relaxed text-black md:text-base">
             {data.subtitle}
           </p>

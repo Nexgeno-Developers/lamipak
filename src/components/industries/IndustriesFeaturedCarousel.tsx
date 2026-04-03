@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { formatBoldText } from '@/lib/htmlText';
 import type { ProductIndustriesFeaturedProduct } from '@/lib/api/product_industries_layout';
 
 const GAP_PX = 24; // gap-6

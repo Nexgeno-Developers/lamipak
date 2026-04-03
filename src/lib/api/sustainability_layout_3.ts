@@ -212,9 +212,7 @@ export async function fetchSustainabilityLayout3Page(slug: string): Promise<{
 
     const visionSection: GreenSustainabilityVisionSectionData | undefined = visionCards.length
       ? {
-          headingBrand: 'Lamipak',
-          headingRest:
-            meta.hero_title?.replace(/^Lamipak\s*/i, '') || 'Sustainability Vision',
+          heading: formatBoldText(meta.hero_title || 'Lamipak Sustainability Vision'),
           subtitle:
             formatBoldText(meta.hero_description_intro || '') ||
             'Bring Life To Packaging, Achieve Sustainability Across Every Dimension Of Our Business.',

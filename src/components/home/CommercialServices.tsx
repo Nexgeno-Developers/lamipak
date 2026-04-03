@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { formatBoldText } from '@/lib/htmlText';
 import { fetchHomepageData } from '@/lib/api/home';
 import type { CommercialServiceCard } from '@/fake-api/homepage';
 

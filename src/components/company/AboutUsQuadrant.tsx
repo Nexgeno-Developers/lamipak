@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { formatBoldText } from '@/lib/htmlText';
 import type { AboutUsQuadrantSection } from '@/fake-api/company';
 import type { ReactNode } from 'react';
 

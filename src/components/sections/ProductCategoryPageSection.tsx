@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { formatBoldText } from '@/lib/htmlText';
 import type { ProductCategory, ProductData } from '@/lib/api';
 import TechnicalConsultationCTA from '@/components/products/TechnicalConsultationCTA';
 import CategoryGlobalImpact from '@/components/products/CategoryGlobalImpact';

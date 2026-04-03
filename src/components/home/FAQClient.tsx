@@ -1,3 +1,4 @@
+import { formatBoldText } from '@/lib/htmlText';
 import type { FAQData, FAQItem } from '@/fake-api/homepage';
 import FAQItemClient from './FAQItemClient';
 

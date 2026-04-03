@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { formatBoldText } from '@/lib/htmlText';
 import type { GreenBuildingCertificationsSectionData } from '@/lib/api/sustainability_layout_4';
 import { RichText } from '@/components/common/RichText';
 
@@ -42,10 +43,7 @@ export default function GreenBuildingCertificationsSection({ data }: GreenBuildi
           >
             {data.eyebrow}
           </p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-            <span className='text-[#009FE8]'>{data.headingGreen}</span>{' '}
-            <span className="text-black">{data.headingBlack}</span>
-          </h2>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl" dangerouslySetInnerHTML={{ __html: data.heading }} />
         </header>
 
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">

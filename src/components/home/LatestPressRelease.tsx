@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { formatBoldText } from '@/lib/htmlText';
 import { fetchHomepageData } from '@/lib/api/home';
 import type { PressReleaseCard } from '@/fake-api/homepage';
 

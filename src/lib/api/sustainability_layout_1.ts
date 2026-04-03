@@ -78,9 +78,7 @@ export async function fetchSustainabilityLayout1Page(slug: string): Promise<{
 
     const sustainabilityFootprintSection = {
       type: 'sustainability_footprint' as const,
-      heading: 'Our',
-      headingHighlight: 'Sustainability',
-      headingSuffix: 'Footprint',
+      heading: formatBoldText('Our Sustainability Footprint'),
       items: heroImages
         .map((img, idx) => {
           const imageUrl = img?.url;
@@ -120,8 +118,7 @@ export async function fetchSustainabilityLayout1Page(slug: string): Promise<{
 
     const whyCartonsMatterSection = {
       type: 'why_cartons_matter' as const,
-      heading: formatBoldText(meta.why_carton_title || 'Why Cartons'),
-      headingHighlight: 'Matter',
+      heading: formatBoldText(meta.why_carton_title || 'Why Cartons Matter'),
       description: formatBoldText(stripHtml(meta.why_carton_description || '')),
       items: whyTitles
         .map((t, idx) => ({
@@ -157,16 +154,13 @@ export async function fetchSustainabilityLayout1Page(slug: string): Promise<{
 
     const powerOfCartonSection = {
       type: 'power_of_carton_packaging' as const,
-      heading: 'The Power Of',
-      headingHighlight: 'Carton',
-      headingSuffix: 'Packaging',
+      heading: formatBoldText('The Power Of Carton Packaging'),
       introBold: 'Sustainability By The Numbers.',
       introText: formatBoldText(stripHtml(meta.impact_statistics_description || '')),
       cards: impactTitles
         .map((t, idx) => ({
           id: `impact-stat-${idx}`,
-          valueHighlight: '',
-          valueRest: '',
+          value: formatBoldText(t),
           title: formatBoldText(t),
           description: formatBoldText(impactDescriptions[idx] || ''),
         }))

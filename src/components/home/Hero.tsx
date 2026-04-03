@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
+import { formatBoldText } from '@/lib/htmlText';
 import type { Hero } from '@/fake-api/homepage';
 
 interface HeroProps {

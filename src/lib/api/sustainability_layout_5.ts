@@ -119,12 +119,12 @@ export async function fetchSustainabilityLayout5Page(slug: string): Promise<{
     ].filter(Boolean) as string[];
 
     const membershipMapSection: NgoMembershipMapSectionData = {
-      headingBlue: membershipHeading.blue,
-      headingBlack: membershipHeading.black,
+      headingBlue: formatBoldText(membershipHeading.blue || ''),
+      headingBlack: formatBoldText(membershipHeading.black || ''),
       mapImage: meta.membership_map?.url || '/ngo_image.webp',
       mapImageAlt:
-        meta.membership_map?.filename?.replace(/[-_]+/g, ' ').trim() ||
-        meta.membership_title ||
+        formatBoldText(meta.membership_map?.filename?.replace(/[-_]+/g, ' ').trim() || '') ||
+        formatBoldText(meta.membership_title || '') ||
         'NGO membership map',
       accentColor: '#00AEEF',
     };
@@ -132,8 +132,8 @@ export async function fetchSustainabilityLayout5Page(slug: string): Promise<{
     const allianceCardsSection: NgoAllianceCardsSectionData | undefined =
       allianceCardBlocks.length
         ? {
-            headingBlue: membershipHeading.blue,
-            headingBlack: membershipHeading.black,
+            headingBlue: formatBoldText(membershipHeading.blue),
+            headingBlack: formatBoldText(membershipHeading.black),
             accentColor: '#00AEEF',
             cards: allianceCardBlocks.map((html, idx) => ({
               id: `alliance-card-${idx}`,

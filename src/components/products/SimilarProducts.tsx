@@ -1,4 +1,5 @@
 import { fetchProductData, getAllProductSlugs } from '@/lib/api';
+import { formatBoldText } from '@/lib/htmlText';
 import SimilarProductsSliderClient from './SimilarProductsSliderClient';
 import type { ProductData } from '@/fake-api/products';
 
