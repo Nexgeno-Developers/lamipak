@@ -10,22 +10,6 @@ import ConnectTechnicalExperts from '@/components/technical-services/ConnectTech
 import type { TechnicalServiceDetailPageData } from '@/lib/api/technical_service_detail_layout';
 import { RichText } from '@/components/common/RichText';
 
-function OperationalSectionHeading({ text }: { text: string }) {
-  const trimmed = text.trim();
-  const m = trimmed.match(/^(.+?)\s+(Success)$/i);
-  if (m) {
-    return (
-      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center">
-        <span className="text-[#009FE8]">{m[1]}</span>{' '}
-        <span className="text-black">{m[2]}</span>
-      </h2>
-    );
-  }
-  return (
-    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-black">{trimmed}</h2>
-  );
-}
-
 export default function TechnicalServiceDetailLayoutPage({
   data,
 }: {
@@ -135,9 +119,7 @@ export default function TechnicalServiceDetailLayoutPage({
         <section className="bg-gray-50 pt-12 pb-4 md:py-16 md:pt-16 md:pb-8 lg:pt-20 lg:pb-8">
           <div className="container mx-auto px-4">
             <div className="mb-10 md:mb-14">
-              <OperationalSectionHeading
-                text={data.operationalTitle || 'Driving Operational Success'}
-              />
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center" dangerouslySetInnerHTML={{ __html: data.operationalTitle || 'Driving Operational Success' }} />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
@@ -177,7 +159,6 @@ export default function TechnicalServiceDetailLayoutPage({
 
       <ConnectTechnicalExperts
         heading={data.connectSection.heading}
-        headingHighlight={data.connectSection.headingHighlight}
         formTitle={data.connectSection.formTitle}
         illustrationImage={data.connectSection.illustrationImage}
         illustrationAlt={data.connectSection.illustrationAlt}

@@ -254,8 +254,8 @@ export async function fetchSustainabilityLayout2Page(slug: string): Promise<{
       pickPrefixHighlight(specialTitle);
 
     const special: LamiraSpecialAbilitiesSectionData = {
-      headingHighlight: specialPrefix ? `${specialPrefix}` : specialHighlight,
-      headingSuffix: specialPrefix ? specialHighlight : specialSuffix || '',
+      heading: formatBoldText(specialTitle),
+      headingSuffix: '',
       subtitle: formatBoldText(meta.special_ability_description?.trim() || ''),
       image: heroImage,
       imageAlt: specialTitle,
@@ -282,9 +282,7 @@ export async function fetchSustainabilityLayout2Page(slug: string): Promise<{
     const loveHeading = pickPrefixHighlight(loveTitle);
 
     const loves: LamiraLovesSectionData = {
-      headingPrefix: loveHeading.prefix,
-      headingHighlight: loveHeading.highlight,
-      headingSuffix: loveHeading.suffix,
+      heading: formatBoldText(loveTitle),
       subtitle: formatBoldText(meta.lamira_love_description?.trim() || ''),
       items: loveTitles
         .map((t, idx) => ({
@@ -302,9 +300,7 @@ export async function fetchSustainabilityLayout2Page(slug: string): Promise<{
     const shared: LamiraSharedGuideSectionData = {
       image: SHARED_GUIDE_IMAGE_FALLBACK,
       imageAlt: sharedTitle,
-      headingPrefix: sharedHeading.prefix,
-      headingHighlight: sharedHeading.highlight,
-      headingSuffix: sharedHeading.suffix,
+      heading: formatBoldText(sharedTitle),
       description: meta.shared_guide_description?.trim() || '',
     };
 
@@ -322,9 +318,7 @@ export async function fetchSustainabilityLayout2Page(slug: string): Promise<{
       }),
     );
     const social: LamiraSocialWorldMomentsSectionData = {
-      headingPrefix: socialHeading.prefix || 'Moments From Our',
-      headingHighlight: socialHeading.highlight,
-      headingSuffix: socialHeading.suffix,
+      heading: formatBoldText(socialTitle),
       items: socialItems,
     };
 

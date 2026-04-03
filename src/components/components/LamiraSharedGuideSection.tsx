@@ -3,9 +3,7 @@ import { RichText } from '@/components/common/RichText';
 export interface LamiraSharedGuideSectionData {
   image: string;
   imageAlt: string;
-  headingPrefix?: string;
-  headingHighlight: string;
-  headingSuffix?: string;
+  heading: string;
   description: string;
 }
 
@@ -31,11 +29,7 @@ export default function LamiraSharedGuideSection({
           </div>
 
           <div>
-            <h2 className="text-3xl md:text-5xl font-bold text-[#111827] leading-tight">
-              {data.headingPrefix ? `${data.headingPrefix} ` : ''}
-              <span className="text-[#00A0E3]">{data.headingHighlight}</span>
-              {data.headingSuffix ? ` ${data.headingSuffix}` : ''}
-            </h2>
+            <h2 className="text-3xl md:text-5xl font-bold text-[#111827] leading-tight" dangerouslySetInnerHTML={{ __html: data.heading }} />
             <RichText
               as="div"
               html={data.description}

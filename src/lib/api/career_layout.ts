@@ -25,7 +25,6 @@ export interface CareerLandingPageData {
   heroBackgroundImage?: string;
   heroSplit?: {
     heading: string;
-    headingHighlight: string;
     paragraphs: string[];
     emphasis: string;
     ctaText: string;
@@ -40,7 +39,6 @@ export interface CareerLandingPageData {
     name: string;
     role: string;
     heading: string;
-    headingHighlight: string;
     paragraphs: string[];
   };
   verticalFeatures?: Array<{
@@ -52,12 +50,10 @@ export interface CareerLandingPageData {
   }>;
   verticalFeaturesHeader?: {
     heading: string;
-    headingHighlight: string;
     description: string;
   };
   expertsSection?: {
     heading: string;
-    headingHighlight: string;
     headingSuffix: string;
     description: string;
     videos: Array<{
@@ -69,7 +65,6 @@ export interface CareerLandingPageData {
   };
   connectSection?: {
     heading: string;
-    headingHighlight: string;
     formTitle: string;
     illustrationImage: string;
     illustrationAlt: string;
@@ -77,7 +72,6 @@ export interface CareerLandingPageData {
   jobsSection?: {
     notice: string;
     heading: string;
-    headingHighlight: string;
     headingSuffix?: string;
     socialApplyLinks?: {
       instagram?: string;
@@ -199,8 +193,7 @@ export async function fetchCareerLayoutPage(slug: string): Promise<{
 
     const heroSplit = meta.hero_title
       ? {
-          heading: formatBoldText(heroHeading.replace(/\s+\w+$/, '')),
-          headingHighlight: formatBoldText(heroHeading.split(/\s+/).pop() || ''),
+          heading: formatBoldText(heroHeading),
           paragraphs: heroDescriptionParagraphs.map(formatBoldText),
           emphasis: formatBoldText(heroDescriptionParagraphs[0] || ''),
           ctaText: formatBoldText('Explore More'),
@@ -221,7 +214,6 @@ export async function fetchCareerLayoutPage(slug: string): Promise<{
             name: formatBoldText(meta.hr_name || ''),
             role: formatBoldText(meta.hr_designation || ''),
             heading: formatBoldText(meta.hr_title || 'Brings Life To Packaging'),
-            headingHighlight: '',
             paragraphs: hrDescriptionParagraphs.length
               ? hrDescriptionParagraphs.map(formatBoldText)
               : [formatBoldText(stripHtml(meta.hr_description))],
@@ -245,7 +237,6 @@ export async function fetchCareerLayoutPage(slug: string): Promise<{
       meta.values_title || meta.values_subtitle
         ? {
             heading: formatBoldText(meta.values_title || 'Company Value Presentation'),
-            headingHighlight: '',
             description: formatBoldText(meta.values_subtitle || ''),
           }
         : undefined;
@@ -256,12 +247,8 @@ export async function fetchCareerLayoutPage(slug: string): Promise<{
     const expertsSection =
       meta.solution_title || solutionVideoUrls.length
         ? {
-            heading: formatBoldText((meta.solution_title || 'Behind Every Solutions').replace(
-              /,\s*There's A Team Of Experts Driving Innovation$/i,
-              '',
-            )),
-            headingHighlight: formatBoldText("There's A Team Of Experts"),
-            headingSuffix: formatBoldText('Driving Innovation'),
+            heading: formatBoldText(meta.solution_title || "Behind Every Solutions, There's A Team Of Experts Driving Innovation"),
+            headingSuffix: '',
             description: formatBoldText(meta.solution_subtitle || ''),
             videos: solutionVideoUrls.map((url, idx) => ({
               id: `video-${idx}`,
@@ -275,9 +262,7 @@ export async function fetchCareerLayoutPage(slug: string): Promise<{
     const jobsSection = meta.apply_title
       ? {
           notice: '',
-          heading: formatBoldText('Open Positions'),
-          headingHighlight: formatBoldText('& Early Career'),
-          headingSuffix: formatBoldText('Opportunities'),
+          heading: formatBoldText('Open Positions & Early Career Opportunities'),
           socialApplyLinks: meta.apply_linkedin_url
             ? { linkedin: meta.apply_linkedin_url }
             : undefined,

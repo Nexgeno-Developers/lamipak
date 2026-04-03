@@ -34,10 +34,7 @@ export default function CareerLandingPage({ data }: CareerLandingPageProps) {
           <div className="grid grid-cols-1 items-stretch gap-0 lg:grid-cols-2">
             <div className="flex items-center justify-center p-8 md:p-12 lg:p-16 xl:p-20">
               <div className="max-w-xl">
-                <h2 className="mb-6 text-3xl font-bold leading-[1.15] text-[#0E233C] md:text-4xl lg:text-5xl">
-                  {data.heroSplit.heading}{' '}
-                  <span className="text-[#009FE8]">{data.heroSplit.headingHighlight}</span>
-                </h2>
+                <h2 className="mb-6 text-3xl font-bold leading-[1.15] text-[#0E233C] md:text-4xl lg:text-5xl" dangerouslySetInnerHTML={{ __html: data.heroSplit.heading }} />
 
                 <p className="mt-8 text-base font-semibold text-[#0E233C] md:text-lg">
                   {data.heroSplit.emphasis}
@@ -103,18 +100,7 @@ export default function CareerLandingPage({ data }: CareerLandingPageProps) {
                 </div>
 
                 <div className="max-w-3xl">
-                  <h2 className="mb-5 text-2xl font-bold text-[#0E233C] md:text-3xl lg:text-5xl">
-                    {data.leadershipMessage.headingHighlight ? (
-                      <>
-                        {data.leadershipMessage.heading}{' '}
-                        <span className="text-[#009FE8]">
-                          {data.leadershipMessage.headingHighlight}
-                        </span>
-                      </>
-                    ) : (
-                      data.leadershipMessage.heading
-                    )}
-                  </h2>
+                  <h2 className="mb-5 text-2xl font-bold text-[#0E233C] md:text-3xl lg:text-5xl" dangerouslySetInnerHTML={{ __html: data.leadershipMessage.heading }} />
                   <div className="space-y-5 text-sm leading-relaxed text-black md:text-base">
                     {data.leadershipMessage.paragraphs.map((p, i) => (
                       <p key={i}>{p}</p>
@@ -133,12 +119,7 @@ export default function CareerLandingPage({ data }: CareerLandingPageProps) {
             <section className="bg-gray-50 pt-10 md:pt-8">
               <div className="container mx-auto px-4">
                 <div className="mx-auto max-w-3xl text-center">
-                  <h2 className="text-2xl font-bold text-[#0E233C] md:text-3xl lg:text-5xl">
-                    <span className="text-[#009FE8]">
-                      {data.verticalFeaturesHeader.heading}
-                    </span>{' '}
-                    {data.verticalFeaturesHeader.headingHighlight}
-                  </h2>
+                  <h2 className="text-2xl font-bold text-[#0E233C] md:text-3xl lg:text-5xl" dangerouslySetInnerHTML={{ __html: data.verticalFeaturesHeader.heading }} />
                   <p className="mt-3 text-sm text-gray-600 md:text-base">
                     {data.verticalFeaturesHeader.description}
                   </p>
@@ -154,13 +135,7 @@ export default function CareerLandingPage({ data }: CareerLandingPageProps) {
         <section className="bg-gray-50 py-8 md:py-12 lg:py-12">
           <div className="container mx-auto px-4">
             <div className="mx-auto mb-10 max-w-4xl text-center md:mb-12">
-              <h2 className="text-2xl font-bold leading-tight text-[#0E233C] md:text-3xl lg:text-5xl">
-                <span className="text-[#009FE8]">
-                  {data.expertsSection.heading}
-                </span>{' '}
-                {data.expertsSection.headingHighlight},{' '}
-                {data.expertsSection.headingSuffix}
-              </h2>
+              <h2 className="text-2xl font-bold leading-tight text-[#0E233C] md:text-3xl lg:text-5xl" dangerouslySetInnerHTML={{ __html: data.expertsSection.heading }} />
               <p className="mt-4 text-sm text-gray-600 md:text-base">
                 {data.expertsSection.description}
               </p>
@@ -189,7 +164,6 @@ export default function CareerLandingPage({ data }: CareerLandingPageProps) {
       {data.connectSection && (
         <ConnectTechnicalExperts
           heading={data.connectSection.heading}
-          headingHighlight={data.connectSection.headingHighlight}
           formTitle={data.connectSection.formTitle}
           illustrationImage={data.connectSection.illustrationImage}
           illustrationAlt={data.connectSection.illustrationAlt}

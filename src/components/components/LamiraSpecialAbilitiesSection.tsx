@@ -1,7 +1,7 @@
 import VideoModalClient from '@/components/common/VideoModalClient';
 
 export interface LamiraSpecialAbilitiesSectionData {
-  headingHighlight: string;
+  heading: string;
   headingSuffix: string;
   subtitle: string;
   image: string;
@@ -28,9 +28,7 @@ export default function LamiraSpecialAbilitiesSection({
     <section className="bg-gray-50 py-10 md:py-12">
       <div className="mx-auto px-4 container">
         <div className="text-center max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-bold text-black leading-tight">
-            <span className="text-[#00A0E3]">{data.headingHighlight}</span> {data.headingSuffix}
-          </h2>
+          <h2 className="text-3xl md:text-5xl font-bold text-black leading-tight" dangerouslySetInnerHTML={{ __html: data.heading }} />
           <p className="mt-3 text-sm md:text-base text-black">{data.subtitle}</p>
         </div>
 

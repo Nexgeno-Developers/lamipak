@@ -123,12 +123,7 @@ export default async function TechnicalServicesLayoutPage({
         <section className="bg-gray-50 py-4 md:py-8 lg:py-12">
           <div className="bg-[#EDF0F1] rounded-[50px] p-8 md:p-12 lg:p-16  container mx-auto px-4">
             <div className="text-center mb-8 md:mb-12">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black">
-                <span className="text-[#009FE8]">{data.upgradeSection.headingHighlight}</span>{' '}
-                {data.upgradeSection.heading
-                  .replace(data.upgradeSection.headingHighlight, '')
-                  .trim()}
-              </h2>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black" dangerouslySetInnerHTML={{ __html: data.upgradeSection.heading }} />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
@@ -206,14 +201,7 @@ export default async function TechnicalServicesLayoutPage({
         <section className="bg-gray-50 py-4 md:py-8 lg:pt-12">
           <div className="container mx-auto px-4">
             <div className="bg-white rounded-[50px] p-6 md:p-16 lg:p-20">
-              <h2 className="text-center text-3xl md:text-4xl lg:text-5xl font-bold mb-8 md:mb-10">
-                <span className="text-[#009FE8]">
-                  {data.serviceDifferentiation.heading.split(' ')[0]}
-                </span>{' '}
-                <span className="text-black">
-                  {data.serviceDifferentiation.heading.split(' ').slice(1).join(' ')}
-                </span>
-              </h2>
+              <h2 className="text-center text-3xl md:text-4xl lg:text-5xl font-bold mb-8 md:mb-10" dangerouslySetInnerHTML={{ __html: data.serviceDifferentiation.heading }} />
 
               <div className="overflow-x-auto">
                 <div className="min-w-[940px] grid grid-cols-[170px_1fr_1fr_1fr] gap-4 items-stretch">
@@ -293,12 +281,7 @@ export default async function TechnicalServicesLayoutPage({
         <section className="bg-gray-50 py-4 md:py-8 lg:py-12">
           <div className="container mx-auto px-4">
             <div className="text-center mb-8 md:mb-12">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black">
-                <span className="text-[#009FE8]">{data.operationalSuccess.headingHighlight}</span>{' '}
-                {data.operationalSuccess.heading
-                  .replace(data.operationalSuccess.headingHighlight, '')
-                  .trim()}
-              </h2>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black" dangerouslySetInnerHTML={{ __html: data.operationalSuccess.heading }} />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
@@ -356,7 +339,6 @@ export default async function TechnicalServicesLayoutPage({
 
       <ConnectTechnicalExperts
         heading={data.connectSection.heading}
-        headingHighlight={data.connectSection.headingHighlight}
         formTitle={data.connectSection.formTitle}
         illustrationImage={data.connectSection.illustrationImage}
         illustrationAlt={data.connectSection.illustrationAlt}

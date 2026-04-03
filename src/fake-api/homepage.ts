@@ -200,7 +200,6 @@ export interface LatestPressReleaseData {
 
 export interface CallToActionData {
   heading: string;
-  headingHighlight: string;
   description: string;
   ctaText: string;
   ctaLink: string;
@@ -465,8 +464,7 @@ export async function getHomepageData(): Promise<HomepageData> {
       ],
     },
     callToAction: {
-      heading: 'Still Have',
-      headingHighlight: 'Questions?',
+      heading: 'Still Have <span class="text-[#009FE8]">Questions?</span>',
       description: 'Our Lamipak team is ready to walk you through any technical details.',
       ctaText: 'Contact Us',
       ctaLink: '/contact',

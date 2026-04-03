@@ -55,9 +55,7 @@ export default function ProductIndustryDetailLayoutPageSection({
               {data.support.subtitle}
             </p>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              <span className="text-[#009FE8]">{data.support.title}</span>
-            </h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6" dangerouslySetInnerHTML={{ __html: data.support.title }} />
 
             {data.support.description ? (
               <RichText

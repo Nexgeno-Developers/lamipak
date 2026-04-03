@@ -1,9 +1,7 @@
 import { RichText } from '@/components/common/RichText';
 
 export interface LamiraLovesSectionData {
-  headingPrefix?: string;
-  headingHighlight: string;
-  headingSuffix?: string;
+  heading: string;
   subtitle: string;
   items: Array<{
     id: string;
@@ -23,11 +21,7 @@ export default function LamiraLovesSection({ data }: LamiraLovesSectionProps) {
     <section className="bg-gray-50 py-10 md:py-12">
       <div className="mx-auto container px-4 ">
         <div className="text-center max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-bold text-black leading-tight">
-            {data.headingPrefix ? `${data.headingPrefix} ` : ''}
-            <span className="text-[#00A0E3]">{data.headingHighlight}</span>{' '}
-            {data.headingSuffix ? data.headingSuffix : ''}
-          </h2>
+          <h2 className="text-3xl md:text-5xl font-bold text-black leading-tight" dangerouslySetInnerHTML={{ __html: data.heading }} />
           <p className="mt-3 text-sm md:text-base text-black">{data.subtitle}</p>
         </div>
 

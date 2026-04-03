@@ -245,10 +245,7 @@ export default function RAndDCentreLayoutPage({ data }: { data: RAndDCentrePageD
         <div className="container mx-auto max-w-7xl px-4">
           <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
             <div>
-              <h2 className="text-3xl font-bold leading-tight text-black md:text-4xl lg:text-[2.75rem] lg:leading-snug">
-                <span className="text-black">{data.introHeadingBlack}</span>{' '}
-                <span className="text-[#009FE8]">{data.introHeadingBlue}</span>
-              </h2>
+              <h2 className="text-3xl font-bold leading-tight text-black md:text-4xl lg:text-[2.75rem] lg:leading-snug" dangerouslySetInnerHTML={{ __html: data.introHeading }} />
               <RichText
                 as="div"
                 html={data.introBodyHtml}
@@ -288,10 +285,7 @@ export default function RAndDCentreLayoutPage({ data }: { data: RAndDCentrePageD
       {/* End-to-end testing — full packaging lifecycle */}
       <section className="bg-[#F5F6F7] py-16 md:py-20 lg:py-24">
         <div className="container mx-auto max-w-7xl px-4">
-          <h2 className="mb-12 text-center text-3xl font-bold leading-tight md:mb-16 md:text-4xl lg:text-5xl">
-            <span className="text-black">{data.lifecycleSection.titleBlack}</span>{' '}
-            <span className="text-[#009FE8]">{data.lifecycleSection.titleBlue}</span>
-          </h2>
+          <h2 className="mb-12 text-center text-3xl font-bold leading-tight md:mb-16 md:text-4xl lg:text-5xl" dangerouslySetInnerHTML={{ __html: data.lifecycleSection.title }} />
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-7 lg:grid-cols-3 lg:gap-8">
             {data.lifecycleSection.cards.map((card) => (
               <LifecycleTestingCard key={card.id} card={card} />
@@ -304,10 +298,7 @@ export default function RAndDCentreLayoutPage({ data }: { data: RAndDCentrePageD
       <section className="bg-[#FAFAFA] py-16 md:py-20 lg:py-24">
         <div className="container mx-auto max-w-5xl px-4">
           <div className="mb-10 text-center md:mb-14">
-            <h2 className="text-2xl font-bold uppercase leading-tight tracking-tight text-black md:text-3xl lg:text-[2rem] lg:leading-snug">
-              <span className="text-black">{data.laboratoryZonesSection.titleBlack}</span>{' '}
-              <span className="text-[#009FE8]">{data.laboratoryZonesSection.titleBlue}</span>
-            </h2>
+            <h2 className="text-2xl font-bold uppercase leading-tight tracking-tight text-black md:text-3xl lg:text-[2rem] lg:leading-snug" dangerouslySetInnerHTML={{ __html: data.laboratoryZonesSection.title }} />
             {data.laboratoryZonesSection.subtitle ? (
               <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.22em] text-black/50 md:text-xs">
                 {data.laboratoryZonesSection.subtitle}

@@ -73,7 +73,6 @@ export type TechnicalServicesLayoutPageData = {
   };
   upgradeSection: {
     heading: string;
-    headingHighlight: string;
     cards: Array<{
       id: string;
       title: string;
@@ -108,7 +107,6 @@ export type TechnicalServicesLayoutPageData = {
   };
   operationalSuccess: {
     heading: string;
-    headingHighlight: string;
     cards: Array<{
       id: string;
       title: string;
@@ -121,7 +119,6 @@ export type TechnicalServicesLayoutPageData = {
   };
   connectSection: {
     heading: string;
-    headingHighlight: string;
     formTitle: string;
     illustrationImage: string;
     illustrationAlt: string;
@@ -322,7 +319,6 @@ export async function fetchTechnicalServicesLayoutPage(slug: string) {
         },
         upgradeSection: {
           heading: formatBoldText(upgradeHeading),
-          headingHighlight: formatBoldText(upgradeHighlight),
           cards: upgradeCards,
         },
         serviceDifferentiation: {
@@ -333,12 +329,10 @@ export async function fetchTechnicalServicesLayoutPage(slug: string) {
         },
         operationalSuccess: {
           heading: formatBoldText(operationalHeading),
-          headingHighlight: formatBoldText(operationalHighlight),
           cards: operationalCards,
         },
         connectSection: {
           heading: formatBoldText('Connect with Our Technical Experts'),
-          headingHighlight: formatBoldText('Technical Experts'),
           formTitle: formatBoldText('Send Us A Message'),
           illustrationImage: '/connected_image.jpg',
           illustrationAlt: formatBoldText('Connect with Technical Experts'),

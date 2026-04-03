@@ -53,18 +53,7 @@ export default function CareerListingClient({
     <section id="open-positions" className="bg-gray-50 py-10 md:py-12">
       <div className="container mx-auto px-4">
         <div className="mt-6 text-center">
-          <h2 className="text-2xl font-bold text-black md:text-5xl">
-            {jobsSection?.heading ?? 'See all open positions and'}{' '}
-            <span className="text-[#009FE8]">
-              {jobsSection?.headingHighlight ?? 'early career opportunities'}
-            </span>
-            {jobsSection?.headingSuffix ? (
-              <>
-                {', '}
-                <span className="text-black">{jobsSection.headingSuffix}</span>
-              </>
-            ) : null}
-          </h2>
+          <h2 className="text-2xl font-bold text-black md:text-5xl" dangerouslySetInnerHTML={{ __html: jobsSection?.heading ?? 'See all open positions and early career opportunities' }} />
         </div>
 
         <div className="mt-8">

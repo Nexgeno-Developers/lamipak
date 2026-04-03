@@ -31,9 +31,7 @@ export interface CarbonNetZeroRoadmapSectionData {
 }
 
 export interface CarbonNetZeroPillarsSectionData {
-  headingPrefix: string;
-  headingHighlight: string;
-  headingSuffix: string;
+  heading: string;
   items: Array<{
     id: string;
     title: string;
@@ -234,9 +232,7 @@ export async function fetchSustainabilityLayout6Page(slug: string): Promise<{
 
     const pillarsSection: CarbonNetZeroPillarsSectionData | undefined = pillars.length
       ? {
-          headingPrefix: pillarHeading.first,
-          headingHighlight: pillarHeading.rest,
-          headingSuffix: '',
+          heading: formatBoldText(`${pillarHeading.first} ${pillarHeading.rest}`.trim()),
           items: pillars,
           accentColor: '#00AEEF',
           cardBackgroundColor: '#f2f4f6',

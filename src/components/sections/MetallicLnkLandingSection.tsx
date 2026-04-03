@@ -66,7 +66,6 @@ export function MetallicLnkLandingSection({ data }: { data: MetallicLnkLandingSe
         <div className="mt-10">
           <ConnectTechnicalExperts
             heading={data.connectSection.heading}
-            headingHighlight={data.connectSection.headingHighlight}
             formTitle={data.connectSection.formTitle}
             illustrationImage={data.connectSection.illustrationImage}
             illustrationAlt={data.connectSection.illustrationAlt}

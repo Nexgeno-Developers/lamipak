@@ -15,7 +15,6 @@ type FormState = {
 
 interface ConnectTechnicalExpertsProps {
   heading?: string;
-  headingHighlight?: string;
   formTitle: string;
   illustrationImage: string;
   illustrationAlt: string;
@@ -28,7 +27,6 @@ interface ConnectTechnicalExpertsProps {
  */
 export default function ConnectTechnicalExperts({
   heading = '',
-  headingHighlight = '',
   formTitle,
   illustrationImage,
   illustrationAlt
@@ -98,12 +96,9 @@ export default function ConnectTechnicalExperts({
     <section className="bg-gray-50 py-4 md:py-8 lg:py-12">
       <div className="container mx-auto px-4">
         {/* Section Heading */}
-        {(heading || headingHighlight) && headingHighlight ? (
+        {heading ? (
           <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold text-black">
-              {heading.replace(headingHighlight, '').trim()}{' '}
-              <span className="text-[#009FE8]">{headingHighlight}</span>
-            </h2>
+            <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold text-black" dangerouslySetInnerHTML={{ __html: heading }} />
           </div>
         ) : null}
 

@@ -104,7 +104,6 @@ export function OpticapLandingSection({ data }: { data: OpticapLandingSectionDat
         <div className="mt-10">
           <ConnectTechnicalExperts
             heading=""
-            headingHighlight=""
             formTitle={connect.formTitle}
             illustrationImage={connect.illustrationImage}
             illustrationAlt={connect.illustrationAlt}

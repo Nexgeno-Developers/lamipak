@@ -18,10 +18,7 @@ export default async function CallToAction() {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-8">
             {/* Left Side - Heading and Description */}
             <div className="flex-1">
-              <h2 className="text-[20px] md:text-4xl lg:text-5xl font-bold lg:mb-4 mb-2">
-                <span className="text-black">{data.heading}</span>{' '}
-                <span className="text-[#009FE8]">{data.headingHighlight}</span>
-              </h2>
+              <h2 className="text-[20px] md:text-4xl lg:text-5xl font-bold lg:mb-4 mb-2" dangerouslySetInnerHTML={{ __html: data.heading }} />
               <RichText
                 as="div"
                 html={data.description}

@@ -173,7 +173,6 @@ export default function MarketingServiceDetailLayoutPage({
       <div className="mt-10">
         <ConnectTechnicalExperts
           heading=""
-          headingHighlight=""
           formTitle={connect.formTitle}
           illustrationImage={connect.illustrationImage}
           illustrationAlt={connect.illustrationAlt}

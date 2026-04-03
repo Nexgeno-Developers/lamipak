@@ -41,15 +41,7 @@ export default function PickCartoonPage({ data }: PickCartoonPageProps) {
             <section key={idx} className="bg-gray-50 py-12 md:pt-20">
               <div className="container mx-auto px-4">
                 <div className="text-center">
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 text-black">
-                    {section.heading}{' '}
-                    {section.headingHighlight ? (
-                      <span className="text-[#009FE8]">{section.headingHighlight}</span>
-                    ) : null}{' '}
-                    {section.headingSuffix ? (
-                      <span className="">{section.headingSuffix}</span>
-                    ) : null}
-                  </h2>
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 text-black" dangerouslySetInnerHTML={{ __html: section.heading }} />
                 </div>
 
                 <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-16">
@@ -113,12 +105,7 @@ export default function PickCartoonPage({ data }: PickCartoonPageProps) {
             <section key={idx} className="bg-gray-50 py-12 md:py-12">
               <div className="container mx-auto px-4">
                 <div className="text-center max-w-4xl mx-auto">
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-2 text-black">
-                    {section.heading}{' '}
-                    {section.headingHighlight ? (
-                      <span className="text-[#009FE8]">{section.headingHighlight}</span>
-                    ) : null}
-                  </h2>
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-2 text-black" dangerouslySetInnerHTML={{ __html: section.heading }} />
                   {section.description ? (
                     <RichText
                       as="div"
@@ -202,15 +189,7 @@ export default function PickCartoonPage({ data }: PickCartoonPageProps) {
             <section key={idx} className="bg-gray-50 py-12 md:py-12">
               <div className="container mx-auto px-4">
                 <div className="text-center max-w-4xl mx-auto">
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-2 text-black">
-                    {section.heading}{' '}
-                    {section.headingHighlight ? (
-                      <span className="text-[#009FE8]">{section.headingHighlight}</span>
-                    ) : null}{' '}
-                    {section.headingSuffix ? (
-                      <span className="text-black">{section.headingSuffix}</span>
-                    ) : null}
-                  </h2>
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-2 text-black" dangerouslySetInnerHTML={{ __html: section.heading }} />
 
                   {(section.introBold || section.introText) && (
                     <p className="mt-3 text-xs md:text-base text-black leading-relaxed">
@@ -229,8 +208,7 @@ export default function PickCartoonPage({ data }: PickCartoonPageProps) {
                       className="rounded-[50px] bg-[#EDF0F1] px-6 py-8 text-center"
                     >
                       <div className="text-xl md:text-2xl font-extrabold text-black">
-                        <span className="text-[#009FE8]">{card.valueHighlight}</span>{' '}
-                        {card.valueRest ? <span>{card.valueRest}</span> : null}
+                        {card.value}
                       </div>
                       <div className="mt-1 text-xl md:text-2xl font-extrabold text-black">
                         {card.title}

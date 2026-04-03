@@ -15,6 +15,7 @@
 
 import { getCompanyData as fakeGetCompanyData } from '@/fake-api/company';
 import type { CompanyData } from '@/fake-api/company';
+import { formatBoldText } from '@/lib/htmlText';
 
 export interface GreenPhotovoltaicProjectBlock {
   locationLabel: string;
@@ -58,7 +59,7 @@ export interface DynamicPageData {
     imageAlt: string;
   };
   lamiraSpecialAbilitiesSection?: {
-    headingHighlight: string;
+    heading: string;
     headingSuffix: string;
     subtitle: string;
     image: string;
@@ -71,8 +72,7 @@ export interface DynamicPageData {
     }>;
   };
   lamiraLovesSection?: {
-    headingPrefix?: string;
-    headingHighlight: string;
+    heading: string;
     headingSuffix?: string;
     subtitle: string;
     items: Array<{
@@ -86,14 +86,12 @@ export interface DynamicPageData {
   lamiraSharedGuideSection?: {
     image: string;
     imageAlt: string;
-    headingPrefix?: string;
-    headingHighlight: string;
+    heading: string;
     headingSuffix?: string;
     description: string;
   };
   lamiraSocialWorldMomentsSection?: {
-    headingPrefix: string;
-    headingHighlight: string;
+    heading: string;
     headingSuffix?: string;
     items: Array<{
       id: string;
@@ -253,9 +251,7 @@ export interface DynamicPageData {
   };
   /** Key sustainability pillars grid (e.g. carbon roadmap page) */
   carbonNetZeroPillarsSection?: {
-    headingPrefix: string;
-    headingHighlight: string;
-    headingSuffix: string;
+    heading: string;
     items: Array<{
       id: string;
       title: string;
@@ -428,8 +424,6 @@ export interface DynamicPageData {
     | {
         type: 'sustainability_footprint';
         heading: string;
-        headingHighlight?: string;
-        headingSuffix?: string;
         items: Array<{
           id: string;
           image: string;
@@ -447,7 +441,6 @@ export interface DynamicPageData {
     | {
         type: 'why_cartons_matter';
         heading: string;
-        headingHighlight?: string;
         description?: string;
         items: Array<{
           id: string;
@@ -468,14 +461,11 @@ export interface DynamicPageData {
     | {
         type: 'power_of_carton_packaging';
         heading: string;
-        headingHighlight?: string;
-        headingSuffix?: string;
         introBold?: string;
         introText?: string;
         cards: Array<{
           id: string;
-          valueHighlight: string;
-          valueRest: string;
+          value: string;
           title: string;
           descriptionEmphasis?: string;
           description: string;
@@ -485,7 +475,6 @@ export interface DynamicPageData {
     | {
         type: 'journey_recycling_section';
         heading: string;
-        headingHighlight?: string;
         image: string;
         imageAlt?: string;
         description: string;
@@ -551,8 +540,8 @@ const PAGES: DynamicPageData[] = [
       imageAlt: 'Lamira tree and sustainable innovation network visual',
     },
     lamiraSpecialAbilitiesSection: {
-      headingHighlight: "Lamira's",
-      headingSuffix: 'Special Abilities',
+      heading: formatBoldText("Lamira's Special Abilities"),
+      headingSuffix: '',
       subtitle:
         "Lamira's unique abilities symbolize the transformation and innovation that sustainable packaging can achieve.",
       image: '/banner-slider2.jpg',
@@ -574,9 +563,8 @@ const PAGES: DynamicPageData[] = [
       ],
     },
     lamiraLovesSection: {
-      headingPrefix: 'What',
-      headingHighlight: 'Lamira',
-      headingSuffix: 'Loves',
+      heading: formatBoldText('What Lamira Loves'),
+      headingSuffix: '',
       subtitle:
         'Lamira spends time exploring the natural world and bringing together friends who share a passion for protecting it.',
       items: [
@@ -609,15 +597,13 @@ const PAGES: DynamicPageData[] = [
     lamiraSharedGuideSection: {
       image: '/share_left_1.webp',
       imageAlt: 'Lamira shared guide tree in network',
-      headingPrefix: 'A Shared Guide',
-      headingHighlight: 'For The Future',
+      heading: formatBoldText('A Shared Guide For The Future'),
       headingSuffix: '',
       description:
-        'Lamira is more than a mascot. lamira is a symbol of Lamipak’s commitment to sustainable packaging innovation and a reminder that protecting our planet requires creativity, collaboration, and responsibility. through Lamira’s story, Lamipak invites partners, customers, and communities to imagine a future where packaging solutions support both people and nature. together, guided by lamira, we can continue building a world where innovation nurtures the environment and every idea helps create a more sustainable tomorrow.',
+        `Lamira is more than a mascot. lamira is a symbol of Lamipak's commitment to sustainable packaging innovation and a reminder that protecting our planet requires creativity, collaboration, and responsibility. through Lamira's story, Lamipak invites partners, customers, and communities to imagine a future where packaging solutions support both people and nature. together, guided by lamira, we can continue building a world where innovation nurtures the environment and every idea helps create a more sustainable tomorrow.`,
     },
     lamiraSocialWorldMomentsSection: {
-      headingPrefix: 'Moments From Our',
-      headingHighlight: 'Social World',
+      heading: formatBoldText('Moments From Our Social World'),
       headingSuffix: '',
       items: [
         {
@@ -1202,9 +1188,7 @@ const PAGES: DynamicPageData[] = [
       summaryBarText: '2050 NET ZERO ACROSS THE VALUE CHAIN',
     },
     carbonNetZeroPillarsSection: {
-      headingPrefix: 'Key',
-      headingHighlight: 'Sustainability',
-      headingSuffix: 'Pillar',
+      heading: formatBoldText('Key Sustainability Pillar'),
       accentColor: '#00AEEF',
       cardBackgroundColor: '#f2f4f6',
       sectionBackgroundColor: '#ffffff',
@@ -1308,9 +1292,7 @@ const PAGES: DynamicPageData[] = [
     sections: [
       {
         type: 'sustainability_footprint',
-        heading: 'Our',
-        headingHighlight: 'Sustainability',
-        headingSuffix: 'Footprint',
+        heading: formatBoldText('Our Sustainability Footprint'),
         items: [
           {
             id: 'pick-footprint-1',
@@ -1338,8 +1320,7 @@ const PAGES: DynamicPageData[] = [
       },
       {
         type: 'why_cartons_matter',
-        heading: 'Why Cartons',
-        headingHighlight: 'Matter',
+        heading: formatBoldText('Why Cartons Matter'),
         description:
           'Packaging has a major environmental impact, affecting carbon emissions, transport efficiency, and recyclability. Cartons provide key benefits that support a more sustainable packaging ecosystem.',
         items: [
@@ -1385,34 +1366,29 @@ const PAGES: DynamicPageData[] = [
       },
       {
         type: 'power_of_carton_packaging',
-        heading: 'The Power Of',
-        headingHighlight: 'Carton',
-        headingSuffix: 'Packaging',
+        heading: formatBoldText('The Power Of Carton Packaging'),
         introBold: 'Sustainability By The Numbers.',
         introText:
           'Here Are A Few Facts That Demonstrate Why Cartons Play A Critical Role In Sustainable Packaging Systems:',
         cards: [
           {
             id: 'pick-climate-impact',
-            valueHighlight: '',
-            valueRest: '',
+            value: '66–77% lower climate impact',
             title: '66–77% lower climate impact',
             description:
               'Independent life cycle assessments show that carton packages can have 66% to 77% lower climate impact than plastic bottles in certain dairy product categories.',
           },
           {
             id: 'pick-renewable-content',
-            valueHighlight: '',
-            valueRest: '',
+            value: 'Up to 90% renewable content',
             title: 'Up to 90% renewable content',
-         
+       
             description:
               'Innovations in carton packaging have increased renewable material content to as high as 90%, helping reduce carbon footprint compared with conventional packaging formats.',
           },
           {
             id: 'pick-recycled-globally',
-            valueHighlight: '',
-            valueRest: '',
+            value: '1.3 million tonnes recycled globally',
             title: '1.3 million tonnes recycled globally',
             description:
               'More than 1.3 million tonnes of beverage cartons were collected for recycling worldwide in 2024, demonstrating the growing role cartons play in the circular economy',

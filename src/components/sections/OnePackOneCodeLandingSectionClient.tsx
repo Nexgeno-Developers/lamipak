@@ -207,7 +207,6 @@ export default function OnePackOneCodeLandingSectionClient({
 
       <ConnectTechnicalExperts
         heading=""
-        headingHighlight=""
         formTitle={data.connectSection?.formTitle || 'Send Us A Message'}
         illustrationImage={data.connectSection?.illustrationImage || '/connected_image.jpg'}
         illustrationAlt={data.connectSection?.illustrationAlt || 'Connect with Technical Experts'}

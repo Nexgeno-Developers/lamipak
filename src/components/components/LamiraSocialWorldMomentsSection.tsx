@@ -1,9 +1,7 @@
 import Image from 'next/image';
 
 export interface LamiraSocialWorldMomentsSectionData {
-  headingPrefix: string;
-  headingHighlight: string;
-  headingSuffix?: string;
+  heading: string;
   items: Array<{
     id: string;
     image: string;
@@ -22,10 +20,7 @@ export default function LamiraSocialWorldMomentsSection({
     <section className="bg-gray-50 py-10 md:py-12">
       <div className="mx-auto px-4 container">
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-5xl font-bold text-black">
-            {data.headingPrefix} <span className="text-[#00A0E3]">{data.headingHighlight}</span>
-            {data.headingSuffix ? ` ${data.headingSuffix}` : ''}
-          </h2>
+          <h2 className="text-3xl md:text-5xl font-bold text-black" dangerouslySetInnerHTML={{ __html: data.heading }} />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

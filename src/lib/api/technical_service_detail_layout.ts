@@ -66,7 +66,6 @@ export type TechnicalServiceDetailPageData = {
   }>;
   connectSection: {
     heading: string;
-    headingHighlight: string;
     formTitle: string;
     illustrationImage: string;
     illustrationAlt: string;
@@ -175,7 +174,6 @@ export async function fetchTechnicalServiceDetailLayoutPage(slug: string) {
         operationalBlocks: blocks,
         connectSection: {
           heading: formatBoldText('Connect with Our Technical Experts'),
-          headingHighlight: formatBoldText('Technical Experts'),
           formTitle: formatBoldText('Send Us A Message'),
           illustrationImage: '/collaborating_together.webp',
           illustrationAlt: formatBoldText('Connect with Technical Experts'),

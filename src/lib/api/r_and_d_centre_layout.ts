@@ -71,8 +71,7 @@ export type RAndDCentreLifecycleCard = {
 };
 
 export type RAndDCentreLifecycleSection = {
-  titleBlack: string;
-  titleBlue: string;
+  title: string;
   cards: RAndDCentreLifecycleCard[];
 };
 
@@ -85,8 +84,7 @@ export type RAndDLaboratoryZoneItem = {
 };
 
 export type RAndDLaboratoryZonesSection = {
-  titleBlack: string;
-  titleBlue: string;
+  title: string;
   subtitle?: string;
   items: RAndDLaboratoryZoneItem[];
 };
@@ -106,8 +104,7 @@ export type RAndDCentrePageData = {
   heroEyebrow: string;
   heroTitle: string;
   heroDescription: string;
-  introHeadingBlack: string;
-  introHeadingBlue: string;
+  introHeading: string;
   introBodyHtml: string;
   primaryCta: { text: string; href: string };
   secondaryCta: { text: string; href: string };
@@ -124,8 +121,7 @@ const DEFAULT_PAGE: RAndDCentrePageData = {
   heroTitle: 'A WORLD-CLASS HOME FOR PACKAGING INNOVATION',
   heroDescription:
     'Our 20,000 m² Innovation Center in Kunshan, China, is a global hub where ideas become industry breakthroughs.',
-  introHeadingBlack: 'Where Packaging',
-  introHeadingBlue: 'Science Meets Performance',
+  introHeading: 'Where Packaging <span class="text-[#009FE8]">Science Meets Performance</span>',
   introBodyHtml: `<p>Our R&amp;D laboratory unites material scientists, process engineers, and packaging specialists to advance aseptic barrier systems, structural design, and sustainable materials. Every test bench and pilot line is built to turn fundamental research into repeatable performance on your filling lines.</p>`,
   primaryCta: { text: 'EXPLORE OUR CAPABILITIES', href: '/packaging' },
   secondaryCta: { text: 'TALK TO OUR TEAM', href: '/contact-us' },
@@ -147,8 +143,7 @@ const DEFAULT_PAGE: RAndDCentrePageData = {
     },
   ],
   lifecycleSection: {
-    titleBlack: 'End-To-End Testing Across The',
-    titleBlue: 'Full Packaging Lifecycle',
+    title: 'End-To-End Testing Across The <span class="text-[#009FE8]">Full Packaging Lifecycle</span>',
     cards: [
       {
         id: 'l1',
@@ -201,8 +196,7 @@ const DEFAULT_PAGE: RAndDCentrePageData = {
     ],
   },
   laboratoryZonesSection: {
-    titleBlack: 'SEVEN SPECIALIZED',
-    titleBlue: 'LABORATORY ZONES',
+    title: 'SEVEN SPECIALIZED <span class="text-[#009FE8]">LABORATORY ZONES</span>',
     subtitle: 'FROM SENSORY SCIENCE TO COMPETITIVE BENCHMARKING',
     items: [
       {
@@ -304,8 +298,11 @@ function mapApiToPage(api: NonNullable<RAndDCentreApiResponse['data']>): RAndDCe
   base.heroTitle = formatBoldText(clean(meta.hero_title) || base.heroTitle);
   base.heroDescription = formatBoldText(clean(meta.hero_description) || base.heroDescription);
 
-  base.introHeadingBlack = formatBoldText(clean(meta.intro_heading_black) || base.introHeadingBlack);
-  base.introHeadingBlue = formatBoldText(clean(meta.intro_heading_blue) || base.introHeadingBlue);
+  const introBlack = clean(meta.intro_heading_black) || base.introHeading;
+  const introBlue = clean(meta.intro_heading_blue);
+  if (introBlack || introBlue) {
+    base.introHeading = formatBoldText((introBlack + ' ' + (introBlue || '')).trim());
+  }
   if (clean(meta.intro_body)) {
     base.introBodyHtml = meta.intro_body!.trim();
   }
@@ -341,8 +338,9 @@ function mapApiToPage(api: NonNullable<RAndDCentreApiResponse['data']>): RAndDCe
 
   const lb = clean(meta.lifecycle_title_black);
   const lblue = clean(meta.lifecycle_title_blue);
-  if (lb) base.lifecycleSection.titleBlack = formatBoldText(lb);
-  if (lblue) base.lifecycleSection.titleBlue = formatBoldText(lblue);
+  if (lb || lblue) {
+    base.lifecycleSection.title = formatBoldText((lb + ' ' + (lblue || '')).trim());
+  }
 
   const life = meta.lifecycle_cards;
   if (life?.length) {
@@ -370,8 +368,9 @@ function mapApiToPage(api: NonNullable<RAndDCentreApiResponse['data']>): RAndDCe
   const zb = clean(meta.laboratory_zones_title_black);
   const zblue = clean(meta.laboratory_zones_title_blue);
   const zsub = clean(meta.laboratory_zones_subtitle);
-  if (zb) base.laboratoryZonesSection.titleBlack = formatBoldText(zb);
-  if (zblue) base.laboratoryZonesSection.titleBlue = formatBoldText(zblue);
+  if (zb || zblue) {
+    base.laboratoryZonesSection.title = formatBoldText((zb + ' ' + (zblue || '')).trim());
+  }
   if (zsub) base.laboratoryZonesSection.subtitle = formatBoldText(zsub);
 
   const zItems = meta.laboratory_zones_items;
