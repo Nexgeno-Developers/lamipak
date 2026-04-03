@@ -41,7 +41,7 @@ const COMPANY_API_BASE_URL =
   process.env.COMPANY_API_BASE_URL || 'https://backend-lamipak.webtesting.pw/api';
 
 const HOME_AUTOFETCH =
-  'marketing_services,technical_services,sustainable_products,sustainabilities';
+  'services,marketing_services,technical_services,sustainable_products,sustainabilities';
 
 const HOME_REVALIDATE_SECONDS = 300;
 
@@ -125,6 +125,8 @@ type SustainabilityLinkItem = {
 };
 
 type HomeAutofetchApi = {
+  /** Combined commercial service cards (preferred when present). */
+  services?: ServiceAutofetchItem[];
   marketing_services?: ServiceAutofetchItem;
   technical_services?: ServiceAutofetchItem;
   sustainable_products?: SustainableProductAutofetchItem[];
@@ -263,6 +265,19 @@ function mapBannerItemsToHero(banner: BannerItemsApi | undefined, baseHero: Hero
   };
 }
 
+function inferServiceIconFallback(svc: ServiceAutofetchItem): 'gear' | 'megaphone' {
+  const s = `${svc.slug || ''} ${svc.title || ''} ${svc.short_summary_title || ''}`.toLowerCase();
+  if (s.includes('technical')) return 'gear';
+  return 'megaphone';
+}
+
+function commercialServiceSortRank(slug: string): number {
+  const s = slug.toLowerCase();
+  if (s.includes('technical-support')) return 0;
+  if (s.includes('marketing-support')) return 1;
+  return 2;
+}
+
 function mapServiceToCard(
   svc: ServiceAutofetchItem,
   icon: 'gear' | 'megaphone',
@@ -290,6 +305,19 @@ function mapServiceToCard(
 }
 
 function mapCommercialServices(autofetch: HomeAutofetchApi | undefined): CommercialServicesData | null {
+  const fromArray = autofetch?.services;
+  if (fromArray?.length) {
+    const sorted = [...fromArray].sort(
+      (a, b) => commercialServiceSortRank(a.slug || '') - commercialServiceSortRank(b.slug || ''),
+    );
+    const cards: CommercialServiceCard[] = [];
+    for (const svc of sorted) {
+      const c = mapServiceToCard(svc, inferServiceIconFallback(svc));
+      if (c) cards.push(c);
+    }
+    if (cards.length) return { cards };
+  }
+
   const tech = autofetch?.technical_services;
   const mkt = autofetch?.marketing_services;
   const cards: CommercialServiceCard[] = [];
