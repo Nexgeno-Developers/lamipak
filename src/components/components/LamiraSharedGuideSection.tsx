@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { formatBoldText } from '@/lib/htmlText';
 import { RichText } from '@/components/common/RichText';
 
@@ -20,13 +21,18 @@ export default function LamiraSharedGuideSection({
       <div className="mx-auto px-4 container">
         <div className="grid grid-cols-1 md:grid-cols-[1.05fr_0.95fr] gap-8 md:gap-10 items-center">
           <div className="relative overflow-hidden rounded-[28px] md:rounded-[40px] bg-gray-50">
-            {/* Use normal <img> so height becomes content-driven (auto). */}
-            <img
-              src={data.image}
-              alt={data.imageAlt}
-              className="block w-full h-auto object-cover"
-              loading="lazy"
-            />
+            {data.image ? (
+              <Image
+                src={data.image}
+                alt={data.imageAlt}
+                width={800}
+                height={600}
+                className="block w-full h-auto object-cover"
+                loading="lazy"
+              />
+            ) : (
+              <div className="w-full h-64 bg-gray-200" />
+            )}
           </div>
 
           <div>

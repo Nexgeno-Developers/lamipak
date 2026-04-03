@@ -1,38 +1,75 @@
-import type { LamiraMeetSectionData } from '@/components/components/LamiraMeetSection';
-import type { LamiraSpecialAbilitiesSectionData } from '@/components/components/LamiraSpecialAbilitiesSection';
-import type { LamiraLovesSectionData } from '@/components/components/LamiraLovesSection';
-import type { LamiraSharedGuideSectionData } from '@/components/components/LamiraSharedGuideSection';
-import type { LamiraSocialWorldMomentsSectionData } from '@/components/components/LamiraSocialWorldMomentsSection';
-import { getYouTubeEmbedUrl } from '@/lib/youtubeEmbed';
 import { formatBoldText } from '@/lib/htmlText';
+import { getYouTubeEmbedUrl } from '@/lib/youtubeEmbed';
+
+type LamiraMeetSectionData = {
+  titlePrefix?: string;
+  titleHighlight: string;
+  titleSuffix?: string;
+  subtitle: string;
+  storyTitle: string;
+  paragraphs: string[];
+  bodyHtml?: string;
+  image: string;
+  imageAlt: string;
+};
+
+type LamiraSpecialAbilitiesSectionData = {
+  heading: string;
+  headingSuffix: string;
+  subtitle: string;
+  image: string;
+  imageAlt: string;
+  videoUrl: string;
+  abilities: Array<{ id: string; title: string; description: string }>;
+};
+
+type LamiraLovesSectionData = {
+  heading: string;
+  subtitle: string;
+  items: Array<{ id: string; title: string; description: string; image: string; imageAlt: string }>;
+};
+
+type LamiraSharedGuideSectionData = {
+  image: string;
+  imageAlt: string;
+  heading: string;
+  description: string;
+};
+
+type LamiraSocialWorldMomentsSectionData = {
+  heading: string;
+  items: Array<{ id: string; image: string; imageAlt: string }>;
+};
 
 type Sustainability2ApiResponse = {
   data?: {
+    id?: number;
     slug: string;
+    language?: string;
     title: string;
     content?: string;
     is_active?: boolean;
     layout?: string;
+    company_id?: number;
     meta?: {
+      breadcrumb_image?: { id?: number; filename?: string; url?: string };
       hero_title?: string;
-      hero_image?: { url?: string };
+      hero_image?: { id?: number; filename?: string; url?: string };
       hero_description?: string;
-      breadcrumb_image?: { url?: string };
-
       special_ability_title?: string;
       special_ability_description?: string;
-      special_ability_items?: string;
-
+      special_ability_items?: string | object;
       lamira_love_title?: string;
       lamira_love_description?: string;
-      lamira_love_items?: string;
-
+      lamira_love_items?: string | object;
+      lamira_love_images?: Array<{ id?: number; filename?: string; url?: string }>;
       shared_guide_title?: string;
-      shared_guide_image?: string;
+      shared_guide_image?: { id?: number; filename?: string; url?: string };
       shared_guide_description?: string;
-
       social_world_title?: string;
-      social_world_images?: string;
+      social_world_images?: Array<{ id?: number; filename?: string; url?: string }>;
+      short_summary_image?: { id?: number; filename?: string; url?: string };
+      short_summary_description?: string;
     };
     seo?: Record<string, unknown>;
   };
@@ -46,10 +83,10 @@ function stripHtml(value?: string | null): string {
 function decodeHtmlEntities(input: string): string {
   return input
     .replace(/&nbsp;/g, ' ')
-    .replace(/&rsquo;/g, '’')
-    .replace(/&lsquo;/g, '‘')
-    .replace(/&ldquo;/g, '“')
-    .replace(/&rdquo;/g, '”')
+    .replace(/&rsquo;/g, '\u2019')
+    .replace(/&lsquo;/g, '\u2018')
+    .replace(/&ldquo;/g, '\u201C')
+    .replace(/&rdquo;/g, '\u201D')
     .replace(/&amp;/g, '&')
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
@@ -92,7 +129,7 @@ function extractStoryTitleAndMeetContent(heroDescriptionHtml: string): {
   const strongRegex = /<strong[^>]*>([\s\S]*?)<\/strong>/i;
   const strongMatch = strongRegex.exec(heroDescriptionHtml);
 
-    const storyTitleClean = strongMatch
+  const storyTitleClean = strongMatch
     ? formatBoldText(decodeHtmlEntities(strongMatch[1].replace(/<[^>]+>/g, ' ').trim()))
     : '';
 
@@ -100,10 +137,7 @@ function extractStoryTitleAndMeetContent(heroDescriptionHtml: string): {
     ? heroDescriptionHtml.replace(strongRegex, '')
     : heroDescriptionHtml;
 
-  // If the editor provided headings (<h3>/<h4>...), preserve the HTML
-  // so the frontend can render those tags exactly.
   if (hasHeadingTags) {
-    // Extract first <p> as subtitle if present, and remove it from bodyHtml.
     const firstPRe = /<p\b[^>]*>([\s\S]*?)<\/p>/i;
     const firstPMatch = firstPRe.exec(heroWithoutStrong);
     const subtitle = firstPMatch ? stripHtml(firstPMatch[1]) : '';
@@ -113,7 +147,7 @@ function extractStoryTitleAndMeetContent(heroDescriptionHtml: string): {
 
     return {
       subtitle: decodeHtmlEntities(subtitle),
-      storyTitle: '',
+      storyTitle: storyTitleClean ? `*${storyTitleClean}*` : '',
       paragraphs: [],
       bodyHtml,
     };
@@ -122,14 +156,12 @@ function extractStoryTitleAndMeetContent(heroDescriptionHtml: string): {
   const bodyText = htmlToTextPreservingBreaks(heroWithoutStrong);
   const bodyParagraphs = splitParagraphsFromText(bodyText).map((p) => decodeHtmlEntities(p));
 
-  // Convention used in the CMS copy:
-  // first paragraph = subtitle (short hook), remaining = story paragraphs.
   const subtitle = bodyParagraphs.length >= 2 ? bodyParagraphs[0] : '';
   const paragraphs = bodyParagraphs.length >= 2 ? bodyParagraphs.slice(1) : bodyParagraphs;
 
   return {
     subtitle,
-    storyTitle: storyTitleClean ? `*${storyTitleClean}*` : 'Lamira’s Story',
+    storyTitle: storyTitleClean ? `*${storyTitleClean}*` : '',
     paragraphs: paragraphs.length ? paragraphs : [stripHtml(heroDescriptionHtml)],
     bodyHtml: undefined,
   };
@@ -152,43 +184,41 @@ function safeJsonParse<T>(value: string | undefined): T | null {
   }
 }
 
-function splitLines(value?: string | null): string[] {
-  if (!value) return [];
-  return value
-    .split(/\r?\n/)
-    .map((l) => l.trim())
-    .filter(Boolean);
+function resolveImageUrl(
+  entry: { id?: number; filename?: string; url?: string } | string | number | undefined,
+  imageMap: Map<string | number, string>,
+): string | undefined {
+  if (!entry) return undefined;
+  if (typeof entry === 'string' && entry.startsWith('http')) return entry;
+  if (typeof entry === 'object' && 'url' in entry) return entry.url;
+  if (typeof entry === 'string' || typeof entry === 'number') {
+    return imageMap.get(entry);
+  }
+  return undefined;
 }
 
-function splitToParagraphs(value?: string | null): string[] {
-  if (!value) return [];
-  return value
-    .split(/\r?\n\s*\r?\n/)
-    .map((p) => p.trim())
-    .filter(Boolean);
+function buildImageMap(
+  images: Array<{ id?: number; filename?: string; url?: string } | undefined>,
+): Map<string | number, string> {
+  const map = new Map<string | number, string>();
+  for (const img of images) {
+    if (img && img.id && img.url) {
+      map.set(img.id, img.url);
+    }
+  }
+  return map;
 }
 
-function pickPrefixHighlight(title: string): { prefix?: string; highlight: string; suffix?: string } {
-  const parts = title.trim().split(/\s+/);
-  if (parts.length <= 1) return { highlight: title.trim() };
-  if (parts.length === 2) return { prefix: parts[0], highlight: parts[1] };
-  return { prefix: parts[0], highlight: parts.slice(1).join(' ') };
+function parseJsonOrObject<T>(value: string | object | undefined): T | null {
+  if (!value) return null;
+  if (typeof value === 'string') return safeJsonParse<T>(value);
+  if (typeof value === 'object') return value as T;
+  return null;
 }
-
-const LOVE_IMAGE_FALLBACKS = ['/what_lamira_1.webp', '/what_lamira_2.webp', '/what_lamira_1.webp'];
-const SHARED_GUIDE_IMAGE_FALLBACK = '/share_left_1.webp';
-const SOCIAL_IMAGE_FALLBACKS = [
-  '/moments_21.webp',
-  '/moments_22.webp',
-  '/moments_23.webp',
-  '/moments_24.webp',
-  '/moments_25.webp',
-  '/moments_26.webp',
-];
 
 export type LamiraPageData = {
   title: string;
-  heroBackgroundImage: string;
+  heroBackgroundImage?: string;
   lamiraMeetSection?: LamiraMeetSectionData;
   lamiraSpecialAbilitiesSection?: LamiraSpecialAbilitiesSectionData;
   lamiraLovesSection?: LamiraLovesSectionData;
@@ -217,25 +247,37 @@ export async function fetchSustainabilityLayout2Page(slug: string): Promise<{
     const seo = (data.seo || {}) as Record<string, unknown>;
 
     const heroTitle = meta.hero_title?.trim() || data.title;
-    const heroImage = meta.hero_image?.url || '/lamira_right_image.webp';
-    const heroBackgroundImage = meta.breadcrumb_image?.url || '/pick_cartoon_banner.webp';
+    const heroImageUrl = meta.hero_image?.url;
+    const heroBackgroundImage = meta.breadcrumb_image?.url;
+
+    const imageMap = buildImageMap([
+      meta.hero_image,
+      meta.breadcrumb_image,
+      meta.shared_guide_image,
+      meta.short_summary_image,
+      ...(meta.social_world_images || []),
+      ...(meta.lamira_love_images || []),
+    ]);
 
     const heroDescriptionHtml = meta.hero_description || '';
     const { subtitle, storyTitle, paragraphs, bodyHtml } = extractStoryTitleAndMeetContent(heroDescriptionHtml);
 
-    const meet: LamiraMeetSectionData = {
-      titlePrefix: undefined,
-      titleHighlight: formatBoldText(heroTitle),
-      titleSuffix: undefined,
-      subtitle: formatBoldText(subtitle),
-      storyTitle,
-      paragraphs: paragraphs.length ? paragraphs.map((p) => formatBoldText(p)) : [formatBoldText(stripHtml(data.content))],
-      bodyHtml,
-      image: heroImage,
-      imageAlt: heroTitle,
-    };
+    const meet: LamiraMeetSectionData | undefined = heroImageUrl
+      ? {
+          titlePrefix: undefined,
+          titleHighlight: formatBoldText(heroTitle),
+          titleSuffix: undefined,
+          subtitle: formatBoldText(subtitle),
+          storyTitle,
+          paragraphs: paragraphs.length ? paragraphs.map((p) => formatBoldText(p)) : [formatBoldText(stripHtml(data.content))],
+          bodyHtml,
+          image: heroImageUrl,
+          imageAlt: heroTitle,
+        }
+      : undefined;
 
-    const specialParsed = safeJsonParse<{
+    const specialParsed = parseJsonOrObject<{
+      itration?: string[];
       title?: string[];
       video_url?: string[];
       description?: string[];
@@ -244,92 +286,100 @@ export async function fetchSustainabilityLayout2Page(slug: string): Promise<{
     const specialDescriptions = specialParsed?.description || [];
     const specialVideos = specialParsed?.video_url || [];
     const rawVideoUrl = specialVideos[0]?.trim();
-    const specialVideoUrl =
-      (rawVideoUrl && getYouTubeEmbedUrl(rawVideoUrl)) ||
-      rawVideoUrl ||
-      'https://www.youtube.com/watch?v=ScMzIvxBSi4';
+    const specialVideoUrl = (rawVideoUrl && getYouTubeEmbedUrl(rawVideoUrl)) || rawVideoUrl || '';
 
-    const specialTitle = meta.special_ability_title?.trim() || "Lamira's Special Abilities";
-    const { prefix: specialPrefix, highlight: specialHighlight, suffix: specialSuffix } =
-      pickPrefixHighlight(specialTitle);
+    const special: LamiraSpecialAbilitiesSectionData | undefined =
+      meta.special_ability_title && specialTitles.length
+        ? {
+            heading: formatBoldText(meta.special_ability_title),
+            headingSuffix: '',
+            subtitle: formatBoldText(meta.special_ability_description?.trim() || ''),
+            image: heroImageUrl || '',
+            imageAlt: meta.special_ability_title,
+            videoUrl: specialVideoUrl,
+            abilities: specialTitles
+              .map((t, idx) => ({
+                id: `ability-${idx}`,
+                title: formatBoldText(t),
+                description: formatBoldText(specialDescriptions[idx] || ''),
+              }))
+              .filter((a) => Boolean(a.title || a.description)),
+          }
+        : undefined;
 
-    const special: LamiraSpecialAbilitiesSectionData = {
-      heading: formatBoldText(specialTitle),
-      headingSuffix: '',
-      subtitle: formatBoldText(meta.special_ability_description?.trim() || ''),
-      image: heroImage,
-      imageAlt: specialTitle,
-      videoUrl: specialVideoUrl,
-      abilities: specialTitles
-        .map((t, idx) => ({
-          id: `ability-${idx}`,
-          title: formatBoldText(t),
-          description: formatBoldText(specialDescriptions[idx] || ''),
-        }))
-        .filter((a) => Boolean(a.title || a.description)),
-    };
-
-    const loveParsed = safeJsonParse<{
+    const loveParsed = parseJsonOrObject<{
+      itration?: string[];
       title?: string[];
+      image?: Array<string | number | { id?: number; url?: string }>;
       description?: string[];
-      image?: string[];
     }>(meta.lamira_love_items);
     const loveTitles = loveParsed?.title || [];
     const loveDescriptions = loveParsed?.description || [];
-    const loveImages = loveParsed?.image || [];
+    const loveImageEntries = loveParsed?.image || [];
 
-    const loveTitle = meta.lamira_love_title?.trim() || 'What Lamira Loves';
-    const loveHeading = pickPrefixHighlight(loveTitle);
+    const loveItems: Array<{ id: string; title: string; description: string; image: string; imageAlt: string }> = [];
+    for (let idx = 0; idx < loveTitles.length; idx++) {
+      const t = loveTitles[idx];
+      const imageUrl = resolveImageUrl(loveImageEntries[idx], imageMap);
+      if (!imageUrl && !t) continue;
+      loveItems.push({
+        id: `love-${idx}`,
+        title: formatBoldText(t),
+        description: formatBoldText(loveDescriptions[idx] || ''),
+        image: imageUrl || '',
+        imageAlt: t,
+      });
+    }
 
-    const loves: LamiraLovesSectionData = {
-      heading: formatBoldText(loveTitle),
-      subtitle: formatBoldText(meta.lamira_love_description?.trim() || ''),
-      items: loveTitles
-        .map((t, idx) => ({
-          id: `love-${idx}`,
-          title: formatBoldText(t),
-          description: formatBoldText(loveDescriptions[idx] || ''),
-          image: LOVE_IMAGE_FALLBACKS[idx % LOVE_IMAGE_FALLBACKS.length],
-          imageAlt: t,
-        }))
-        .filter((i) => Boolean(i.title || i.description)),
-    };
+    const loves: LamiraLovesSectionData | undefined =
+      meta.lamira_love_title && loveItems.length
+        ? {
+            heading: formatBoldText(meta.lamira_love_title),
+            subtitle: formatBoldText(meta.lamira_love_description?.trim() || ''),
+            items: loveItems.filter((item) => Boolean(item.title || item.description)),
+          }
+        : undefined;
 
-    const sharedTitle = meta.shared_guide_title?.trim() || 'A Shared Guide For The Future';
-    const sharedHeading = pickPrefixHighlight(sharedTitle);
-    const shared: LamiraSharedGuideSectionData = {
-      image: SHARED_GUIDE_IMAGE_FALLBACK,
-      imageAlt: sharedTitle,
-      heading: formatBoldText(sharedTitle),
-      description: meta.shared_guide_description?.trim() || '',
-    };
+    const sharedImageUrl = meta.shared_guide_image?.url;
+    const shared: LamiraSharedGuideSectionData | undefined =
+      meta.shared_guide_title && sharedImageUrl
+        ? {
+            image: sharedImageUrl,
+            imageAlt: meta.shared_guide_title,
+            heading: formatBoldText(meta.shared_guide_title),
+            description: formatBoldText(meta.shared_guide_description?.trim() || ''),
+          }
+        : undefined;
 
-    const socialTitle = meta.social_world_title?.trim() || 'Moments From Our Social World';
-    const socialHeading = pickPrefixHighlight(socialTitle);
-    const socialIds = (meta.social_world_images || '')
-      .split(',')
-      .map((x) => x.trim())
-      .filter(Boolean);
-    const socialItems = (socialIds.length ? socialIds : SOCIAL_IMAGE_FALLBACKS).map(
-      (_, idx): LamiraSocialWorldMomentsSectionData['items'][number] => ({
+    const socialImageEntries = meta.social_world_images || [];
+    const socialItems: Array<{ id: string; image: string; imageAlt: string }> = [];
+    for (let idx = 0; idx < socialImageEntries.length; idx++) {
+      const entry = socialImageEntries[idx];
+      const imageUrl = resolveImageUrl(entry, imageMap);
+      if (!imageUrl) continue;
+      socialItems.push({
         id: `moment-${idx + 1}`,
-        image: SOCIAL_IMAGE_FALLBACKS[idx % SOCIAL_IMAGE_FALLBACKS.length],
-        imageAlt: `Social moment image ${idx + 1}`,
-      }),
-    );
-    const social: LamiraSocialWorldMomentsSectionData = {
-      heading: formatBoldText(socialTitle),
-      items: socialItems,
-    };
+        image: imageUrl,
+        imageAlt: entry.filename || `Social moment image ${idx + 1}`,
+      });
+    }
+
+    const social: LamiraSocialWorldMomentsSectionData | undefined =
+      meta.social_world_title && socialItems.length
+        ? {
+            heading: formatBoldText(meta.social_world_title),
+            items: socialItems,
+          }
+        : undefined;
 
     const pageData: LamiraPageData = {
       title: data.title,
       heroBackgroundImage,
       lamiraMeetSection: meet,
-      lamiraSpecialAbilitiesSection: special.abilities.length ? special : undefined,
-      lamiraLovesSection: loves.items.length ? loves : undefined,
-      lamiraSharedGuideSection: shared.description ? shared : undefined,
-      lamiraSocialWorldMomentsSection: social.items.length ? social : undefined,
+      lamiraSpecialAbilitiesSection: special,
+      lamiraLovesSection: loves,
+      lamiraSharedGuideSection: shared,
+      lamiraSocialWorldMomentsSection: social,
     };
 
     return { slug: data.slug, title: data.title, seo, pageData };
@@ -337,4 +387,3 @@ export async function fetchSustainabilityLayout2Page(slug: string): Promise<{
     return null;
   }
 }
-

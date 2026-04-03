@@ -40,9 +40,12 @@ export default function LamiraMeetSection({ data }: LamiraMeetSectionProps) {
       <div className="mx-auto w-full container px-4">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-10 md:gap-12 items-center">
           <div className="max-w-xl">
-            
+
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#111827] leading-tight">
-              <span className="text-[#00A0E3]">{renderAsteriskBold(data.titleHighlight)}</span>
+              <span
+                className="text-black"
+                dangerouslySetInnerHTML={{ __html: data.titleHighlight }}
+              />
             </h2>
 
             {data.subtitle ? (
@@ -75,16 +78,18 @@ export default function LamiraMeetSection({ data }: LamiraMeetSectionProps) {
           </div>
 
           <div className="relative overflow-hidden rounded-[28px] md:rounded-[34px]">
-            <div className="relative w-full aspect-[5/4] md:aspect-[4/3]">
-              <Image
-                src={data.image}
-                alt={data.imageAlt}
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                priority
-              />
-            </div>
+            {data.image && (
+              <div className="relative w-full aspect-[5/4] md:aspect-[4/3]">
+                <Image
+                  src={data.image}
+                  alt={data.imageAlt}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
