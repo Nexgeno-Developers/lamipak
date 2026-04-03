@@ -65,6 +65,8 @@ import { fetchNpdLayoutPage } from '@/lib/api/npd_layout';
 import NpdLayoutPage from '@/components/pages/NpdLayoutPage';
 import { fetchPilotPlantLayoutPage } from '@/lib/api/pilot_plant_layout';
 import PilotPlantLayoutPage from '@/components/pages/PilotPlantLayoutPage';
+import { fetchInnovationsLayoutPage } from '@/lib/api/innovations_layout';
+import InnovationsLayoutPage from '@/components/pages/InnovationsLayoutPage';
 
 import {
   getDynamicPageBySlug,
@@ -117,6 +119,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       slug: pilotPlantLayout.slug,
       title: pilotPlantLayout.title,
       seo: pilotPlantLayout.seo || {},
+    });
+  }
+
+  const innovationsLayout = await fetchInnovationsLayoutPage(fullSlug);
+  if (innovationsLayout) {
+    return buildApiMetadata({
+      slug: innovationsLayout.slug,
+      title: innovationsLayout.title,
+      seo: innovationsLayout.seo || {},
     });
   }
 
@@ -553,6 +564,11 @@ export default async function DynamicPage({ params }: PageProps) {
   const pilotPlantLayout = await fetchPilotPlantLayoutPage(fullSlug);
   if (pilotPlantLayout) {
     return <PilotPlantLayoutPage data={pilotPlantLayout.page} />;
+  }
+
+  const innovationsLayout = await fetchInnovationsLayoutPage(fullSlug);
+  if (innovationsLayout) {
+    return <InnovationsLayoutPage data={innovationsLayout.page} />;
   }
 
   const rAndDCentreLayout = await fetchRAndDCentreLayoutPage(fullSlug);
