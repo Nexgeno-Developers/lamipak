@@ -39,7 +39,7 @@ export default function ProductIndustryDetailLayoutPageSection({
                 <RichText
                   as="div"
                   html={data.shortDescription}
-                  className="text-center text-lg md:text-xl lg:text-2xl text-white mb-8 leading-relaxed max-w-3xl mx-auto mt-6"
+                  className="text-center text-base md:text-base text-white mb-8 leading-relaxed max-w-3xl mx-auto mt-6"
                 />
               ) : null}
             </div>

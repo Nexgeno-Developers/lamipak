@@ -61,7 +61,7 @@ export default function ProductDetailLayout({
                 </h1>
 
                 {product.shortDescription && (
-                  <p className="text-center text-lg md:text-xl lg:text-2xl text-white mb-8 leading-relaxed max-w-3xl mx-auto">
+                  <p className="text-center text-base md:text-base text-white mb-8 leading-relaxed max-w-3xl mx-auto">
                     {product.shortDescription}
                   </p>
                 )}

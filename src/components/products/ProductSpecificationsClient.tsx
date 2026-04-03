@@ -166,7 +166,7 @@ export default function ProductSpecificationsClient({ product }: ProductSpecific
             </h2>
 
             {product.description && (
-              <p className="text-lg md:text-xl text-black mb-8 leading-relaxed">
+              <p className="text-base md:text-base text-black mb-8 leading-relaxed">
                 {product.description}
               </p>
             )}
@@ -232,7 +232,7 @@ export default function ProductSpecificationsClient({ product }: ProductSpecific
                 <h3 className="text-xl md:text-2xl font-semibold text-black mb-4">
                   Compatible With
                 </h3>
-                <p className="text-base md:text-lg text-black mb-4 leading-relaxed">
+                <p className="text-base md:text-base text-black mb-4 leading-relaxed">
                   {product.compatibilityDescription}
                 </p>
               </div>
