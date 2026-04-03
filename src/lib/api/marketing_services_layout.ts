@@ -144,7 +144,7 @@ export async function fetchMarketingServicesLayoutPage(slug: string) {
           heroBackgroundImage: heroImage,
           heroTitle,
           heroDescriptionHtml: meta.hero_description || undefined,
-          introImage: mediaUrl(meta.short_summary_image),
+          introImage: mediaUrl(meta.hero_image) || mediaUrl(meta.short_summary_image),
           introImageAlt: heroTitle,
           highlightsTitle: meta.highlights_title || undefined,
           highlights: highlightItems,
