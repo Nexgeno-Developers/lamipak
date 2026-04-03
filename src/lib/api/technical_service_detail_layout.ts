@@ -73,6 +73,8 @@ export type TechnicalServiceDetailPageData = {
   };
 };
 
+import { formatBoldText } from '@/lib/htmlText';
+
 function buildPageApiPath(slug: string) {
   return slug
     .split('/')
@@ -129,10 +131,10 @@ export async function fetchTechnicalServiceDetailLayoutPage(slug: string) {
           if (!title || !image) return null;
           return {
             id: `f-${idx}`,
-            title,
-            description: (infoDescs[idx] || '').trim(),
+            title: formatBoldText(title),
+            description: formatBoldText((infoDescs[idx] || '').trim()),
             image,
-            imageAlt: title,
+            imageAlt: formatBoldText(title),
           };
         })
         .filter(Boolean) as TechnicalServiceDetailPageData['detailedFeatures'];
@@ -148,35 +150,35 @@ export async function fetchTechnicalServiceDetailLayoutPage(slug: string) {
           const iconForRow = cover && icon ? icon : undefined;
           return {
             id: String(block.id ?? `b-${idx}`),
-            title,
-            description: stripHtml(block.short_summary_description) || '',
+            title: formatBoldText(title),
+            description: formatBoldText(stripHtml(block.short_summary_description) || ''),
             image: cardImage,
             iconUrl: iconForRow,
-            imageAlt: title,
+            imageAlt: formatBoldText(title),
             href,
           };
         })
         .filter(Boolean) as TechnicalServiceDetailPageData['operationalBlocks'];
 
       const page: TechnicalServiceDetailPageData = {
-        title,
+        title: formatBoldText(title),
         heroBackgroundImage: heroBg,
-        breadcrumbParentLabel: 'Technical Services',
+        breadcrumbParentLabel: formatBoldText('Technical Services'),
         breadcrumbParentHref: '/technical-support-services',
         introImage: mediaUrl(meta.hero_image),
-        introImageAlt: title,
-        introDescription: stripHtml(meta.hero_description) || stripHtml(meta.short_summary_description) || '',
+        introImageAlt: formatBoldText(title),
+        introDescription: formatBoldText(stripHtml(meta.hero_description) || stripHtml(meta.short_summary_description) || ''),
         introDescriptionHtml: meta.hero_description || undefined,
         detailedFeatures,
         videoUrl: meta.video_url?.trim() || meta.short_summary_video_url?.trim() || undefined,
-        operationalTitle: meta.operational_title || undefined,
+        operationalTitle: formatBoldText(meta.operational_title || '') || undefined,
         operationalBlocks: blocks,
         connectSection: {
-          heading: 'Connect with Our Technical Experts',
-          headingHighlight: 'Technical Experts',
-          formTitle: 'Send Us A Message',
+          heading: formatBoldText('Connect with Our Technical Experts'),
+          headingHighlight: formatBoldText('Technical Experts'),
+          formTitle: formatBoldText('Send Us A Message'),
           illustrationImage: '/collaborating_together.webp',
-          illustrationAlt: 'Connect with Technical Experts',
+          illustrationAlt: formatBoldText('Connect with Technical Experts'),
         },
       };
 

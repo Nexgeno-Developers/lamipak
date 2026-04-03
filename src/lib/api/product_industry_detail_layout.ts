@@ -1,5 +1,5 @@
 type Media = { url?: string | null } | null | undefined;
-import { normalizeText } from '@/lib/htmlText';
+import { normalizeText, formatBoldText } from '@/lib/htmlText';
 
 type ProductIndustryDetailApiResponse = {
   data?: {
@@ -192,8 +192,8 @@ export async function fetchProductIndustryDetailLayoutPage(slug: string) {
 
     const supportItems: IndustrySupportItem[] = await Promise.all(
       supportTitles.map(async (t, idx) => {
-        const title = (t || '').trim();
-        const description = (supportDescriptions[idx] || '').trim();
+        const title = formatBoldText((t || '').trim());
+        const description = formatBoldText((supportDescriptions[idx] || '').trim());
         const image = await supportImageToUrl(supportImages[idx]);
         return {
           id: `support-${idx}`,
@@ -212,39 +212,39 @@ export async function fetchProductIndustryDetailLayoutPage(slug: string) {
     const recommended: IndustryRecommendedProduct[] = (meta.recommended_products || [])
       .map((p) => ({
         id: String(p.id || p.slug || p.title || ''),
-        title: (p.title || '').trim(),
+        title: formatBoldText((p.title || '').trim()),
         slug: (p.slug || '').replace(/^\/+/, ''),
-        description: stripHtml(p.short_summary_description || ''),
+        description: formatBoldText(stripHtml(p.short_summary_description || '')),
         image: mediaUrl(p.short_summary_image),
       }))
       .filter((p) => !!p.title && !!p.slug);
 
     const page: ProductIndustryDetailPageData = {
-      title: meta.short_summary_title || data.title,
+      title: formatBoldText(meta.short_summary_title || data.title),
       heroBackgroundImage: mediaUrl(meta.breadcrumb_image),
-      shortDescription: stripHtml(meta.short_description) || stripHtml(data.content) || undefined,
+      shortDescription: formatBoldText(stripHtml(meta.short_description) || stripHtml(data.content)) || undefined,
       support: {
-        title: meta.support_title || data.title,
-        subtitle: meta.support_subtitle || 'WHAT WE SUPPORT',
-        description: (meta.support_description || '').trim() || undefined,
+        title: formatBoldText(meta.support_title || data.title),
+        subtitle: formatBoldText(meta.support_subtitle || 'WHAT WE SUPPORT'),
+        description: formatBoldText((meta.support_description || '').trim()) || undefined,
         items: supportItems.filter((i) => !!i.title),
       },
       pilotPlantCta: meta.pilot_plant_navigation_url
         ? {
-            label: meta.pilot_plant_title || undefined,
-            heading: meta.pilot_plant_subtitle || undefined,
-            ctaText: 'CONTACT US',
+            label: formatBoldText(meta.pilot_plant_title || '') || undefined,
+            heading: formatBoldText(meta.pilot_plant_subtitle || '') || undefined,
+            ctaText: formatBoldText('CONTACT US'),
             ctaLink: `/${meta.pilot_plant_navigation_url.replace(/^\/+/, '')}`,
           }
         : undefined,
       globalImpact:
         meta.leading_title && meta.leading_subtitle && mediaUrl(meta.leading_image)
           ? {
-              label: meta.leading_title,
-              heading: meta.leading_subtitle,
+              label: formatBoldText(meta.leading_title),
+              heading: formatBoldText(meta.leading_subtitle),
               image: mediaUrl(meta.leading_image)!,
-              imageAlt: meta.leading_subtitle || meta.leading_title,
-              features: leadingPoints,
+              imageAlt: formatBoldText(meta.leading_subtitle || meta.leading_title),
+              features: leadingPoints.map(formatBoldText),
             }
           : undefined,
       recommendedProducts: recommended,

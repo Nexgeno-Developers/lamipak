@@ -8,7 +8,7 @@ import type { GovernanceWhistleblowingSectionData } from '@/components/governanc
 import type { GovernanceWhistleblowingCardsSectionData } from '@/components/governance/GovernanceWhistleblowingCardsSection';
 
 type Media = { url?: string | null } | null | undefined;
-import { decodeHtmlEntities, normalizeText } from '@/lib/htmlText';
+import { decodeHtmlEntities, normalizeText, formatBoldText } from '@/lib/htmlText';
 
 type AboutUsLayout4ApiResponse = {
   data?: {
@@ -169,15 +169,15 @@ export async function fetchAboutUsLayout4Page(slug: string) {
     const heroCardIcons = meta.hero_items?.icon || [];
 
     const governanceFrameworkSection: GovernanceFrameworkSectionData = {
-      eyebrow: meta.hero_subtitle || data.title,
-      title: meta.hero_title || data.title,
+      eyebrow: formatBoldText(meta.hero_subtitle || data.title),
+      title: formatBoldText(meta.hero_title || data.title),
       description: stripHtml(meta.hero_description) || '',
       primaryCta: { text: 'Explore our  framework', href: '#governance-framework' },
       secondaryCta: { text: 'Speak Up', href: '#governance-framework' },
       cards: frameworkIconIds
         .map((iconId, idx) => {
-          const title = (heroCardTitles[idx] || '').trim();
-          const subtitle = (heroCardDescs[idx] || '').trim();
+          const title = formatBoldText((heroCardTitles[idx] || '').trim());
+          const subtitle = formatBoldText((heroCardDescs[idx] || '').trim());
           if (!title) return null;
           return {
             id: `hero-${idx}`,
@@ -204,13 +204,13 @@ export async function fetchAboutUsLayout4Page(slug: string) {
     const govIcons = meta.governance_items?.icon || [];
 
     const governanceFrameworkSecondarySection: GovernanceFrameworkSecondarySectionData = {
-      eyebrow: meta.governance_title || meta.hero_title || data.title,
-      title: meta.governance_subtitle || meta.hero_subtitle || '',
+      eyebrow: formatBoldText(meta.governance_title || meta.hero_title || data.title),
+      title: formatBoldText(meta.governance_subtitle || meta.hero_subtitle || ''),
       description: paragraphsFromHtml(meta.governance_description),
       cards: secondaryIconIds
         .map((iconId, idx) => {
-          const title = (govTitles[idx] || '').trim();
-          const subtitle = (govDescs[idx] || '').trim();
+          const title = formatBoldText((govTitles[idx] || '').trim());
+          const subtitle = formatBoldText((govDescs[idx] || '').trim());
           if (!title) return null;
           return {
             id: `gov-${idx}`,

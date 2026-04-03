@@ -1,5 +1,5 @@
 import type { AboutUsQuadrantSection } from '@/fake-api/company';
-import { decodeHtmlEntities, normalizeText } from '@/lib/htmlText';
+import { decodeHtmlEntities, normalizeText, formatBoldText } from '@/lib/htmlText';
 
 type Media = { url?: string | null } | null | undefined;
 
@@ -160,8 +160,8 @@ export async function fetchAboutUsLayout2Page(slug: string) {
 
     const meta = data.meta || {};
 
-    const topTitle = meta.about_title?.trim() || data.title;
-    const bottomTitle = meta.about_title_secondary?.trim() || '';
+    const topTitle = formatBoldText(meta.about_title?.trim() || data.title);
+    const bottomTitle = formatBoldText(meta.about_title_secondary?.trim() || '');
 
     const topHighlight = pickHighlightFromTitle(topTitle);
     const bottomHighlight = pickTrailingHighlight(bottomTitle);

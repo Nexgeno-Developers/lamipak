@@ -1,5 +1,5 @@
 import type { ProductData, ProductSEO } from '@/fake-api/products';
-import { normalizeText } from '@/lib/htmlText';
+import { normalizeText, formatBoldText } from '@/lib/htmlText';
 
 type Media = { url?: string | null } | null | undefined;
 
@@ -130,8 +130,8 @@ function parseSpecifications(raw?: string) {
 
     return titles
       .map((label, index) => ({
-        label: label.trim(),
-        value: (descriptions[index] || '').trim(),
+        label: formatBoldText(label.trim()),
+        value: formatBoldText((descriptions[index] || '').trim()),
       }))
       .filter((item) => item.label && item.value);
   } catch {
@@ -179,12 +179,12 @@ function mapApiDataToProduct(data: NonNullable<ProductLayoutApiResponse['data']>
   return {
     id: String(data.id || slug),
     slug,
-    title,
+    title: formatBoldText(title),
     description:
-      stripHtml(meta.product_info_description) || stripHtml(data.content) || stripHtml(meta.short_summary_description),
-    shortDescription: stripHtml(meta.short_summary_description) || undefined,
+      formatBoldText(stripHtml(meta.product_info_description)) || formatBoldText(stripHtml(data.content)) || formatBoldText(stripHtml(meta.short_summary_description)),
+    shortDescription: formatBoldText(stripHtml(meta.short_summary_description)) || undefined,
     image: shortSummaryImage || heroBackgroundImage || '/product_image_1.jpg',
-    imageAlt: title,
+    imageAlt: formatBoldText(title),
     heroBackgroundImage,
     productImage3D: shortSummaryImage,
     // For API-driven products we only show the main image; no application tabs.
@@ -195,27 +195,27 @@ function mapApiDataToProduct(data: NonNullable<ProductLayoutApiResponse['data']>
       Object.keys(sizeFormats.imagesByVariant).length > 0 ? sizeFormats.imagesByVariant : undefined,
     quickSpecifications: parsedSpecifications.length ? parsedSpecifications : undefined,
     productVideo: meta.video_url?.trim() || undefined,
-    compatibilityDescription: stripHtml(meta.compatibility_description) || undefined,
+    compatibilityDescription: formatBoldText(stripHtml(meta.compatibility_description)) || undefined,
     productFeatures: featureTitles
       .map((featureTitle, index) => ({
         id: `${slug}-feature-${index + 1}`,
-        title: featureTitle || `Feature ${index + 1}`,
-        description: stripHtml(featureDescriptions[index]) || '-',
+        title: formatBoldText(featureTitle || `Feature ${index + 1}`),
+        description: formatBoldText(stripHtml(featureDescriptions[index])) || '-',
         image: mediaUrl(featureImages[index]) || shortSummaryImage || '/simimalr_product_1.jpg',
-        imageAlt: featureTitle || `Feature ${index + 1}`,
+        imageAlt: formatBoldText(featureTitle || `Feature ${index + 1}`),
       }))
       .filter((item) => !!item.title),
     accessories: accessoryTitles
       .map((name, index) => ({
         id: `${slug}-accessory-${index + 1}`,
-        name,
+        name: formatBoldText(name),
         image: mediaUrl(accessoryImages[index]) || '/simimalr_product_1.jpg',
-        imageAlt: name || `Accessory ${index + 1}`,
+        imageAlt: formatBoldText(name || `Accessory ${index + 1}`),
       }))
       .filter((item) => !!item.name),
     technicalConsultation: {
-      question: 'Need technical consultation for this product?',
-      ctaText: 'CONNECT TECHNICAL EXPERTS',
+      question: formatBoldText('Need technical consultation for this product?'),
+      ctaText: formatBoldText('CONNECT TECHNICAL EXPERTS'),
       ctaLink: '/technical-services',
     },
     seo: toProductSeo(data, slug),

@@ -1,4 +1,4 @@
-import { decodeHtmlEntities } from '@/lib/htmlText';
+import { decodeHtmlEntities, formatBoldText } from '@/lib/htmlText';
 
 export type LamiStrawIconId = 'u' | 'telescope' | 'i' | 'flow';
 
@@ -137,16 +137,16 @@ export async function fetcProductCategoryLayout3Page(slug: string) {
     const products = toArray(data.autofetch?.lamistraw_products);
 
     const landingData: LamiStrawLandingSectionData = {
-      eyebrow: meta.hero_subtitle?.trim() || data.title,
-      title: meta.hero_title?.trim() || data.title,
+      eyebrow: formatBoldText(meta.hero_subtitle?.trim() || data.title),
+      title: formatBoldText(meta.hero_title?.trim() || data.title),
       descriptionLines:
-        splitToParagraphs(meta.hero_description) ||
-        splitToParagraphs(data.content) ||
+        splitToParagraphs(meta.hero_description).map(formatBoldText) ||
+        splitToParagraphs(data.content).map(formatBoldText) ||
         [],
       cards: products
         .map((p, idx) => {
           const title = p.title?.trim() || '';
-          const description = stripHtml(p.short_summary_description);
+          const description = formatBoldText(stripHtml(p.short_summary_description));
           const image = p.short_summary_image?.url || undefined;
           const href = slugToHref(p.slug);
 
@@ -154,13 +154,13 @@ export async function fetcProductCategoryLayout3Page(slug: string) {
 
           return {
             id: String(p.id ?? `lamistraw-${idx}`),
-            title: title || `Product ${idx + 1}`,
+            title: formatBoldText(title || `Product ${idx + 1}`),
             description,
-            readMoreLabel: 'Read More →',
+            readMoreLabel: formatBoldText('Read More →'),
             href,
             iconId: iconIdForIndex(idx),
             image,
-            imageAlt: title || `Product ${idx + 1}`,
+            imageAlt: formatBoldText(title || `Product ${idx + 1}`),
           };
         })
         .filter(Boolean) as LamiStrawCardItem[],

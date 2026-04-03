@@ -38,6 +38,8 @@ type ProductCategoryLayout1ApiResponse = {
   };
 };
 
+import { formatBoldText } from '@/lib/htmlText';
+
 function stripHtml(value?: string) {
   if (!value) return '';
   return value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -74,45 +76,45 @@ export async function fetcProductCategoryLayout1Page(slug: string) {
     const standard = toArray(data.autofetch?.standard_products);
     const premium = toArray(data.autofetch?.premium_products);
 
-    const intro = stripHtml(data.meta?.about_description) || stripHtml(data.title);
+    const intro = formatBoldText(stripHtml(data.meta?.about_description) || stripHtml(data.title));
 
     return {
       slug: data.slug,
-      title: data.title,
+      title: formatBoldText(data.title),
       meta: data.meta || {},
       seo: data.seo || {},
       pageData: {
         slug: data.slug,
-        title: data.title,
+        title: formatBoldText(data.title),
         sections: [
           {
             type: 'heroWithBreadcrumbs',
             data: {
-              title: data.title,
+              title: formatBoldText(data.title),
               backgroundImage: data.meta?.banner_images?.url || undefined,
-              breadcrumbs: [{ label: data.title }],
+              breadcrumbs: [{ label: formatBoldText(data.title) }],
             },
           },
           {
             type: 'rollFedCatalog',
             data: {
-              eyebrow: data.title,
+              eyebrow: formatBoldText(data.title),
               intro,
               videoUrl: data.meta?.video_url || undefined,
-              standardTitle: 'Standard Products',
+              standardTitle: formatBoldText('Standard Products'),
               standardProducts: standard.map((p) => ({
                 id: String(p.id),
                 slug: p.slug,
-                title: p.title,
-                sizes: p.short_summary_description || '',
+                title: formatBoldText(p.title),
+                sizes: formatBoldText(p.short_summary_description || ''),
                 image: p.short_summary_image?.url || undefined,
               })),
-              premiumTitle: 'Premium Products',
+              premiumTitle: formatBoldText('Premium Products'),
               premiumProducts: premium.map((p) => ({
                 id: String(p.id),
                 slug: p.slug,
-                title: p.title,
-                sizes: p.short_summary_description || '',
+                title: formatBoldText(p.title),
+                sizes: formatBoldText(p.short_summary_description || ''),
                 image: p.short_summary_image?.url || undefined,
               })),
             },

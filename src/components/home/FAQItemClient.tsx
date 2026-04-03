@@ -10,6 +10,8 @@ interface FAQItemClientProps {
 export default function FAQItemClient({ item }: FAQItemClientProps) {
   const [isOpen, setIsOpen] = useState(false);
 
+  const hasHtml = (text: string) => /<[^>]+>/.test(text);
+
   return (
     <div className="border-b border-gray-200 last:border-b-0">
       <button
@@ -17,12 +19,11 @@ export default function FAQItemClient({ item }: FAQItemClientProps) {
         className="cursor-pointer w-full py-4 md:py-6 flex items-center justify-between text-left group"
         aria-expanded={isOpen}
       >
-        {/* Question Text */}
-        <span className="text-base md:text-xl font-medium text-black pr-4 flex-1">
-          {item.question}
-        </span>
+        <span
+          className="text-base md:text-xl font-medium text-black pr-4 flex-1"
+          dangerouslySetInnerHTML={{ __html: item.question }}
+        />
 
-        {/* Plus/Minus Icon */}
         <div className="flex-shrink-0 lg:w-8 lg:h-8 w-6 h-6 rounded-full bg-[#009FE8] flex items-center justify-center transition-transform group-hover:scale-110">
           <svg
             className={`lg:w-5 lg:h-5 w-4 h-4 text-white transition-transform duration-300 ${
@@ -42,21 +43,28 @@ export default function FAQItemClient({ item }: FAQItemClientProps) {
         </div>
       </button>
 
-      {/* Answer */}
       {isOpen && (
         <div className="pb-6 pl-0 lg:pr-12">
           {item.answer
             .split(/\n+/)
             .map((p) => p.trim())
             .filter(Boolean)
-            .map((paragraph, idx, arr) => (
-              <p
-                key={`${item.id}-p-${idx}`}
-                className={`text-black lg:text-base text-sm leading-relaxed ${idx > 0 ? 'mt-4' : ''}`}
-              >
-                {paragraph}
-              </p>
-            ))}
+            .map((paragraph, idx, arr) =>
+              hasHtml(paragraph) ? (
+                <p
+                  key={`${item.id}-p-${idx}`}
+                  className={`text-black lg:text-base text-sm leading-relaxed ${idx > 0 ? 'mt-4' : ''}`}
+                  dangerouslySetInnerHTML={{ __html: paragraph }}
+                />
+              ) : (
+                <p
+                  key={`${item.id}-p-${idx}`}
+                  className={`text-black lg:text-base text-sm leading-relaxed ${idx > 0 ? 'mt-4' : ''}`}
+                >
+                  {paragraph}
+                </p>
+              ),
+            )}
         </div>
       )}
     </div>

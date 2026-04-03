@@ -89,6 +89,8 @@ type Sustainability4ApiResponse = {
   };
 };
 
+import { formatBoldText } from '@/lib/htmlText';
+
 function stripHtml(value?: string | null): string {
   if (!value) return '';
   return value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -183,11 +185,11 @@ export async function fetchSustainabilityLayout4Page(slug: string): Promise<{
       id: `cert-card-${idx}`,
       image: images[idx]?.url || '/certificte_image_1.webp',
       imageAlt: factoryTitle,
-      factoryTitle,
-      location: parseLocationField(locations[idx]),
-      certificationLabel: parseKeyPointsField(keyPoints[idx]),
+      factoryTitle: formatBoldText(factoryTitle),
+      location: formatBoldText(parseLocationField(locations[idx])),
+      certificationLabel: formatBoldText(parseKeyPointsField(keyPoints[idx])),
       year: years[idx] || '',
-      description: descriptions[idx] || '',
+      description: formatBoldText(descriptions[idx] || ''),
       badgeImages: normalizeCertificates(certificates[idx]),
     }));
 
@@ -219,8 +221,8 @@ export async function fetchSustainabilityLayout4Page(slug: string): Promise<{
     const timelineItems = timelineYears.map((year, idx) => ({
       id: `tl-${year}-${idx}`,
       year,
-      title: timelineTitles[idx] || '',
-      description: timelineDescriptions[idx] || '',
+      title: formatBoldText(timelineTitles[idx] || ''),
+      description: formatBoldText(timelineDescriptions[idx] || ''),
     }));
 
     const timelineHeading = splitHeading(

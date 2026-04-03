@@ -1,4 +1,4 @@
-import { decodeHtmlEntities } from '@/lib/htmlText';
+import { decodeHtmlEntities, formatBoldText } from '@/lib/htmlText';
 
 export interface GreenEffortsPageData {
   title: string;
@@ -202,7 +202,7 @@ export async function fetchSustainabilityLayout3Page(slug: string): Promise<{
 
         return {
           id: `vision-card-${idx}`,
-          title: rawTitle.toUpperCase(),
+          title: formatBoldText(rawTitle.toUpperCase()),
           icon: icon as (typeof ICON_MAP)[number],
           iconImageUrl,
           descriptionHtml,
@@ -217,10 +217,10 @@ export async function fetchSustainabilityLayout3Page(slug: string): Promise<{
           headingRest:
             meta.hero_title?.replace(/^Lamipak\s*/i, '') || 'Sustainability Vision',
           subtitle:
-            meta.hero_description_intro ||
+            formatBoldText(meta.hero_description_intro || '') ||
             'Bring Life To Packaging, Achieve Sustainability Across Every Dimension Of Our Business.',
           cards: visionCards,
-          footerText: stripHtml(meta.hero_description_footer || ''),
+          footerText: formatBoldText(stripHtml(meta.hero_description_footer || '')),
         }
       : undefined;
 
@@ -255,7 +255,7 @@ export async function fetchSustainabilityLayout3Page(slug: string): Promise<{
         ? {
             headingLineBlue,
             headingLineBlack,
-            body: stripHtml(meta.sustainability_journey_description),
+            body: formatBoldText(stripHtml(meta.sustainability_journey_description)),
             image: journeyImage,
             imageAlt: journeyTitle || 'Sustainability journey',
             backgroundColor: '#f8f9fa',

@@ -13,6 +13,8 @@ export type SustainableSolutionsSectionData = {
   videoUrl?: string;
 };
 
+import { formatBoldText } from '@/lib/htmlText';
+
 type ProductCategoryLayout2ApiResponse = {
   data?: {
     id: number;
@@ -132,10 +134,10 @@ function buildSustainableSectionData(params: {
 
       return {
         id: String(item.id ?? `sustainable-${idx}`),
-        title: itemTitle,
-        description: itemDescription,
+        title: formatBoldText(itemTitle),
+        description: formatBoldText(itemDescription),
         image: itemImage,
-        imageAlt: itemTitle,
+        imageAlt: formatBoldText(itemTitle),
         href: itemHref,
       };
     })
@@ -148,10 +150,10 @@ function buildSustainableSectionData(params: {
     if (fallbackDescription || fallbackImage) {
       items.push({
         id: 'sustainable-main',
-        title: meta?.hero_title || title,
-        description: fallbackDescription,
+        title: formatBoldText(meta?.hero_title || title),
+        description: formatBoldText(fallbackDescription),
         image: fallbackImage,
-        imageAlt: meta?.hero_title || title,
+        imageAlt: formatBoldText(meta?.hero_title || title),
       });
     }
   }
@@ -205,7 +207,7 @@ export async function fetcProductCategoryLayout2Page(slug: string) {
     sections.push({
       type: 'heroWithBreadcrumbs',
       data: {
-        title: meta.hero_title || data.title,
+        title: formatBoldText(meta.hero_title || data.title),
         backgroundImage: meta.banner_images?.url || undefined,
         breadcrumbs: breadcrumbsForPage(data.slug, data.title),
       },

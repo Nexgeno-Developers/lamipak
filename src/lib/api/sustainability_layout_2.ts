@@ -4,6 +4,7 @@ import type { LamiraLovesSectionData } from '@/components/components/LamiraLoves
 import type { LamiraSharedGuideSectionData } from '@/components/components/LamiraSharedGuideSection';
 import type { LamiraSocialWorldMomentsSectionData } from '@/components/components/LamiraSocialWorldMomentsSection';
 import { getYouTubeEmbedUrl } from '@/lib/youtubeEmbed';
+import { formatBoldText } from '@/lib/htmlText';
 
 type Sustainability2ApiResponse = {
   data?: {
@@ -91,8 +92,8 @@ function extractStoryTitleAndMeetContent(heroDescriptionHtml: string): {
   const strongRegex = /<strong[^>]*>([\s\S]*?)<\/strong>/i;
   const strongMatch = strongRegex.exec(heroDescriptionHtml);
 
-  const storyTitleClean = strongMatch
-    ? decodeHtmlEntities(strongMatch[1].replace(/<[^>]+>/g, ' ').trim())
+    const storyTitleClean = strongMatch
+    ? formatBoldText(decodeHtmlEntities(strongMatch[1].replace(/<[^>]+>/g, ' ').trim()))
     : '';
 
   const heroWithoutStrong = strongMatch
@@ -224,11 +225,11 @@ export async function fetchSustainabilityLayout2Page(slug: string): Promise<{
 
     const meet: LamiraMeetSectionData = {
       titlePrefix: undefined,
-      titleHighlight: heroTitle,
+      titleHighlight: formatBoldText(heroTitle),
       titleSuffix: undefined,
-      subtitle,
+      subtitle: formatBoldText(subtitle),
       storyTitle,
-      paragraphs: paragraphs.length ? paragraphs : [stripHtml(data.content)],
+      paragraphs: paragraphs.length ? paragraphs.map((p) => formatBoldText(p)) : [formatBoldText(stripHtml(data.content))],
       bodyHtml,
       image: heroImage,
       imageAlt: heroTitle,
@@ -255,15 +256,15 @@ export async function fetchSustainabilityLayout2Page(slug: string): Promise<{
     const special: LamiraSpecialAbilitiesSectionData = {
       headingHighlight: specialPrefix ? `${specialPrefix}` : specialHighlight,
       headingSuffix: specialPrefix ? specialHighlight : specialSuffix || '',
-      subtitle: meta.special_ability_description?.trim() || '',
+      subtitle: formatBoldText(meta.special_ability_description?.trim() || ''),
       image: heroImage,
       imageAlt: specialTitle,
       videoUrl: specialVideoUrl,
       abilities: specialTitles
         .map((t, idx) => ({
           id: `ability-${idx}`,
-          title: t,
-          description: specialDescriptions[idx] || '',
+          title: formatBoldText(t),
+          description: formatBoldText(specialDescriptions[idx] || ''),
         }))
         .filter((a) => Boolean(a.title || a.description)),
     };
@@ -284,12 +285,12 @@ export async function fetchSustainabilityLayout2Page(slug: string): Promise<{
       headingPrefix: loveHeading.prefix,
       headingHighlight: loveHeading.highlight,
       headingSuffix: loveHeading.suffix,
-      subtitle: meta.lamira_love_description?.trim() || '',
+      subtitle: formatBoldText(meta.lamira_love_description?.trim() || ''),
       items: loveTitles
         .map((t, idx) => ({
           id: `love-${idx}`,
-          title: t,
-          description: loveDescriptions[idx] || '',
+          title: formatBoldText(t),
+          description: formatBoldText(loveDescriptions[idx] || ''),
           image: LOVE_IMAGE_FALLBACKS[idx % LOVE_IMAGE_FALLBACKS.length],
           imageAlt: t,
         }))

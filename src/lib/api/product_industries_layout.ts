@@ -1,4 +1,5 @@
 import { cache } from 'react';
+import { formatBoldText } from '@/lib/htmlText';
 
 type Media = { url?: string | null } | null | undefined;
 
@@ -166,11 +167,11 @@ export const fetchProductIndustriesLayoutPage = cache(async (slug: string) => {
 
       const insights: ProductIndustriesInsights | null = hasInsights
         ? {
-            eyebrow: insightsEyebrow,
-            title: insightsTitle,
+            eyebrow: formatBoldText(insightsEyebrow),
+            title: formatBoldText(insightsTitle || ''),
             descriptionHtml: hasBody ? meta.insights_description : undefined,
             image: insightsImage,
-            ctaText: 'Read full whitepaper',
+            ctaText: formatBoldText('Read full whitepaper'),
             ctaHref: insightsHref,
           }
         : null;
@@ -180,14 +181,14 @@ export const fetchProductIndustriesLayoutPage = cache(async (slug: string) => {
           const id = item.id ?? idx;
           const slugPart = item.slug?.trim();
           if (!slugPart) return null;
-          const title = displayIndustryTitle(item);
-          const desc = cleanMeta(item.short_summary_description);
+          const title = formatBoldText(displayIndustryTitle(item));
+          const desc = formatBoldText(cleanMeta(item.short_summary_description) || '');
           return {
             id: String(id),
             title,
             href: slugToHref(slugPart),
             iconUrl: mediaUrl(item.short_summary_icon),
-            description: desc,
+            description: desc || undefined,
           };
         })
         .filter(Boolean) as ProductIndustriesIndustry[];
@@ -201,12 +202,12 @@ export const fetchProductIndustriesLayoutPage = cache(async (slug: string) => {
           const description = (item.short_summary_description || '').trim();
           return {
             id: String(id),
-            title,
+            title: formatBoldText(title),
             href: slugToHref(slugPart),
             image: mediaUrl(item.short_summary_image),
-            imageAlt: title,
-            description: description || undefined,
-            subtitle: description ? subtitleFromDescription(description) : undefined,
+            imageAlt: formatBoldText(title),
+            description: formatBoldText(description) || undefined,
+            subtitle: description ? formatBoldText(subtitleFromDescription(description)) : undefined,
           };
         })
         .filter(Boolean) as ProductIndustriesFeaturedProduct[];

@@ -76,6 +76,8 @@ export type OnePackOneCodeLandingSectionData = {
   features: OnePackOneCodeFeature[];
 };
 
+import { formatBoldText } from '@/lib/htmlText';
+
 function stripHtml(value?: string) {
   if (!value) return '';
   return value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -154,7 +156,7 @@ export async function fetcProductCategoryLayout4Page(slug: string) {
 
     const tabs = tabOrder.map((id, idx) => ({
       id,
-      label: heroNames[idx] || defaultLabels[id],
+      label: formatBoldText(heroNames[idx] || defaultLabels[id]),
       iconUrl: heroIcons[idx]?.url,
     }));
 
@@ -163,9 +165,9 @@ export async function fetcProductCategoryLayout4Page(slug: string) {
     const infoImages = meta.info_items?.image || [];
 
     const features = tabOrder.map((id, idx) => {
-      const title = infoTitles[idx] || defaultLabels[id];
+      const title = formatBoldText(infoTitles[idx] || defaultLabels[id]);
       const htmlDesc = infoDescriptions[idx];
-      const bullets = extractBulletTextFromHtml(htmlDesc);
+      const bullets = extractBulletTextFromHtml(htmlDesc).map(formatBoldText);
       const image = infoImages[idx]?.url || undefined;
       const number = String(idx + 1).padStart(2, '0');
 
@@ -200,7 +202,7 @@ export async function fetcProductCategoryLayout4Page(slug: string) {
               // Access points UI is currently not rendered by the component,
               // but the type requires it.
               accessPoints: {
-                title: 'Access Points',
+                title: formatBoldText('Access Points'),
                 description: '',
                 items: features.map((f) => ({
                   id: f.id,

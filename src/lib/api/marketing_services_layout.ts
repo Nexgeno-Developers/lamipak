@@ -48,6 +48,8 @@ type MarketingServicesApiResponse = {
   };
 };
 
+import { formatBoldText } from '@/lib/htmlText';
+
 function buildPageApiPath(slug: string) {
   return slug
     .split('/')
@@ -112,8 +114,8 @@ export async function fetchMarketingServicesLayoutPage(slug: string) {
         .map((t, idx) => ({
           id: `hl-${idx}`,
           icon: mediaUrl(icons[idx]),
-          value: values[idx],
-          title: t,
+          value: formatBoldText(values[idx]),
+          title: formatBoldText(t),
         }))
         .filter((x) => !!x.title);
 
@@ -126,10 +128,10 @@ export async function fetchMarketingServicesLayoutPage(slug: string) {
           if (!title || !itemSlug) return null;
           return {
             id: String(item.id ?? `ms-${idx}`),
-            title,
-            description: stripHtml(item.short_summary_description) || undefined,
+            title: formatBoldText(title),
+            description: formatBoldText(stripHtml(item.short_summary_description) || '') || undefined,
             image: mediaUrl(item.short_summary_image),
-            imageAlt: title,
+            imageAlt: formatBoldText(title),
             href: slugToHref(itemSlug),
           };
         })
@@ -137,18 +139,18 @@ export async function fetchMarketingServicesLayoutPage(slug: string) {
 
       return {
         slug: data.slug,
-        title: data.title,
+        title: formatBoldText(data.title),
         seo: (data.seo || {}) as any,
         page: {
-          title: data.title,
+          title: formatBoldText(data.title),
           heroBackgroundImage: heroImage,
-          heroTitle,
+          heroTitle: formatBoldText(heroTitle),
           heroDescriptionHtml: meta.hero_description || undefined,
           introImage: mediaUrl(meta.hero_image) || mediaUrl(meta.short_summary_image),
-          introImageAlt: heroTitle,
-          highlightsTitle: meta.highlights_title || undefined,
+          introImageAlt: formatBoldText(heroTitle),
+          highlightsTitle: formatBoldText(meta.highlights_title || '') || undefined,
           highlights: highlightItems,
-          servicesHeading: meta.short_summary_title || undefined,
+          servicesHeading: formatBoldText(meta.short_summary_title || '') || undefined,
           services,
         } satisfies MarketingServicesLayoutPageData,
         // useful plain text for SEO fallback if needed

@@ -83,6 +83,8 @@ type Sustainability6ApiResponse = {
   };
 };
 
+import { formatBoldText } from '@/lib/htmlText';
+
 function buildPageApiPath(slug: string) {
   return slug
     .split('/')
@@ -192,7 +194,7 @@ export async function fetchSustainabilityLayout6Page(slug: string): Promise<{
       return {
         id: `m-${year}-${idx}`,
         year,
-        title: pathTitles[idx] || '',
+        title: formatBoldText(pathTitles[idx] || ''),
         iconImageUrl,
         icon: (ROADMAP_ICONS[idx] ?? 'target') as 'target' | 'trend' | 'leaf',
         descriptionHtml: html ? desc : undefined,
@@ -204,7 +206,7 @@ export async function fetchSustainabilityLayout6Page(slug: string): Promise<{
       headingBlack: pathHeading.first,
       headingBlue: pathHeading.rest,
       milestones,
-      summaryBarText: meta.Net_Zero_Target_text || '2050 NET ZERO ACROSS THE VALUE CHAIN',
+      summaryBarText: formatBoldText(meta.Net_Zero_Target_text || '2050 NET ZERO ACROSS THE VALUE CHAIN'),
       summaryBarUrl: meta.Net_Zero_Target_url,
       accentColor: '#00AEEF',
       iconCircleBackground: '#e8ecef',

@@ -67,6 +67,8 @@ type Sustainability5ApiResponse = {
   };
 };
 
+import { formatBoldText } from '@/lib/htmlText';
+
 function stripHtml(value?: string | null): string {
   if (!value) return '';
   return value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -151,10 +153,10 @@ export async function fetchSustainabilityLayout5Page(slug: string): Promise<{
         ? {
             heroHeadingBlue: circularHeading.blue,
             heroHeadingBlack: circularHeading.black,
-            heroIntro: stripHtml(meta.circular_future_description),
-            featureHeadingBlack: communityParts.slice(0, communityMid).join(' '),
-            featureHeadingBlue: communityParts.slice(communityMid).join(' '),
-            featureBody: stripHtml(meta.community_description),
+            heroIntro: formatBoldText(stripHtml(meta.circular_future_description)),
+            featureHeadingBlack: formatBoldText(communityParts.slice(0, communityMid).join(' ')),
+            featureHeadingBlue: formatBoldText(communityParts.slice(communityMid).join(' ')),
+            featureBody: formatBoldText(stripHtml(meta.community_description)),
             image: meta.community_image?.url || '/our_green_left_image.webp',
             imageAlt: communityTitle || 'People & Community',
             accentColor: '#00AEEF',

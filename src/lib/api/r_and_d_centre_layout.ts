@@ -1,4 +1,5 @@
 import { cache } from 'react';
+import { formatBoldText } from '@/lib/htmlText';
 
 type Media = { url?: string | null } | null | undefined;
 
@@ -298,35 +299,35 @@ function mapApiToPage(api: NonNullable<RAndDCentreApiResponse['data']>): RAndDCe
   const heroBg = mediaUrl(meta.breadcrumb_image);
   if (heroBg) base.heroBackgroundImage = heroBg;
 
-  base.title = clean(api.title) || base.title;
-  base.heroEyebrow = clean(meta.hero_eyebrow) || base.heroEyebrow;
-  base.heroTitle = clean(meta.hero_title) || base.heroTitle;
-  base.heroDescription = clean(meta.hero_description) || base.heroDescription;
+  base.title = formatBoldText(clean(api.title) || base.title);
+  base.heroEyebrow = formatBoldText(clean(meta.hero_eyebrow) || base.heroEyebrow);
+  base.heroTitle = formatBoldText(clean(meta.hero_title) || base.heroTitle);
+  base.heroDescription = formatBoldText(clean(meta.hero_description) || base.heroDescription);
 
-  base.introHeadingBlack = clean(meta.intro_heading_black) || base.introHeadingBlack;
-  base.introHeadingBlue = clean(meta.intro_heading_blue) || base.introHeadingBlue;
+  base.introHeadingBlack = formatBoldText(clean(meta.intro_heading_black) || base.introHeadingBlack);
+  base.introHeadingBlue = formatBoldText(clean(meta.intro_heading_blue) || base.introHeadingBlue);
   if (clean(meta.intro_body)) {
     base.introBodyHtml = meta.intro_body!.trim();
   }
 
   const pText = clean(meta.cta_primary_text);
   const pUrl = clean(meta.cta_primary_url);
-  if (pText && pUrl) base.primaryCta = { text: pText, href: pUrl };
-  else if (pText) base.primaryCta = { ...base.primaryCta, text: pText };
+  if (pText && pUrl) base.primaryCta = { text: formatBoldText(pText), href: pUrl };
+  else if (pText) base.primaryCta = { ...base.primaryCta, text: formatBoldText(pText) };
   else if (pUrl) base.primaryCta = { ...base.primaryCta, href: pUrl };
 
   const sText = clean(meta.cta_secondary_text);
   const sUrl = clean(meta.cta_secondary_url);
-  if (sText && sUrl) base.secondaryCta = { text: sText, href: sUrl };
-  else if (sText) base.secondaryCta = { ...base.secondaryCta, text: sText };
+  if (sText && sUrl) base.secondaryCta = { text: formatBoldText(sText), href: sUrl };
+  else if (sText) base.secondaryCta = { ...base.secondaryCta, text: formatBoldText(sText) };
   else if (sUrl) base.secondaryCta = { ...base.secondaryCta, href: sUrl };
 
   const cards = meta.stat_cards;
   if (cards?.length) {
     base.stats = cards
       .map((c, idx) => {
-        const value = clean(c.value);
-        const label = clean(c.label);
+        const value = formatBoldText(clean(c.value) || '');
+        const label = formatBoldText(clean(c.label) || '');
         if (!value || !label) return null;
         return {
           id: String(idx + 1),
@@ -340,17 +341,17 @@ function mapApiToPage(api: NonNullable<RAndDCentreApiResponse['data']>): RAndDCe
 
   const lb = clean(meta.lifecycle_title_black);
   const lblue = clean(meta.lifecycle_title_blue);
-  if (lb) base.lifecycleSection.titleBlack = lb;
-  if (lblue) base.lifecycleSection.titleBlue = lblue;
+  if (lb) base.lifecycleSection.titleBlack = formatBoldText(lb);
+  if (lblue) base.lifecycleSection.titleBlue = formatBoldText(lblue);
 
   const life = meta.lifecycle_cards;
   if (life?.length) {
     const mapped = life
       .map((c, idx) => {
-        const title = clean(c.title);
-        const description = clean(c.description);
+        const title = formatBoldText(clean(c.title) || '');
+        const description = formatBoldText(clean(c.description) || '');
         if (!title || !description) return null;
-        const tags = parseTags(c.tags);
+        const tags = parseTags(c.tags).map(formatBoldText);
         return {
           id: `lc-${idx + 1}`,
           iconUrl: mediaUrl(c.icon),
@@ -369,18 +370,18 @@ function mapApiToPage(api: NonNullable<RAndDCentreApiResponse['data']>): RAndDCe
   const zb = clean(meta.laboratory_zones_title_black);
   const zblue = clean(meta.laboratory_zones_title_blue);
   const zsub = clean(meta.laboratory_zones_subtitle);
-  if (zb) base.laboratoryZonesSection.titleBlack = zb;
-  if (zblue) base.laboratoryZonesSection.titleBlue = zblue;
-  if (zsub) base.laboratoryZonesSection.subtitle = zsub;
+  if (zb) base.laboratoryZonesSection.titleBlack = formatBoldText(zb);
+  if (zblue) base.laboratoryZonesSection.titleBlue = formatBoldText(zblue);
+  if (zsub) base.laboratoryZonesSection.subtitle = formatBoldText(zsub);
 
   const zItems = meta.laboratory_zones_items;
   if (zItems?.length) {
     const mapped = zItems
       .map((z, idx) => {
-        const title = clean(z.title);
-        const description = clean(z.description);
+        const title = formatBoldText(clean(z.title) || '');
+        const description = formatBoldText(clean(z.description) || '');
         if (!title || !description) return null;
-        const tags = parseTags(z.tags);
+        const tags = parseTags(z.tags).map(formatBoldText);
         return {
           id: `z-${idx + 1}`,
           iconUrl: mediaUrl(z.icon),
@@ -400,9 +401,9 @@ function mapApiToPage(api: NonNullable<RAndDCentreApiResponse['data']>): RAndDCe
   const bCtaT = clean(meta.bottom_cta_link_text);
   const bCtaU = clean(meta.bottom_cta_link_url);
   const bBg = mediaUrl(meta.bottom_cta_background_image);
-  if (bTitle) base.bottomCtaSection.title = bTitle;
-  if (bDesc) base.bottomCtaSection.description = bDesc;
-  if (bCtaT) base.bottomCtaSection.ctaText = bCtaT;
+  if (bTitle) base.bottomCtaSection.title = formatBoldText(bTitle);
+  if (bDesc) base.bottomCtaSection.description = formatBoldText(bDesc);
+  if (bCtaT) base.bottomCtaSection.ctaText = formatBoldText(bCtaT);
   if (bCtaU) base.bottomCtaSection.ctaHref = bCtaU;
   if (bBg) base.bottomCtaSection.backgroundImage = bBg;
 

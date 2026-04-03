@@ -32,6 +32,8 @@ type MarketingServiceDetailApiResponse = {
   };
 };
 
+import { formatBoldText } from '@/lib/htmlText';
+
 function buildPageApiPath(slug: string) {
   return slug
     .split('/')
@@ -105,8 +107,8 @@ export async function fetchMarketingServiceDetailLayoutPage(slug: string) {
         .map((t, idx) => ({
           id: `h-${idx}`,
           icon: mediaUrl(hiIcons[idx]),
-          title: t,
-          description: hiDescs[idx],
+          title: formatBoldText(t || ''),
+          description: formatBoldText(hiDescs[idx] || ''),
         }))
         .filter((x) => !!x.title);
 
@@ -117,31 +119,31 @@ export async function fetchMarketingServiceDetailLayoutPage(slug: string) {
         .map((t, idx) => ({
           id: `bj-${idx}`,
           icon: mediaUrl(bjIcons[idx]),
-          title: t,
-          subtitle: bjDescs[idx],
+          title: formatBoldText(t),
+          subtitle: formatBoldText(bjDescs[idx]),
         }))
         .filter((x) => !!x.title);
 
       const page: MarketingServiceDetailPageData = {
-        title: data.title,
+        title: formatBoldText(data.title),
         heroBackgroundImage: heroBg,
         // Top split section should use hero_* fields (per backend).
-        introTitle: meta.hero_title || meta.short_summary_title || data.title,
+        introTitle: formatBoldText(meta.hero_title || meta.short_summary_title || data.title),
         introDescription:
-          stripHtml(meta.hero_description) ||
-          meta.short_summary_description ||
-          stripHtml(data.content) ||
+          formatBoldText(stripHtml(meta.hero_description)) ||
+          formatBoldText(meta.short_summary_description || '') ||
+          formatBoldText(stripHtml(data.content)) ||
           '',
         introCtaHref:
           meta.hero_navigation_url && meta.hero_navigation_url !== '#'
             ? meta.hero_navigation_url
             : undefined,
         introImage: mediaUrl(meta.hero_image) || mediaUrl(meta.short_summary_image),
-        introImageAlt: meta.short_summary_title || data.title,
+        introImageAlt: formatBoldText(meta.short_summary_title || data.title),
         heroDescriptionHtml: meta.hero_description || undefined,
         highlights,
         videoUrl: meta.video_url?.trim() || undefined,
-        brandJourneyTitle: meta.brand_journey_title || undefined,
+        brandJourneyTitle: formatBoldText(meta.brand_journey_title || '') || undefined,
         brandJourneyItems,
       };
 

@@ -128,7 +128,7 @@ export type TechnicalServicesLayoutPageData = {
   };
 };
 
-import { decodeHtmlEntities, normalizeText } from '@/lib/htmlText';
+import { decodeHtmlEntities, normalizeText, formatBoldText } from '@/lib/htmlText';
 
 function buildPageApiPath(slug: string) {
   return slug
@@ -236,12 +236,12 @@ export async function fetchTechnicalServicesLayoutPage(slug: string) {
           if (!title || !itemSlug) return null;
           return {
             id: String(item.id ?? `ts-${idx}`),
-            title,
-            description: stripHtml(item.short_summary_description) || '',
+            title: formatBoldText(title),
+            description: formatBoldText(stripHtml(item.short_summary_description) || ''),
             thumbnail: mediaUrl(item.short_summary_icon) || mediaUrl(item.short_summary_image),
             thumbnailAlt: title,
             videoUrl: typeof item.short_summary_video_url === 'string' ? item.short_summary_video_url.trim() : '',
-            ctaText: 'Discover More',
+            ctaText: formatBoldText('Discover More'),
             ctaLink: slugToHref(itemSlug),
           };
         })
@@ -257,36 +257,36 @@ export async function fetchTechnicalServicesLayoutPage(slug: string) {
 
       const headerRow1 = {
         empty: '',
-        lamiCare: row2[0] || 'LAMICARE',
-        lamiPremium: colPremium[0] || 'LAMIPREMIUM',
-        lamiPartner: colPartner[0] || 'LAMIPARTNER',
+        lamiCare: formatBoldText(row2[0] || 'LAMICARE'),
+        lamiPremium: formatBoldText(colPremium[0] || 'LAMIPREMIUM'),
+        lamiPartner: formatBoldText(colPartner[0] || 'LAMIPARTNER'),
       };
 
       const headerRow2 = {
-        focus: row1[1] || 'Focus',
-        stability: row2[1] || 'Stability',
-        performance: colPremium[1] || 'Performance',
-        transformation: colPartner[1] || 'Transformation',
+        focus: formatBoldText(row1[1] || 'Focus'),
+        stability: formatBoldText(row2[1] || 'Stability'),
+        performance: formatBoldText(colPremium[1] || 'Performance'),
+        transformation: formatBoldText(colPartner[1] || 'Transformation'),
       };
 
       const rows = [
         {
-          category: row1[2] || 'ENGAGEMENT',
-          lamiCare: row2[2] || '',
-          lamiPremium: colPremium[2] || '',
-          lamiPartner: colPartner[2] || '',
+          category: formatBoldText(row1[2] || 'ENGAGEMENT'),
+          lamiCare: formatBoldText(row2[2] || ''),
+          lamiPremium: formatBoldText(colPremium[2] || ''),
+          lamiPartner: formatBoldText(colPartner[2] || ''),
         },
         {
-          category: row1[3] || 'ACCOUNTABILITY',
-          lamiCare: row2[3] || '',
-          lamiPremium: colPremium[3] || '',
-          lamiPartner: colPartner[3] || '',
+          category: formatBoldText(row1[3] || 'ACCOUNTABILITY'),
+          lamiCare: formatBoldText(row2[3] || ''),
+          lamiPremium: formatBoldText(colPremium[3] || ''),
+          lamiPartner: formatBoldText(colPartner[3] || ''),
         },
         {
-          category: row1[4] || 'DIGITAL',
-          lamiCare: row2[4] || '',
-          lamiPremium: colPremium[4] || '',
-          lamiPartner: colPartner[4] || '',
+          category: formatBoldText(row1[4] || 'DIGITAL'),
+          lamiCare: formatBoldText(row2[4] || ''),
+          lamiPremium: formatBoldText(colPremium[4] || ''),
+          lamiPartner: formatBoldText(colPartner[4] || ''),
         },
       ].filter((r) => Boolean(r.category));
 
@@ -300,48 +300,48 @@ export async function fetchTechnicalServicesLayoutPage(slug: string) {
           if (!title || !blockSlug) return null;
           return {
             id: String(block.id ?? `op-${idx}`),
-            title,
-            description: stripHtml(block.short_summary_description) || '',
+            title: formatBoldText(title),
+            description: formatBoldText(stripHtml(block.short_summary_description) || ''),
             image:
               mediaUrl(block.short_summary_image) || mediaUrl(block.short_summary_icon) || '',
-            imageAlt: title,
-            ctaText: 'Discover More',
+            imageAlt: formatBoldText(title),
+            ctaText: formatBoldText('Discover More'),
             ctaLink: slugToHref(blockSlug),
           };
         })
         .filter(Boolean) as TechnicalServicesLayoutPageData['operationalSuccess']['cards'];
 
       const page: TechnicalServicesLayoutPageData = {
-        heroTitle,
+        heroTitle: formatBoldText(heroTitle),
         heroBackgroundImage: heroBg,
         introSection: {
-          heading: introHeading,
-          paragraphs,
+          heading: formatBoldText(introHeading),
+          paragraphs: paragraphs.map(formatBoldText),
           image: introImage,
-          imageAlt: introHeading,
+          imageAlt: formatBoldText(introHeading),
         },
         upgradeSection: {
-          heading: upgradeHeading,
-          headingHighlight: upgradeHighlight,
+          heading: formatBoldText(upgradeHeading),
+          headingHighlight: formatBoldText(upgradeHighlight),
           cards: upgradeCards,
         },
         serviceDifferentiation: {
-          heading: diffHeading,
+          heading: formatBoldText(diffHeading),
           headerRow1,
           headerRow2,
           rows,
         },
         operationalSuccess: {
-          heading: operationalHeading,
-          headingHighlight: operationalHighlight,
+          heading: formatBoldText(operationalHeading),
+          headingHighlight: formatBoldText(operationalHighlight),
           cards: operationalCards,
         },
         connectSection: {
-          heading: 'Connect with Our Technical Experts',
-          headingHighlight: 'Technical Experts',
-          formTitle: 'Send Us A Message',
+          heading: formatBoldText('Connect with Our Technical Experts'),
+          headingHighlight: formatBoldText('Technical Experts'),
+          formTitle: formatBoldText('Send Us A Message'),
           illustrationImage: '/connected_image.jpg',
-          illustrationAlt: 'Connect with Technical Experts',
+          illustrationAlt: formatBoldText('Connect with Technical Experts'),
         },
       };
 

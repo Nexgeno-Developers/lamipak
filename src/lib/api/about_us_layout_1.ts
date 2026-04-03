@@ -1,5 +1,5 @@
 import type { CompanyHero, CompanyStatistic, JourneyData } from '@/fake-api/company';
-import { normalizeText } from '@/lib/htmlText';
+import { normalizeText, formatBoldText } from '@/lib/htmlText';
 
 type Media = { url?: string | null } | null | undefined;
 
@@ -112,8 +112,8 @@ export async function fetchAboutUsLayout1Page(slug: string) {
 
     const statistics: CompanyStatistic[] = titles
       .map((label, idx) => {
-        const cleanLabel = (label || '').trim();
-        const value = (values[idx] || '').trim();
+        const cleanLabel = formatBoldText((label || '').trim());
+        const value = formatBoldText((values[idx] || '').trim());
         if (!cleanLabel || !value) return null;
         return {
           id: `s-${idx}`,
@@ -138,7 +138,7 @@ export async function fetchAboutUsLayout1Page(slug: string) {
         .map((year, idx) => {
           const y = (year || '').trim();
           if (!y) return null;
-          const caption = (captions[idx] || '').trim() || y;
+          const caption = formatBoldText((captions[idx] || '').trim() || y);
           const image = mediaOrStringUrl(images[idx]);
           return image
             ? {

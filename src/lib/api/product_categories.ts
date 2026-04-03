@@ -1,3 +1,5 @@
+import { formatBoldText } from '@/lib/htmlText';
+
 type ProductCategoryItem = {
   id: number;
   title: string;
@@ -54,25 +56,25 @@ export async function fetchProductCategoriesPage(slug: string) {
 
     const pageData = {
       slug: data.slug,
-      title: data.title,
+      title: formatBoldText(data.title),
       sections: [
         {
           type: 'heroWithBreadcrumbs',
           data: {
-            title: data.title,
+            title: formatBoldText(data.title),
             backgroundImage: data.meta?.banner_images?.url || undefined,
-            breadcrumbs: [{ label: data.title }],
+            breadcrumbs: [{ label: formatBoldText(data.title) }],
           },
         },
         {
           type: 'categoryShowcase',
           data: {
-            intro: data.meta?.about_description || data.content || undefined,
+            intro: formatBoldText(data.meta?.about_description || data.content || '') || undefined,
             items: (data.autofetch?.product_categories || []).map((item) => ({
               id: String(item.id),
-              title: item.title,
-              description: item.short_summary_description || '',
-              ctaLabel: 'Technical specs',
+              title: formatBoldText(item.title),
+              description: formatBoldText(item.short_summary_description || ''),
+              ctaLabel: formatBoldText('Technical specs'),
               href: `/${data.slug}/${item.slug}/`,
               image: item.short_summary_icon?.url || undefined,
             })),
@@ -85,10 +87,10 @@ export async function fetchProductCategoriesPage(slug: string) {
 
     return {
       slug: data.slug,
-      title: data.title,
+      title: formatBoldText(data.title),
       meta: data.meta || {},
       heroImage: data.meta?.banner_images?.url,
-      intro: data.meta?.about_description || data.content,
+      intro: formatBoldText(data.meta?.about_description || data.content || ''),
       categories: data.autofetch?.product_categories || [],
       seo: data.seo || {},
       pageData,

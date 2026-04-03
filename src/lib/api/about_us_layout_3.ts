@@ -1,5 +1,5 @@
 import type { OurValuesSection, VisionMissionSection } from '@/fake-api/company';
-import { normalizeText } from '@/lib/htmlText';
+import { normalizeText, formatBoldText } from '@/lib/htmlText';
 
 type Media = { url?: string | null } | null | undefined;
 
@@ -70,17 +70,17 @@ export async function fetchAboutUsLayout3Page(slug: string) {
     const visionMission: VisionMissionSection = {
       backgroundImage: mediaUrl(meta.vision_mission_image) || '',
       backgroundImageAlt: meta.vision_mission_title || data.title,
-      tagline: meta.vision_mission_title || data.title,
-      description: meta.vision_mission_description || '',
+      tagline: formatBoldText(meta.vision_mission_title || data.title),
+      description: formatBoldText(meta.vision_mission_description || ''),
       vision: {
         icon: 'vision',
         heading: 'Vision',
-        text: meta.vision_mission_vision || '',
+        text: formatBoldText(meta.vision_mission_vision || ''),
       },
       mission: {
         icon: 'mission',
         heading: 'Mission',
-        text: meta.vision_mission_mission || '',
+        text: formatBoldText(meta.vision_mission_mission || ''),
       },
     };
 
@@ -89,11 +89,11 @@ export async function fetchAboutUsLayout3Page(slug: string) {
     const valueDescs = meta.values_items?.description || [];
 
     const ourValues: OurValuesSection = {
-      heading: meta.values_title || 'OUR VALUES',
-      description: meta.values_subtitle || '',
+      heading: formatBoldText(meta.values_title || 'OUR VALUES'),
+      description: formatBoldText(meta.values_subtitle || ''),
       values: valueTitles
         .map((title, idx) => {
-          const t = (title || '').trim();
+          const t = formatBoldText((title || '').trim());
           const image = mediaUrl(valueImages[idx]) || '';
           if (!t || !image) return null;
           return {
@@ -101,7 +101,7 @@ export async function fetchAboutUsLayout3Page(slug: string) {
             title: t,
             image,
             imageAlt: t,
-            caption: (valueDescs[idx] || '').trim(),
+            caption: formatBoldText((valueDescs[idx] || '').trim()),
           };
         })
         .filter(Boolean) as OurValuesSection['values'],

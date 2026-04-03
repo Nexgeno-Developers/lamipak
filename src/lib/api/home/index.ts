@@ -1,4 +1,5 @@
 import { cache } from 'react';
+import { formatBoldText } from '@/lib/htmlText';
 import { getHomepageData } from '@/fake-api/homepage';
 import type {
   CommercialServiceCard,
@@ -412,8 +413,8 @@ function mapFaqs(faqs: FaqsItemsApi | undefined): FAQItem[] | null {
   const out: FAQItem[] = [];
 
   for (let i = 0; i < n; i++) {
-    const question = (titles[i] || '').trim();
-    const answer = faqAnswerFromHtml(descriptions[i] || '');
+    const question = formatBoldText((titles[i] || '').trim());
+    const answer = formatBoldText(faqAnswerFromHtml(descriptions[i] || ''));
     if (!question && !answer) continue;
     out.push({
       id: String(i + 1),

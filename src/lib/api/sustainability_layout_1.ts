@@ -1,4 +1,5 @@
 import type { DynamicPageData } from '@/fake-api/dynamic-pages';
+import { formatBoldText } from '@/lib/htmlText';
 
 type Sustainability1ApiResponse = {
   data?: {
@@ -89,7 +90,7 @@ export async function fetchSustainabilityLayout1Page(slug: string): Promise<{
             image: imageUrl,
             imageAlt: data.title,
             title: '',
-            description: stripHtml(heroDescriptions[idx] || ''),
+            description: formatBoldText(stripHtml(heroDescriptions[idx] || '')),
           };
         })
         .filter(Boolean) as Array<{
@@ -106,7 +107,7 @@ export async function fetchSustainabilityLayout1Page(slug: string): Promise<{
           type: 'image_quote_banner' as const,
           backgroundImage: meta.breadcrumb_image?.url || '/pick_cartoon_cta_1.webp',
           backgroundAlt: 'Nature background',
-          text: meta.sustainable_packaging_vision_title,
+          text: formatBoldText(meta.sustainable_packaging_vision_title),
         }
       : null;
 
@@ -119,14 +120,14 @@ export async function fetchSustainabilityLayout1Page(slug: string): Promise<{
 
     const whyCartonsMatterSection = {
       type: 'why_cartons_matter' as const,
-      heading: meta.why_carton_title || 'Why Cartons',
+      heading: formatBoldText(meta.why_carton_title || 'Why Cartons'),
       headingHighlight: 'Matter',
-      description: stripHtml(meta.why_carton_description || ''),
+      description: formatBoldText(stripHtml(meta.why_carton_description || '')),
       items: whyTitles
         .map((t, idx) => ({
           id: `why-carton-${idx}`,
-          title: t,
-          description: whyDescriptions[idx] || '',
+          title: formatBoldText(t),
+          description: formatBoldText(whyDescriptions[idx] || ''),
           image: `/why_cartoon_${idx + 1}.webp`,
           imageAlt: t,
         }))
@@ -149,7 +150,7 @@ export async function fetchSustainabilityLayout1Page(slug: string): Promise<{
           productAlt: 'Carton packs',
           headingLines: meta.lamipak_commitment_title
             .split(/\r?\n/)
-            .map((l) => l.trim())
+            .map((l) => formatBoldText(l.trim()))
             .filter(Boolean),
         }
       : null;
@@ -160,17 +161,17 @@ export async function fetchSustainabilityLayout1Page(slug: string): Promise<{
       headingHighlight: 'Carton',
       headingSuffix: 'Packaging',
       introBold: 'Sustainability By The Numbers.',
-      introText: stripHtml(meta.impact_statistics_description || ''),
+      introText: formatBoldText(stripHtml(meta.impact_statistics_description || '')),
       cards: impactTitles
         .map((t, idx) => ({
           id: `impact-stat-${idx}`,
           valueHighlight: '',
           valueRest: '',
-          title: t,
-          description: impactDescriptions[idx] || '',
+          title: formatBoldText(t),
+          description: formatBoldText(impactDescriptions[idx] || ''),
         }))
         .filter((c) => Boolean(c.title || c.description)),
-      footnote: stripHtml(meta.impact_statistics_footer_description || ''),
+      footnote: formatBoldText(stripHtml(meta.impact_statistics_footer_description || '')),
     };
 
     const journeyRecyclingSection = meta.recycling_journey_description
@@ -179,7 +180,7 @@ export async function fetchSustainabilityLayout1Page(slug: string): Promise<{
           heading: 'Building A Circular Packaging Future',
           image: '/journey_image.jpg',
           imageAlt: 'The recycling journey',
-          description: stripHtml(meta.recycling_journey_description),
+          description: formatBoldText(stripHtml(meta.recycling_journey_description)),
           ctaText: 'Join The Movement Pick Carton. Save Nature.',
           ctaLink: '/contact',
         }
@@ -198,7 +199,7 @@ export async function fetchSustainabilityLayout1Page(slug: string): Promise<{
       slug: data.slug,
       type: 'pick-carton',
       title: data.title,
-      content: stripHtml(data.content),
+      content: formatBoldText(stripHtml(data.content)),
       heroBackgroundImage: meta.breadcrumb_image?.url || '/pick_cartoon_banner.webp',
       sections,
     };

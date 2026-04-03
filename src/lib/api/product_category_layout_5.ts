@@ -67,6 +67,8 @@ export type OpticapLandingSectionData = {
   };
 };
 
+import { formatBoldText } from '@/lib/htmlText';
+
 function stripHtml(value?: string) {
   if (!value) return '';
   return value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -118,10 +120,10 @@ export async function fetcProductCategoryLayout5Page(slug: string) {
     }
 
     const meta = data.meta || {};
-    const heroTitle = meta.hero_title || data.title;
-    const heroSubtitle = meta.hero_subtitle || '';
+    const heroTitle = formatBoldText(meta.hero_title || data.title);
+    const heroSubtitle = formatBoldText(meta.hero_subtitle || '');
     const heroDescriptionHtml = meta.hero_description?.trim() || '';
-    const heroDescriptionPlain = stripHtml(meta.hero_description);
+    const heroDescriptionPlain = formatBoldText(stripHtml(meta.hero_description));
     const infoDescriptionHtml = meta.info_description?.trim() || '';
 
     const bannerTopUrl = meta.banner_images?.url || undefined;
@@ -131,13 +133,13 @@ export async function fetcProductCategoryLayout5Page(slug: string) {
 
     const productFeaturesPills = (meta.product_categories || []).map((item) => ({
       id: String(item.id),
-      label: item.title,
+      label: formatBoldText(item.title),
       href: slugToHref(item.slug),
     }));
 
     const descriptionLines = heroDescriptionHtml
       ? []
-      : [heroDescriptionPlain || meta.short_summary_description || ''].filter(Boolean);
+      : [heroDescriptionPlain || formatBoldText(meta.short_summary_description || '')].filter(Boolean);
 
     const videoUrl =
       meta.video_url?.trim() ||

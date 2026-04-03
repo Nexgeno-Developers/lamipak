@@ -128,6 +128,8 @@ type CareerApiResponse = {
   };
 };
 
+import { formatBoldText } from '@/lib/htmlText';
+
 function stripHtml(value?: string | null): string {
   if (!value) return '';
   return value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -197,14 +199,14 @@ export async function fetchCareerLayoutPage(slug: string): Promise<{
 
     const heroSplit = meta.hero_title
       ? {
-          heading: heroHeading.replace(/\s+\w+$/, ''),
-          headingHighlight: heroHeading.split(/\s+/).pop() || '',
-          paragraphs: heroDescriptionParagraphs,
-          emphasis: heroDescriptionParagraphs[0] || '',
-          ctaText: 'Explore More',
+          heading: formatBoldText(heroHeading.replace(/\s+\w+$/, '')),
+          headingHighlight: formatBoldText(heroHeading.split(/\s+/).pop() || ''),
+          paragraphs: heroDescriptionParagraphs.map(formatBoldText),
+          emphasis: formatBoldText(heroDescriptionParagraphs[0] || ''),
+          ctaText: formatBoldText('Explore More'),
           ctaLink: meta.hero_navigation_link || '/',
           mediaImage: heroThumbnail || meta.breadcrumb_image?.url || '/about_banner.jpg',
-          mediaAlt: heroHeading,
+          mediaAlt: formatBoldText(heroHeading),
           mediaLink: embedVideoUrl,
         }
       : undefined;
@@ -215,14 +217,14 @@ export async function fetchCareerLayoutPage(slug: string): Promise<{
       meta.hr_title || meta.hr_description
         ? {
             image: meta.hr_photo?.url || '/about_banner.jpg',
-            imageAlt: meta.hr_name || 'Leadership',
-            name: meta.hr_name || '',
-            role: meta.hr_designation || '',
-            heading: meta.hr_title || 'Brings Life To Packaging',
+            imageAlt: formatBoldText(meta.hr_name || 'Leadership'),
+            name: formatBoldText(meta.hr_name || ''),
+            role: formatBoldText(meta.hr_designation || ''),
+            heading: formatBoldText(meta.hr_title || 'Brings Life To Packaging'),
             headingHighlight: '',
             paragraphs: hrDescriptionParagraphs.length
-              ? hrDescriptionParagraphs
-              : [stripHtml(meta.hr_description)],
+              ? hrDescriptionParagraphs.map(formatBoldText)
+              : [formatBoldText(stripHtml(meta.hr_description))],
           }
         : undefined;
 
@@ -233,18 +235,18 @@ export async function fetchCareerLayoutPage(slug: string): Promise<{
 
     const verticalFeatures = valuesTitles.map((title, idx) => ({
       id: `value-${idx}`,
-      title,
-      description: valuesDescriptions[idx] || '',
+      title: formatBoldText(title),
+      description: formatBoldText(valuesDescriptions[idx] || ''),
       image: valuesImages[idx]?.url || '/about_banner.jpg',
-      imageAlt: title,
+      imageAlt: formatBoldText(title),
     }));
 
     const verticalFeaturesHeader =
       meta.values_title || meta.values_subtitle
         ? {
-            heading: meta.values_title || 'Company Value Presentation',
+            heading: formatBoldText(meta.values_title || 'Company Value Presentation'),
             headingHighlight: '',
-            description: meta.values_subtitle || '',
+            description: formatBoldText(meta.values_subtitle || ''),
           }
         : undefined;
 
@@ -254,17 +256,17 @@ export async function fetchCareerLayoutPage(slug: string): Promise<{
     const expertsSection =
       meta.solution_title || solutionVideoUrls.length
         ? {
-            heading: (meta.solution_title || 'Behind Every Solutions').replace(
+            heading: formatBoldText((meta.solution_title || 'Behind Every Solutions').replace(
               /,\s*There's A Team Of Experts Driving Innovation$/i,
               '',
-            ),
-            headingHighlight: "There's A Team Of Experts",
-            headingSuffix: 'Driving Innovation',
-            description: meta.solution_subtitle || '',
+            )),
+            headingHighlight: formatBoldText("There's A Team Of Experts"),
+            headingSuffix: formatBoldText('Driving Innovation'),
+            description: formatBoldText(meta.solution_subtitle || ''),
             videos: solutionVideoUrls.map((url, idx) => ({
               id: `video-${idx}`,
               thumbnail: getYouTubeThumbnail(url),
-              thumbnailAlt: `Expert video ${idx + 1}`,
+              thumbnailAlt: formatBoldText(`Expert video ${idx + 1}`),
               videoUrl: toEmbedUrl(url),
             })),
           }
@@ -273,9 +275,9 @@ export async function fetchCareerLayoutPage(slug: string): Promise<{
     const jobsSection = meta.apply_title
       ? {
           notice: '',
-          heading: 'Open Positions',
-          headingHighlight: '& Early Career',
-          headingSuffix: 'Opportunities',
+          heading: formatBoldText('Open Positions'),
+          headingHighlight: formatBoldText('& Early Career'),
+          headingSuffix: formatBoldText('Opportunities'),
           socialApplyLinks: meta.apply_linkedin_url
             ? { linkedin: meta.apply_linkedin_url }
             : undefined,
@@ -283,8 +285,8 @@ export async function fetchCareerLayoutPage(slug: string): Promise<{
       : undefined;
 
     const pageData: CareerLandingPageData = {
-      title: data.title,
-      heroTitle: heroHeading,
+      title: formatBoldText(data.title),
+      heroTitle: formatBoldText(heroHeading),
       heroBackgroundImage: meta.breadcrumb_image?.url || '/about_banner.jpg',
       heroSplit,
       leadershipMessage,
