@@ -57,6 +57,8 @@ import GovernanceManagementLayoutPageSection from '@/components/sections/Governa
 import ProductCategoryPageSection from '@/components/sections/ProductCategoryPageSection';
 import { fetchProductIndustryDetailLayoutPage } from '@/lib/api/product_industry_detail_layout';
 import ProductIndustryDetailLayoutPageSection from '@/components/sections/ProductIndustryDetailLayoutPageSection';
+import { fetchProductIndustriesLayoutPage } from '@/lib/api/product_industries_layout';
+import ProductIndustriesLayoutPage from '@/components/pages/ProductIndustriesLayoutPage';
 
 import {
   getDynamicPageBySlug,
@@ -92,6 +94,15 @@ async function fetchPageData(fullSlug: string) {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
+
+  const productIndustriesLayout = await fetchProductIndustriesLayoutPage(fullSlug);
+  if (productIndustriesLayout) {
+    return buildApiMetadata({
+      slug: productIndustriesLayout.slug,
+      title: productIndustriesLayout.title,
+      seo: productIndustriesLayout.seo || {},
+    });
+  }
 
   const industryLayout = await fetchProductIndustryDetailLayoutPage(fullSlug);
   if (industryLayout) {
@@ -499,6 +510,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function DynamicPage({ params }: PageProps) {
   const { slug } = await params;
   const fullSlug = slug?.join('/') || ''; // ✅ MAIN FIX
+
+  const productIndustriesLayout = await fetchProductIndustriesLayoutPage(fullSlug);
+  if (productIndustriesLayout) {
+    return <ProductIndustriesLayoutPage data={productIndustriesLayout.page} />;
+  }
 
   const industryLayout = await fetchProductIndustryDetailLayoutPage(fullSlug);
   if (industryLayout) {

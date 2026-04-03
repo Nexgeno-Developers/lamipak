@@ -180,7 +180,7 @@ function WorkCard({ card }: { card: SustainabilityWorkCard }) {
           {card.title}
         </h3>
 
-        <p className="text-black text-sm md:text-base lg:mb-4 mb-0 leading-relaxed flex-1">
+        <p className="text-black text-sm md:text-base lg:mb-4 mb-0 leading-relaxed flex-1 line-clamp-3">
           {card.description}
         </p>
 

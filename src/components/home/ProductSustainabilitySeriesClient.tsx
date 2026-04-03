@@ -202,7 +202,7 @@ function ProductCard({ product }: { product: SustainabilityProductCard }) {
         </h3>
 
         {/* Description */}
-        <p className="text-black text-[14px] md:text-base lg:mb-6 mb-3 leading-relaxed line-clamp-4">
+        <p className="text-black text-[14px] md:text-base lg:mb-6 mb-3 leading-relaxed line-clamp-3">
           {product.description}
         </p>
 
