@@ -132,8 +132,7 @@ export async function fetchAboutUsLayout1Page(slug: string) {
     const images = journeyJson?.image || [];
 
     const journey: JourneyData = {
-      title: 'LamiPak Journey',
-      titleHighlight: 'LamiPak',
+      title: '<span class="text-[#009FE8]">LamiPak</span> Journey',
       milestones: years
         .map((year, idx) => {
           const y = (year || '').trim();

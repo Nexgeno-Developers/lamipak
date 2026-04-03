@@ -33,8 +33,7 @@ export default function LatestInsightsClient({ data }: LatestInsightsClientProps
         {/* Header with Title and Navigation */}
         <div className="flex items-center justify-between mb-6 md:mb-12">
           <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold">
-            <span className="text-black">Latest</span>{' '}
-            <span className="text-[#009FE8]">Insights</span>
+            <span className="text-black">Latest Insights</span>
           </h2>
 
           {/* Navigation Arrows */}

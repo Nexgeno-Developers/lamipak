@@ -17,9 +17,8 @@ export default async function InnovationInPackaging() {
         <InnovationSliderInteractive cards={data.cards}>
           {/* Header with Title and Explore More Button */}
           <div className="flex items-center justify-between mb-8 md:mb-12 flex-wrap gap-4">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
-              <span className="text-[#009FE8]">Innovation</span>{' '}
-              <span className="text-black">in Packaging</span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black">
+              Innovation in Packaging
             </h2>
 
             {/* Explore More Button */}

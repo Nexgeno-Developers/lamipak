@@ -41,7 +41,7 @@ export default function LatestNewsClient({ trendItems, pressItems }: LatestNewsC
         {/* Heading */}
         <div className="text-center mb-6 md:mb-8">
           <h2 className="text-3xl md:text-4xl lg:text-5xl text-black font-bold mb-6 md:mb-8 leading-[70px] text-center">
-            Latest <span className="text-[#009FE8]">News</span>
+            Latest News
           </h2>
         </div>
 

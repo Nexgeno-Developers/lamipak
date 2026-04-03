@@ -1,3 +1,4 @@
+import { formatBoldText } from '@/lib/htmlText';
 import Link from 'next/link';
 import type { ProductGridSectionData, ProductGridSectionItem } from '@/fake-api/page-builder';
 import type { PageBuilderContext } from '@/components/pageBuilder/PageBuilder';
@@ -58,9 +59,7 @@ export function ProductGridSection({
           {data.eyebrow && (
             <p className="text-sm md:text-base text-[#009FE8] uppercase tracking-wide mb-2">{data.eyebrow}</p>
           )}
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
-            <span className="text-[#009FE8]">{data.title}</span>
-          </h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold" dangerouslySetInnerHTML={{ __html: formatBoldText(data.title) }} />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">

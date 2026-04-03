@@ -138,11 +138,7 @@ export default function Hero({ data }: HeroProps) {
 
             {/* Main Headline */}
             <div className="lg:max-w-5xl">
-              <h1 className="text-[24px] sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight [overflow-wrap:anywhere] lg:mb-0 mb-3">
-                <span className="text-white">{currentSlideData.title}</span>
-                <br />
-                <span className="text-[#009FE8]">{currentSlideData.titleHighlight}</span>
-              </h1>
+              <h1 className="text-[24px] sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight [overflow-wrap:anywhere] lg:mb-0 mb-3 text-black" dangerouslySetInnerHTML={{ __html: currentSlideData.title }} />
 
               <p className="text-[14px] lg:text-base text-white lg:py-[20px] pt-0 pb-0 lg:!leading-[32px] !leading-[22px] lg:pr-[200px] lg:line-clamp-4 line-clamp-3">
                 {currentSlideData.description}

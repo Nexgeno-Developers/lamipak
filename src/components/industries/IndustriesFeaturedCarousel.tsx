@@ -64,8 +64,7 @@ export default function IndustriesFeaturedCarousel({
     >
       <div className="mb-8 flex flex-row flex-wrap items-center justify-between gap-4">
         <h2 className="min-w-0 text-left text-3xl font-bold md:text-4xl lg:text-5xl">
-          <span className="text-black">Featured</span>{' '}
-          <span className="text-[#009FE8]">Products</span>
+          <span className="text-black">Featured Products</span>
         </h2>
         <div className="flex shrink-0 items-center gap-3">
           <button

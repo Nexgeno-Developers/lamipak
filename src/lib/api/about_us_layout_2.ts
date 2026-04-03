@@ -171,9 +171,8 @@ export async function fetchAboutUsLayout2Page(slug: string) {
 
     const quadrant: AboutUsQuadrantSection = {
       topLeft: {
-        title: topTitle,
-        titleHighlight: topHighlight,
-        paragraphs: safeParagraphsFromHtml(meta.about_description),
+        title: formatBoldText(topTitle),
+        paragraphs: safeParagraphsFromHtml(meta.about_description).map(formatBoldText),
       },
       topRight: {
         image: topImage || '',
@@ -184,9 +183,8 @@ export async function fetchAboutUsLayout2Page(slug: string) {
         imageAlt: bottomTitle || topTitle,
       },
       bottomRight: {
-        title: bottomTitle || topTitle,
-        titleHighlight: bottomHighlight,
-        paragraphs: safeParagraphsFromHtml(meta.about_description_secondary),
+        title: formatBoldText(bottomTitle || topTitle),
+        paragraphs: safeParagraphsFromHtml(meta.about_description_secondary).map(formatBoldText),
       },
     };
 

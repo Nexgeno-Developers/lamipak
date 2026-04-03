@@ -57,11 +57,7 @@ export default function ApproachClient({ data }: ApproachClientProps) {
             </div>
 
             {/* Title */}
-            <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold mb-4 leading-tight md:leading-16">
-              <span className="text-black">{data.title}</span> 
-             
-               <span className="text-[#009FE8]"> {data.titleHighlight}</span>
-            </h2>
+            <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold mb-4 leading-tight md:leading-16 text-black text-black" dangerouslySetInnerHTML={{ __html: data.title }} />
 
             {/* Subtitle */}
             <p className="text-black mb-8 text-[14px] md:text-lg leading-relaxed">

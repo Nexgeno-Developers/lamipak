@@ -66,8 +66,7 @@ export default function ProductCategoryPageSection({
                 </p>
 
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                  <span className="text-[#009FE8]">{(category as any).name}</span>{' '}
-                  <span className="text-black">We Support</span>
+                  <span className="text-black">{(category as any).name} We Support</span>
                 </h2>
 
                 {(category as any).description && (

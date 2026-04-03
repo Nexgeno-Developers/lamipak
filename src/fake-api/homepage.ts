@@ -7,7 +7,6 @@ export interface HeroSlide {
   id: string;
   category: string;
   title: string;
-  titleHighlight: string;
   description: string;
   ctaText: string;
   ctaLink: string;
@@ -77,7 +76,6 @@ export interface Question {
 
 export interface ApproachData {
   title: string;
-  titleHighlight: string;
   subtitle: string;
   image: string;
   imageAlt: string;
@@ -88,8 +86,7 @@ export interface ApproachData {
 
 export interface VideoBannerData {
   title: string;
-  preTitleBlue?: string;
-  preTitleBlack?: string;
+  preTitle: string;
   preDescription?: string;
   videoUrl?: string;
   ctaText: string;
@@ -249,7 +246,6 @@ export async function getHomepageData(): Promise<HomepageData> {
           id: 'fallback-1',
           category: 'LAMIPAK',
           title: 'Welcome',
-          titleHighlight: '',
           description: '',
           ctaText: 'EXPLORE',
           ctaLink: '/',
@@ -260,8 +256,7 @@ export async function getHomepageData(): Promise<HomepageData> {
       videoUrl: '/video2.mp4',
     },
     approach: {
-      title: 'We engineer the future of',
-      titleHighlight: 'aseptic packaging.',
+      title: 'We engineer the future of <span class="text-[#009FE8]">aseptic packaging.</span>',
       subtitle: 'Answer three questions and discover your optimal packaging system.',
       image: '/approcah_image.jpg',
       imageAlt: 'Professional examining aseptic packaging in laboratory',
@@ -305,8 +300,7 @@ export async function getHomepageData(): Promise<HomepageData> {
     },
     videoBanner: {
       title: '',
-      preTitleBlue: '',
-      preTitleBlack: '',
+      preTitle: '',
       preDescription: '',
       videoUrl: 'https://www.youtube.com/watch?v=2Tpppx-X0z0',
       ctaText: 'View how we help global brands',

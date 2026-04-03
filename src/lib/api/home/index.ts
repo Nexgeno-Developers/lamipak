@@ -168,14 +168,14 @@ function faqAnswerFromHtml(html: string): string {
     .trim();
 }
 
-function splitHeroTitle(full: string): { title: string; titleHighlight: string } {
+function splitHeroTitle(full: string): { title: string } {
   const idx = full.indexOf(',');
   if (idx === -1) {
-    return { title: full.trim(), titleHighlight: '' };
+    return { title: full.trim() };
   }
+  const rest = full.slice(idx + 1).trim();
   return {
-    title: full.slice(0, idx + 1).trim(),
-    titleHighlight: full.slice(idx + 1).trim(),
+    title: `${full.slice(0, idx + 1).trim()} <span class="text-[#009FE8]">${rest}</span>`,
   };
 }
 
@@ -236,13 +236,12 @@ function mapBannerItemsToHero(banner: BannerItemsApi | undefined, baseHero: Hero
     if (!bg) continue;
 
     const fullTitle = titles[i] ?? '';
-    const { title, titleHighlight } = splitHeroTitle(fullTitle);
+    const { title } = splitHeroTitle(fullTitle);
 
     slides.push({
       id: String(banners[i]?.id ?? i + 1),
       category: labels[i]?.trim() || 'LAMIPAK',
       title,
-      titleHighlight,
       description: subtitles[i]?.trim() ?? '',
       ctaText: HERO_CTA_ROTATION[i % HERO_CTA_ROTATION.length],
       ctaLink: normalizeNavHref(navUrls[i]),
@@ -435,11 +434,12 @@ function mapVideoBanner(meta: HomeMetaApi | undefined, base: VideoBannerData): V
   );
   const preDescription = (meta.global_beverage_description || '').trim();
 
+  const combinedPreTitle = [preTitleBlue, preTitleBlack].filter(Boolean).join(' ');
+
   return {
     ...base,
     title: base.title,
-    preTitleBlue: preTitleBlue || base.preTitleBlue,
-    preTitleBlack: preTitleBlack || base.preTitleBlack,
+    preTitle: combinedPreTitle || base.preTitle,
     preDescription: preDescription || base.preDescription,
     videoUrl,
     ctaText: base.ctaText,

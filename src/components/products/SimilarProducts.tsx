@@ -47,8 +47,7 @@ export default async function SimilarProducts({ currentProductSlug }: SimilarPro
         <div className="flex items-center justify-between mb-8 md:mb-12 relative">
           {/* Title */}
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
-            <span className="text-[#009FE8]">Similar</span>{' '}
-            <span className="text-black">Products</span>
+            <span className="text-black">Similar Products</span>
           </h2>
         </div>
 

@@ -126,8 +126,7 @@ export default function ProductIndustryDetailLayoutPageSection({
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-8 md:mb-12 relative">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
-                <span className="text-[#009FE8]">Recommended</span>{' '}
-                <span className="text-black">Products</span>
+                <span className="text-black">Recommended Products</span>
               </h2>
             </div>
 

@@ -29,12 +29,7 @@ export default function AboutUsQuadrant({ data, videoBetween }: AboutUsQuadrantP
       <div className="grid grid-cols-1 lg:grid-cols-2 pb-8 md:pb-10">
         <div className="flex items-center justify-center p-5 md:p-12 lg:p-16 xl:p-16">
           <div className="max-w-2xl">
-            <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold mb-4 md:mb-8 leading-tight md:leading-[60px]">
-              <span className="text-[#009FE8]">{data.topLeft.titleHighlight}</span>
-              <span className="text-black">
-                {data.topLeft.title.replace(data.topLeft.titleHighlight, '').trim()}
-              </span>
-            </h2>
+            <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold mb-4 md:mb-8 leading-tight md:leading-[60px] text-black" dangerouslySetInnerHTML={{ __html: data.topLeft.title }} />
             {data.topLeft.paragraphs.map((paragraph, index) => (
               <p
                 key={index}
@@ -90,12 +85,7 @@ export default function AboutUsQuadrant({ data, videoBetween }: AboutUsQuadrantP
 
         <div className="flex items-center justify-center p-5 md:p-12 lg:p-16 xl:p-16">
           <div className="max-w-2xl">
-            <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold mb-4 md:mb-8 leading-tight md:leading-[60px]">
-              <span className="text-black">
-                {data.bottomRight.title.split(data.bottomRight.titleHighlight)[0]}
-              </span>
-              <span className="text-[#009FE8]">{data.bottomRight.titleHighlight}</span>
-            </h2>
+            <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold mb-4 md:mb-8 leading-tight md:leading-[60px]" dangerouslySetInnerHTML={{ __html: data.bottomRight.title }} />
             {data.bottomRight.paragraphs.map((paragraph, index) => (
               <p
                 key={index}

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { fetchHomepageData } from '@/lib/api/home';
 import type { VideoBannerData } from '@/fake-api/homepage';
+import { formatBoldText } from '@/lib/htmlText';
 
 interface VideoBannerProps {
   videoOnly?: boolean; // If true, hides text and CTA, shows only video
@@ -100,6 +101,7 @@ export default function VideoBanner({
       if (videoUrl) {
         setData({
           title: '',
+          preTitle: '',
           ctaText: '',
           ctaLink: '',
           videoUrl,
@@ -235,14 +237,11 @@ export default function VideoBanner({
 
   return (
     <>
-      {!videoOnly && (data.preTitleBlue || data.preTitleBlack || data.preDescription) && (
+      {!videoOnly && (data.preTitle || data.preDescription) && (
         <section className="bg-gray-50 pt-4 pb-8 md:py-10">
           <div className="container mx-auto px-4">
             <div className="md:p-10 text-center">
-              <h2 className="text-[22px] md:text-3xl lg:text-4xl font-bold leading-tight">
-                {data.preTitleBlue ? <span className="text-[#009FE8]">{data.preTitleBlue}</span> : null}{' '}
-                {data.preTitleBlack ? <span className="text-black">{data.preTitleBlack}</span> : null}
-              </h2>
+              <h2 className="text-[22px] md:text-3xl lg:text-4xl font-bold leading-tight text-black" dangerouslySetInnerHTML={{ __html: formatBoldText(data.preTitle) }} />
               {data.preDescription ? (
                 <p className="mt-4 text-sm md:text-base text-black leading-relaxed max-w-5xl mx-auto">
                   {data.preDescription}
