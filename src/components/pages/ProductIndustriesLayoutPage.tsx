@@ -139,12 +139,9 @@ export default function ProductIndustriesLayoutPage({ data }: { data: ProductInd
 
       {/* Featured products */}
       {data.featuredProducts.length > 0 ? (
-        <section className="bg-[#f8f8f8] py-12 md:py-16 lg:py-20">
-          <div className="container mx-auto px-4">
-            <h2 className="mb-8 text-center text-3xl font-bold md:mb-12 md:text-4xl lg:text-5xl">
-              <span className="text-black">Featured</span>{' '}
-              <span className="text-[#009FE8]">Products</span>
-            </h2>
+        <section className="relative overflow-hidden py-12 md:py-16 lg:py-20">
+          
+          <div className="relative z-10 container mx-auto px-4">
             <IndustriesFeaturedCarousel products={data.featuredProducts} />
           </div>
         </section>
