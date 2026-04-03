@@ -22,7 +22,8 @@ export default async function LatestPressRelease() {
         {/* Header */}
         <div className="mb-4 md:mb-12">
           <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold">
-            <span className="text-black">Latest Press Release</span>
+            <span className="text-black">Latest</span>{' '}
+            <span className="text-[#009FE8]">Press Release</span>
           </h2>
         </div>
 

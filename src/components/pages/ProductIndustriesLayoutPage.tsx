@@ -40,8 +40,8 @@ export default function ProductIndustriesLayoutPage({ data }: { data: ProductInd
       {data.industries.length > 0 ? (
         <section className="bg-[#f8f8f8] py-12 md:py-16 lg:py-20">
           <div className="container mx-auto px-4">
-            <h2 className="mb-10 text-center text-3xl font-bold md:mb-14 md:text-4xl lg:text-5xl">
-              Industrial Segments
+            <h2 className="mb-10 text-center text-3xl font-bold md:mb-14 md:text-4xl lg:text-5xl text-black">
+              <span className="text-[#009FE8]">Industrial</span> Segments
             </h2>
             <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
               {data.industries.map((item) => (
