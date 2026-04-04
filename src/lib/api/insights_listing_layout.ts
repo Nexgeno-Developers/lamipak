@@ -13,6 +13,8 @@ export type InsightsListingData = {
   heroBackgroundImage?: string;
   subtitle?: string;
   items: InsightItem[];
+  /** Subcategory filter options (from CMS or derived from items). */
+  filterSubcategories?: string[];
 };
 
 type InsightItemApi = {
@@ -22,6 +24,8 @@ type InsightItemApi = {
   image?: { url?: string | null } | null;
   link?: string;
   slug?: string;
+  subcategory?: string;
+  category?: string;
 };
 
 type ListingApiResponse = {
@@ -33,6 +37,8 @@ type ListingApiResponse = {
     meta?: {
       banner_images?: { url?: string | null } | null;
       list_subtitle?: string;
+      /** Optional ordered list of subcategory filter labels (JSON array or string). */
+      list_subcategories?: unknown;
       items?: unknown;
     };
     seo?: Record<string, unknown>;
@@ -103,6 +109,11 @@ function mapItem(raw: InsightItemApi, idx: number, kind: InsightsListingKind): I
         : `/${hrefRaw.replace(/^\/+/, '')}`
     : `/insights/${kind}#${id}`;
 
+  const sub =
+    clean(raw.subcategory) ||
+    clean(raw.category) ||
+    undefined;
+
   return {
     id,
     title: formatBoldText(title),
@@ -110,7 +121,42 @@ function mapItem(raw: InsightItemApi, idx: number, kind: InsightsListingKind): I
     image: mediaUrl(raw.image),
     imageAlt: title,
     href,
+    subcategory: sub,
   };
+}
+
+const DEMO_ARTICLE_SUBCATEGORIES = ['Dairy', 'Beverage', 'Operations', 'Sustainability', 'Innovation'] as const;
+
+function parseStringArray(raw: unknown): string[] {
+  if (!raw) return [];
+  if (Array.isArray(raw)) {
+    return raw
+      .filter((x): x is string => typeof x === 'string' && !!x.trim())
+      .map((x) => x.trim());
+  }
+  if (typeof raw === 'string') {
+    try {
+      const p = JSON.parse(raw) as unknown;
+      if (Array.isArray(p)) {
+        return p.filter((x): x is string => typeof x === 'string' && !!x.trim()).map((x) => x.trim());
+      }
+    } catch {
+      return raw
+        .split(',')
+        .map((x) => x.trim())
+        .filter(Boolean);
+    }
+  }
+  return [];
+}
+
+function deriveSubcategories(items: InsightItem[]): string[] {
+  const s = new Set<string>();
+  items.forEach((i) => {
+    const t = i.subcategory?.trim();
+    if (t) s.add(t);
+  });
+  return Array.from(s).sort((a, b) => a.localeCompare(b));
 }
 
 function buildMany(kind: InsightsListingKind, count: number): InsightItem[] {
@@ -128,6 +174,8 @@ function buildMany(kind: InsightsListingKind, count: number): InsightItem[] {
       kind === 'articles'
         ? `/insights/articles/article-${i + 1}`
         : `/insights/${kind === 'newsletter' ? 'newsletter' : kind}#item-${i + 1}`,
+    subcategory:
+      kind === 'articles' ? DEMO_ARTICLE_SUBCATEGORIES[i % DEMO_ARTICLE_SUBCATEGORIES.length] : undefined,
   }));
 }
 
@@ -138,6 +186,7 @@ const DEFAULT_LISTINGS: Record<InsightsListingKind, InsightsListingData> = {
     breadcrumbLabel: TITLES.articles,
     heroBackgroundImage: PLACEHOLDER_IMG,
     subtitle: 'Browse all articles from Lamipak.',
+    filterSubcategories: [...DEMO_ARTICLE_SUBCATEGORIES],
     items: buildMany('articles', 9),
   },
   webinars: {
@@ -182,6 +231,14 @@ function mapApiToListing(
     base.items = rawList
       .map((item, idx) => mapItem(item, idx, kind))
       .filter(Boolean) as InsightItem[];
+  }
+
+  const metaSubs = parseStringArray(meta.list_subcategories);
+  if (metaSubs.length) {
+    base.filterSubcategories = metaSubs;
+  } else if (kind === 'articles') {
+    const derived = deriveSubcategories(base.items);
+    if (derived.length) base.filterSubcategories = derived;
   }
 
   return base;

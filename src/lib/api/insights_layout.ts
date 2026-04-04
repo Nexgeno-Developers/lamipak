@@ -10,6 +10,8 @@ export type InsightItem = {
   image?: string;
   imageAlt: string;
   href: string;
+  /** Subcategory / vertical for listing filters (e.g. Dairy, Beverage). */
+  subcategory?: string;
 };
 
 export type InsightsHubData = {
@@ -38,6 +40,8 @@ type InsightItemApi = {
   image?: Media;
   link?: string;
   slug?: string;
+  subcategory?: string;
+  category?: string;
 };
 
 type InsightsHubApiResponse = {
@@ -119,6 +123,11 @@ function mapItem(
         : `/${hrefRaw.replace(/^\/+/, '')}`
     : `${defaultBasePath}#${id}`;
 
+  const sub =
+    clean(raw.subcategory) ||
+    clean(raw.category) ||
+    undefined;
+
   return {
     id,
     title: formatBoldText(title),
@@ -126,6 +135,7 @@ function mapItem(
     image: mediaUrl(raw.image),
     imageAlt: title,
     href,
+    subcategory: sub,
   };
 }
 
