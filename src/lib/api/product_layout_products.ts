@@ -1,5 +1,6 @@
 import type { ProductData, ProductSEO } from '@/fake-api/products';
 import { normalizeText, formatBoldText } from '@/lib/htmlText';
+import { cleanVideoUrlFromApi } from '@/lib/cleanVideoUrl';
 
 type Media = { url?: string | null } | null | undefined;
 
@@ -249,7 +250,7 @@ function mapApiDataToProduct(data: NonNullable<ProductLayoutApiResponse['data']>
     sizeFormatImages:
       Object.keys(sizeFormats.imagesByVariant).length > 0 ? sizeFormats.imagesByVariant : undefined,
     quickSpecifications: parsedSpecifications.length ? parsedSpecifications : undefined,
-    productVideo: meta.video_url?.trim() || undefined,
+    productVideo: cleanVideoUrlFromApi(meta.video_url) || undefined,
     compatibilityDescription: formatBoldText(stripHtml(meta.compatibility_description)) || undefined,
     productFeatures: featureTitles
       .map((featureTitle, index) => ({
