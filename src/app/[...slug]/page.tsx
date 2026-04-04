@@ -19,6 +19,7 @@ import OurCompanyDynamicPage from '@/components/OurCompanyDynamicPage';
 import ContactUsPage from '@/components/ContactUsPage';
 import GovernanceManagementPage from '@/components/GovernanceManagementPage';
 import { PageBuilder } from '@/components/pageBuilder/PageBuilder';
+import { ProductCategoriesHubPage } from '@/components/pages/ProductCategoriesHubPage';
 import { fetchProductCategoriesPage } from '@/lib/api/product_categories';
 import { fetcProductCategoryLayout5Page } from '@/lib/api/product_category_layout_5';
 import { fetcProductCategoryLayout1Page } from '@/lib/api/product_category_layout_1';
@@ -588,8 +589,9 @@ export default async function DynamicPage({ params }: PageProps) {
   const apiPage = await fetchProductCategoriesPage(fullSlug);
   if (apiPage) {
     return (
-      <PageBuilder
+      <ProductCategoriesHubPage
         pageData={apiPage.pageData as any}
+        videoUrl={apiPage.videoUrl}
         pageContext={{
           mainCategory: apiPage.slug,
         }}

@@ -18,6 +18,7 @@ type ProductCategoriesApiResponse = {
     meta?: {
       banner_images?: { url?: string };
       about_description?: string;
+      video_url?: string;
     };
     seo?: {
       title?: string;
@@ -39,6 +40,18 @@ type ProductCategoriesApiResponse = {
     };
   };
 };
+
+function cleanVideoUrlFromApi(url: string | undefined): string | null {
+  const trimmed = url?.trim();
+  if (!trimmed) return null;
+  try {
+    const u = new URL(trimmed);
+    u.searchParams.delete('themeRefresh');
+    return u.toString();
+  } catch {
+    return trimmed.replace(/[&?]themeRefresh=\d+/i, '').replace(/\?$/, '') || null;
+  }
+}
 
 export async function fetchProductCategoriesPage(slug: string) {
   const baseUrl = process.env.COMPANY_API_BASE_URL;
@@ -98,6 +111,8 @@ export async function fetchProductCategoriesPage(slug: string) {
       categories: data.autofetch?.product_categories || [],
       seo: data.seo || {},
       pageData,
+      /** Cleaned YouTube/file URL from `meta.video_url` for inline `VideoBanner` (not a page-builder section). */
+      videoUrl: cleanVideoUrlFromApi(data.meta?.video_url),
     };
   } catch {
     return null;
