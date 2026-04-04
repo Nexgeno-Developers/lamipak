@@ -61,8 +61,8 @@ function ProductGrid({
 }) {
   return (
     <section className="mt-10 md:mt-12">
-     
-      
+
+
       <h2 className="text-center text-[#009FE8] text-sm md:text-[24px] font-bold mb-6 md:mb-8">
         {title}
       </h2>
@@ -95,20 +95,21 @@ export function RollFedCatalogSection({ data }: { data: RollFedCatalogSectionPro
           )}
         </div>
       </section>
-<div className="pb-10 md:pb-24 md:pt-8 pt-4">
-{videoUrl ? (
-        <VideoBanner
-          prefetchedData={{
-            title: '',
-            preTitle: '',
-            ctaText: '',
-            ctaLink: '',
-            videoUrl,
-          }}
-        />
-      ) : null}
-</div>
-      
+
+      <div className="pb-10 md:pb-24 md:pt-8 pt-4 mt-5">
+        {videoUrl ? (
+          <VideoBanner
+            prefetchedData={{
+              title: '',
+              preTitle: '',
+              ctaText: '',
+              ctaLink: '',
+              videoUrl,
+            }}
+          />
+        ) : null}
+      </div>
+
 
       <CallToAction />
       <NewsletterSubscription />

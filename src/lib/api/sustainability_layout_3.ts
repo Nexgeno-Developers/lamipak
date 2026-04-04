@@ -1,54 +1,54 @@
 import { decodeHtmlEntities, formatBoldText } from '@/lib/htmlText';
 
-export interface GreenEffortsPageData {
+export type GreenSustainabilityVisionCardData = {
+  id: string;
   title: string;
-  heroBackgroundImage: string;
-  greenSustainabilityVisionSection?: GreenSustainabilityVisionSectionData;
-  greenPhotovoltaicProjectSections?: GreenPhotovoltaicProjectSectionData[];
-  greenSustainabilityJourneySection?: GreenSustainabilityJourneySectionData;
-}
+  iconImageUrl?: string;
+  icon?: 'globe' | 'social' | 'product' | 'business';
+  descriptionHtml?: string;
+  bullets?: Array<{
+    parts: Array<{ text: string; bold?: boolean }>;
+  }>;
+};
 
-export interface GreenSustainabilityVisionSectionData {
+export type GreenSustainabilityVisionSectionData = {
   heading: string;
   subtitle: string;
-  cards: Array<{
-    id: string;
-    title: string;
-    /** CMS `hero_items.image[].url` when present */
-    iconImageUrl?: string;
-    /** Fallback when no image */
-    icon?: 'globe' | 'social' | 'product' | 'business';
-    /** Raw HTML from CMS (`hero_items.description[]`) */
-    descriptionHtml?: string;
-    /** Legacy / fake-api structured bullets */
-    bullets?: Array<{
-      parts: Array<{ text: string; bold?: boolean }>;
-    }>;
-  }>;
+  cards: GreenSustainabilityVisionCardData[];
   footerText: string;
-}
+};
 
-export interface GreenPhotovoltaicProjectSectionData {
+export type GreenPhotovoltaicProjectSectionData = {
   htmlItems: string[];
-}
+};
 
-export interface GreenSustainabilityJourneySectionData {
-  headingLineBlue: string;
-  headingLineBlack: string;
+export type GreenSustainabilityJourneySectionData = {
+  heading: string;
   body: string;
   image: string;
   imageAlt: string;
   backgroundColor?: string;
   accentColor?: string;
-}
+};
+
+export type GreenEffortsPageData = {
+  title: string;
+  heroBackgroundImage?: string;
+  greenSustainabilityVisionSection?: GreenSustainabilityVisionSectionData;
+  greenPhotovoltaicProjectSections?: GreenPhotovoltaicProjectSectionData[];
+  greenSustainabilityJourneySection?: GreenSustainabilityJourneySectionData;
+};
 
 type Sustainability3ApiResponse = {
   data?: {
+    id?: number;
     slug: string;
+    language?: string;
     title: string;
     content?: string;
     is_active?: boolean;
     layout?: string;
+    company_id?: number;
     meta?: {
       breadcrumb_image?: { id?: number; filename?: string; url?: string };
       hero_title?: string;
@@ -62,8 +62,10 @@ type Sustainability3ApiResponse = {
       hero_description_footer?: string;
       project_items?: string;
       sustainability_journey_title?: string;
-      sustainability_journey_image?: string;
+      sustainability_journey_image?: { id?: number; filename?: string; url?: string };
       sustainability_journey_description?: string;
+      short_summary_image?: { id?: number; filename?: string; url?: string };
+      short_summary_description?: string;
     };
     seo?: Record<string, unknown>;
   };
@@ -91,27 +93,21 @@ function safeJsonParse<T>(value: string | undefined): T | null {
   }
 }
 
-type HeroItemsBlock = {
+function parseHeroItems(
+  raw: NonNullable<NonNullable<Sustainability3ApiResponse['data']>['meta']>['hero_items'],
+): {
   itration?: string[];
   image?: Array<{ id?: number; filename?: string; url?: string } | string>;
   title?: string[];
   description?: string[];
-};
-
-function parseHeroItems(
-  raw: NonNullable<NonNullable<Sustainability3ApiResponse['data']>['meta']>['hero_items'],
-): HeroItemsBlock | null {
+} | null {
   if (raw == null) return null;
-  if (typeof raw === 'string') {
-    return safeJsonParse<HeroItemsBlock>(raw);
-  }
-  if (typeof raw === 'object') {
-    return raw as HeroItemsBlock;
-  }
+  if (typeof raw === 'string') return safeJsonParse(raw);
+  if (typeof raw === 'object') return raw as typeof raw;
   return null;
 }
 
-function heroImageUrl(entry: { id?: number; filename?: string; url?: string } | string | undefined) {
+function heroImageUrl(entry: { id?: number; filename?: string; url?: string } | string | undefined): string | undefined {
   if (!entry) return undefined;
   if (typeof entry === 'string') return entry.trim() || undefined;
   return entry.url?.trim() || undefined;
@@ -120,6 +116,8 @@ function heroImageUrl(entry: { id?: number; filename?: string; url?: string } | 
 function hasHtmlTags(s: string): boolean {
   return /<[^>]+>/.test(s);
 }
+
+const ICON_MAP = ['globe', 'social', 'product', 'business'] as const;
 
 function parseHtmlDescriptionToBullets(
   html: string,
@@ -157,8 +155,6 @@ function parseHtmlDescriptionToBullets(
     .filter(Boolean) as Array<{ parts: Array<{ text: string; bold?: boolean }> }>;
 }
 
-const ICON_MAP = ['globe', 'social', 'product', 'business'] as const;
-
 export async function fetchSustainabilityLayout3Page(slug: string): Promise<{
   slug: string;
   title: string;
@@ -184,100 +180,72 @@ export async function fetchSustainabilityLayout3Page(slug: string): Promise<{
     const heroDescriptions = heroItems?.description || [];
     const heroImages = heroItems?.image || [];
 
-    const visionCards = heroTitles
-      .map((title, idx) => {
-        const rawTitle = (title || '').trim();
-        if (!rawTitle) return null;
+    const visionCards: GreenSustainabilityVisionCardData[] = [];
+    for (let idx = 0; idx < heroTitles.length; idx++) {
+      const rawTitle = (heroTitles[idx] || '').trim();
+      if (!rawTitle) continue;
 
-        const htmlDesc = (heroDescriptions[idx] || '').trim();
-        const iconImageUrl = heroImageUrl(heroImages[idx]);
-        const icon = ICON_MAP[idx] ?? 'globe';
-        const html = hasHtmlTags(htmlDesc);
+      const htmlDesc = (heroDescriptions[idx] || '').trim();
+      if (!htmlDesc) continue;
 
-        const bullets = html ? undefined : parseHtmlDescriptionToBullets(htmlDesc || rawTitle);
-        const descriptionHtml = html ? htmlDesc : undefined;
+      const iconImageUrl = heroImageUrl(heroImages[idx]);
+      const icon = ICON_MAP[idx] ?? 'globe';
+      const hasHtml = hasHtmlTags(htmlDesc);
 
-        if (!descriptionHtml && !bullets?.length) return null;
+      const bullets = hasHtml ? undefined : parseHtmlDescriptionToBullets(htmlDesc || rawTitle);
+      const descriptionHtml = hasHtml ? htmlDesc : undefined;
 
-        return {
-          id: `vision-card-${idx}`,
-          title: formatBoldText(rawTitle.toUpperCase()),
-          icon: icon as (typeof ICON_MAP)[number],
-          iconImageUrl,
-          descriptionHtml,
-          bullets,
-        };
-      })
-      .filter(Boolean) as GreenSustainabilityVisionSectionData['cards'];
+      if (!descriptionHtml && !bullets?.length) continue;
+
+      visionCards.push({
+        id: `vision-card-${idx}`,
+        title: formatBoldText(rawTitle.toUpperCase()),
+        icon: icon as (typeof ICON_MAP)[number],
+        iconImageUrl,
+        descriptionHtml,
+        bullets,
+      });
+    }
 
     const visionSection: GreenSustainabilityVisionSectionData | undefined = visionCards.length
       ? {
-          heading: formatBoldText(meta.hero_title || 'Lamipak Sustainability Vision'),
-          subtitle:
-            formatBoldText(meta.hero_description_intro || '') ||
-            'Bring Life To Packaging, Achieve Sustainability Across Every Dimension Of Our Business.',
+          heading: formatBoldText(meta.hero_title || data.title),
+          subtitle: formatBoldText(meta.hero_description_intro || ''),
           cards: visionCards,
           footerText: formatBoldText(stripHtml(meta.hero_description_footer || '')),
         }
       : undefined;
 
-    const parsedProjectItems = safeJsonParse<{ itration?: string[]; content?: string[] }>(
-      meta.project_items,
-    );
+    const parsedProjectItems = safeJsonParse<{ itration?: string[]; content?: string[] }>(meta.project_items);
     const projectHtmlItems = parsedProjectItems?.content?.filter(Boolean) || [];
 
     const photovoltaicSection: GreenPhotovoltaicProjectSectionData | undefined =
       projectHtmlItems.length ? { htmlItems: projectHtmlItems } : undefined;
 
-    const journeyImageId = meta.sustainability_journey_image;
-    let journeyImage = '/our_green_left_image.webp';
-    if (journeyImageId) {
-      const matchedImage = heroImages.find((img) => {
-        if (typeof img === 'string') return false;
-        return String(img.id) === String(journeyImageId);
-      });
-      if (matchedImage && typeof matchedImage === 'object' && matchedImage.url) {
-        journeyImage = matchedImage.url;
-      }
-    }
-
-    const journeyTitle = meta.sustainability_journey_title || '';
-    const journeyHeadingParts = journeyTitle.split(/\s+/);
-    const midPoint = Math.ceil(journeyHeadingParts.length / 2);
-    const headingLineBlue = journeyHeadingParts.slice(0, midPoint).join(' ');
-    const headingLineBlack = journeyHeadingParts.slice(midPoint).join(' ');
+    const journeyImageUrl = meta.sustainability_journey_image?.url;
+    const journeyTitle = meta.sustainability_journey_title || data.title;
 
     const journeySection: GreenSustainabilityJourneySectionData | undefined =
-      meta.sustainability_journey_description
+      meta.sustainability_journey_description && journeyImageUrl
         ? {
-            headingLineBlue,
-            headingLineBlack,
+            heading: formatBoldText(journeyTitle),
             body: formatBoldText(stripHtml(meta.sustainability_journey_description)),
-            image: journeyImage,
-            imageAlt: journeyTitle || 'Sustainability journey',
+            image: journeyImageUrl,
+            imageAlt: journeyTitle,
             backgroundColor: '#f8f9fa',
             accentColor: '#00AEEF',
           }
         : undefined;
 
-    const breadcrumbImage = meta.breadcrumb_image?.url || '/pick_cartoon_banner.webp';
-
     const pageData: GreenEffortsPageData = {
       title: data.title,
-      heroBackgroundImage: breadcrumbImage,
+      heroBackgroundImage: meta.breadcrumb_image?.url,
       greenSustainabilityVisionSection: visionSection,
-      greenPhotovoltaicProjectSections: photovoltaicSection
-        ? [photovoltaicSection]
-        : undefined,
+      greenPhotovoltaicProjectSections: photovoltaicSection ? [photovoltaicSection] : undefined,
       greenSustainabilityJourneySection: journeySection,
     };
 
-    return {
-      slug: data.slug,
-      title: data.title,
-      seo,
-      pageData,
-    };
+    return { slug: data.slug, title: data.title, seo, pageData };
   } catch {
     return null;
   }

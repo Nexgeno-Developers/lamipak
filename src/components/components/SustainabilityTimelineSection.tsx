@@ -33,10 +33,7 @@ export default function SustainabilityTimelineSection({ data }: SustainabilityTi
     <section style={{ backgroundColor: bg }}>
       <div className="container mx-auto px-4 ">
         <header className="mb-12 md:mb-16">
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-[2.5rem]">
-            <span style={{ color: accent }}>{data.headingBlue}</span>{' '}
-            <span className="text-black">{data.headingBlack}</span>
-          </h2>
+          <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-[2.5rem] text-black" dangerouslySetInnerHTML={{ __html: data.heading }} />
           <p className="mt-4 max-w-2xl text-base text-black md:text-lg">{data.subtitle}</p>
         </header>
 
@@ -53,7 +50,7 @@ export default function SustainabilityTimelineSection({ data }: SustainabilityTi
                 </div>
                 <div className="min-w-0 flex-1 pt-0.5">
                   <p className="text-sm font-medium text-black md:text-base">{item.year}</p>
-                  <h3 className="mt-1 text-lg font-bold text-black md:text-xl">{item.title}</h3>
+                  <h3 className="mt-1 text-lg font-bold text-black md:text-xl" dangerouslySetInnerHTML={{ __html: item.title }} />
                   <RichText
                     as="div"
                     html={item.description}

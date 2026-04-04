@@ -1,13 +1,6 @@
-export interface CertificationsAchievementsPageData {
-  title: string;
-  heroBackgroundImage: string;
-  breadcrumbDescription?: string;
-  certificationsGreenBuildingSection?: GreenBuildingCertificationsSectionData;
-  certificationsSustainabilityTimelineSection?: SustainabilityTimelineSectionData;
-  certificationsCertificateTilesSection?: CertificateTilesSectionData;
-}
+import { formatBoldText } from '@/lib/htmlText';
 
-export interface GreenBuildingCertificationsSectionData {
+export type GreenBuildingCertificationsSectionData = {
   eyebrow: string;
   heading: string;
   eyebrowColor?: string;
@@ -25,11 +18,10 @@ export interface GreenBuildingCertificationsSectionData {
     description: string;
     badgeImages?: Array<{ src: string; alt: string }>;
   }>;
-}
+};
 
-export interface SustainabilityTimelineSectionData {
-  headingBlue: string;
-  headingBlack: string;
+export type SustainabilityTimelineSectionData = {
+  heading: string;
   subtitle: string;
   accentColor?: string;
   backgroundColor?: string;
@@ -39,9 +31,9 @@ export interface SustainabilityTimelineSectionData {
     title: string;
     description: string;
   }>;
-}
+};
 
-export interface CertificateTilesSectionData {
+export type CertificateTilesSectionData = {
   items: Array<{
     id: string;
     href: string;
@@ -52,15 +44,27 @@ export interface CertificateTilesSectionData {
   linkColor?: string;
   iconColor?: string;
   sectionBackgroundColor?: string;
-}
+};
+
+export type CertificationsAchievementsPageData = {
+  title: string;
+  heroBackgroundImage?: string;
+  breadcrumbDescription?: string;
+  certificationsGreenBuildingSection?: GreenBuildingCertificationsSectionData;
+  certificationsSustainabilityTimelineSection?: SustainabilityTimelineSectionData;
+  certificationsCertificateTilesSection?: CertificateTilesSectionData;
+};
 
 type Sustainability4ApiResponse = {
   data?: {
+    id?: number;
     slug: string;
+    language?: string;
     title: string;
     content?: string;
     is_active?: boolean;
     layout?: string;
+    company_id?: number;
     meta?: {
       breadcrumb_image?: { id?: number; filename?: string; url?: string };
       breadcrumb_description?: string;
@@ -81,14 +85,14 @@ type Sustainability4ApiResponse = {
       };
       timeline_title?: string;
       timeline_description?: string;
-      timeline_items?: string;
+      timeline_items?: string | object;
       timeline_certificates?: { id?: number; filename?: string; url?: string };
+      short_summary_image?: { id?: number; filename?: string; url?: string };
+      short_summary_description?: string;
     };
     seo?: Record<string, unknown>;
   };
 };
-
-import { formatBoldText } from '@/lib/htmlText';
 
 function stripHtml(value?: string | null): string {
   if (!value) return '';
@@ -110,6 +114,13 @@ function safeJsonParse<T>(value: string | undefined): T | null {
   } catch {
     return null;
   }
+}
+
+function parseJsonOrObject<T>(value: string | object | undefined): T | null {
+  if (!value) return null;
+  if (typeof value === 'string') return safeJsonParse<T>(value);
+  if (typeof value === 'object') return value as T;
+  return null;
 }
 
 function parseLocationField(locationJson?: string): string {
@@ -143,12 +154,6 @@ function normalizeCertificates(
   return [];
 }
 
-function splitHeading(title: string): { blue: string; black: string } {
-  const parts = title.trim().split(/\s+/);
-  if (parts.length <= 1) return { blue: title.trim(), black: '' };
-  return { blue: parts[0], black: parts.slice(1).join(' ') };
-}
-
 export async function fetchSustainabilityLayout4Page(slug: string): Promise<{
   slug: string;
   title: string;
@@ -178,11 +183,9 @@ export async function fetchSustainabilityLayout4Page(slug: string): Promise<{
     const descriptions = heroItems?.description || [];
     const certificates = heroItems?.certificates || [];
 
-    const greenBuildingHeading = splitHeading(meta.hero_subtitle || 'Green Building Certifications');
-
     const greenBuildingCards = titles.map((factoryTitle, idx) => ({
       id: `cert-card-${idx}`,
-      image: images[idx]?.url || '/certificte_image_1.webp',
+      image: images[idx]?.url || '',
       imageAlt: factoryTitle,
       factoryTitle: formatBoldText(factoryTitle),
       location: formatBoldText(parseLocationField(locations[idx])),
@@ -195,8 +198,8 @@ export async function fetchSustainabilityLayout4Page(slug: string): Promise<{
     const greenBuildingSection: GreenBuildingCertificationsSectionData | undefined =
       greenBuildingCards.length
         ? {
-            eyebrow: formatBoldText(meta.hero_title || 'PROTECTING ENVIRONMENT'),
-            heading: formatBoldText(meta.hero_subtitle || 'Green Building Certifications'),
+            eyebrow: formatBoldText(meta.hero_title || data.title),
+            heading: formatBoldText(meta.hero_subtitle || data.title),
             eyebrowColor: '#00AEEF',
             headingGreenColor: '#009FE8',
             pillColor: '#009CFF',
@@ -205,7 +208,7 @@ export async function fetchSustainabilityLayout4Page(slug: string): Promise<{
           }
         : undefined;
 
-    const timelineParsed = safeJsonParse<{
+    const timelineParsed = parseJsonOrObject<{
       itration?: string[];
       year?: string[];
       title?: string[];
@@ -223,15 +226,10 @@ export async function fetchSustainabilityLayout4Page(slug: string): Promise<{
       description: formatBoldText(timelineDescriptions[idx] || ''),
     }));
 
-    const timelineHeading = splitHeading(
-      meta.timeline_title || 'Our Sustainability Timeline',
-    );
-
     const timelineSection: SustainabilityTimelineSectionData | undefined =
       timelineItems.length
         ? {
-            headingBlue: formatBoldText(`${timelineHeading.blue} `),
-            headingBlack: formatBoldText(timelineHeading.black),
+            heading: formatBoldText(meta.timeline_title || data.title),
             subtitle: formatBoldText(meta.timeline_description || ''),
             accentColor: '#00AEEF',
             backgroundColor: '#f8f9fa',
@@ -257,23 +255,16 @@ export async function fetchSustainabilityLayout4Page(slug: string): Promise<{
         }
       : undefined;
 
-    const breadcrumbImage = meta.breadcrumb_image?.url || '/pick_cartoon_banner.webp';
-
     const pageData: CertificationsAchievementsPageData = {
       title: data.title,
-      heroBackgroundImage: breadcrumbImage,
+      heroBackgroundImage: meta.breadcrumb_image?.url,
       breadcrumbDescription: meta.breadcrumb_description,
       certificationsGreenBuildingSection: greenBuildingSection,
       certificationsSustainabilityTimelineSection: timelineSection,
       certificationsCertificateTilesSection: tilesSection,
     };
 
-    return {
-      slug: data.slug,
-      title: data.title,
-      seo,
-      pageData,
-    };
+    return { slug: data.slug, title: data.title, seo, pageData };
   } catch {
     return null;
   }

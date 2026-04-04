@@ -29,8 +29,6 @@ export interface GreenBuildingCertificationsSectionProps {
 }
 
 export default function GreenBuildingCertificationsSection({ data }: GreenBuildingCertificationsSectionProps) {
-  const eyebrowColor = data.eyebrowColor ?? '#00AEEF';
-  const headingGreen = data.headingGreenColor ?? '#0D9B4E';
   const pillColor = data.pillColor ?? '#009CFF';
   const iconColor = data.iconCircleColor ?? '#00AEEF';
 
@@ -43,7 +41,7 @@ export default function GreenBuildingCertificationsSection({ data }: GreenBuildi
           >
             {data.eyebrow}
           </p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl" dangerouslySetInnerHTML={{ __html: data.heading }} />
+          <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl text-black" dangerouslySetInnerHTML={{ __html: data.heading }} />
         </header>
 
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
@@ -55,9 +53,11 @@ export default function GreenBuildingCertificationsSection({ data }: GreenBuildi
               {/* Height auto: remove forced aspect ratio + use normal <img>. */}
               <div className="w-full overflow-hidden p-3 md:p-4">
                 <div className="overflow-hidden rounded-[50px]">
-                  <img
+                  <Image
                     src={card.image}
                     alt={card.imageAlt}
+                    width={800}
+                    height={600}
                     className="block w-full h-auto object-cover"
                     loading="lazy"
                   />
@@ -70,8 +70,8 @@ export default function GreenBuildingCertificationsSection({ data }: GreenBuildi
                     <RibbonBadgeIcon className="h-11 w-11" color={iconColor} />
                   </div>
                   <div className="min-w-0 pt-0.5">
-                    <h3 className="text-lg font-bold text-black md:text-xl">{card.factoryTitle}</h3>
-                    <p className="text-sm text-gray-500 md:text-base">{card.location}</p>
+                    <h3 className="text-lg font-bold text-black md:text-xl" dangerouslySetInnerHTML={{ __html: card.factoryTitle }} />
+                    <p className="text-sm text-gray-500 md:text-base" dangerouslySetInnerHTML={{ __html: card.location }} />
                   </div>
                 </div>
 
@@ -79,9 +79,8 @@ export default function GreenBuildingCertificationsSection({ data }: GreenBuildi
                   <span
                     className="inline-flex rounded-full px-3.5 py-1 text-xs font-semibold text-white md:text-sm"
                     style={{ backgroundColor: pillColor }}
-                  >
-                    {card.certificationLabel}
-                  </span>
+                    dangerouslySetInnerHTML={{ __html: card.certificationLabel }}
+                  />
                   <span className="text-sm font-medium text-gray-500 md:text-base">{card.year}</span>
                 </div>
 
