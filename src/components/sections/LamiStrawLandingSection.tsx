@@ -86,23 +86,23 @@ function StrawCard({
           </h3>
 
           <p className="lg:mt-4 mt-2 text-sm md:text-base text-black leading-relaxed">
-        {card.description}
-      </p>
+            {card.description}
+          </p>
 
-      {card.href && (
-        <div className="mt-4">
-          <Link
-            href={card.href}
-            className="text-[#009FE8] text-xs md:text-sm font-semibold inline-flex items-center hover:opacity-80 transition-opacity"
-          >
-            {card.readMoreLabel}
-          </Link>
-        </div>
-      )}
+          {card.href && (
+            <div className="mt-4">
+              <Link
+                href={card.href}
+                className="text-[#009FE8] text-xs md:text-sm font-semibold inline-flex items-center hover:opacity-80 transition-opacity"
+              >
+                {card.readMoreLabel}
+              </Link>
+            </div>
+          )}
         </div>
       </div>
 
-      
+
     </div>
   );
 }
@@ -116,49 +116,52 @@ export function LamiStrawLandingSection({
 
   return (
     <>
-    <section className="bg-gray-50 py-10 md:py-20">
-      <div className="container mx-auto px-4">
-        <div className=" mx-auto text-center">
-          <p className="text-[#009FE8] text-xs md:text-sm font-semibold tracking-wider uppercase mb-5">
-            {data.eyebrow}
-          </p>
-          <h1 className="text-[22px] md:text-4xl font-bold text-black leading-tight">{data.title}</h1>
+      <section className="bg-gray-50 py-10 md:py-20">
+        <div className="container mx-auto px-4">
+          <div className=" mx-auto text-center">
+            <p className="text-[#009FE8] text-xs md:text-sm font-semibold tracking-wider uppercase mb-5">
+              {data.eyebrow}
+            </p>
+            <h1
+              className="text-[22px] md:text-4xl font-bold text-black leading-tight"
+              dangerouslySetInnerHTML={{ __html: data.title }}
+            />
 
-          <div className="mt-5 text-sm md:text-base text-black leading-relaxed space-y-4">
-            {data.descriptionLines.map((line, idx) => (
-              <p key={idx}>{line}</p>
-            ))}
+            <div className="mt-5 text-sm md:text-base text-black leading-relaxed space-y-4">
+              {data.descriptionLines.map((line, idx) => (
+                <p key={idx}>{line}</p>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-10 md:mt-14">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 mx-auto">
+              {data.cards.map((card) => (
+                <StrawCard key={card.id} card={card} />
+              ))}
+            </div>
           </div>
         </div>
+      </section>
 
-        <div className="mt-10 md:mt-14">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 mx-auto">
-            {data.cards.map((card) => (
-              <StrawCard key={card.id} card={card} />
-            ))}
-          </div>
-        </div>
+      <div className="pb-10 md:pb-24 pt-2 md:pt-4">
+        {videoUrl ? (
+          <VideoBanner
+            prefetchedData={{
+              title: '',
+              preTitle: '',
+              ctaText: '',
+              ctaLink: '',
+              videoUrl,
+            }}
+          />
+        ) : null}
       </div>
-    </section>
 
-<div className="pb-10 md:pb-24 pt-2 md:pt-4">
-{videoUrl ? (
-        <VideoBanner
-          prefetchedData={{
-            title: '',
-            preTitle: '',
-            ctaText: '',
-            ctaLink: '',
-            videoUrl,
-          }}
-        />
-      ) : null}
-</div>
-      
-      
 
-    <CallToAction />
-    <NewsletterSubscription />
+
+      <CallToAction />
+      <NewsletterSubscription />
     </>
   );
 }
