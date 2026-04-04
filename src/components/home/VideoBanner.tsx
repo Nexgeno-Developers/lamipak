@@ -43,9 +43,16 @@ function getYouTubeEmbedSrc(videoUrl: string): { id: string; src: string } | nul
   const id = parseYouTubeId(videoUrl);
   if (!id) return null;
 
-  // Keep it simple: use embed with autoplay on click.
+  // Modal / “full” playback: sound allowed when user opens modal (autoplay starts playback).
   const src = `https://www.youtube.com/embed/${id}?autoplay=1&controls=1&rel=0&playsinline=1`;
   return { id, src };
+}
+
+/** Muted autoplay loop for hero background (no controls, not clickable). */
+function getYouTubeBackgroundEmbedSrc(videoUrl: string): string | null {
+  const id = parseYouTubeId(videoUrl);
+  if (!id) return null;
+  return `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&controls=0&rel=0&playsinline=1&loop=1&playlist=${id}&modestbranding=1&iv_load_policy=3&disablekb=1`;
 }
 
 type YoutubeThumbQuality = 'maxresdefault' | 'sddefault' | 'hqdefault';
@@ -150,9 +157,26 @@ export default function VideoBanner({
   const backgroundInnerEl = (() => {
     if (!data.videoUrl) return <div className="w-full h-full bg-gray-800" />;
     if (youtube) {
+      const bgSrc = getYouTubeBackgroundEmbedSrc(data.videoUrl);
+      if (!bgSrc) {
+        return (
+          <div className="absolute inset-0">
+            <YouTubeThumbnailBackground key={data.videoUrl} videoUrl={data.videoUrl} />
+          </div>
+        );
+      }
       return (
-        <div className="absolute inset-0">
-          <YouTubeThumbnailBackground key={data.videoUrl} videoUrl={data.videoUrl} />
+        <div className="absolute inset-0 overflow-hidden bg-black">
+          {/* 16:9 iframe scaled to cover viewport (muted autoplay loop) */}
+          <iframe
+            key={bgSrc}
+            title="Background video"
+            src={bgSrc}
+            className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[100vw] min-w-[177.78vh] -translate-x-1/2 -translate-y-1/2 border-0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            loading="eager"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-black/45" aria-hidden />
         </div>
       );
     }
@@ -178,7 +202,7 @@ export default function VideoBanner({
     if (youtube) {
       return (
         <div
-          className="fixed inset-0 z-[100] bg-[#071426]/55 backdrop-blur-[4px] flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 p-4 backdrop-blur-[2px]"
           role="dialog"
           aria-modal="true"
         >

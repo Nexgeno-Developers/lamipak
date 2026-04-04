@@ -111,7 +111,7 @@ export default function VideoModalClient({
           role="dialog"
           aria-modal="true"
           aria-labelledby={titleId}
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-[#071426]/55 backdrop-blur-[4px]"
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/20 p-4 backdrop-blur-[2px]"
         >
           <button
             type="button"
