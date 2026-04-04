@@ -188,7 +188,8 @@ export async function fetcProductCategoryLayout3Page(slug: string) {
           {
             type: 'heroWithBreadcrumbs',
             data: {
-              title: meta.hero_title || data.title,
+              // Page `title` from API (e.g. "LamiStraw"); do not prefer meta.hero_title here so the banner matches the CMS title.
+              title: data.title,
               backgroundImage: meta.banner_images?.url || undefined,
               breadcrumbs: breadcrumbsForPage(data.slug, data.title),
             },
