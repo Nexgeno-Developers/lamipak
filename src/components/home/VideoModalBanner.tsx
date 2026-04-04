@@ -113,23 +113,28 @@ export default function VideoModalBanner({
             onClick={() => setIsOpen(false)}
             aria-label="Close video"
           />
-          <div className="relative w-full max-w-5xl">
-            <button
-              type="button"
-              onClick={() => setIsOpen(false)}
-              className="absolute -top-10 right-0 h-10 w-10 rounded-full bg-white/90 text-black flex items-center justify-center hover:bg-white transition-colors"
-              aria-label="Close video"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+          <div className="relative z-[101] flex w-full max-w-5xl flex-col gap-3">
+            <div className="flex justify-end">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsOpen(false);
+                }}
+                className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/35 bg-[#0E233C]/95 text-white shadow-[0_8px_30px_rgba(0,0,0,0.35)] backdrop-blur-sm transition hover:border-[#009FE8] hover:bg-[#009FE8]"
+                aria-label="Close video"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
 
             {youtubeSrc ? (
               <iframe
                 title="Video"
                 src={youtubeSrc}
-                className="w-full h-auto max-h-[80vh] bg-black rounded-[18px] border border-white/20 shadow-[0_20px_80px_rgba(0,0,0,0.45)]"
+                className="max-h-[80vh] w-full rounded-[18px] border border-white/20 bg-black shadow-[0_20px_80px_rgba(0,0,0,0.45)]"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />

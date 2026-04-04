@@ -212,33 +212,41 @@ export default function VideoBanner({
             onClick={() => setIsVideoPlaying(false)}
             aria-label="Close video"
           />
-          <div className="relative w-full max-w-5xl aspect-video bg-black rounded-[18px] overflow-hidden border border-white/20 shadow-[0_20px_80px_rgba(0,0,0,0.45)]">
-            <button
-              type="button"
-              onClick={() => setIsVideoPlaying(false)}
-              className="cursor-pointer z-10 absolute top-[10px] right-3 h-10 w-10 rounded-full bg-white/90 text-black flex items-center justify-center hover:bg-white transition-colors"
-              aria-label="Close video"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+          {/* Close sits above the player so it never overlaps YouTube’s own controls (settings, etc.) */}
+          <div className="relative z-[101] flex w-full max-w-5xl flex-col gap-3">
+            <div className="flex justify-end">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsVideoPlaying(false);
+                }}
+                className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/35 bg-[#0E233C]/95 text-white shadow-[0_8px_30px_rgba(0,0,0,0.35)] backdrop-blur-sm transition hover:border-[#009FE8] hover:bg-[#009FE8]"
+                aria-label="Close video"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
 
-            {!playerReady && (
-              <div className="absolute inset-0 z-[5] flex items-center justify-center bg-black/60">
-                <div className="h-10 w-10 rounded-full border-2 border-white/40 border-t-white animate-spin" />
-              </div>
-            )}
-            <iframe
-              src={youtube.src}
-              title="YouTube video"
-              className="absolute inset-0 w-full h-full"
-              allow="autoplay; encrypted-media; picture-in-picture"
-              allowFullScreen={true}
-              frameBorder={0}
-              loading="eager"
-              onLoad={() => setPlayerReady(true)}
-            ></iframe>
+            <div className="relative aspect-video w-full overflow-hidden rounded-[18px] border border-white/20 bg-black shadow-[0_20px_80px_rgba(0,0,0,0.45)]">
+              {!playerReady && (
+                <div className="absolute inset-0 z-[5] flex items-center justify-center bg-black/60">
+                  <div className="h-10 w-10 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                </div>
+              )}
+              <iframe
+                src={youtube.src}
+                title="YouTube video"
+                className="absolute inset-0 h-full w-full"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen={true}
+                frameBorder={0}
+                loading="eager"
+                onLoad={() => setPlayerReady(true)}
+              />
+            </div>
           </div>
         </div>
       );
