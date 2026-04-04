@@ -2,10 +2,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { OpticapLandingSectionData } from '@/lib/api/product_category_layout_5';
 import ConnectTechnicalExperts from '@/components/technical-services/ConnectTechnicalExperts';
-import { ProductCategoryVideoEmbed } from '@/components/sections/ProductCategoryVideoEmbed';
+import VideoBanner from '@/components/home/VideoBanner';
 import CallToAction from '../home/CallToAction';
 import NewsletterSubscription from '../home/NewsletterSubscription';
 import { RichText } from '@/components/common/RichText';
+import { formatBoldText } from '@/lib/htmlText';
+
 
 export function OpticapLandingSection({ data }: { data: OpticapLandingSectionData }) {
   const hasHtmlIntro = Boolean(data.descriptionHtml?.trim());
@@ -36,9 +38,8 @@ export function OpticapLandingSection({ data }: { data: OpticapLandingSectionDat
             </div>
 
             <div className="space-y-6">
-              <h2 className="text-[22px] sm:text-4xl md:text-5xl font-bold text-black leading-tight">
-                {data.title}
-              </h2>
+              <h2 className="text-[22px] sm:text-4xl md:text-5xl font-bold text-black leading-tight"
+                dangerouslySetInnerHTML={{ __html: formatBoldText(data.title) }} />
 
               {hasHtmlIntro ? (
                 <RichText
@@ -99,7 +100,15 @@ export function OpticapLandingSection({ data }: { data: OpticapLandingSectionDat
           
         </div>
 
-        {data.videoUrl ? <ProductCategoryVideoEmbed videoUrl={data.videoUrl} /> : null}
+        {data.videoUrl || data.homeVideoBanner ? (
+          <div className="mt-10 md:mt-16 w-full">
+            {data.videoUrl ? (
+              <VideoBanner videoUrl={data.videoUrl} />
+            ) : data.homeVideoBanner ? (
+              <VideoBanner prefetchedData={data.homeVideoBanner} />
+            ) : null}
+          </div>
+        ) : null}
 
         <div className="mt-10">
           <ConnectTechnicalExperts

@@ -6,6 +6,7 @@ import CallToAction from '../home/CallToAction';
 import NewsletterSubscription from '../home/NewsletterSubscription';
 import VideoBanner from '@/components/home/VideoBanner';
 import { cleanVideoUrlFromApi } from '@/lib/cleanVideoUrl';
+import { formatBoldText } from '@/lib/htmlText';
 
 function IconBase({ children }: { children: React.ReactNode }) {
   return (
@@ -122,7 +123,8 @@ export function LamiStrawLandingSection({
           <p className="text-[#009FE8] text-xs md:text-sm font-semibold tracking-wider uppercase mb-5">
             {data.eyebrow}
           </p>
-          <h1 className="text-[22px] md:text-4xl font-bold text-black leading-tight">{data.title}</h1>
+          <h1 className="text-[22px] md:text-4xl font-bold text-black leading-tight"
+            dangerouslySetInnerHTML={{ __html: formatBoldText(data.title) }} />
 
           <div className="mt-5 text-sm md:text-base text-black leading-relaxed space-y-4">
             {data.descriptionLines.map((line, idx) => (
