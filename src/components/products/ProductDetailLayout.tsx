@@ -109,8 +109,9 @@ export default function ProductDetailLayout({
 
         <ProductSpecifications product={product} />
 
-        <div className="container mx-auto px-4 pb-4 pt-4 md:pb-12 md:pt-8">
-          {productVideoUrl ? (
+        {productVideoUrl ? (
+          <div className="container mx-auto px-4 pb-4 pt-4 md:pb-12 md:pt-8">
+         
             <div className="overflow-hidden rounded-[50px]">
               <VideoBanner
                 prefetchedData={{
@@ -122,8 +123,9 @@ export default function ProductDetailLayout({
                 }}
               />
             </div>
-          ) : null}
+          
         </div>
+        ) : null}
 
         {product.productFeatures && product.productFeatures.length > 0 && (
           <ProductFeatures features={product.productFeatures} />
@@ -137,7 +139,11 @@ export default function ProductDetailLayout({
           currentProductSlug={product.slug}
           relatedProductCards={product.relatedProductCards}
         />
+
+        <div className="pb-4 md:pb-12">
         <TechnicalConsultationCTA data={product.technicalConsultation} />
+        </div>
+       
         <NewsletterSubscription />
       </main>
     </>
