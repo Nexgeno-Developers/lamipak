@@ -11,6 +11,7 @@ import {
   getProductData,
   type ProductData,
 } from '@/fake-api/products';
+import type { VideoBannerData } from '@/fake-api/homepage';
 
 export type PageBuilderMainCategory = string;
 export type PageBuilderSubCategory = string;
@@ -282,6 +283,8 @@ export type OpticapLandingSectionData = {
   /** CMS HTML for info_description. */
   productFeaturesDescriptionHtml?: string;
   videoUrl?: string;
+  /** Homepage `VideoBanner` payload when no CMS/env video URL. */
+  homeVideoBanner?: VideoBannerData;
   connectSection?: {
     heading: string;
     headingHighlight: string;

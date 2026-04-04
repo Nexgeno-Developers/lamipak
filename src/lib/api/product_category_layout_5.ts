@@ -58,6 +58,8 @@ export type OpticapLandingSectionData = {
   productFeaturesDescription: string;
   productFeaturesDescriptionHtml?: string;
   videoUrl?: string;
+  /** When no CMS/env `videoUrl`, same block as home (`VideoBanner` + homepage copy). */
+  homeVideoBanner?: VideoBannerData;
   connectSection?: {
     heading: string;
     headingHighlight: string;
@@ -69,6 +71,8 @@ export type OpticapLandingSectionData = {
 
 import { formatBoldText } from '@/lib/htmlText';
 import { breadcrumbsFromSlugPath } from '@/lib/breadcrumbsFromSlugPath';
+import { fetchHomepageData } from '@/lib/api/home';
+import type { VideoBannerData } from '@/fake-api/homepage';
 
 function stripHtml(value?: string) {
   if (!value) return '';
@@ -109,6 +113,9 @@ export async function fetcProductCategoryLayout5Page(slug: string) {
     }
 
     const meta = data.meta || {};
+    /** Top hero banner always uses the page `title` from the API (e.g. "Waterpak"). */
+    const bannerTitle = formatBoldText(stripHtml(data.title) || data.title);
+    /** Inner Opticap column headline: optional `meta.hero_title`, else page title. */
     const heroTitle = formatBoldText(meta.hero_title || data.title);
     const heroSubtitle = formatBoldText(meta.hero_subtitle || '');
     const heroDescriptionHtml = meta.hero_description?.trim() || '';
@@ -130,10 +137,17 @@ export async function fetcProductCategoryLayout5Page(slug: string) {
       ? []
       : [heroDescriptionPlain || formatBoldText(meta.short_summary_description || '')].filter(Boolean);
 
-    const videoUrl =
+    const cmsOrEnvVideo =
       meta.video_url?.trim() ||
       process.env.NEXT_PUBLIC_PRODUCT_CATEGORY_VIDEO_URL?.trim() ||
       undefined;
+
+    const homepageData = await fetchHomepageData();
+    const videoUrl = cmsOrEnvVideo || undefined;
+    const homeVideoBanner: VideoBannerData | undefined =
+      !cmsOrEnvVideo && homepageData.videoBanner?.videoUrl
+        ? homepageData.videoBanner
+        : undefined;
 
     return {
       slug: data.slug,
@@ -147,9 +161,9 @@ export async function fetcProductCategoryLayout5Page(slug: string) {
           {
             type: 'heroWithBreadcrumbs',
             data: {
-              title: heroTitle,
+              title: bannerTitle,
               backgroundImage: topBackgroundUrl,
-              breadcrumbs: breadcrumbsFromSlugPath(slug, data.title),
+              breadcrumbs: breadcrumbsFromSlugPath(slug, stripHtml(data.title) || data.title),
             },
           },
           {
@@ -166,6 +180,7 @@ export async function fetcProductCategoryLayout5Page(slug: string) {
               productFeaturesDescription: stripHtml(meta.info_description) || '',
               productFeaturesDescriptionHtml: infoDescriptionHtml || undefined,
               videoUrl,
+              homeVideoBanner,
             },
           },
         ],

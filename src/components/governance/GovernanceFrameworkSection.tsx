@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { RichText } from '@/components/common/RichText';
 import Link from 'next/link';
 import Image from 'next/image';
+import { formatBoldText } from '@/lib/htmlText';
 
 export type GovernanceFrameworkIconId =
   | 'framework'
@@ -152,9 +153,8 @@ export default function GovernanceFrameworkSection({
               {data.eyebrow}
             </div>
 
-            <h2 className="mt-3 text-[24px] md:text-5xl font-bold text-black leading-tight">
-              {data.title}
-            </h2>
+            <h2 className="mt-3 text-[24px] md:text-5xl font-bold text-black leading-tight" dangerouslySetInnerHTML={{ __html: formatBoldText(data.title) }} />
+          
 
             <RichText
               as="div"

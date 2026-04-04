@@ -1,3 +1,4 @@
+import { formatBoldText } from '@/lib/htmlText';
 export type GovernanceWhistleblowingSectionData = {
   layout: 'whistleblowing';
   eyebrow: string;
@@ -19,10 +20,8 @@ export default function GovernanceWhistleblowingSection({
             {data.eyebrow}
           </div>
 
-          <h2 className="mt-3 md:mt-4 text-[24px] md:text-5xl font-bold leading-tight">
-            
-            <span className="text-black">{data.title}</span>
-          </h2>
+          <h2 className="mt-3 md:mt-4 text-[24px] md:text-5xl font-bold leading-tight"
+              dangerouslySetInnerHTML={{ __html: formatBoldText(data.title) }} />
 
           <div className="mt-4 md:mt-5 text-black leading-relaxed text-[14px] md:text-base space-y-4">
             {data.paragraphs.map((p) => (

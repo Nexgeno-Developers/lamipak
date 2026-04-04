@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-
+import { formatBoldText } from '@/lib/htmlText';
 export type GovernanceSecurityTrustIconId =
   | 'confidentiality'
   | 'integrity'
@@ -103,12 +103,12 @@ export default function GovernanceSecurityTrustSection({
       <div className="container mx-auto px-4">
         <div className="">
           <div className="text-[#009FE8] font-semibold text-sm md:text-base">
-            {data.eyebrow}
+          {data.title}
           </div>
 
-          <h2 className="mt-2 text-[24px] md:text-5xl font-bold leading-tight">
-            <span className="text-black">{data.title}</span>
-          </h2>
+          <h2 className="mt-2 text-[24px] md:text-5xl font-bold leading-tight"
+          dangerouslySetInnerHTML={{ __html: formatBoldText(data.eyebrow) }} />
+       
 
           <div className="mt-6 grid grid-cols-1 lg:grid-cols-[48%_52%] gap-8 items-start">
             <div className="space-y-4 text-black">

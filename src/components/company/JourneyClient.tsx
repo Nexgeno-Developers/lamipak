@@ -40,7 +40,7 @@ export default function JourneyClient({ data }: JourneyClientProps) {
       <div className="container mx-auto px-4">
         {/* Section Title */}
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-[24px] md:text-4xl lg:text-5xl font-bold text-black" dangerouslySetInnerHTML={{ __html: data.title }} />
+          <h2 className="text-[24px] md:text-4xl lg:text-5xl font-bold text-black" dangerouslySetInnerHTML={{ __html: formatBoldText(data.title) }} />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-8 lg:gap-12 items-start">
