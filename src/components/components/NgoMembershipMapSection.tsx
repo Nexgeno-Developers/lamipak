@@ -17,10 +17,7 @@ export default function NgoMembershipMapSection({ data }: NgoMembershipMapSectio
   return (
     <section className="py-14 md:pt-20 md:pb-12 bg-gray-50">
       <div className="container mx-auto px-4 ">
-        <h2 className="mb-10 text-center text-3xl font-bold tracking-tight md:mb-14 md:text-4xl lg:text-5xl">
-          <span style={{ color: accent }}>{data.headingBlue}</span>{' '}
-          <span className="text-black">{data.headingBlack}</span>
-        </h2>
+        <h2 className="mb-10 text-center text-3xl font-bold tracking-tight md:mb-14 md:text-4xl lg:text-5xl" dangerouslySetInnerHTML={{ __html: data.heading }} />
 
         <div>
           <Image

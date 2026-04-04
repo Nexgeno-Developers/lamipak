@@ -1,54 +1,54 @@
-export interface NgosPageData {
-  title: string;
-  heroBackgroundImage: string;
-  breadcrumbDescription?: string;
-  ngosMembershipMapSection?: NgoMembershipMapSectionData;
-  ngosAllianceCardsSection?: NgoAllianceCardsSectionData;
-  ngosCircularFutureSection?: NgoCircularFutureSectionData;
-}
+import { formatBoldText } from '@/lib/htmlText';
 
-export interface NgoMembershipMapSectionData {
-  headingBlue: string;
-  headingBlack: string;
-  /** CMS `meta.membership_map.url` */
+export type NgoMembershipMapSectionData = {
+  heading: string;
   mapImage?: string;
   mapImageAlt?: string;
   accentColor?: string;
   leaderLineColor?: string;
   dotColor?: string;
   sectionBackgroundColor?: string;
-}
+};
 
-export interface NgoAllianceCardsSectionData {
-  headingBlue: string;
-  headingBlack: string;
+export type NgoAllianceCardsSectionData = {
+  heading: string;
   accentColor?: string;
   cards: Array<{
     id: string;
     html: string;
   }>;
-}
+};
 
-export interface NgoCircularFutureSectionData {
-  heroHeadingBlue: string;
-  heroHeadingBlack: string;
+export type NgoCircularFutureSectionData = {
+  heroHeading: string;
   heroIntro: string;
-  featureHeadingBlack: string;
-  featureHeadingBlue: string;
+  featureHeading: string;
   featureBody: string;
   image: string;
   imageAlt: string;
   accentColor?: string;
   backgroundColor?: string;
-}
+};
+
+export type NgosPageData = {
+  title: string;
+  heroBackgroundImage?: string;
+  breadcrumbDescription?: string;
+  ngosMembershipMapSection?: NgoMembershipMapSectionData;
+  ngosAllianceCardsSection?: NgoAllianceCardsSectionData;
+  ngosCircularFutureSection?: NgoCircularFutureSectionData;
+};
 
 type Sustainability5ApiResponse = {
   data?: {
+    id?: number;
     slug: string;
+    language?: string;
     title: string;
     content?: string;
     is_active?: boolean;
     layout?: string;
+    company_id?: number;
     meta?: {
       breadcrumb_image?: { id?: number; filename?: string; url?: string };
       breadcrumb_description?: string;
@@ -67,8 +67,6 @@ type Sustainability5ApiResponse = {
   };
 };
 
-import { formatBoldText } from '@/lib/htmlText';
-
 function stripHtml(value?: string | null): string {
   if (!value) return '';
   return value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -80,12 +78,6 @@ function buildPageApiPath(slug: string) {
     .filter(Boolean)
     .map((part) => encodeURIComponent(part))
     .join('/');
-}
-
-function splitHeading(title: string): { blue: string; black: string } {
-  const parts = title.trim().split(/\s+/);
-  if (parts.length <= 1) return { blue: title.trim(), black: '' };
-  return { blue: parts[0], black: parts.slice(1).join(' ') };
 }
 
 export async function fetchSustainabilityLayout5Page(slug: string): Promise<{
@@ -108,32 +100,25 @@ export async function fetchSustainabilityLayout5Page(slug: string): Promise<{
     const meta = data.meta || {};
     const seo = (data.seo || {}) as Record<string, unknown>;
 
-    const membershipHeading = splitHeading(
-      meta.membership_title || 'NGO Membership Of Lamipak',
-    );
-
     const allianceCardBlocks = [
       meta.membership_block_1,
       meta.membership_block_2,
       meta.membership_block_3,
     ].filter(Boolean) as string[];
 
-    const membershipMapSection: NgoMembershipMapSectionData = {
-      headingBlue: formatBoldText(membershipHeading.blue || ''),
-      headingBlack: formatBoldText(membershipHeading.black || ''),
-      mapImage: meta.membership_map?.url || '/ngo_image.webp',
-      mapImageAlt:
-        formatBoldText(meta.membership_map?.filename?.replace(/[-_]+/g, ' ').trim() || '') ||
-        formatBoldText(meta.membership_title || '') ||
-        'NGO membership map',
-      accentColor: '#00AEEF',
-    };
+    const membershipMapSection: NgoMembershipMapSectionData | undefined = meta.membership_title
+      ? {
+          heading: formatBoldText(meta.membership_title),
+          mapImage: meta.membership_map?.url,
+          mapImageAlt: meta.membership_map?.filename?.replace(/[-_]+/g, ' ').trim() || meta.membership_title,
+          accentColor: '#00AEEF',
+        }
+      : undefined;
 
     const allianceCardsSection: NgoAllianceCardsSectionData | undefined =
-      allianceCardBlocks.length
+      allianceCardBlocks.length && meta.membership_title
         ? {
-            headingBlue: formatBoldText(membershipHeading.blue),
-            headingBlack: formatBoldText(membershipHeading.black),
+            heading: formatBoldText(meta.membership_title),
             accentColor: '#00AEEF',
             cards: allianceCardBlocks.map((html, idx) => ({
               id: `alliance-card-${idx}`,
@@ -142,44 +127,29 @@ export async function fetchSustainabilityLayout5Page(slug: string): Promise<{
           }
         : undefined;
 
-    const circularFutureTitle = meta.circular_future_title || '';
-    const circularHeading = splitHeading(circularFutureTitle);
-    const communityTitle = meta.community_title || '';
-    const communityParts = communityTitle.split(/\s+/);
-    const communityMid = Math.ceil(communityParts.length / 2);
-
     const circularFutureSection: NgoCircularFutureSectionData | undefined =
-      meta.circular_future_description || meta.community_description
+      (meta.circular_future_description || meta.community_description) && meta.circular_future_title
         ? {
-            heroHeadingBlue: circularHeading.blue,
-            heroHeadingBlack: circularHeading.black,
+            heroHeading: formatBoldText(meta.circular_future_title),
             heroIntro: formatBoldText(stripHtml(meta.circular_future_description)),
-            featureHeadingBlack: formatBoldText(communityParts.slice(0, communityMid).join(' ')),
-            featureHeadingBlue: formatBoldText(communityParts.slice(communityMid).join(' ')),
+            featureHeading: formatBoldText(meta.community_title || ''),
             featureBody: formatBoldText(stripHtml(meta.community_description)),
-            image: meta.community_image?.url || '/our_green_left_image.webp',
-            imageAlt: communityTitle || 'People & Community',
+            image: meta.community_image?.url || '',
+            imageAlt: meta.community_title || meta.circular_future_title,
             accentColor: '#00AEEF',
           }
         : undefined;
 
-    const breadcrumbImage = meta.breadcrumb_image?.url || '/pick_cartoon_banner.webp';
-
     const pageData: NgosPageData = {
       title: data.title,
-      heroBackgroundImage: breadcrumbImage,
+      heroBackgroundImage: meta.breadcrumb_image?.url,
       breadcrumbDescription: meta.breadcrumb_description,
       ngosMembershipMapSection: membershipMapSection,
       ngosAllianceCardsSection: allianceCardsSection,
       ngosCircularFutureSection: circularFutureSection,
     };
 
-    return {
-      slug: data.slug,
-      title: data.title,
-      seo,
-      pageData,
-    };
+    return { slug: data.slug, title: data.title, seo, pageData };
   } catch {
     return null;
   }
