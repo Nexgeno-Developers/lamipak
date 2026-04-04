@@ -8,8 +8,6 @@ export interface NgoCircularFutureSectionProps {
 }
 
 export default function NgoCircularFutureSection({ data }: NgoCircularFutureSectionProps) {
-  const accent = data.accentColor ?? '#00AEEF';
-  const bg = data.backgroundColor ?? '#f9f9f9';
 
   return (
     <section className="py-16 md:py-12 bg-gray-50">
