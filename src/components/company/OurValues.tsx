@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import type { OurValuesSection } from '@/fake-api/company';
 import { RichText } from '@/components/common/RichText';
+import { formatBoldText } from '@/lib/htmlText';
 
 interface OurValuesProps {
   data: OurValuesSection;
@@ -29,9 +30,9 @@ export default function OurValues({ data }: OurValuesProps) {
       <div className="container mx-auto px-4">
         {/* Heading */}
         <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold text-[#009FE8] mb-4">
-            {data.heading}
-          </h2>
+          <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold text-black mb-4"
+            dangerouslySetInnerHTML={{ __html: formatBoldText(data.heading) }} />
+          
           <RichText
             as="div"
             html={data.description}

@@ -16,6 +16,7 @@ export type GovernanceGrcSectionData = {
 };
 
 import Image from 'next/image';
+import { formatBoldText } from '@/lib/htmlText';
 
 function renderIcon(iconId: GovernanceGrcIconId, iconUrl?: string) {
   if (iconUrl) {
@@ -130,13 +131,11 @@ export default function GovernanceGrcSection({
       <div className="container mx-auto px-4">
         <div className="">
           <div className="text-[#009FE8] font-semibold text-sm md:text-base">
-            {resolved.eyebrow}
+           {resolved.title}
           </div>
 
-          <h2 className="mt-3 text-[24px] md:text-5xl font-bold text-black leading-tight">
-            {resolved.title}
-          </h2>
-
+          <h2 className="mt-3 text-[24px] md:text-5xl font-bold text-black leading-tight" dangerouslySetInnerHTML={{ __html: formatBoldText(resolved.eyebrow) }} />
+          
           <p className="mt-4 md:mt-6 text-[14px] md:text-base text-black leading-relaxed">
             {resolved.description}
           </p>

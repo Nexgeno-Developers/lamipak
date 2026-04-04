@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { formatBoldText } from '@/lib/htmlText';
 
 export type GovernanceCenterPanelDetailSectionData = {
   layout: 'centerPanel';
@@ -23,12 +24,12 @@ export default function GovernanceDetailSection({
       <div className="container mx-auto px-4">
         <div className="">
           <div className="text-[#009FE8] font-semibold text-sm md:text-base">
-            {data.eyebrow}
+          Ethical standards
           </div>
 
-          <h2 className="mt-2 text-[24px] md:text-5xl font-bold text-black leading-tight">
-            {data.title}
-          </h2>
+          <h2 className="mt-2 text-[24px] md:text-5xl font-bold text-black leading-tight" 
+           dangerouslySetInnerHTML={{ __html: formatBoldText(data.title) }} />
+          
         </div>
       </div>
     </section>
