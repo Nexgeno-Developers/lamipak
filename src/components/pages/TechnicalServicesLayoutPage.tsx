@@ -99,7 +99,7 @@ export default async function TechnicalServicesLayoutPage({
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-center">
             <div className="pr-[40px]">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-6" dangerouslySetInnerHTML={{ __html: data.introSection.heading }} />
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-6" dangerouslySetInnerHTML={{ __html: formatBoldText(data.introSection.heading) }} />
               {data.introSection.paragraphs.map((paragraph, index) => (
                 <p
                   key={index}
@@ -132,7 +132,7 @@ export default async function TechnicalServicesLayoutPage({
         <section className="bg-gray-50 py-4 md:py-8 lg:py-12">
           <div className="bg-[#EDF0F1] rounded-[50px] p-8 md:p-12 lg:p-16  container mx-auto px-4">
             <div className="text-center mb-8 md:mb-12">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black" dangerouslySetInnerHTML={{ __html: data.upgradeSection.heading }} />
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black lg:leading-[65px]" dangerouslySetInnerHTML={{ __html: formatBoldText(data.upgradeSection.heading) }} />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
@@ -210,7 +210,8 @@ export default async function TechnicalServicesLayoutPage({
         <section className="bg-gray-50 py-4 md:py-8 lg:pt-12">
           <div className="container mx-auto px-4">
             <div className="bg-white rounded-[50px] p-6 md:p-16 lg:p-20">
-              <h2 className="text-center text-3xl md:text-4xl lg:text-5xl font-bold mb-8 md:mb-10" dangerouslySetInnerHTML={{ __html: data.serviceDifferentiation.heading }} />
+              <h2 className="text-center text-3xl md:text-4xl lg:text-5xl font-bold mb-8 md:mb-10" dangerouslySetInnerHTML={{ __html: formatBoldText(data.serviceDifferentiation.heading) }} />
+              
 
               <div className="overflow-x-auto">
                 <div className="min-w-[940px] grid grid-cols-[170px_1fr_1fr_1fr] gap-4 items-stretch">
@@ -290,7 +291,7 @@ export default async function TechnicalServicesLayoutPage({
         <section className="bg-gray-50 py-4 md:py-8 lg:py-12">
           <div className="container mx-auto px-4">
             <div className="text-center mb-8 md:mb-12">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black" dangerouslySetInnerHTML={{ __html: data.operationalSuccess.heading }} />
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black" dangerouslySetInnerHTML={{ __html: formatBoldText(data.operationalSuccess.heading) }} />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
