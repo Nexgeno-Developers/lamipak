@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import type { GreenSustainabilityJourneySectionData } from '@/lib/api/sustainability_layout_3';
+import { formatBoldText } from '@/lib/htmlText';
 
 type SectionData = GreenSustainabilityJourneySectionData;
 
@@ -9,19 +10,14 @@ export interface GreenSustainabilityJourneySectionProps {
 
 export default function GreenSustainabilityJourneySection({ data }: GreenSustainabilityJourneySectionProps) {
   const bg = data.backgroundColor ?? '#f8f9fa';
-  const accent = data.accentColor ?? '#00AEEF';
 
   return (
     <section className="py-8 lg:py-12" style={{ backgroundColor: bg }}>
       <div className="container mx-auto px-4">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14 xl:gap-16">
           <div>
-            <h2 className="text-3xl font-bold leading-tight tracking-tight md:text-4xl lg:text-5xl">
-              <span className="block" style={{ color: accent }}>
-                {data.headingLineBlue}
-              </span>
-              <span className="mt-1 block font-bold text-black">{data.headingLineBlack}</span>
-            </h2>
+            <h2 className="text-3xl font-bold leading-tight tracking-tight md:text-4xl lg:text-5xl text-black" dangerouslySetInnerHTML={{ __html: formatBoldText(data.heading) }} />
+
             <p className="mt-8 max-w-xl text-base leading-relaxed text-black md:mt-10 md:text-lg">
               {data.body}
             </p>
