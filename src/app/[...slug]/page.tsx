@@ -68,6 +68,10 @@ import { fetchPilotPlantLayoutPage } from '@/lib/api/pilot_plant_layout';
 import PilotPlantLayoutPage from '@/components/pages/PilotPlantLayoutPage';
 import { fetchInnovationsLayoutPage } from '@/lib/api/innovations_layout';
 import InnovationsLayoutPage from '@/components/pages/InnovationsLayoutPage';
+import { fetchInsightsHubPage } from '@/lib/api/insights_layout';
+import { fetchInsightsListingPage } from '@/lib/api/insights_listing_layout';
+import InsightsHubPage from '@/components/pages/InsightsHubPage';
+import InsightsListingPage from '@/components/pages/InsightsListingPage';
 
 import {
   getDynamicPageBySlug,
@@ -129,6 +133,24 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       slug: innovationsLayout.slug,
       title: innovationsLayout.title,
       seo: innovationsLayout.seo || {},
+    });
+  }
+
+  const insightsListing = await fetchInsightsListingPage(fullSlug);
+  if (insightsListing) {
+    return buildApiMetadata({
+      slug: insightsListing.slug,
+      title: insightsListing.title,
+      seo: insightsListing.seo || {},
+    });
+  }
+
+  const insightsHub = await fetchInsightsHubPage(fullSlug);
+  if (insightsHub) {
+    return buildApiMetadata({
+      slug: insightsHub.slug,
+      title: insightsHub.title,
+      seo: insightsHub.seo || {},
     });
   }
 
@@ -570,6 +592,16 @@ export default async function DynamicPage({ params }: PageProps) {
   const innovationsLayout = await fetchInnovationsLayoutPage(fullSlug);
   if (innovationsLayout) {
     return <InnovationsLayoutPage data={innovationsLayout.page} />;
+  }
+
+  const insightsListing = await fetchInsightsListingPage(fullSlug);
+  if (insightsListing) {
+    return <InsightsListingPage data={insightsListing.page} />;
+  }
+
+  const insightsHub = await fetchInsightsHubPage(fullSlug);
+  if (insightsHub) {
+    return <InsightsHubPage data={insightsHub.page} />;
   }
 
   const rAndDCentreLayout = await fetchRAndDCentreLayoutPage(fullSlug);
