@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { ProductCategoryVideoEmbed } from '@/components/sections/ProductCategoryVideoEmbed';
+import VideoBanner from '@/components/home/VideoBanner';
 import CallToAction from '../home/CallToAction';
 import NewsletterSubscription from '../home/NewsletterSubscription';
 import { RichText } from '@/components/common/RichText';
+import { cleanVideoUrlFromApi } from '@/lib/cleanVideoUrl';
 
 type RollFedCatalogProduct = {
   id: string;
@@ -75,30 +76,42 @@ function ProductGrid({
 }
 
 export function RollFedCatalogSection({ data }: { data: RollFedCatalogSectionPropsData }) {
+  const videoUrl = cleanVideoUrlFromApi(data.videoUrl);
+
   return (
     <>
-    <section className="bg-gray-50 py-10 md:py-14">
-      <div className="container mx-auto px-4">
-      <p className="text-[#009FE8] text-xs md:text-sm font-semibold text-center tracking-wider uppercase mb-5">
-        {data.eyebrow}
-      </p>
-        <div className="text-center text-black text-sm md:text-base leading-relaxed mx-auto">
-          <RichText html={data.intro} />
+      <section className="bg-gray-50 py-10 md:py-14">
+        <div className="container mx-auto px-4">
+          <p className="text-[#009FE8] text-xs md:text-sm font-semibold text-center tracking-wider uppercase mb-5">
+            {data.eyebrow}
+          </p>
+          <div className="text-center text-black text-sm md:text-base leading-relaxed mx-auto">
+            <RichText html={data.intro} />
+          </div>
+
+          <ProductGrid title={data.standardTitle} products={data.standardProducts} />
+          {data.premiumTitle && data.premiumProducts.length > 0 && (
+            <ProductGrid title={data.premiumTitle} products={data.premiumProducts} />
+          )}
         </div>
+      </section>
+<div className="pb-10 md:pb-24 md:pt-8 pt-4">
+{videoUrl ? (
+        <VideoBanner
+          prefetchedData={{
+            title: '',
+            preTitle: '',
+            ctaText: '',
+            ctaLink: '',
+            videoUrl,
+          }}
+        />
+      ) : null}
+</div>
+      
 
-
-        <ProductGrid title={data.standardTitle} products={data.standardProducts} />
-        {data.premiumTitle && data.premiumProducts.length > 0 && (
-          <ProductGrid title={data.premiumTitle} products={data.premiumProducts} />
-        )}
-      </div>
-
-    {data.videoUrl ? <ProductCategoryVideoEmbed videoUrl={data.videoUrl} /> : null}
-
-    </section>
-
-    <CallToAction />
-    <NewsletterSubscription />
+      <CallToAction />
+      <NewsletterSubscription />
     </>
   );
 }

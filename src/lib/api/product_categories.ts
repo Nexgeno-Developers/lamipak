@@ -1,5 +1,6 @@
 import { formatBoldText } from '@/lib/htmlText';
 import { breadcrumbsFromSlugPath } from '@/lib/breadcrumbsFromSlugPath';
+import { cleanVideoUrlFromApi } from '@/lib/cleanVideoUrl';
 
 type ProductCategoryItem = {
   id: number;
@@ -40,18 +41,6 @@ type ProductCategoriesApiResponse = {
     };
   };
 };
-
-function cleanVideoUrlFromApi(url: string | undefined): string | null {
-  const trimmed = url?.trim();
-  if (!trimmed) return null;
-  try {
-    const u = new URL(trimmed);
-    u.searchParams.delete('themeRefresh');
-    return u.toString();
-  } catch {
-    return trimmed.replace(/[&?]themeRefresh=\d+/i, '').replace(/\?$/, '') || null;
-  }
-}
 
 export async function fetchProductCategoriesPage(slug: string) {
   const baseUrl = process.env.COMPANY_API_BASE_URL;

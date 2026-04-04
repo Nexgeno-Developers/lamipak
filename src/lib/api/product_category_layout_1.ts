@@ -40,6 +40,7 @@ type ProductCategoryLayout1ApiResponse = {
 
 import { formatBoldText } from '@/lib/htmlText';
 import { breadcrumbsFromSlugPath } from '@/lib/breadcrumbsFromSlugPath';
+import { cleanVideoUrlFromApi } from '@/lib/cleanVideoUrl';
 
 function stripHtml(value?: string) {
   if (!value) return '';
@@ -78,6 +79,7 @@ export async function fetcProductCategoryLayout1Page(slug: string) {
     const premium = toArray(data.autofetch?.premium_products);
 
     const intro = formatBoldText(stripHtml(data.meta?.about_description) || stripHtml(data.title));
+    const videoUrl = cleanVideoUrlFromApi(data.meta?.video_url) || undefined;
 
     return {
       slug: data.slug,
@@ -101,7 +103,7 @@ export async function fetcProductCategoryLayout1Page(slug: string) {
             data: {
               eyebrow: formatBoldText(data.title),
               intro,
-              videoUrl: data.meta?.video_url || undefined,
+              videoUrl,
               standardTitle: formatBoldText('Standard Products'),
               standardProducts: standard.map((p) => ({
                 id: String(p.id),
