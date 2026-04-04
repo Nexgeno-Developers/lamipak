@@ -166,7 +166,7 @@ const DEFAULT_HUB: InsightsHubData = {
       ),
       image: PLACEHOLDER_IMG,
       imageAlt: 'Aseptic packaging line',
-      href: '/insights/articles#future-aseptic',
+      href: '/insights/articles/future-of-aseptic',
     },
     {
       id: 'a2',
@@ -176,7 +176,7 @@ const DEFAULT_HUB: InsightsHubData = {
       ),
       image: PLACEHOLDER_IMG,
       imageAlt: 'Sustainable cartons',
-      href: '/insights/articles#sustainability-carton',
+      href: '/insights/articles/sustainability-carton',
     },
     {
       id: 'a3',
@@ -186,7 +186,7 @@ const DEFAULT_HUB: InsightsHubData = {
       ),
       image: PLACEHOLDER_IMG,
       imageAlt: 'Filling line',
-      href: '/insights/articles#filling-line',
+      href: '/insights/articles/filling-line',
     },
   ],
   webinars: [

@@ -70,8 +70,10 @@ import { fetchInnovationsLayoutPage } from '@/lib/api/innovations_layout';
 import InnovationsLayoutPage from '@/components/pages/InnovationsLayoutPage';
 import { fetchInsightsHubPage } from '@/lib/api/insights_layout';
 import { fetchInsightsListingPage } from '@/lib/api/insights_listing_layout';
+import { fetchInsightsArticleDetailPage } from '@/lib/api/insights_article_detail_layout';
 import InsightsHubPage from '@/components/pages/InsightsHubPage';
 import InsightsListingPage from '@/components/pages/InsightsListingPage';
+import InsightsArticleDetailPage from '@/components/pages/InsightsArticleDetailPage';
 
 import {
   getDynamicPageBySlug,
@@ -133,6 +135,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       slug: innovationsLayout.slug,
       title: innovationsLayout.title,
       seo: innovationsLayout.seo || {},
+    });
+  }
+
+  const insightsArticleDetail = await fetchInsightsArticleDetailPage(fullSlug);
+  if (insightsArticleDetail) {
+    return buildApiMetadata({
+      slug: insightsArticleDetail.slug,
+      title: insightsArticleDetail.title,
+      seo: insightsArticleDetail.seo || {},
     });
   }
 
@@ -592,6 +603,11 @@ export default async function DynamicPage({ params }: PageProps) {
   const innovationsLayout = await fetchInnovationsLayoutPage(fullSlug);
   if (innovationsLayout) {
     return <InnovationsLayoutPage data={innovationsLayout.page} />;
+  }
+
+  const insightsArticleDetail = await fetchInsightsArticleDetailPage(fullSlug);
+  if (insightsArticleDetail) {
+    return <InsightsArticleDetailPage data={insightsArticleDetail.page} />;
   }
 
   const insightsListing = await fetchInsightsListingPage(fullSlug);

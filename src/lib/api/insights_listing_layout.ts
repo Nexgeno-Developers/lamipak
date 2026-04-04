@@ -124,7 +124,10 @@ function buildMany(kind: InsightsListingKind, count: number): InsightItem[] {
     ),
     image: PLACEHOLDER_IMG,
     imageAlt: `${baseTitle} ${i + 1}`,
-    href: `/insights/${kind === 'newsletter' ? 'newsletter' : kind}#item-${i + 1}`,
+    href:
+      kind === 'articles'
+        ? `/insights/articles/article-${i + 1}`
+        : `/insights/${kind === 'newsletter' ? 'newsletter' : kind}#item-${i + 1}`,
   }));
 }
 
