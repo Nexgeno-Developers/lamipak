@@ -145,7 +145,7 @@ export async function fetcProductCategoryLayout5Page(slug: string) {
     const homepageData = await fetchHomepageData();
     const videoUrl = cmsOrEnvVideo || undefined;
     const homeVideoBanner: VideoBannerData | undefined =
-      !cmsOrEnvVideo && homepageData.videoBanner?.videoUrl
+      !cmsOrEnvVideo && homepageData?.videoBanner?.videoUrl
         ? homepageData.videoBanner
         : undefined;
 
