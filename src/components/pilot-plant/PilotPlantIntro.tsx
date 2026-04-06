@@ -30,28 +30,28 @@ export default function PilotPlantIntro({
   secondaryCta,
 }: Props) {
   return (
-    <section className="bg-white py-14 md:py-20 lg:py-24">
+    <section className="bg-gray-50 py-14 md:py-20 lg:py-24">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-20">
           <div className="order-2 lg:order-1">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#009FE8] md:text-sm">
+            <p className="text-xs font-semibold uppercase text-[#009FE8] md:text-sm">
               {introLabel}
             </p>
-            <h2 className="mt-4 text-3xl font-bold leading-tight text-black md:text-4xl lg:text-[2.65rem] lg:leading-snug">
+            <h2 className="mt-4 text-3xl font-bold leading-tight text-black md:text-4xl lg:text-5xl lg:leading-snug">
               <span className="text-black">{introHeadingBlack}</span>{' '}
               <span className="text-[#009FE8]">{introHeadingBlue}</span>
             </h2>
-            <p className="mt-6 text-base leading-relaxed text-black/80 md:text-lg">{introBody}</p>
+            <p className="mt-6 text-base leading-relaxed text-black md:text-lg">{introBody}</p>
             <div className="mt-10 flex max-w-xl flex-col gap-4 sm:flex-row sm:flex-wrap">
               <Link
                 href={primaryCta.href}
-                className="inline-flex min-h-[52px] flex-1 items-center justify-center rounded-[14px] bg-[#0a2744] px-8 py-3.5 text-center text-sm font-semibold uppercase tracking-wide text-white shadow-sm transition hover:bg-[#081c33] md:text-base"
+                className="inline-flex min-h-[52px] flex-1 items-center justify-center rounded-[50px] bg-[#0061A5] px-2 py-3.5 text-center text-sm font-semibold uppercase tracking-wide text-white  transition hover:bg-[#081c33] md:text-base"
               >
                 {primaryCta.text}
               </Link>
               <Link
                 href={secondaryCta.href}
-                className="inline-flex min-h-[52px] flex-1 items-center justify-center rounded-[14px] bg-[#009FE8] px-8 py-3.5 text-center text-sm font-semibold uppercase tracking-wide text-white shadow-sm transition hover:bg-[#0088cc] md:text-base"
+                className="inline-flex min-h-[52px] flex-1 items-center justify-center rounded-[50px] bg-[#009FE8] px-2 py-3.5 text-center text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-[#0088cc] md:text-base"
               >
                 {secondaryCta.text}
               </Link>
@@ -59,14 +59,15 @@ export default function PilotPlantIntro({
           </div>
 
           <div className="order-1 lg:order-2">
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[20px] bg-gray-200 shadow-[0_20px_50px_rgba(10,39,68,0.12)] lg:aspect-[5/4]">
+            <div className="relative w-full overflow-hidden rounded-[50px] bg-gray-200 shadow-[0_20px_50px_rgba(10,39,68,0.12)] ">
               {introImage ? (
                 <Image
                   src={introImage}
                   alt={introImageAlt || ''}
-                  fill
+                  height={1000}
+                  width={1000}
                   className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  sizes=""
                   priority
                 />
               ) : (

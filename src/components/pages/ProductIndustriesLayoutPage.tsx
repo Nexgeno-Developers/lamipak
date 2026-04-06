@@ -110,7 +110,7 @@ export default function ProductIndustriesLayoutPage({ data }: { data: ProductInd
                 )}
               </div>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#009FE8] md:text-sm">
+                <p className="text-xs font-semibold uppercase text-[#009FE8] md:text-sm">
                   {data.insights.eyebrow}
                 </p>
                 {data.insights.title ? (

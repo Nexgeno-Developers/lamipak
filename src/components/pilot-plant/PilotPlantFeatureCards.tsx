@@ -19,30 +19,31 @@ function ArrowIcon() {
 
 export default function PilotPlantFeatureCards({ cards }: { cards: PilotPlantFeatureCard[] }) {
   return (
-    <section className="bg-white pb-16 md:pb-24 lg:pb-28">
+    <section className="bg-gray-50 pb-12 md:pb-16 lg:pb-20">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-10 lg:grid-cols-3 lg:gap-8">
           {cards.map((card) => (
             <article
               key={card.id}
-              className="flex flex-col overflow-hidden rounded-[18px] bg-white shadow-[0_12px_40px_rgba(10,39,68,0.1)] ring-1 ring-black/[0.04]"
+              className="flex flex-col overflow-hidden rounded-[50px] bg-white p-4"
             >
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-gray-100">
+              <div className="relative w-full overflow-hidden ">
                 {card.image ? (
                   <Image
                     src={card.image}
                     alt={card.imageAlt}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 33vw"
+                    width={1000}
+                    height={1000}
+                    className="object-cover rounded-[50px]"
+                    sizes=""
                   />
                 ) : (
                   <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300" />
                 )}
               </div>
-              <div className="flex flex-1 flex-col px-6 pb-8 pt-6 md:px-7">
+              <div className="flex flex-1 flex-col px-3 pb-8 pt-6 md:px-3">
                 <h3 className="text-lg font-bold text-[#009FE8] md:text-xl">{card.title}</h3>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-black/75 md:text-base">
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-black md:text-base">
                   {card.description}
                 </p>
                 <Link

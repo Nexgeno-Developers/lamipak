@@ -5,7 +5,7 @@ type Props = Pick<InnovationsPageData, 'introHeadingBlack' | 'introHeadingBlue' 
 
 export default function InnovationsIntro({ introHeadingBlack, introHeadingBlue, introBody }: Props) {
   return (
-    <section className="bg-white py-14 md:py-20 lg:py-24">
+    <section className="bg-gray-50 py-14 md:py-20 lg:py-24">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-20">
           <div>

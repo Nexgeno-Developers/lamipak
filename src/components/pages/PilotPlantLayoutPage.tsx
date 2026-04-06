@@ -1,4 +1,6 @@
 import type { PilotPlantPageData } from '@/lib/api/pilot_plant_layout';
+import CallToAction from '@/components/home/CallToAction';
+import NewsletterSubscription from '@/components/home/NewsletterSubscription';
 import PilotPlantFacilitySection from '@/components/pilot-plant/PilotPlantFacilitySection';
 import PilotPlantFeatureCards from '@/components/pilot-plant/PilotPlantFeatureCards';
 import PilotPlantHero from '@/components/pilot-plant/PilotPlantHero';
@@ -45,6 +47,9 @@ export default function PilotPlantLayoutPage({ data }: { data: PilotPlantPageDat
         steps={data.ecosystemSteps}
       />
       <PilotPlantStatsBanner stats={data.stats} />
+
+      <CallToAction />
+      <NewsletterSubscription />
     </main>
   );
 }

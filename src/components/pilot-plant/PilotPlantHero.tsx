@@ -18,8 +18,8 @@ export default function PilotPlantHero({ heroBackgroundImage, heroTitle }: Props
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/38 to-black/48" />
       </div>
-      <div className="relative z-10 mx-auto max-w-6xl px-4 pb-16 text-center md:pb-20 lg:pb-24">
-        <h1 className="text-xl font-bold uppercase leading-tight tracking-[0.08em] text-white md:text-3xl lg:text-4xl xl:text-5xl">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 text-center">
+        <h1 className="text-[24px] md:text-5xl lg:text-6xl xl:text-6xl font-bold text-white tracking-tight leading-tight">
           {heroTitle}
         </h1>
       </div>
