@@ -6,32 +6,33 @@ import type { InnovationsFeatureCard } from '@/lib/api/innovations_layout';
 export default function InnovationsFeatureCards({ cards }: { cards: InnovationsFeatureCard[] }) {
   return (
     <section className="bg-white pb-16 md:pb-24 lg:pb-28">
-      <div className="container mx-auto max-w-7xl px-4">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-10">
           {cards.map((card) => (
             <article
               key={card.id}
-              className="flex flex-col overflow-hidden rounded-[26px] bg-[#F4F7F9] shadow-[0_16px_48px_rgba(10,39,68,0.08)] ring-1 ring-black/[0.05]"
+              className="flex flex-col overflow-hidden rounded-[50px] bg-[#EDF0F1] p-4"
             >
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-gray-200">
+              <div className="relative w-full overflow-hidden">
                 {card.image ? (
                   <Image
                     src={card.image}
                     alt={card.imageAlt}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    height={1000}
+                    width={1000}
+                    className="object-cover rounded-[50px] h-[250px]"
+                    sizes=""
                   />
                 ) : (
                   <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300" />
                 )}
               </div>
-              <div className="flex flex-1 flex-col px-7 pb-9 pt-8 md:px-9 md:pb-10 md:pt-9">
+              <div className="flex flex-1 flex-col px-7 pb-9 pt-8 md:px-2 md:pb-4 md:pt-9">
                 <h3 className="text-xl font-bold text-black md:text-2xl">{card.title}</h3>
-                <p className="mt-4 text-sm leading-relaxed text-gray-600 md:text-base">{card.description}</p>
+                <p className="mt-4 text-sm leading-relaxed text-black md:text-base">{card.description}</p>
                 <ul className="mt-6 space-y-3">
                   {card.bullets.filter(Boolean).map((line, i) => (
-                    <li key={i} className="flex gap-3 text-sm leading-snug text-gray-700 md:text-base">
+                    <li key={i} className="flex gap-3 text-sm leading-snug text-black md:text-base">
                       <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#009FE8]" aria-hidden />
                       <span>{line}</span>
                     </li>

@@ -53,7 +53,7 @@ export default function InnovationsHero({ heroTitle, heroBackgroundImage }: Prop
       <div className="absolute inset-0 bg-gradient-to-t from-[#021526]/90 via-[#042a45]/55 to-transparent" />
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 text-center">
-        <h1 className="text-xl font-bold uppercase leading-snug tracking-[0.06em] text-white drop-shadow-sm md:text-2xl md:leading-tight lg:text-3xl xl:text-4xl">
+        <h1 className="text-2xl font-bold uppercase tracking-tight text-white md:text-4xl lg:text-5xl">
           {heroTitle}
         </h1>
       </div>

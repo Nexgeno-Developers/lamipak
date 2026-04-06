@@ -25,7 +25,7 @@ export default function NpdIntroSection({
 }: Props) {
   return (
     <section className="bg-white py-14 md:py-20 lg:py-24">
-      <div className="container mx-auto max-w-7xl px-4">
+      <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-20">
           <div className="order-2 lg:order-1">
             <h2 className="text-3xl font-bold leading-tight text-black md:text-4xl lg:text-[2.75rem] lg:leading-snug">

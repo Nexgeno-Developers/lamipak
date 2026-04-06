@@ -20,7 +20,7 @@ function ArrowIcon() {
 export default function PilotPlantFeatureCards({ cards }: { cards: PilotPlantFeatureCard[] }) {
   return (
     <section className="bg-white pb-16 md:pb-24 lg:pb-28">
-      <div className="container mx-auto max-w-7xl px-4">
+      <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-10 lg:grid-cols-3 lg:gap-8">
           {cards.map((card) => (
             <article

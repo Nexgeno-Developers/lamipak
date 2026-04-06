@@ -86,6 +86,21 @@ const DEFAULT_PAGE: InnovationsPageData = {
       ctaText: 'Explore Pilot Plant',
       ctaHref: '/pilot-plant',
     },
+    {
+      id: 'R&D Center',
+      image: '/about_banner.jpg',
+      imageAlt: 'Innovation center building',
+      title: 'R&D Center',
+      description:
+        'Test, Refine, And Validate Your Product In Cutting-Edge Pilot Facilities Designed To Simulate Real-World Manufacturing And Ensure Scalability.',
+      bullets: [
+        'Recipe Development & Prototyping',
+        'Aseptic Packaging Validation',
+        'Pilot-Scale Production Support',
+      ],
+      ctaText: 'Explore Pilot Plant',
+      ctaHref: '/pilot-plant',
+    },
   ],
 };
 

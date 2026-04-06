@@ -11,7 +11,7 @@ type Props = {
 export default function PilotPlantInnovationEcosystem({ titleBlack, titleBlue, steps }: Props) {
   return (
     <section className="bg-[#F4F7F9] pb-16 pt-12 md:pb-24 md:pt-16 lg:pb-28 lg:pt-20">
-      <div className="container mx-auto max-w-7xl px-4">
+      <div className="container mx-auto px-4">
         <h2 className="text-center text-2xl font-bold leading-tight md:text-3xl lg:text-4xl">
           <span className="text-black">{titleBlack}</span>{' '}
           <span className="text-[#009FE8]">{titleBlue}</span>

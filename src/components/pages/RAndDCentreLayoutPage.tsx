@@ -250,7 +250,7 @@ export default function RAndDCentreLayoutPage({ data }: { data: RAndDCentrePageD
 
       {/* Intro + stats */}
       <section className="py-14 md:py-20 lg:py-24">
-        <div className="container mx-auto max-w-7xl px-4">
+        <div className="container mx-auto  px-4">
           <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
             <div>
               <h2 className="text-3xl font-bold leading-tight text-black md:text-4xl lg:text-[2.75rem] lg:leading-snug" dangerouslySetInnerHTML={{ __html: data.introHeading }} />
@@ -292,7 +292,7 @@ export default function RAndDCentreLayoutPage({ data }: { data: RAndDCentrePageD
 
       {/* End-to-end testing — full packaging lifecycle */}
       <section className="bg-[#F5F6F7] py-16 md:py-20 lg:py-24">
-        <div className="container mx-auto max-w-7xl px-4">
+        <div className="container mx-auto px-4">
           <h2 className="mb-12 text-center text-3xl font-bold leading-tight md:mb-16 md:text-4xl lg:text-5xl text-black" dangerouslySetInnerHTML={{ __html: data.lifecycleSection.title }} />
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-7 lg:grid-cols-3 lg:gap-8">
             {data.lifecycleSection.cards.map((card, idx) => (

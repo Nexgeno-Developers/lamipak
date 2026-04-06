@@ -25,7 +25,7 @@ export default function PilotPlantScopeAndAgile({
 }: Props) {
   return (
     <section className="bg-white py-14 md:py-20 lg:py-24">
-      <div className="container mx-auto max-w-7xl px-4">
+      <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-14 xl:gap-20 lg:items-start">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#009FE8] md:text-sm">
