@@ -22,7 +22,7 @@ export default function CompanyHero({ data }: CompanyHeroProps) {
             className="absolute inset-0 w-full h-full object-cover"
           />
         ) : (
-          <div className="absolute inset-0 bg-gray-800" />
+          <div className="absolute inset-0 bg-gray-800" /> 
         )}
         {/* Dark Blue Overlay */}
         {/* <div className="absolute inset-0 bg-[#0e233c52] opacity-90" /> */}
