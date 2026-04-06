@@ -21,40 +21,39 @@ export function InsightCard({
 
   return (
     <article
-      className={`flex flex-col overflow-hidden rounded-[28px] ${shell} p-4 md:p-5 h-full`}
+      className={`flex flex-col overflow-hidden rounded-[50px] bg-white p-4 md:p-5 h-full`}
     >
-      <div className="relative w-full aspect-[16/10] overflow-hidden rounded-[20px] bg-gray-100">
+      <div className="relative w-full overflow-hidden rounded-[50px] bg-gray-100">
         {item.image ? (
           <Image
             src={item.image}
             alt={item.imageAlt}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 33vw"
+            height={1000}
+            width={1000}
+            className="object-cover object-top rounded-[50px] h-[250px]"
+            sizes=""
           />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-[#B7D7EA]/40 to-[#009FE8]/20" />
         )}
       </div>
 
-      <div className="mt-4 flex flex-1 flex-col">
+      <div className="mt-4 flex flex-1 flex-col pt-4 pb-4">
         <h3
-          className="text-base md:text-lg font-bold text-[#009FE8] leading-snug"
+          className="text-base md:text-[20px] font-bold text-[#009FE8] leading-snug"
           dangerouslySetInnerHTML={{ __html: item.title }}
         />
         <p
           className="mt-2 text-sm md:text-[15px] text-black leading-relaxed flex-1 line-clamp-4"
           dangerouslySetInnerHTML={{ __html: item.description }}
         />
-        <div className="mt-4 pt-1">
+        <div className="mt-2 pt-1">
           <Link
             href={item.href}
-            className="text-sm font-bold text-black hover:text-[#009FE8] transition-colors inline-flex items-center gap-1"
+            className="text-sm md:text-[15px] capitalize font-bold text-black hover:text-[#009FE8] transition-colors inline-flex items-center gap-1"
           >
             Read more
-            <span aria-hidden className="text-[#009FE8]">
-              →
-            </span>
+           
           </Link>
         </div>
       </div>

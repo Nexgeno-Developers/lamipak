@@ -27,7 +27,7 @@ export function InsightsPageHero({
         <div className="absolute inset-0 bg-black/45" aria-hidden />
       </div>
 
-      <div className="relative z-10 flex min-h-[120px] flex-col justify-center px-4">
+      <div className="relative z-10 flex flex-col justify-center px-4">
         <div className="container mx-auto text-center">
           {titleTag === 'div' ? (
             <div

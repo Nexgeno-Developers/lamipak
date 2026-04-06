@@ -15,7 +15,7 @@ function ViewAllButton({
     <div className="flex justify-center mt-10 md:mt-12">
       <Link
         href={href}
-        className="inline-flex min-w-[200px] items-center justify-center rounded-full border-2 border-[#009FE8] px-8 py-3 text-sm md:text-base font-semibold text-[#009FE8] transition-colors hover:bg-[#009FE8] hover:text-white"
+        className="inline-flex min-w-[200px] capitalize items-center justify-center rounded-full border-2 border-[#009FE8] px-8 py-3 text-sm md:text-base font-semibold text-[#009FE8] transition-colors hover:bg-[#009FE8] hover:text-white"
       >
         {label}
       </Link>
@@ -34,23 +34,17 @@ export default function InsightsHubPage({ data }: { data: InsightsHubData }) {
         </div>
       </section>
 
-      {data.pageIntro ? (
-        <section className="border-b border-gray-100 bg-white py-8 md:py-10">
-          <div className="container mx-auto max-w-4xl px-4 text-center">
-            <p className="text-sm md:text-base text-gray-600 leading-relaxed">{data.pageIntro}</p>
-          </div>
-        </section>
-      ) : null}
+   
 
       {/* Articles */}
-      <section className="bg-white py-12 md:py-16">
+      <section className="bg-gray-50 py-12 md:py-16">
         <div className="container mx-auto px-4">
           <h2
-            className="text-center text-2xl md:text-3xl font-bold text-black"
+            className="text-center text-2xl md:text-5xl font-bold text-black"
             dangerouslySetInnerHTML={{ __html: data.articlesSectionTitle }}
           />
           {data.articlesSectionSubtitle ? (
-            <p className="mx-auto mt-3 max-w-2xl text-center text-sm md:text-base text-gray-600">
+            <p className="mx-auto mt-3 max-w-2xl text-center text-sm md:text-base text-black">
               {data.articlesSectionSubtitle}
             </p>
           ) : null}
@@ -67,7 +61,7 @@ export default function InsightsHubPage({ data }: { data: InsightsHubData }) {
       <section className="bg-[#C5E3F4] py-12 md:py-16">
         <div className="container mx-auto px-4">
           <h2
-            className="text-center text-2xl md:text-3xl font-bold text-black"
+            className="text-center text-2xl md:text-5xl font-bold text-black"
             dangerouslySetInnerHTML={{ __html: data.webinarsSectionTitle }}
           />
           {data.webinarsSectionSubtitle ? (
@@ -88,11 +82,11 @@ export default function InsightsHubPage({ data }: { data: InsightsHubData }) {
       <section className="bg-gray-50 py-12 md:py-16">
         <div className="container mx-auto px-4">
           <h2
-            className="text-center text-2xl md:text-3xl font-bold text-black"
+            className="text-center text-2xl md:text-5xl font-bold text-black"
             dangerouslySetInnerHTML={{ __html: data.newsletterSectionTitle }}
           />
           {data.newsletterSectionSubtitle ? (
-            <p className="mx-auto mt-3 max-w-2xl text-center text-sm md:text-base text-gray-600">
+            <p className="mx-auto mt-3 max-w-2xl text-center text-sm md:text-base text-black">
               {data.newsletterSectionSubtitle}
             </p>
           ) : null}
