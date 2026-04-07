@@ -41,7 +41,17 @@ export default function PilotPlantScopeAndAgile({
                   key={item.id}
                   className="flex flex-col rounded-[30px] bg-[#EDF0F1] p-5 "
                 >
-                  <PilotPlantScopeIcon id={item.icon} />
+                  {item.iconUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element -- CMS icons (SVG/PNG)
+                    <img
+                      src={item.iconUrl}
+                      alt=""
+                      className="h-10 w-10 object-contain"
+                      aria-hidden
+                    />
+                  ) : (
+                    <PilotPlantScopeIcon id={item.icon} />
+                  )}
                   <p className="mt-4 text-[10px] font-semibold uppercase tracking-wider text-black md:text-[11px]">
                     {item.categoryLabel}
                   </p>
