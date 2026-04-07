@@ -245,7 +245,8 @@ function mapApiToPage(api: NonNullable<PilotPlantApiResponse['data']>): PilotPla
   if (heroBg) base.heroBackgroundImage = heroBg;
 
   base.title = clean(api.title) ?? '';
-  base.heroTitle = clean(meta.hero_title) ?? '';
+  // Hero banner should show the CMS page `title` (e.g. "Knowledge Centre Pilot Plant").
+  base.heroTitle = base.title || clean(meta.hero_title) || '';
 
   // ===== innovation_detail_2 (CMS) =====
   base.introLabel = clean(meta.hero_subtitle) || clean(meta.intro_label) || '';
