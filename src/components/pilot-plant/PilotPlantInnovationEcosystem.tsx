@@ -29,7 +29,7 @@ export default function PilotPlantInnovationEcosystem({ titleBlack, titleBlue, s
                     alt={step.imageAlt}
                     height={1000}
                     width={1000}
-                    className="object-cover rounded-tr-[50px]"
+                    className="object-cover rounded-tr-[50px] h-[200px] object-top"
                     sizes=""
                   />
                 ) : (

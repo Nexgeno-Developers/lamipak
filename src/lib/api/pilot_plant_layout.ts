@@ -19,6 +19,15 @@ type PilotPlantApiResponse = {
       hero_specs_navigation_link?: string;
       pilot_plant_title?: string;
       pilot_plant_description?: string;
+      pilot_plant_pages?: Array<{
+        id?: number | string;
+        title?: string;
+        slug?: string;
+        short_summary_icon?: Media;
+        short_summary_image?: Media;
+        short_summary_title?: string;
+        short_summary_description?: string;
+      }>;
       application_versatility_title?: string;
       application_versatility_subtitle?: string;
       application_versatility_description?: string;
@@ -370,6 +379,29 @@ function mapApiToPage(api: NonNullable<PilotPlantApiResponse['data']>): PilotPla
     base.facilityTitleBlue = facilitySplit.blue || base.facilityTitleBlue;
   }
   base.facilityDescription = clean(meta.pilot_plant_description) || base.facilityDescription;
+
+  // Feature cards from CMS: pilot_plant_pages
+  if (meta.pilot_plant_pages?.length) {
+    const mapped: PilotPlantFeatureCard[] = meta.pilot_plant_pages
+      .map((p, idx) => {
+        const title = clean(p.short_summary_title) || clean(p.title);
+        const description = clean(p.short_summary_description);
+        const slug = clean(p.slug);
+        if (!title || !description || !slug) return null;
+        const image = mediaUrl(p.short_summary_image) || mediaUrl(p.short_summary_icon);
+        return {
+          id: String(p.id ?? `pp-${idx + 1}`),
+          image,
+          imageAlt: title,
+          title,
+          description,
+          linkText: 'VIEW SPECS',
+          linkHref: `/${slug.replace(/^\/+/, '')}`,
+        };
+      })
+      .filter(Boolean) as PilotPlantFeatureCard[];
+    if (mapped.length) base.featureCards = mapped;
+  }
 
   // Scope / application versatility
   base.scopeTitleBlack = clean(meta.application_versatility_title) || base.scopeTitleBlack;

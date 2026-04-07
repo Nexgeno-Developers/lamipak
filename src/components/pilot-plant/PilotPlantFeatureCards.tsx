@@ -27,14 +27,14 @@ export default function PilotPlantFeatureCards({ cards }: { cards: PilotPlantFea
               key={card.id}
               className="flex flex-col overflow-hidden rounded-[50px] bg-white p-4"
             >
-              <div className="relative w-full overflow-hidden ">
+              <div className="relative w-full overflow-hidden  h-[300px]">
                 {card.image ? (
                   <Image
                     src={card.image}
                     alt={card.imageAlt}
                     width={1000}
                     height={1000}
-                    className="object-cover rounded-[50px]"
+                    className="object-cover rounded-[50px] object-top h-full"
                     sizes=""
                   />
                 ) : (
@@ -43,7 +43,7 @@ export default function PilotPlantFeatureCards({ cards }: { cards: PilotPlantFea
               </div>
               <div className="flex flex-1 flex-col px-3 pb-8 pt-6 md:px-3">
                 <h3 className="text-lg font-bold text-[#009FE8] md:text-xl">{card.title}</h3>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-black md:text-base">
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-black md:text-base line-clamp-3">
                   {card.description}
                 </p>
                 <Link
