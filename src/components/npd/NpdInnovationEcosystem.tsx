@@ -13,8 +13,8 @@ export default function NpdInnovationEcosystem({
     <section className="bg-gray-50 pb-16 md:pb-20 lg:pb-24">
       <div className="container mx-auto px-4">
         <h2 className="mb-12 text-center text-3xl font-bold md:mb-14 md:text-4xl lg:mb-10 lg:text-5xl">
-          <span className="text-black">{ecosystemTitleBlack}</span>{' '}
-          <span className="text-[#009FE8]">{ecosystemTitleBlue}</span>
+          <span className="text-black">The Innovation</span>{' '}
+          <span className="text-[#009FE8]">Ecosystem</span>
         </h2>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
           {ecosystemCards.map((card) => (

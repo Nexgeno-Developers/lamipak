@@ -37,13 +37,13 @@ export default function NpdIntroSection({
                 href={primaryCta.href}
                 className="rounded-[50px] bg-[#009FE8] px-8 py-4 text-center text-sm font-semibold uppercase tracking-wide text-white shadow-sm transition hover:bg-[#0088cc] md:text-base"
               >
-                {primaryCta.text}
+                Start your product journey
               </Link>
               <Link
                 href={secondaryCta.href}
                 className="rounded-[50px] bg-[#009FE8] px-8 py-4 text-center text-sm font-semibold uppercase tracking-wide text-white shadow-sm transition hover:bg-[#0088cc] md:text-base"
               >
-                {secondaryCta.text}
+                Book Innovation Consultation
               </Link>
             </div>
           </div>

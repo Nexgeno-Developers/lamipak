@@ -79,54 +79,18 @@ export type NpdPageData = {
   videoUrl?: string;
 };
 
-const DEFAULT_PAGE: NpdPageData = {
-  title: 'New Product Development',
-  heroBackgroundImage: '/about_banner.jpg',
-  heroTitle: 'IDEATE INNOVATE SCALE',
-  introHeadingBlack: 'Turn Your Beverage Idea Into',
-  introHeadingBlue: 'A Market Ready Product',
-  introBody:
-    'From concept to commercialization, Lamipak supports your aseptic liquid packaging development with data-driven insights, sustainable packaging solutions, and technical expertise.',
-  introImage: '/about_banner.jpg',
-  introImageAlt: 'Aseptic packaging innovation',
-  primaryCta: { text: 'Start Your Product Journey', href: '/contact-us' },
-  secondaryCta: { text: 'Book Innovation Consultation', href: '/contact-us' },
-  ecosystemTitleBlack: 'The Innovation',
-  ecosystemTitleBlue: 'Ecosystem',
-  ecosystemCards: [
-    {
-      id: '1',
-      image: '/about_banner.jpg',
-      imageAlt: 'Market insight',
-      iconVariant: 0,
-      title: 'Market Insight',
-      description: 'Identifying high-growth trends through consumer data.',
-    },
-    {
-      id: '2',
-      image: '/about_banner.jpg',
-      imageAlt: 'Prototyping',
-      iconVariant: 1,
-      title: 'Prototyping',
-      description: 'Structural design and shelf-impact visualization.',
-    },
-    {
-      id: '3',
-      image: '/about_banner.jpg',
-      imageAlt: 'Material tech',
-      iconVariant: 2,
-      title: 'Material Tech',
-      description: 'Barrier performance validation and material science.',
-    },
-    {
-      id: '4',
-      image: '/about_banner.jpg',
-      imageAlt: 'Scale up',
-      iconVariant: 3,
-      title: 'Scale Up',
-      description: 'Full industrialization and line integration support.',
-    },
-  ],
+/** No marketing copy or placeholder assets — used only when the API is unavailable or returns nothing for a field. */
+const EMPTY_PAGE: NpdPageData = {
+  title: '',
+  heroTitle: '',
+  introHeadingBlack: '',
+  introHeadingBlue: '',
+  introBody: '',
+  primaryCta: { text: '', href: '#' },
+  secondaryCta: { text: '', href: '#' },
+  ecosystemTitleBlack: '',
+  ecosystemTitleBlue: '',
+  ecosystemCards: [],
 };
 
 function buildPageApiPath(slug: string) {
@@ -179,9 +143,9 @@ function mapEcosystemItemsBlock(eco: EcosystemItemsBlock | undefined): NpdEcosys
 
 function mapInnovationDetail1ToPage(api: NonNullable<NpdApiResponse['data']>): NpdPageData {
   const meta = api.meta || {};
-  const base = { ...DEFAULT_PAGE };
+  const base: NpdPageData = { ...EMPTY_PAGE };
 
-  base.title = clean(api.title) || base.title;
+  base.title = clean(api.title) ?? '';
 
   const heroBg = mediaUrl(meta.breadcrumb_image);
   if (heroBg) base.heroBackgroundImage = heroBg;
@@ -191,27 +155,27 @@ function mapInnovationDetail1ToPage(api: NonNullable<NpdApiResponse['data']>): N
 
   const fromHeroDesc = htmlToPlainText(meta.hero_description);
   const fromShort = clean(meta.short_summary_description);
-  base.introBody = fromHeroDesc || fromShort || base.introBody;
+  base.introBody = fromHeroDesc || fromShort || '';
 
   const heroImg = mediaUrl(meta.hero_image);
   if (heroImg) {
     base.introImage = heroImg;
-    base.introImageAlt = base.title;
+    base.introImageAlt = base.title || '';
   }
 
   const href1 = clean(meta.hero_product_journey_navigation_link);
   const href2 = clean(meta.hero_consultation_navigation_link);
   base.primaryCta = {
     text: base.primaryCta.text,
-    href: href1 || base.primaryCta.href,
+    href: href1 || '#',
   };
   base.secondaryCta = {
     text: base.secondaryCta.text,
-    href: href2 || base.secondaryCta.href,
+    href: href2 || '#',
   };
 
   const ecoMapped = mapEcosystemItemsBlock(meta.ecosystem_items);
-  if (ecoMapped.length) base.ecosystemCards = ecoMapped;
+  base.ecosystemCards = ecoMapped.length ? ecoMapped : [];
 
   const v = clean(meta.video_url);
   if (v) base.videoUrl = v;
@@ -221,12 +185,12 @@ function mapInnovationDetail1ToPage(api: NonNullable<NpdApiResponse['data']>): N
 
 function mapLegacyNpdToPage(api: NonNullable<NpdApiResponse['data']>): NpdPageData {
   const meta = api.meta || {};
-  const base = { ...DEFAULT_PAGE };
+  const base: NpdPageData = { ...EMPTY_PAGE };
 
   const heroBg = mediaUrl(meta.breadcrumb_image);
   if (heroBg) base.heroBackgroundImage = heroBg;
 
-  base.title = clean(api.title) || base.title;
+  base.title = clean(api.title) ?? '';
 
   const legacyHeroTitle = clean(meta.hero_title);
   if (legacyHeroTitle) {
@@ -239,9 +203,9 @@ function mapLegacyNpdToPage(api: NonNullable<NpdApiResponse['data']>): NpdPageDa
     else if (iblue) base.heroTitle = `*${iblue}*`;
   }
 
-  base.introHeadingBlack = clean(meta.intro_heading_black) || base.introHeadingBlack;
-  base.introHeadingBlue = clean(meta.intro_heading_blue) || base.introHeadingBlue;
-  base.introBody = clean(meta.intro_body) || base.introBody;
+  base.introHeadingBlack = clean(meta.intro_heading_black) ?? '';
+  base.introHeadingBlue = clean(meta.intro_heading_blue) ?? '';
+  base.introBody = clean(meta.intro_body) ?? '';
   const introImg = mediaUrl(meta.intro_image);
   if (introImg) base.introImage = introImg;
 
@@ -256,8 +220,8 @@ function mapLegacyNpdToPage(api: NonNullable<NpdApiResponse['data']>): NpdPageDa
   else if (p2) base.secondaryCta = { ...base.secondaryCta, text: p2 };
   else if (u2) base.secondaryCta = { ...base.secondaryCta, href: u2 };
 
-  base.ecosystemTitleBlack = clean(meta.ecosystem_title_black) || base.ecosystemTitleBlack;
-  base.ecosystemTitleBlue = clean(meta.ecosystem_title_blue) || base.ecosystemTitleBlue;
+  base.ecosystemTitleBlack = clean(meta.ecosystem_title_black) ?? '';
+  base.ecosystemTitleBlue = clean(meta.ecosystem_title_blue) ?? '';
 
   const eco = meta.ecosystem_cards;
   if (eco?.length) {
@@ -277,7 +241,7 @@ function mapLegacyNpdToPage(api: NonNullable<NpdApiResponse['data']>): NpdPageDa
         };
       })
       .filter(Boolean) as NpdEcosystemCard[];
-    if (mapped.length) base.ecosystemCards = mapped;
+    base.ecosystemCards = mapped.length ? mapped : [];
   }
 
   const v = clean(meta.video_url);
@@ -318,14 +282,14 @@ export const fetchNpdLayoutPage = cache(async (slug: string) => {
         }
       }
     } catch {
-      /* static defaults */
+      /* fall through to empty page */
     }
   }
 
   return {
     slug: 'npd',
-    title: DEFAULT_PAGE.title,
+    title: '',
     seo: {} as Record<string, unknown>,
-    page: { ...DEFAULT_PAGE },
+    page: { ...EMPTY_PAGE },
   };
 });
