@@ -11,6 +11,7 @@ import { NPD_STATIC_VIDEO_BANNER } from '@/components/npd/npdVideoBannerData';
 export default function NpdLayoutPage({ data }: { data: NpdPageData }) {
   const videoBannerPrefetched = {
     ...NPD_STATIC_VIDEO_BANNER,
+    preTitle: data.title,
     ...(data.videoUrl ? { videoUrl: data.videoUrl } : {}),
   };
 
