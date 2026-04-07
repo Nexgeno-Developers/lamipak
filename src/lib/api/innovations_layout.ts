@@ -69,7 +69,7 @@ const DEFAULT_PAGE: InnovationsPageData = {
         'Sustainable Packaging Solutions',
       ],
       ctaText: 'Explore NPD',
-      ctaHref: '/npd',
+      ctaHref: '/npd2',
     },
     {
       id: 'pilot',

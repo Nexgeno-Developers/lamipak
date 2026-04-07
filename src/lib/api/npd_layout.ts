@@ -260,36 +260,33 @@ function mapApiToPage(api: NonNullable<NpdApiResponse['data']>): NpdPageData {
 
 const ACCEPTED_LAYOUTS = new Set(['npd', 'innovation_detail_1']);
 
+/**
+ * Resolves any URL path whose CMS page uses layout `npd` or `innovation_detail_1`.
+ * Calls `GET /v1/page/{slug}` — the public URL and API slug stay in sync when you change the slug in the CMS (e.g. `npd` → `npd2`).
+ */
 export const fetchNpdLayoutPage = cache(async (slug: string) => {
   const cleanSlug = slug.replace(/^\/+|\/+$/g, '');
-  if (cleanSlug !== 'npd') return null;
+  if (!cleanSlug) return null;
 
   const baseUrl = process.env.COMPANY_API_BASE_URL;
-  if (baseUrl) {
-    try {
-      const apiSlugPath = buildPageApiPath(cleanSlug);
-      const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
-      if (res.ok) {
-        const payload = (await res.json()) as NpdApiResponse;
-        const data = payload.data;
-        if (data && ACCEPTED_LAYOUTS.has(data.layout || '')) {
-          return {
-            slug: data.slug,
-            title: data.title,
-            seo: data.seo || {},
-            page: mapApiToPage(data),
-          };
-        }
-      }
-    } catch {
-      /* fall through to empty page */
-    }
-  }
+  if (!baseUrl) return null;
 
-  return {
-    slug: 'npd',
-    title: '',
-    seo: {} as Record<string, unknown>,
-    page: { ...EMPTY_PAGE },
-  };
+  try {
+    const apiSlugPath = buildPageApiPath(cleanSlug);
+    const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
+    if (!res.ok) return null;
+
+    const payload = (await res.json()) as NpdApiResponse;
+    const data = payload.data;
+    if (!data || !ACCEPTED_LAYOUTS.has(data.layout || '')) return null;
+
+    return {
+      slug: data.slug,
+      title: data.title,
+      seo: data.seo || {},
+      page: mapApiToPage(data),
+    };
+  } catch {
+    return null;
+  }
 });

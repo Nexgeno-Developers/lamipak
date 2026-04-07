@@ -1,6 +1,6 @@
 import type { VideoBannerData } from '@/lib/api/home';
 
-/** Static video banner for `/npd` — not merged from homepage CMS. */
+/** Fallback video banner data for NPD routes (`/npd`, `/npd1`, …) — merged with CMS `video_url` in the layout page. */
 export const NPD_STATIC_VIDEO_BANNER: VideoBannerData = {
   title: '',
   preTitle: '',
