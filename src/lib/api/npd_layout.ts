@@ -1,32 +1,51 @@
 import { cache } from 'react';
+import { normalizeText } from '@/lib/htmlText';
 
 type Media = { url?: string | null } | null | undefined;
+
+type EcosystemItemsBlock = {
+  itration?: string[];
+  title?: string[];
+  icon?: Media[];
+  image?: Media[];
+  description?: string[];
+};
+
+type NpdMeta = {
+  breadcrumb_image?: Media;
+  short_summary_icon?: Media;
+  short_summary_description?: string;
+  hero_title?: string;
+  hero_image?: Media;
+  hero_description?: string;
+  hero_product_journey_navigation_link?: string;
+  hero_consultation_navigation_link?: string;
+  ecosystem_items?: EcosystemItemsBlock;
+  video_url?: string;
+  intro_heading_black?: string;
+  intro_heading_blue?: string;
+  intro_body?: string;
+  intro_image?: Media;
+  cta_primary_text?: string;
+  cta_primary_url?: string;
+  cta_secondary_text?: string;
+  cta_secondary_url?: string;
+  ecosystem_title_black?: string;
+  ecosystem_title_blue?: string;
+  ecosystem_cards?: Array<{
+    image?: Media;
+    icon?: Media;
+    title?: string;
+    description?: string;
+  }>;
+};
 
 type NpdApiResponse = {
   data?: {
     slug: string;
     title: string;
     layout?: string;
-    meta?: {
-      breadcrumb_image?: Media;
-      hero_title?: string;
-      intro_heading_black?: string;
-      intro_heading_blue?: string;
-      intro_body?: string;
-      intro_image?: Media;
-      cta_primary_text?: string;
-      cta_primary_url?: string;
-      cta_secondary_text?: string;
-      cta_secondary_url?: string;
-      ecosystem_title_black?: string;
-      ecosystem_title_blue?: string;
-      ecosystem_cards?: Array<{
-        image?: Media;
-        icon?: Media;
-        title?: string;
-        description?: string;
-      }>;
-    };
+    meta?: NpdMeta;
     seo?: Record<string, unknown>;
   };
 };
@@ -44,6 +63,7 @@ export type NpdEcosystemCard = {
 export type NpdPageData = {
   title: string;
   heroBackgroundImage?: string;
+  /** Supports `*highlight*` segments; rendered with `formatBoldText` in the hero. */
   heroTitle: string;
   introHeadingBlack: string;
   introHeadingBlue: string;
@@ -55,6 +75,8 @@ export type NpdPageData = {
   ecosystemTitleBlack: string;
   ecosystemTitleBlue: string;
   ecosystemCards: NpdEcosystemCard[];
+  /** YouTube or other video URL for the section video banner (optional). */
+  videoUrl?: string;
 };
 
 const DEFAULT_PAGE: NpdPageData = {
@@ -107,9 +129,17 @@ const DEFAULT_PAGE: NpdPageData = {
   ],
 };
 
+function buildPageApiPath(slug: string) {
+  return slug
+    .split('/')
+    .filter(Boolean)
+    .map((part) => encodeURIComponent(part))
+    .join('/');
+}
+
 function mediaUrl(media?: Media) {
   const url = media?.url;
-  return typeof url === 'string' && url.trim() ? url : undefined;
+  return typeof url === 'string' && url.trim() ? url.trim() : undefined;
 }
 
 function clean(s?: string | null) {
@@ -117,7 +147,100 @@ function clean(s?: string | null) {
   return t || undefined;
 }
 
-function mapApiToPage(api: NonNullable<NpdApiResponse['data']>): NpdPageData {
+function htmlToPlainText(html?: string | null): string {
+  if (!html) return '';
+  return normalizeText(html.replace(/<[^>]+>/g, ' '));
+}
+
+/** Split `before *highlight*` from CMS hero_title for intro headings. */
+function splitHeroTitleForIntro(raw: string): { black: string; blue: string } {
+  const t = raw.trim();
+  const start = t.indexOf('*');
+  if (start === -1) return { black: t, blue: '' };
+  const end = t.indexOf('*', start + 1);
+  if (end === -1) {
+    return { black: t.slice(0, start).trim(), blue: t.slice(start + 1).trim() };
+  }
+  return {
+    black: t.slice(0, start).trim(),
+    blue: t.slice(start + 1, end).trim(),
+  };
+}
+
+function normalizeEcosystemDescription(s?: string | null): string {
+  const t = (s ?? '').replace(/\r\n/g, ' ').replace(/\n/g, ' ');
+  return normalizeText(t);
+}
+
+function mapEcosystemItemsBlock(eco: EcosystemItemsBlock | undefined): NpdEcosystemCard[] {
+  if (!eco?.title?.length) return [];
+  const out: NpdEcosystemCard[] = [];
+  for (let i = 0; i < eco.title.length; i++) {
+    const title = clean(eco.title[i]);
+    if (!title) continue;
+    const description = normalizeEcosystemDescription(eco.description?.[i]);
+    out.push({
+      id: `eco-${i + 1}`,
+      image: mediaUrl(eco.image?.[i]),
+      imageAlt: title,
+      iconUrl: mediaUrl(eco.icon?.[i]),
+      iconVariant: i % 4,
+      title,
+      description,
+    });
+  }
+  return out;
+}
+
+function mapInnovationDetail1ToPage(api: NonNullable<NpdApiResponse['data']>): NpdPageData {
+  const meta = api.meta || {};
+  const base = { ...DEFAULT_PAGE };
+
+  base.title = clean(api.title) || base.title;
+
+  const heroBg = mediaUrl(meta.breadcrumb_image);
+  if (heroBg) base.heroBackgroundImage = heroBg;
+
+  const heroTitleRaw = clean(meta.hero_title);
+  if (heroTitleRaw) base.heroTitle = heroTitleRaw;
+
+  const introFromHero = heroTitleRaw ? splitHeroTitleForIntro(heroTitleRaw) : null;
+  if (introFromHero && (introFromHero.black || introFromHero.blue)) {
+    base.introHeadingBlack = introFromHero.black || base.introHeadingBlack;
+    base.introHeadingBlue = introFromHero.blue || base.introHeadingBlue;
+  }
+
+  const fromHeroDesc = htmlToPlainText(meta.hero_description);
+  const fromShort = clean(meta.short_summary_description);
+  base.introBody = fromHeroDesc || fromShort || base.introBody;
+
+  const heroImg = mediaUrl(meta.hero_image);
+  if (heroImg) {
+    base.introImage = heroImg;
+    base.introImageAlt = base.title;
+  }
+
+  const href1 = clean(meta.hero_product_journey_navigation_link);
+  const href2 = clean(meta.hero_consultation_navigation_link);
+  base.primaryCta = {
+    text: base.primaryCta.text,
+    href: href1 || base.primaryCta.href,
+  };
+  base.secondaryCta = {
+    text: base.secondaryCta.text,
+    href: href2 || base.secondaryCta.href,
+  };
+
+  const ecoMapped = mapEcosystemItemsBlock(meta.ecosystem_items);
+  if (ecoMapped.length) base.ecosystemCards = ecoMapped;
+
+  const v = clean(meta.video_url);
+  if (v) base.videoUrl = v;
+
+  return base;
+}
+
+function mapLegacyNpdToPage(api: NonNullable<NpdApiResponse['data']>): NpdPageData {
   const meta = api.meta || {};
   const base = { ...DEFAULT_PAGE };
 
@@ -168,8 +291,21 @@ function mapApiToPage(api: NonNullable<NpdApiResponse['data']>): NpdPageData {
     if (mapped.length) base.ecosystemCards = mapped;
   }
 
+  const v = clean(meta.video_url);
+  if (v) base.videoUrl = v;
+
   return base;
 }
+
+function mapApiToPage(api: NonNullable<NpdApiResponse['data']>): NpdPageData {
+  const layout = api.layout || '';
+  if (layout === 'innovation_detail_1') {
+    return mapInnovationDetail1ToPage(api);
+  }
+  return mapLegacyNpdToPage(api);
+}
+
+const ACCEPTED_LAYOUTS = new Set(['npd', 'innovation_detail_1']);
 
 export const fetchNpdLayoutPage = cache(async (slug: string) => {
   const cleanSlug = slug.replace(/^\/+|\/+$/g, '');
@@ -178,11 +314,12 @@ export const fetchNpdLayoutPage = cache(async (slug: string) => {
   const baseUrl = process.env.COMPANY_API_BASE_URL;
   if (baseUrl) {
     try {
-      const res = await fetch(`${baseUrl}/v1/page/npd`, { cache: 'no-store' });
+      const apiSlugPath = buildPageApiPath(cleanSlug);
+      const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
       if (res.ok) {
         const payload = (await res.json()) as NpdApiResponse;
         const data = payload.data;
-        if (data && data.layout === 'npd') {
+        if (data && ACCEPTED_LAYOUTS.has(data.layout || '')) {
           return {
             slug: data.slug,
             title: data.title,

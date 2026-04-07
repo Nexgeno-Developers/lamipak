@@ -9,6 +9,11 @@ import NpdIntroSection from '@/components/npd/NpdIntroSection';
 import { NPD_STATIC_VIDEO_BANNER } from '@/components/npd/npdVideoBannerData';
 
 export default function NpdLayoutPage({ data }: { data: NpdPageData }) {
+  const videoBannerPrefetched = {
+    ...NPD_STATIC_VIDEO_BANNER,
+    ...(data.videoUrl ? { videoUrl: data.videoUrl } : {}),
+  };
+
   return (
     <main className="min-h-screen bg-white">
       <NpdHero heroBackgroundImage={data.heroBackgroundImage} heroTitle={data.heroTitle} />
@@ -34,11 +39,12 @@ export default function NpdLayoutPage({ data }: { data: NpdPageData }) {
         ecosystemTitleBlue={data.ecosystemTitleBlue}
         ecosystemCards={data.ecosystemCards}
       />
-      <VideoBanner prefetchedData={NPD_STATIC_VIDEO_BANNER} />
-<div className="bg-gray-50 lg:pt-24 pt-12">  
-<CallToAction />
-</div>
-     
+      <VideoBanner prefetchedData={videoBannerPrefetched} />
+
+      <div className="bg-gray-50 pt-12 lg:pt-24">
+        <CallToAction />
+      </div>
+
       <NewsletterSubscription />
     </main>
   );
