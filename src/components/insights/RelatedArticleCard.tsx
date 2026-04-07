@@ -4,21 +4,21 @@ import type { RelatedArticleItem } from '@/lib/api/insights_article_detail_layou
 
 export function RelatedArticleCard({ item }: { item: RelatedArticleItem }) {
   return (
-    <article className="overflow-hidden rounded-[18px] bg-white p-3 shadow-sm ring-1 ring-black/5">
-      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-t-[14px] rounded-b-md bg-gray-100">
+    <article className="overflow-hidden rounded-[50px] bg-white p-4">
+      <div className="relative w-full overflow-hidden">
         {item.image ? (
           <Image
             src={item.image}
             alt={item.imageAlt}
-            fill
-            className="object-cover"
-            sizes="320px"
+            height={1000}
+            width={1000}
+            className="object-cover rounded-[50px] h-[160px] object-top"
           />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-[#B7D7EA]/50 to-[#009FE8]/15" />
         )}
       </div>
-      <div className="pt-3">
+      <div className="pt-5 pb-3 px-3">
         {item.category ? (
           <p className="text-xs font-bold uppercase tracking-wide text-black">{item.category}</p>
         ) : null}
