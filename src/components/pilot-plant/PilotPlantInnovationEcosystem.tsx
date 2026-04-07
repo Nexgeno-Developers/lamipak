@@ -13,8 +13,8 @@ export default function PilotPlantInnovationEcosystem({ titleBlack, titleBlue, s
     <section className="bg-gray-50 lg:pb-24 pb-12">
       <div className="container mx-auto px-4">
         <h2 className="text-center text-2xl font-bold leading-tight md:text-5xl lg:text-5xl">
-          <span className="text-black">{titleBlack}</span>{' '}
-          <span className="text-[#009FE8]">{titleBlue}</span>
+          <span className="text-black">The Innovation</span>{' '}
+          <span className="text-[#009FE8]">Ecosystem</span>
         </h2>
         <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:mt-8 lg:grid-cols-4 lg:gap-6">
           {steps.map((step) => (

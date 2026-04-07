@@ -47,13 +47,13 @@ export default function PilotPlantIntro({
                 href={primaryCta.href}
                 className="inline-flex min-h-[52px] flex-1 items-center justify-center rounded-[50px] bg-[#0061A5] px-2 py-3.5 text-center text-sm font-semibold uppercase tracking-wide text-white  transition hover:bg-[#081c33] md:text-base"
               >
-                {primaryCta.text}
+                Explore Capabilities
               </Link>
               <Link
                 href={secondaryCta.href}
                 className="inline-flex min-h-[52px] flex-1 items-center justify-center rounded-[50px] bg-[#009FE8] px-2 py-3.5 text-center text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-[#0088cc] md:text-base"
               >
-                {secondaryCta.text}
+                Technical Specs
               </Link>
             </div>
           </div>

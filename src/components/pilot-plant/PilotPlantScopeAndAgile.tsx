@@ -1,6 +1,6 @@
 import type { PilotPlantPageData } from '@/lib/api/pilot_plant_layout';
 import { PilotPlantScopeIcon } from '@/components/pilot-plant/scopeIcons';
-
+import { formatBoldText } from '@/lib/htmlText';
 type Props = Pick<
   PilotPlantPageData,
   | 'scopeLabel'
@@ -29,12 +29,12 @@ export default function PilotPlantScopeAndAgile({
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-14 xl:gap-20 lg:items-start">
           <div>
             <p className="text-xs font-semibold uppercase text-[#009FE8] md:text-sm">
-              {scopeLabel}
+              {scopeTitleBlue || scopeLabel}
             </p>
-            <h2 className="mt-3 text-3xl font-bold leading-tight md:text-4xl lg:text-5xl">
-              <span className="text-[#009FE8]">{scopeTitleBlue}</span>{' '}
-              <span className="text-black">{scopeTitleBlack}</span>
-            </h2>
+            <h2 className="mt-3 text-3xl font-bold leading-tight md:text-4xl lg:text-5xl"
+              
+              dangerouslySetInnerHTML={{ __html: formatBoldText(scopeTitleBlack) }} />
+         
             <div className="mt-10 grid grid-cols-2 gap-4 md:gap-5">
               {scopeGrid.map((item) => (
                 <div

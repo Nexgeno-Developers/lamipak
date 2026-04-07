@@ -151,123 +151,34 @@ export type PilotPlantPageData = {
   stats: PilotPlantStat[];
 };
 
-const DEFAULT_PAGE: PilotPlantPageData = {
-  title: 'Knowledge Centre Pilot Plant',
-  heroBackgroundImage: '/about_banner.jpg',
-  heroTitle: 'KNOWLEDGE CENTRE PILOT PLANT',
-  introLabel: 'KNOWLEDGE CENTRE',
-  introHeadingBlack: 'From Concept',
-  introHeadingBlue: 'To Shelf.',
-  introBody:
-    'Bridging the gap between liquid food imagination and industrial reality through end-to-end technical support.',
-  introImage: '/about_banner.jpg',
-  introImageAlt: 'Laboratory validation',
-  introOverlayTitle: '100% ACCURACY',
-  introOverlaySubtitle: 'Recipe Validation Excellence',
-  primaryCta: { text: 'Explore Capabilities', href: '/contact-us' },
-  secondaryCta: { text: 'Technical Specs', href: '/contact-us' },
-  facilityTitleBlack: 'The',
-  facilityTitleBlue: 'Pilot Plant',
-  facilityDescription:
-    'A state-of-the-art facility mimicking full-scale environments on an agile scale, the ultimate proving ground for high-speed production.',
-  featureCards: [
-    {
-      id: '1',
-      image: '/about_banner.jpg',
-      imageAlt: 'Recipe innovation',
-      title: 'Recipe Innovation',
-      description: 'Balanced liquid formulas with sustainable barrier properties.',
-      linkText: 'VIEW SPECS',
-      linkHref: '/contact-us',
-    },
-    {
-      id: '2',
-      image: '/about_banner.jpg',
-      imageAlt: 'Efficiency tuning',
-      title: 'Efficiency Tuning',
-      description: 'Optimizing machine speeds and material waste reduction.',
-      linkText: 'OPTIMIZATION DATA',
-      linkHref: '/contact-us',
-    },
-    {
-      id: '3',
-      image: '/about_banner.jpg',
-      imageAlt: 'Shelf-life studies',
-      title: 'Shelf-life Studies',
-      description: 'Accelerated stability testing and nutritional preservation.',
-      linkText: 'LAB RESULTS',
-      linkHref: '/contact-us',
-    },
-  ],
-  scopeLabel: 'PRODUCT SCOPE',
-  scopeTitleBlue: 'Application',
-  scopeTitleBlack: 'Versatility',
-  scopeGrid: [
-    { id: 's1', icon: 'drop', categoryLabel: 'DAIRY', title: 'UHT & CREAM' },
-    { id: 's2', icon: 'leaf', categoryLabel: 'PLANT BASED', title: 'OAT & SOY' },
-    { id: 's3', icon: 'glass', categoryLabel: 'JUICE', title: 'NECTARS & DRINKS' },
-    { id: 's4', icon: 'mug', categoryLabel: 'RTD', title: 'TEA & COFFEE' },
-  ],
-  agileEyebrow: 'PROTOTYPING',
-  agileTitle: 'Agile Validation',
-  agileBody:
-    'Small batch testing (50–200L) before industrial commitment — reducing R&D costs and market risk.',
-  agileHighlights: [
-    {
-      title: 'Technical Stress Tests',
-      description: 'Validation of pH levels and viscosity.',
-    },
-    {
-      title: 'Seal Integrity',
-      description: 'Mass production speed simulations.',
-    },
-  ],
-  ecosystemTitleBlack: 'The Innovation',
-  ecosystemTitleBlue: 'Ecosystem',
-  ecosystemSteps: [
-    {
-      id: 'e1',
-      image: '/about_banner.jpg',
-      imageAlt: 'Dairy products — ideation',
-      step: '01',
-      phase: 'IDEATION',
-      title: 'Recipe Concept',
-      description: 'Market trends and formula development.',
-    },
-    {
-      id: 'e2',
-      image: '/about_banner.jpg',
-      imageAlt: 'Dairy products — pilot fill',
-      step: '02',
-      phase: 'PILOT FILL',
-      title: 'Technical Trial',
-      description: 'Aseptic filling and initial quality sampling.',
-    },
-    {
-      id: 'e3',
-      image: '/about_banner.jpg',
-      imageAlt: 'Dairy products — validation',
-      step: '03',
-      phase: 'VALIDATION',
-      title: 'Audit Stage',
-      description: 'Stability testing and performance audits.',
-    },
-    {
-      id: 'e4',
-      image: '/about_banner.jpg',
-      imageAlt: 'Dairy products — industrial',
-      step: '04',
-      phase: 'INDUSTRIAL',
-      title: 'Mass Rollout',
-      description: 'Full production scaling and optimization.',
-    },
-  ],
-  stats: [
-    { value: '35%', label: 'R&D TIME REDUCTION' },
-    { value: '12k+', label: 'VALIDATED RECIPES' },
-    { value: '0.01%', label: 'ERROR RATE GOAL' },
-    { value: '24/7', label: 'EXPERT SUPPORT' },
-  ],
+/** No dummy copy or placeholder assets — used only when API is unavailable. */
+const EMPTY_PAGE: PilotPlantPageData = {
+  title: '',
+  heroTitle: '',
+  introLabel: '',
+  introHeadingBlack: '',
+  introHeadingBlue: '',
+  introBody: '',
+  introOverlayTitle: '',
+  introOverlaySubtitle: '',
+  primaryCta: { text: '', href: '#' },
+  secondaryCta: { text: '', href: '#' },
+  facilityTitleBlack: '',
+  facilityTitleBlue: '',
+  facilityDescription: '',
+  featureCards: [],
+  scopeLabel: '',
+  scopeTitleBlue: '',
+  scopeTitleBlack: '',
+  scopeGrid: [],
+  agileEyebrow: '',
+  agileTitle: '',
+  agileBody: '',
+  agileHighlights: [],
+  ecosystemTitleBlack: '',
+  ecosystemTitleBlue: '',
+  ecosystemSteps: [],
+  stats: [],
 };
 
 function mediaUrl(media?: Media) {
@@ -328,20 +239,20 @@ function parseApplicationVersatilityDescription(html?: string | null): {
 
 function mapApiToPage(api: NonNullable<PilotPlantApiResponse['data']>): PilotPlantPageData {
   const meta = api.meta || {};
-  const base = { ...DEFAULT_PAGE };
+  const base: PilotPlantPageData = { ...EMPTY_PAGE };
 
   const heroBg = mediaUrl(meta.breadcrumb_image);
   if (heroBg) base.heroBackgroundImage = heroBg;
 
-  base.title = clean(api.title) || base.title;
-  base.heroTitle = clean(meta.hero_title) || base.heroTitle;
+  base.title = clean(api.title) ?? '';
+  base.heroTitle = clean(meta.hero_title) ?? '';
 
   // ===== innovation_detail_2 (CMS) =====
-  base.introLabel = clean(meta.hero_subtitle) || clean(meta.intro_label) || base.introLabel;
+  base.introLabel = clean(meta.hero_subtitle) || clean(meta.intro_label) || '';
 
   const heroDesc = htmlToPlainText(meta.hero_description);
   const shortDesc = clean(meta.short_summary_description);
-  base.introBody = heroDesc || shortDesc || clean(meta.intro_body) || base.introBody;
+  base.introBody = heroDesc || shortDesc || clean(meta.intro_body) || '';
 
   const heroImg = mediaUrl(meta.hero_image);
   const introImg = mediaUrl(meta.intro_image);
@@ -352,15 +263,15 @@ function mapApiToPage(api: NonNullable<PilotPlantApiResponse['data']>): PilotPla
   const ib = clean(meta.intro_heading_black);
   const iblue = clean(meta.intro_heading_blue);
   if (ib || iblue) {
-    base.introHeadingBlack = ib || base.introHeadingBlack;
-    base.introHeadingBlue = iblue || base.introHeadingBlue;
+    base.introHeadingBlack = ib || '';
+    base.introHeadingBlue = iblue || '';
   } else {
     const ht = clean(meta.hero_title);
     if (ht) {
       const m = ht.match(/^(.*?)(\s+to\s+.*)$/i);
       if (m) {
-        base.introHeadingBlack = m[1].trim() || base.introHeadingBlack;
-        base.introHeadingBlue = m[2].trim() || base.introHeadingBlue;
+        base.introHeadingBlack = m[1].trim() || '';
+        base.introHeadingBlue = m[2].trim() || '';
       } else {
         base.introHeadingBlack = ht;
         base.introHeadingBlue = '';
@@ -375,10 +286,10 @@ function mapApiToPage(api: NonNullable<PilotPlantApiResponse['data']>): PilotPla
 
   const facilitySplit = splitStarTitle(meta.pilot_plant_title);
   if (facilitySplit) {
-    base.facilityTitleBlack = facilitySplit.black || base.facilityTitleBlack;
-    base.facilityTitleBlue = facilitySplit.blue || base.facilityTitleBlue;
+    base.facilityTitleBlack = facilitySplit.black || '';
+    base.facilityTitleBlue = facilitySplit.blue || '';
   }
-  base.facilityDescription = clean(meta.pilot_plant_description) || base.facilityDescription;
+  base.facilityDescription = clean(meta.pilot_plant_description) || '';
 
   // Feature cards from CMS: pilot_plant_pages
   if (meta.pilot_plant_pages?.length) {
@@ -404,8 +315,8 @@ function mapApiToPage(api: NonNullable<PilotPlantApiResponse['data']>): PilotPla
   }
 
   // Scope / application versatility
-  base.scopeTitleBlack = clean(meta.application_versatility_title) || base.scopeTitleBlack;
-  base.scopeTitleBlue = clean(meta.application_versatility_subtitle) || base.scopeTitleBlue;
+  base.scopeTitleBlack = clean(meta.application_versatility_title) || '';
+  base.scopeTitleBlue = clean(meta.application_versatility_subtitle) || '';
 
   const scopeItems = meta.application_versatility_items;
   if (scopeItems?.title?.length) {
@@ -424,7 +335,7 @@ function mapApiToPage(api: NonNullable<PilotPlantApiResponse['data']>): PilotPla
         title,
       });
     }
-    if (grid.length) base.scopeGrid = grid;
+  if (grid.length) base.scopeGrid = grid;
   }
 
   const descParsed = parseApplicationVersatilityDescription(meta.application_versatility_description);
@@ -546,8 +457,8 @@ export const fetchPilotPlantLayoutPage = cache(async (slug: string) => {
 
   return {
     slug: 'pilot-plant',
-    title: DEFAULT_PAGE.title,
+    title: '',
     seo: {} as Record<string, unknown>,
-    page: { ...DEFAULT_PAGE },
+    page: { ...EMPTY_PAGE },
   };
 });
