@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import type { ProductData } from '@/fake-api/products';
+import Link from 'next/link';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -238,6 +239,35 @@ export default function ProductSpecificationsClient({ product }: ProductSpecific
                 </p>
               </div>
             )}
+
+            {/* Industries Support */}
+            {product.relatedIndustries && product.relatedIndustries.length > 0 ? (
+              <div className="mt-8">
+                <h3 className="text-xl md:text-2xl font-semibold text-black mb-4">
+                  Industries Support
+                </h3>
+                <div className="flex flex-wrap gap-3">
+                  {product.relatedIndustries.map((ind) => (
+                    ind.slug ? (
+                      <Link
+                        key={ind.id}
+                        href={ind.slug.startsWith('/') ? ind.slug : `/${ind.slug}`}
+                        className="inline-flex items-center px-3 py-1.5 rounded-full bg-[#F1FAFF] ring-1 ring-[#BFE5F7] text-[12px] md:text-sm font-semibold text-[#0A4A7A] transition-colors hover:bg-[#E6F6FF]"
+                      >
+                        {ind.title}
+                      </Link>
+                    ) : (
+                      <span
+                        key={ind.id}
+                        className="inline-flex items-center rounded-full border border-[#009FE8]/35 bg-white px-4 py-2 text-sm font-semibold text-[#0E233C]"
+                      >
+                        {ind.title}
+                      </span>
+                    )
+                  ))}
+                </div>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
