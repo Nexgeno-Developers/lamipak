@@ -176,7 +176,7 @@ export default function VideoBanner({
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             loading="eager"
           />
-          <div className="pointer-events-none absolute inset-0 bg-black/45" aria-hidden />
+          {/* <div className="pointer-events-none absolute inset-0 bg-black/45" aria-hidden /> */}
         </div>
       );
     }
@@ -289,15 +289,15 @@ export default function VideoBanner({
                 setPlayerReady(false);
                 setIsVideoPlaying(true);
               }}
-              className="cursor-pointer flex items-center justify-center transition-all group "
+              className="group flex cursor-pointer items-center justify-center rounded-full bg-white/40 p-5 transition lg:p-7"
               aria-label="Play video"
             >
               <Image
-                src="/play_icon_image.png"
+                src="/arrow_icon.png"
                 alt=""
-                width={100}
-                height={100}
-                className="group-hover:scale-110 transition-transform lg:w-[100px] w-[60px]"
+                width={72}
+                height={72}
+                className="transition-transform group-hover:scale-110 lg:h-[40px] lg:w-[40px] h-[25px] w-[25px]"
               />
             </button>
           </div>
@@ -314,15 +314,15 @@ export default function VideoBanner({
               setPlayerReady(false);
               setIsVideoPlaying(true);
             }}
-            className="cursor-pointer flex items-center justify-center transition-all group shadow-lg"
+            className="group flex cursor-pointer items-center justify-center rounded-full bg-black/30 p-5 shadow-lg backdrop-blur-[2px] transition hover:bg-black/40 lg:p-7"
             aria-label="Play video"
           >
             <Image
-              src="/play_icon_image.png"
+              src="/arrow_icon.png"
               alt=""
-              width={100}
-              height={100}
-              className="group-hover:scale-110 transition-transform lg:w-[100px] w-[60px]"
+              width={72}
+              height={72}
+              className="transition-transform group-hover:scale-110 lg:h-[78px] lg:w-[78px] h-[54px] w-[54px]"
             />
           </button>
         </div>
