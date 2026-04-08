@@ -80,7 +80,7 @@ export async function fetchProductCategoriesPage(slug: string) {
               id: String(item.id),
               title: formatBoldText(item.title),
               description: formatBoldText(item.short_summary_description || ''),
-              ctaLabel: formatBoldText('Technical specs'),
+              ctaLabel: formatBoldText('View Products'),
               href: `/${data.slug}/${item.slug}/`,
               image: item.short_summary_icon?.url || undefined,
             })),

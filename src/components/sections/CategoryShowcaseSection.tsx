@@ -110,51 +110,57 @@ function ShowcaseCard({ item }: { item: CategoryShowcaseItem }) {
 
   const inner = (
     <>
-      <div className="relative w-full h-[380px] bg-[#D9D9D9] overflow-hidden">
-        {item.image ? (
-          <Image
-            src={item.image}
-            alt={item.imageAlt || item.title}
-            width={500}
-            height={500}
-            className="object-contain  w-[250px] mx-auto"
-            sizes=""
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-[#009FE8]">
-            <Icon />
-          </div>
-        )}
-        <div className="absolute inset-0 bg-[#0000000a]" />
-        {/* <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/65 to-black/10" /> */}
-        <div className="absolute inset-x-0 bottom-0 h-[50%] backdrop-blur-[2px] bg-[#ffffff42]" />
-        <div className="absolute top-3 right-3 z-10 flex flex-col items-end gap-1">
+      <div className="relative flex h-full flex-col overflow-hidden rounded-[28px]">
+        {/* Top image tile */}
+        <div className="relative  overflow-hidden rounded-[22px] bg-[#D9D9D9]">
           {item.badge ? (
-            <span className="text-[10px] font-bold uppercase tracking-widest bg-white text-black px-2.5 py-1 rounded-md">
-              {item.badge}
-            </span>
+            <div className="absolute right-3 top-3 z-10">
+              <span className="rounded-md bg-white px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-black">
+                {item.badge}
+              </span>
+            </div>
           ) : null}
+
+          <div className="flex items-center justify-center px-4 pb-12">
+            {item.image ? (
+              <Image
+                src={item.image}
+                alt={item.imageAlt || item.title}
+                width={520}
+                height={520}
+                className="mx-auto h-[310px] w-auto object-contain object-top"
+                sizes=""
+              />
+            ) : (
+              <div className="flex h-[210px] w-full items-center justify-center text-[#009FE8]">
+                <Icon />
+              </div>
+            )}
+          </div>
         </div>
-        <div className="absolute inset-x-0 bottom-0 z-10 p-4 md:p-5">
-          <h3 className="text-[22px] md:text-[24px] font-bold uppercase tracking-tight mb-2 leading-none text-black">
+
+        {/* CTA pill */}
+        <div className="relative z-[999] top-[-35px] flex justify-center">
+          <span className="inline-flex min-h-[34px] items-center justify-center rounded-full bg-white px-6 text-[11px] font-bold uppercase tracking-widest text-[#0E233C]">
+            {item.ctaLabel || 'VIEW PRODUCTS'}
+          </span>
+        </div>
+
+        {/* Bottom blue panel */}
+        <div className="mt-[-50px] flex flex-1 flex-col rounded-t-[22px] bg-[#009FE8] px-6 pb-8 pt-10 text-center text-white relative z-10 ">
+          <h3 className="text-[18px] font-bold uppercase leading-tight tracking-wide md:text-[20px]">
             {item.title}
           </h3>
           <RichText
             html={item.description}
-            className="text-xs md:text-sm leading-relaxed text-black mb-3 line-clamp-3"
+            className="mx-auto mt-3 max-w-[22rem] text-xs leading-relaxed text-white/95 md:text-sm line-clamp-2"
           />
-          <div className="text-[11px] font-bold uppercase tracking-wider text-[#55C8FF]">
-            {item.ctaLabel}
-            <span className="inline-block ml-1" aria-hidden>
-              →
-            </span>
-          </div>
         </div>
       </div>
     </>
   );
 
-  const cardClass = `block h-full min-h-[280px] rounded-[14px] overflow-hidden bg-[#EDF0F1] text-left ${
+  const cardClass = `block h-full min-h-[280px] text-left ${
     isHighlight ? '' : ''
   }`;
 
@@ -190,7 +196,7 @@ export function CategoryShowcaseSection({ data }: { data: CategoryShowcaseSectio
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
           {data.items.map((item) => (
             <div key={item.id}>
               <ShowcaseCard item={item} />
