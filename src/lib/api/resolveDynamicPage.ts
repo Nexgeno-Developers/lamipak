@@ -35,7 +35,10 @@ import { fetchPilotPlantLayoutPage } from '@/lib/api/pilot_plant_layout';
 import { fetchInnovationsLayoutPage } from '@/lib/api/innovations_layout';
 import { fetchInsightsHubPage } from '@/lib/api/insights_layout';
 import { fetchInsightsListingPage } from '@/lib/api/insights_listing_layout';
-import { fetchInsightsArticleDetailPage } from '@/lib/api/insights_article_detail_layout';
+import {
+  fetchInsightsArticleDetailPage,
+  isInsightsArticleDetailPath,
+} from '@/lib/api/insights_article_detail_layout';
 import { fetchAboutUsLayout1Page } from '@/lib/api/about_us_layout_1';
 import { fetchAboutUsLayout2Page } from '@/lib/api/about_us_layout_2';
 import { fetchAboutUsLayout3Page } from '@/lib/api/about_us_layout_3';
@@ -320,6 +323,16 @@ async function resolveApiLayout(
       return {
         kind: 'api-layout',
         layout,
+        payload: page,
+        metadata: buildApiLayoutMetadata(page),
+      };
+    }
+    case 'default_post_detail': {
+      const page = await fetchInsightsArticleDetailPage(fullSlug);
+      if (!page) return null;
+      return {
+        kind: 'api-layout',
+        layout: 'insights_article_detail',
         payload: page,
         metadata: buildApiLayoutMetadata(page),
       };
@@ -655,6 +668,18 @@ export const resolveDynamicPage = cache(
           layout: 'insights_listing',
           payload: listing,
           metadata: buildApiLayoutMetadata(listing),
+        };
+      }
+    }
+
+    if (isInsightsArticleDetailPath(cleanSlug)) {
+      const detail = await fetchInsightsArticleDetailPage(cleanSlug);
+      if (detail) {
+        return {
+          kind: 'api-layout',
+          layout: 'insights_article_detail',
+          payload: detail,
+          metadata: buildApiLayoutMetadata(detail),
         };
       }
     }

@@ -12,6 +12,14 @@ export type RelatedArticleItem = {
   image?: string;
   imageAlt: string;
   href: string;
+  publishedAt?: string;
+};
+
+export type RightSideBlock = {
+  id: string;
+  image?: string;
+  imageAlt: string;
+  href?: string;
 };
 
 export type InsightsArticleDetailPageData = {
@@ -22,9 +30,17 @@ export type InsightsArticleDetailPageData = {
   heroImage?: string;
   /** Full article HTML from CMS. */
   bodyHtml: string;
-  relatedArticles: RelatedArticleItem[];
   /** Plain label for breadcrumb current segment. */
   breadcrumbLabel: string;
+  breadcrumbParentLabel?: string;
+  breadcrumbParentHref?: string;
+  authorName?: string;
+  authorAvatar?: string;
+  publishedAt?: string;
+  categories?: Array<{ label: string; href?: string }>;
+  summary?: string;
+  rightSideBlocks?: RightSideBlock[];
+  relatedPosts: RelatedArticleItem[];
 };
 
 type RelatedApi = {
@@ -36,6 +52,7 @@ type RelatedApi = {
   image?: Media;
   link?: string;
   slug?: string;
+  published_at?: string;
 };
 
 type ArticleDetailApiResponse = {
@@ -58,6 +75,60 @@ type ArticleDetailApiResponse = {
   };
 };
 
+type PostAuthorApi = {
+  id?: number | string;
+  name?: string;
+  email?: string;
+  profile_image?: Media;
+};
+
+type PostCategoryApi = {
+  id?: number | string;
+  name?: string;
+  title?: string;
+  slug?: string;
+  parent_id?: number | string | null;
+};
+
+type PostRightSideBlockApi = {
+  image?: Media;
+  url?: string | null;
+};
+
+type PostRelatedApi = {
+  title?: string;
+  slug?: string;
+  summary?: string | null;
+  featured_image?: Media;
+  published_at?: string;
+};
+
+type PostDetailApiResponse = {
+  data?: {
+    id?: number | string;
+    slug?: string;
+    auto_slug?: string[];
+    language?: string;
+    title?: string;
+    content?: string;
+    featured_image?: Media;
+    layout?: string;
+    is_active?: boolean | null;
+    author?: PostAuthorApi | null;
+    categories?: PostCategoryApi[] | null;
+    tags?: Array<Record<string, unknown>> | null;
+    meta?: {
+      right_side_blocks?: PostRightSideBlockApi[] | null;
+      summary?: string | null;
+    } | null;
+    seo?: Record<string, unknown> | null;
+    published_at?: string | null;
+    created_at?: string | null;
+    updated_at?: string | null;
+    related_posts?: PostRelatedApi[] | null;
+  };
+};
+
 const PLACEHOLDER = '/about_banner.jpg';
 
 function clean(s?: string | null) {
@@ -77,6 +148,31 @@ function toArray<T>(v: T | T[] | null | undefined): T[] {
 function stripHtml(value?: string | null): string {
   if (!value) return '';
   return value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function normalizeSlugPath(slug?: string | null): string {
+  return (slug || '').replace(/^\/+|\/+$/g, '');
+}
+
+function slugToHref(slug?: string | null): string | undefined {
+  const clean = normalizeSlugPath(slug);
+  return clean ? `/${clean}` : undefined;
+}
+
+function categoryLabel(category?: PostCategoryApi | null): string {
+  return clean(category?.title) || clean(category?.name) || '';
+}
+
+function buildPostHref(baseSlug: string, rawSlug: string | undefined, fallbackId: string): string {
+  const slug = clean(rawSlug);
+  if (!slug) return `${slugToHref(baseSlug) || '/insights'}#${fallbackId}`;
+  if (/^https?:\/\//i.test(slug)) return slug;
+  if (slug.startsWith('/')) return slug;
+
+  const base = normalizeSlugPath(baseSlug);
+  if (slug.startsWith('insights/')) return `/${slug}`;
+  if (base && slug.startsWith(base)) return `/${slug}`;
+  return base ? `/${base}/${slug}` : `/${slug}`;
 }
 
 function mapRelated(
@@ -105,6 +201,7 @@ function mapRelated(
     image: mediaUrl(raw.image),
     imageAlt: stripHtml(title) || 'Article',
     href,
+    publishedAt: raw.published_at || undefined,
   };
 }
 
@@ -121,7 +218,7 @@ const DEFAULT_PAGE: InsightsArticleDetailPageData = {
   heroImage: PLACEHOLDER,
   bodyHtml: DEFAULT_BODY,
   breadcrumbLabel: 'Market insights',
-  relatedArticles: [
+  relatedPosts: [
     {
       id: 'r1',
       category: 'Dairy',
@@ -186,7 +283,96 @@ function mapApiToPage(
     const mapped = related
       .map((r, idx) => mapRelated(r, idx, articleSlug))
       .filter(Boolean) as RelatedArticleItem[];
-    if (mapped.length) base.relatedArticles = mapped;
+    if (mapped.length) base.relatedPosts = mapped;
+  }
+
+  return base;
+}
+
+function mapPostToPage(
+  data: NonNullable<PostDetailApiResponse['data']>,
+  cleanSlug: string,
+): InsightsArticleDetailPageData {
+  const base: InsightsArticleDetailPageData = {
+    ...DEFAULT_PAGE,
+    relatedPosts: [],
+    rightSideBlocks: [],
+  };
+  const title = clean(data.title) || 'Article';
+  const summary = clean(data.meta?.summary);
+
+  base.titleMain = formatBoldText(title);
+  base.titleAccent = undefined;
+  base.bodyHtml = clean(data.content) || base.bodyHtml;
+  base.heroImage = mediaUrl(data.featured_image) || base.heroImage;
+  base.breadcrumbLabel = stripHtml(title).slice(0, 80) || base.breadcrumbLabel;
+  base.summary = summary || undefined;
+
+  if (data.author?.name) base.authorName = data.author.name;
+  const avatar = mediaUrl(data.author?.profile_image);
+  if (avatar) base.authorAvatar = avatar;
+  if (data.published_at) base.publishedAt = data.published_at;
+
+  const categories = (data.categories || []).filter(Boolean) as PostCategoryApi[];
+  if (categories.length) {
+    const mapped = categories
+      .map((c) => {
+        const label = categoryLabel(c);
+        if (!label) return null;
+        return {
+          label,
+          href: slugToHref(c.slug),
+        };
+      })
+      .filter(Boolean) as Array<{ label: string; href?: string }>;
+    if (mapped.length) base.categories = mapped;
+
+    const parent = categories.find((c) => c.parent_id == null) || categories[0];
+    if (parent) {
+      base.breadcrumbParentLabel = categoryLabel(parent) || undefined;
+      base.breadcrumbParentHref = slugToHref(parent.slug);
+    }
+  }
+
+  const rightBlocks = toArray(data.meta?.right_side_blocks as PostRightSideBlockApi[] | null);
+  if (rightBlocks.length) {
+    base.rightSideBlocks = rightBlocks
+      .map((block, idx) => {
+        const image = mediaUrl(block.image);
+        if (!image) return null;
+        return {
+          id: `ad-${idx + 1}`,
+          image,
+          imageAlt: `Sponsored ${idx + 1}`,
+          href: clean(block.url) || undefined,
+        } as RightSideBlock;
+      })
+      .filter(Boolean) as RightSideBlock[];
+  }
+
+  const related = toArray(data.related_posts);
+  if (related.length) {
+    const baseSlug = normalizeSlugPath(
+      (categories.find((c) => c.parent_id == null)?.slug || 'insights/articles') as string,
+    );
+    const mapped = related
+      .map((item, idx) => {
+        const relTitle = clean(item.title);
+        const excerpt = clean(item.summary);
+        if (!relTitle && !excerpt) return null;
+        const id = `rel-${idx + 1}`;
+        return {
+          id,
+          title: formatBoldText(relTitle || `Post ${idx + 1}`),
+          excerpt: formatBoldText(excerpt || relTitle || ''),
+          image: mediaUrl(item.featured_image),
+          imageAlt: relTitle || 'Post',
+          href: buildPostHref(baseSlug, item.slug, id),
+          publishedAt: item.published_at || undefined,
+        } as RelatedArticleItem;
+      })
+      .filter(Boolean) as RelatedArticleItem[];
+    if (mapped.length) base.relatedPosts = mapped;
   }
 
   return base;
@@ -211,9 +397,45 @@ export const fetchInsightsArticleDetailPage = cache(async (slug: string) => {
 
   const parts = cleanSlug.split('/').filter(Boolean);
   const articleSlug = parts.slice(2).join('/') || parts[2] || 'article';
+  const postSlug = parts[parts.length - 1] || articleSlug;
 
   const baseUrl = process.env.COMPANY_API_BASE_URL;
   if (baseUrl) {
+    try {
+      const res = await fetch(`${baseUrl}/v1/posts/${encodeURIComponent(postSlug)}`, {
+        cache: 'no-store',
+      });
+      if (res.ok) {
+        const payload = (await res.json()) as PostDetailApiResponse;
+        const data = payload.data;
+        if (data && data.layout === 'default_post_detail' && data.is_active !== false) {
+          const page = mapPostToPage(data, cleanSlug);
+          const seo = { ...(data.seo || {}) } as Record<string, any>;
+          if (!seo.description && page.summary) {
+            seo.description = page.summary;
+          }
+          if (!seo.title && data.title) {
+            seo.title = data.title;
+          }
+          const heroImage = mediaUrl(data.featured_image);
+          if (!seo.og_image && heroImage) {
+            seo.og_image = { url: heroImage };
+          }
+          if (!seo.twitter_image && heroImage) {
+            seo.twitter_image = { url: heroImage };
+          }
+          return {
+            slug: cleanSlug,
+            title: stripHtml(clean(data.title)) || 'Article',
+            seo,
+            page,
+          };
+        }
+      }
+    } catch {
+      /* fall through */
+    }
+
     try {
       const apiSlugPath = buildPageApiPath(cleanSlug);
       const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
@@ -232,6 +454,8 @@ export const fetchInsightsArticleDetailPage = cache(async (slug: string) => {
     } catch {
       /* defaults */
     }
+
+    return null;
   }
 
   return {

@@ -495,6 +495,8 @@ export const fetchInsightsListingPage = cache(async (slug: string, page: number 
     } catch {
       /* defaults */
     }
+
+    return null;
   }
 
   const def = DEFAULT_LISTINGS[kind];

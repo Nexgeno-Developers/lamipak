@@ -4,6 +4,23 @@ import { InsightsPageHero } from '@/components/insights/InsightsPageHero';
 import { RelatedArticleCard } from '@/components/insights/RelatedArticleCard';
 import type { InsightsArticleDetailPageData } from '@/lib/api/insights_article_detail_layout';
 import Image from 'next/image';
+import Link from 'next/link';
+
+function formatDateLabel(value?: string) {
+  if (!value) return undefined;
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return undefined;
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(d);
+}
+
+function primaryCategory(categories?: Array<{ label: string; href?: string }>) {
+  return categories?.[0];
+}
+
 function buildHeroTitleHtml(data: InsightsArticleDetailPageData): string {
   if (!data.titleAccent) return data.titleMain;
   return `${data.titleMain} <span class="text-[#9fdbff]">${data.titleAccent}</span>`;
@@ -11,6 +28,10 @@ function buildHeroTitleHtml(data: InsightsArticleDetailPageData): string {
 
 export default function InsightsArticleDetailPage({ data }: { data: InsightsArticleDetailPageData }) {
   const heroTitleHtml = buildHeroTitleHtml(data);
+  const publishedLabel = formatDateLabel(data.publishedAt);
+  const primaryCat = primaryCategory(data.categories);
+  const breadcrumbParentLabel = data.breadcrumbParentLabel || primaryCat?.label || 'Articles';
+  const breadcrumbParentHref = data.breadcrumbParentHref || primaryCat?.href || '/insights/articles';
 
   return (
     <main className="min-h-screen bg-[#f5f7f8]">
@@ -25,7 +46,7 @@ export default function InsightsArticleDetailPage({ data }: { data: InsightsArti
           <Breadcrumbs
             items={[
               { label: 'Insights', href: '/insights' },
-              { label: 'Articles', href: '/insights/articles' },
+              { label: breadcrumbParentLabel, href: breadcrumbParentHref },
               { label: data.breadcrumbLabel },
             ]}
           />
@@ -47,6 +68,58 @@ export default function InsightsArticleDetailPage({ data }: { data: InsightsArti
                     </>
                   ) : null}
                 </h1>
+                {data.summary ? (
+                  <p className="mt-4 text-base leading-relaxed text-black/70 md:text-lg">
+                    {data.summary}
+                  </p>
+                ) : null}
+                <div className="mt-5 flex flex-wrap items-center gap-3 text-sm text-black/60">
+                  {data.authorAvatar ? (
+                    <Image
+                      src={data.authorAvatar}
+                      alt={data.authorName || 'Author'}
+                      width={36}
+                      height={36}
+                      className="h-9 w-9 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#009FE8]/10 text-xs font-bold text-[#009FE8]">
+                      {data.authorName ? data.authorName.slice(0, 1).toUpperCase() : 'L'}
+                    </div>
+                  )}
+                  {data.authorName ? (
+                    <span className="font-semibold text-black">{data.authorName}</span>
+                  ) : null}
+                  {publishedLabel ? (
+                    <span className="text-black/40">•</span>
+                  ) : null}
+                  {publishedLabel ? <span>{publishedLabel}</span> : null}
+                  {data.categories?.length ? (
+                    <>
+                      <span className="text-black/40">•</span>
+                      <div className="flex flex-wrap items-center gap-2">
+                        {data.categories.map((cat) =>
+                          cat.href ? (
+                            <Link
+                              key={cat.href}
+                              href={cat.href}
+                              className="rounded-full border border-[#009FE8]/30 bg-[#009FE8]/10 px-3 py-1 text-xs font-semibold text-[#009FE8]"
+                            >
+                              {cat.label}
+                            </Link>
+                          ) : (
+                            <span
+                              key={cat.label}
+                              className="rounded-full border border-[#009FE8]/30 bg-[#009FE8]/10 px-3 py-1 text-xs font-semibold text-[#009FE8]"
+                            >
+                              {cat.label}
+                            </span>
+                          ),
+                        )}
+                      </div>
+                    </>
+                  ) : null}
+                </div>
               </header>
 
               {data.heroImage ? (
@@ -70,16 +143,50 @@ export default function InsightsArticleDetailPage({ data }: { data: InsightsArti
           </article>
 
           <aside className="lg:col-span-3">
-            <div className="sticky top-6 space-y-4">
-              <h2 className="text-lg font-bold text-black">Related articles</h2>
-              <div className="space-y-4">
-                {data.relatedArticles.map((item) => (
-                  <RelatedArticleCard key={item.id} item={item} />
-                ))}
+            {data.rightSideBlocks?.length ? (
+              <div className="sticky top-6 space-y-4">
+                <h2 className="text-sm font-bold uppercase tracking-[0.18em] text-black/60">
+                  Sponsored
+                </h2>
+                <div className="space-y-4">
+                  {data.rightSideBlocks.map((block) => {
+                    const card = (
+                      <div className="overflow-hidden rounded-[40px] bg-white p-3 shadow-sm ring-1 ring-black/5">
+                        {block.image ? (
+                          <Image
+                            src={block.image}
+                            alt={block.imageAlt}
+                            width={600}
+                            height={800}
+                            className="h-auto w-full rounded-[32px] object-cover"
+                          />
+                        ) : null}
+                      </div>
+                    );
+                    return block.href ? (
+                      <Link key={block.id} href={block.href} className="block">
+                        {card}
+                      </Link>
+                    ) : (
+                      <div key={block.id}>{card}</div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            ) : null}
           </aside>
         </div>
+
+        {data.relatedPosts?.length ? (
+          <section className="mt-16">
+            <h2 className="text-2xl font-bold text-black">Related posts</h2>
+            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {data.relatedPosts.map((item) => (
+                <RelatedArticleCard key={item.id} item={item} />
+              ))}
+            </div>
+          </section>
+        ) : null}
       </div>
       </div>
     </main>
