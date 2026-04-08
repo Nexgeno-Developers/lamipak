@@ -23,7 +23,10 @@ type ProductLayoutApiResponse = {
         industry?: string[];
       };
       relation_industries?: Array<{
+        id?: number | string;
         title?: string;
+        slug?: string;
+        short_summary_title?: string;
       }>;
       relation_type?: string;
       relation_featured?: string;
@@ -229,6 +232,19 @@ function mapApiDataToProduct(data: NonNullable<ProductLayoutApiResponse['data']>
   // SimilarProducts fall back to loading every mock slug, which is not the API list.
   const relatedProductCards = parseRelatedProducts(data.autofetch?.related_products, data.id);
 
+  const relatedIndustries =
+    meta.relation_industries
+      ?.map((ind, idx) => {
+        const title = ind.short_summary_title || ind.title;
+        if (!title) return null;
+        return {
+          id: String(ind.id ?? `rel-ind-${idx + 1}`),
+          title: stripHtml(title),
+          slug: ind.slug,
+        };
+      })
+      .filter(Boolean) as Array<{ id: string; title: string; slug?: string }> | undefined;
+
   // "Compatible With" uses only compatibility_description (see ProductSpecifications).
   // Do not duplicate features_items or relation_industries as a checklist here.
   return {
@@ -276,6 +292,7 @@ function mapApiDataToProduct(data: NonNullable<ProductLayoutApiResponse['data']>
     },
     seo: toProductSeo(data, slug),
     relatedProductCards,
+    relatedIndustries: relatedIndustries?.length ? relatedIndustries : undefined,
   };
 }
 

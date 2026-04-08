@@ -98,6 +98,12 @@ export interface ProductData {
     ctaText: string;
     ctaLink: string;
   };
+  /** Related industries from API `meta.relation_industries` (product layout). */
+  relatedIndustries?: Array<{
+    id: string;
+    title: string;
+    slug?: string;
+  }>;
   seo: ProductSEO;
 }
 

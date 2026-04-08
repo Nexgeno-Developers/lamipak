@@ -40,7 +40,7 @@ export default async function CommercialServices() {
  */
 function ServiceCard({ card }: { card: CommercialServiceCard }) {
   return (
-    <div className="bg-white rounded-[25px]  overflow-hidden transition-shadow duration-300">
+    <div className="bg-[#009de61a] rounded-[25px]  overflow-hidden transition-shadow duration-300">
       {/* Image */}
       <div className="relative aspect-[16/10] md:h-80 md:aspect-auto overflow-hidden rounded-t-[25px]">
         <Image

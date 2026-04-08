@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { fetchHomepageData } from '@/lib/api/home';
 import { getCanonicalUrl } from '@/config/site';
 import Hero from '@/components/home/Hero';
+import GlobalPresenceBanner from '@/components/home/GlobalPresenceBanner';
 import VideoBanner from '@/components/home/VideoBanner';
 import Approach from '@/components/home/Approach';
 import CommercialServices from '@/components/home/CommercialServices';
@@ -68,6 +69,7 @@ export default async function HomePage() {
         <Hero data={homepageData.hero} />
         
         <Approach />
+        <GlobalPresenceBanner />
         <VideoBanner prefetchedData={homepageData.videoBanner} />
         <CommercialServices />
         <LatestInsights />
