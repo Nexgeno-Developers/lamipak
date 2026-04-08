@@ -107,6 +107,13 @@ const CATEGORY_NOT_FOUND_METADATA: Metadata = {
   description: 'The requested category could not be found.',
 };
 
+const INSIGHTS_LAYOUT_BY_SLUG: Record<string, 'insights' | 'insights_listing'> = {
+  insights: 'insights',
+  'insights/articles': 'insights_listing',
+  'insights/webinars': 'insights_listing',
+  'insights/newsletter': 'insights_listing',
+};
+
 function buildApiLayoutMetadata(payload: {
   slug: string;
   title: string;
@@ -619,6 +626,12 @@ export const resolveDynamicPage = cache(
     const probe = await probePageLayout(cleanSlug);
     if (probe?.layout) {
       const resolved = await resolveApiLayout(probe.layout, cleanSlug);
+      if (resolved) return resolved;
+    }
+
+    const insightsLayout = INSIGHTS_LAYOUT_BY_SLUG[cleanSlug];
+    if (insightsLayout) {
+      const resolved = await resolveApiLayout(insightsLayout, cleanSlug);
       if (resolved) return resolved;
     }
 
