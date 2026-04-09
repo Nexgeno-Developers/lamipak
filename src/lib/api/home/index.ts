@@ -93,6 +93,7 @@ export type FAQData = {
 export type HomepageData = {
   hero: Hero;
   videoBanner: VideoBannerData;
+  globalPresenceBanner: GlobalPresenceBannerData;
   commercialServices: CommercialServicesData;
   productSustainability: ProductSustainabilityData;
   workInSustainability: WorkInSustainabilityData;
@@ -203,6 +204,12 @@ export type LatestPressReleaseData = {
   cards: PressReleaseCard[];
 };
 
+export type GlobalPresenceBannerData = {
+  title: string;
+  description: string;
+  backgroundImage: string;
+};
+
 export type CallToActionData = {
   heading: string;
   description: string;
@@ -241,6 +248,7 @@ type HomeMetaApi = {
   global_beverage_title?: string;
   global_beverage_description?: string;
   global_beverage_video_url?: string;
+  global_beverage_image?: MediaRef;
   faqs_items?: FaqsItemsApi;
 };
 
@@ -281,6 +289,14 @@ type LatestInsightApiItem = {
   category?: string | null;
 };
 
+type LatestNewsApiItem = {
+  id?: number;
+  title?: string;
+  slug?: string;
+  featured_image?: MediaRef;
+  summary?: string;
+};
+
 type HomeAutofetchApi = {
   services?: ServiceAutofetchItem[];
   marketing_services?: ServiceAutofetchItem[];
@@ -288,6 +304,7 @@ type HomeAutofetchApi = {
   sustainable_products?: SustainableProductAutofetchItem[];
   sustainabilities?: SustainabilityLinkItem[];
   latest_insights?: LatestInsightApiItem[] | LatestInsightApiItem | null;
+  latest_news?: LatestNewsApiItem[] | LatestNewsApiItem | null;
 };
 
 type HomePageApiResponse = {
@@ -305,13 +322,14 @@ type HomePageApiResponse = {
     };
     autofetch?: HomeAutofetchApi;
     latest_insights?: LatestInsightApiItem[] | LatestInsightApiItem | null;
+    latest_news?: LatestNewsApiItem[] | LatestNewsApiItem | null;
   };
 };
 
 // ==================== Helpers ====================
 
 const COMPANY_API_BASE_URL = process.env.COMPANY_API_BASE_URL || 'https://backend-lamipak.webtesting.pw/api';
-const HOME_AUTOFETCH = 'services,sustainable_products,sustainabilities,latest_insights';
+const HOME_AUTOFETCH = 'services,sustainable_products,sustainabilities,latest_insights,latest_news';
 const HOME_REVALIDATE_SECONDS = 300;
 
 function buildApiUrl(path: string): string {
@@ -436,6 +454,16 @@ function buildInsightsLink(slug?: string | null): string {
   return `/insights/articles/${raw}`;
 }
 
+
+function buildpressreleaseLink(slug?: string | null): string {
+  const raw = (slug || '').trim();
+  if (!raw) return '/media/press-releases';
+  if (/^https?:\/\//i.test(raw)) return raw;
+  if (raw.startsWith('/')) return raw;
+  if (raw.startsWith('insights/')) return `/${raw}`;
+  return `/media/press-releases/${raw}`;
+}
+
 // ==================== Fallback Data ====================
 
 const FALLBACK_APPROACH: ApproachData = {
@@ -484,33 +512,13 @@ const FALLBACK_APPROACH: ApproachData = {
 
 // FALLBACK_INSIGHTS removed: latest insights now mapped from API `latest_insights`.
 
-const FALLBACK_PRESS_RELEASES: LatestPressReleaseData = {
-  cards: [
-    {
-      id: '1',
-      category: 'Dairy Systems',
-      title: 'Lamipak Showcases Expanded End-to-End Packaging Solutions at Gulfood Manufacturing 2025',
-      image: '/latest_press_1.jpg',
-      imageAlt: 'Lamipak exhibition booth at Gulfood Manufacturing 2025',
-      link: '/',
-    },
-    {
-      id: '2',
-      category: 'Dairy Systems',
-      title: 'Lamipak Introduces New Fresh Milk Packaging Solutions',
-      image: '/latest_press_2.jpg',
-      imageAlt: 'Fresh milk packaging solutions',
-      link: '/',
-    },
-    {
-      id: '3',
-      category: 'Dairy Systems',
-      title: 'Lamipak Receives Certificate of Appreciation from PT. Lami Packaging Indonesia',
-      image: '/latest_press_3.jpg',
-      imageAlt: 'Certificate of appreciation',
-      link: '/',
-    },
-  ],
+// FALLBACK_PRESS_RELEASES removed: latest news now mapped from API `latest_news`.
+
+const DEFAULT_GLOBAL_PRESENCE_BANNER: GlobalPresenceBannerData = {
+  title: 'HOW GLOBAL BEVERAGE BRANDS SCALE WITH ASEPTIC PRECISION',
+  description:
+    'With advanced manufacturing facilities in China and Indonesia, Lamipak delivers high-quality packaging products to customers across more than 80 countries. Our global operations combine precision engineering, scalable production, and carton packaging solutions to support brands and companies worldwide.',
+  backgroundImage: '/global_bg.png',
 };
 
 const FALLBACK_CTA: CallToActionData = {
@@ -721,6 +729,49 @@ function mapLatestInsights(items: LatestInsightApiItem[] | LatestInsightApiItem 
   return cards.length ? { cards } : null;
 }
 
+function mapLatestNews(items: LatestNewsApiItem[] | LatestNewsApiItem | null | undefined): LatestPressReleaseData | null {
+  const list = toArray(items);
+  if (!list.length) return null;
+
+  const cards = list
+    .map((item, idx) => {
+      const id = item.id ?? idx + 1;
+      const title = cleanText(item.title);
+      const image = item.featured_image?.url?.trim();
+      const slug = item.slug?.trim();
+      if (!title || !image || !slug) return null;
+
+      return {
+        id: String(id),
+        category: 'NEWS',
+        title,
+        image,
+        imageAlt: title,
+        link: buildpressreleaseLink(slug),
+      } as PressReleaseCard;
+    })
+    .filter(Boolean) as PressReleaseCard[];
+
+  return cards.length ? { cards } : null;
+}
+
+function mapGlobalPresenceBanner(meta: HomeMetaApi | undefined): GlobalPresenceBannerData | null {
+  if (!meta) return null;
+  const title = cleanText(meta.global_beverage_title) || DEFAULT_GLOBAL_PRESENCE_BANNER.title;
+  const description =
+    cleanText(meta.global_beverage_description) || DEFAULT_GLOBAL_PRESENCE_BANNER.description;
+  const backgroundImage =
+    meta.global_beverage_image?.url?.trim() || DEFAULT_GLOBAL_PRESENCE_BANNER.backgroundImage;
+
+  if (!title && !description && !backgroundImage) return null;
+
+  return {
+    title,
+    description,
+    backgroundImage,
+  };
+}
+
 function mapVideoBanner(meta: HomeMetaApi | undefined): VideoBannerData | null {
   if (!meta?.global_beverage_video_url?.trim()) return null;
 
@@ -778,6 +829,10 @@ export const fetchHomepageData = cache(async (): Promise<HomepageData | null> =>
     const latestInsightsMapped = mapLatestInsights(
       autofetch.latest_insights ?? data.latest_insights,
     );
+    const latestPressReleaseMapped = mapLatestNews(
+      autofetch.latest_news ?? data.latest_news,
+    );
+    const globalPresenceMapped = mapGlobalPresenceBanner(meta);
 
     const seoMerged = data.seo?.title || data.seo?.description
       ? {
@@ -791,11 +846,12 @@ export const fetchHomepageData = cache(async (): Promise<HomepageData | null> =>
     return {
       hero: heroMapped ?? { slides: [], categories: [] },
       videoBanner: videoMapped ?? { title: '', preTitle: '', ctaText: '', ctaLink: '/' },
+      globalPresenceBanner: globalPresenceMapped ?? DEFAULT_GLOBAL_PRESENCE_BANNER,
       commercialServices: commercialMapped ?? { cards: [] },
       productSustainability: productMapped ?? { products: [] },
       workInSustainability: workMapped ?? { cards: [] },
       faq: faqMapped ?? { items: [] },
-      latestPressRelease: FALLBACK_PRESS_RELEASES,
+      latestPressRelease: latestPressReleaseMapped ?? { cards: [] },
       latestInsights: latestInsightsMapped ?? { cards: [] },
       approach: FALLBACK_APPROACH,
       innovationInPackaging: { cards: [], exploreMoreLink: '/' },
