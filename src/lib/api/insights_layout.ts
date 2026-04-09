@@ -18,7 +18,11 @@ export type InsightsHubData = {
   title: string;
   /** Hero banner image (e.g. CMS `meta.banner_images.url`). */
   heroBackgroundImage?: string;
+  /** Plain label for breadcrumbs. */
+  breadcrumbLabel?: string;
   pageIntro?: string;
+  /** Dynamic sections when API returns `post_block_categories`. */
+  sections?: InsightsHubSection[];
   articlesSectionTitle: string;
   articlesSectionSubtitle?: string;
   articles: InsightItem[];
@@ -31,6 +35,16 @@ export type InsightsHubData = {
   newsletterSectionSubtitle?: string;
   newsletter: InsightItem[];
   newsletterViewAllHref: string;
+};
+
+export type InsightsHubSection = {
+  id: string;
+  title: string;
+  subtitle?: string;
+  items: InsightItem[];
+  viewAllHref?: string;
+  viewAllLabel?: string;
+  variant: 'articles' | 'webinar' | 'newsletter';
 };
 
 type InsightItemApi = {
@@ -101,6 +115,11 @@ function mediaUrl(media?: Media) {
 
 function clean(s?: string | null) {
   return (s ?? '').trim();
+}
+
+function stripHtml(value?: string | null): string {
+  if (!value) return '';
+  return value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
 function normalizeSlugPath(value?: string | null): string {
@@ -199,6 +218,13 @@ function classifyCategory(
   if (slug.includes('webinar') || name.includes('webinar')) return 'webinars';
   if (slug.includes('newsletter') || name.includes('newsletter')) return 'newsletter';
   return null;
+}
+
+function variantFromCategory(category: PostBlockCategoryApi): 'articles' | 'webinar' | 'newsletter' {
+  const mapped = classifyCategory(category);
+  if (mapped === 'webinars') return 'webinar';
+  if (mapped === 'newsletter') return 'newsletter';
+  return 'articles';
 }
 
 function mapPostBlockItem(
@@ -355,6 +381,7 @@ function mapApiToHub(data: NonNullable<InsightsHubApiResponse['data']>): Insight
   if (heroBg) base.heroBackgroundImage = heroBg;
 
   base.title = formatBoldText(clean(data.title) || base.title);
+  base.breadcrumbLabel = stripHtml(clean(data.title)) || stripHtml(base.title) || 'Insights';
   base.pageIntro = clean(meta.page_intro) || clean(data.content) || base.pageIntro;
 
   const hasArticlesHeading = Boolean(clean(meta.articles_heading));
@@ -387,6 +414,33 @@ function mapApiToHub(data: NonNullable<InsightsHubApiResponse['data']>): Insight
   }
 
   if (hasPostCategories) {
+    const pageBaseHref = `/${normalizeSlugPath(data.slug || 'insights')}`;
+    const sections = postCategories
+      .map((category, index) => {
+        const name = clean(category.name) || `Section ${index + 1}`;
+        const description = clean(category.description);
+        const categoryHref = buildCategoryHref(category.slug, pageBaseHref);
+        const posts = toArray(category.posts)
+          .map((post, idx) => mapPostBlockItem(post, idx, category.slug, categoryHref))
+          .filter(Boolean) as InsightItem[];
+
+        const variant = variantFromCategory(category);
+
+        return {
+          id: String(category.id ?? `cat-${index + 1}`),
+          title: formatBoldText(name),
+          subtitle: description || undefined,
+          items: posts,
+          viewAllHref: categoryHref || undefined,
+          variant,
+        } as InsightsHubSection;
+      })
+      .filter((section) => section.items.length > 0);
+
+    if (sections.length) {
+      base.sections = sections;
+    }
+
     postCategories.forEach((category) => {
       const kind = classifyCategory(category);
       if (!kind) return;
@@ -479,8 +533,6 @@ function buildPageApiPath(slug: string) {
 
 export const fetchInsightsHubPage = cache(async (slug: string) => {
   const cleanSlug = slug.replace(/^\/+|\/+$/g, '');
-  if (cleanSlug !== 'insights') return null;
-
   const baseUrl = process.env.COMPANY_API_BASE_URL;
   if (baseUrl) {
     try {
@@ -504,6 +556,8 @@ export const fetchInsightsHubPage = cache(async (slug: string) => {
     }
     return null;
   }
+
+  if (cleanSlug !== 'insights') return null;
 
   return {
     slug: 'insights',

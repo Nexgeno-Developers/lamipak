@@ -5,6 +5,7 @@ import NewsletterSubscription from '@/components/home/NewsletterSubscription';
 import type { InsightsHubData } from '@/lib/api/insights_layout';
 import { InsightCard } from '@/components/insights/InsightCard';
 import { InsightsPageHero } from '@/components/insights/InsightsPageHero';
+import { plainTextFromMaybeHtml } from '@/lib/htmlText';
 
 function ViewAllButton({
   href,
@@ -13,6 +14,7 @@ function ViewAllButton({
   href: string;
   label: string;
 }) {
+  if (!href) return null;
   return (
     <div className="flex justify-center mt-10 md:mt-12">
       <Link
@@ -26,86 +28,86 @@ function ViewAllButton({
 }
 
 export default function InsightsHubPage({ data }: { data: InsightsHubData }) {
+  const breadcrumbLabel =
+    data.breadcrumbLabel || plainTextFromMaybeHtml(data.title) || 'Insights';
+
+  const fallbackSections = [
+    {
+      id: 'articles',
+      title: data.articlesSectionTitle,
+      subtitle: data.articlesSectionSubtitle,
+      items: data.articles,
+      viewAllHref: data.articlesViewAllHref,
+      variant: 'articles' as const,
+      viewAllLabel: 'View all articles',
+    },
+    {
+      id: 'webinars',
+      title: data.webinarsSectionTitle,
+      subtitle: data.webinarsSectionSubtitle,
+      items: data.webinars,
+      viewAllHref: data.webinarsViewAllHref,
+      variant: 'webinar' as const,
+      viewAllLabel: 'View all webinars',
+    },
+    {
+      id: 'newsletter',
+      title: data.newsletterSectionTitle,
+      subtitle: data.newsletterSectionSubtitle,
+      items: data.newsletter,
+      viewAllHref: data.newsletterViewAllHref,
+      variant: 'newsletter' as const,
+      viewAllLabel: 'View all newsletters',
+    },
+  ];
+
+  const sections = (data.sections && data.sections.length ? data.sections : fallbackSections).filter(
+    (section) => section.items && section.items.length > 0,
+  );
+
   return (
     <main className="min-h-screen bg-white">
       <InsightsPageHero titleHtml={data.title} backgroundImage={data.heroBackgroundImage} />
 
       <section className="bg-gray-50">
         <div className="container mx-auto px-4 py-4">
-          <Breadcrumbs items={[{ label: 'Insights' }]} />
+          <Breadcrumbs items={[{ label: breadcrumbLabel }]} />
         </div>
       </section>
 
-   
+      {sections.map((section, index) => {
+        const plainTitle = plainTextFromMaybeHtml(section.title);
+        const viewAllLabel =
+          section.viewAllLabel ||
+          (plainTitle ? `View all ${plainTitle.toLowerCase()}` : 'View all');
 
-      {/* Articles */}
-      {data.articles.length > 0 ? (
-        <section className="bg-gray-50 py-12 md:py-16">
-          <div className="container mx-auto px-4">
-            <h2
-              className="text-center text-2xl md:text-5xl font-bold text-black"
-              dangerouslySetInnerHTML={{ __html: data.articlesSectionTitle }}
-            />
-            {data.articlesSectionSubtitle ? (
-              <p className="mx-auto mt-3 max-w-2xl text-center text-sm md:text-base text-black">
-                {data.articlesSectionSubtitle}
-              </p>
-            ) : null}
-            <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
-              {data.articles.map((item) => (
-                <InsightCard key={item.id} item={item} variant="articles" />
-              ))}
-            </div>
-            <ViewAllButton href={data.articlesViewAllHref} label="View all articles" />
-          </div>
-        </section>
-      ) : null}
+        const sectionBg =
+          section.variant === 'webinar' ? 'bg-[#C5E3F4]' : 'bg-gray-50';
 
-      {/* Webinars */}
-      {data.webinars.length > 0 ? (
-        <section className="bg-[#C5E3F4] py-12 md:py-16">
-          <div className="container mx-auto px-4">
-            <h2
-              className="text-center text-2xl md:text-5xl font-bold text-black"
-              dangerouslySetInnerHTML={{ __html: data.webinarsSectionTitle }}
-            />
-            {data.webinarsSectionSubtitle ? (
-              <p className="mx-auto mt-3 max-w-2xl text-center text-sm md:text-base text-black/70">
-                {data.webinarsSectionSubtitle}
-              </p>
-            ) : null}
-            <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
-              {data.webinars.map((item) => (
-                <InsightCard key={item.id} item={item} variant="webinar" />
-              ))}
+        return (
+          <section key={section.id} className={`${sectionBg} py-12 md:py-16`}>
+            <div className="container mx-auto px-4">
+              <h2
+                className="text-center text-2xl md:text-5xl font-bold text-black"
+                dangerouslySetInnerHTML={{ __html: section.title }}
+              />
+              {section.subtitle ? (
+                <p className="mx-auto mt-3 max-w-2xl text-center text-sm md:text-base text-black/80">
+                  {section.subtitle}
+                </p>
+              ) : null}
+              <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
+                {section.items.map((item) => (
+                  <InsightCard key={item.id} item={item} variant={section.variant} />
+                ))}
+              </div>
+              {section.viewAllHref ? (
+                <ViewAllButton href={section.viewAllHref} label={viewAllLabel} />
+              ) : null}
             </div>
-            <ViewAllButton href={data.webinarsViewAllHref} label="View all webinars" />
-          </div>
-        </section>
-      ) : null}
-
-      {/* Newsletter */}
-      {data.newsletter.length > 0 ? (
-        <section className="bg-gray-50 py-12 md:py-16">
-          <div className="container mx-auto px-4">
-            <h2
-              className="text-center text-2xl md:text-5xl font-bold text-black"
-              dangerouslySetInnerHTML={{ __html: data.newsletterSectionTitle }}
-            />
-            {data.newsletterSectionSubtitle ? (
-              <p className="mx-auto mt-3 max-w-2xl text-center text-sm md:text-base text-black">
-                {data.newsletterSectionSubtitle}
-              </p>
-            ) : null}
-            <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
-              {data.newsletter.map((item) => (
-                <InsightCard key={item.id} item={item} variant="newsletter" />
-              ))}
-            </div>
-            <ViewAllButton href={data.newsletterViewAllHref} label="View all newsletters" />
-          </div>
-        </section>
-      ) : null}
+          </section>
+        );
+      })}
 
       <CallToAction />
       <NewsletterSubscription />
