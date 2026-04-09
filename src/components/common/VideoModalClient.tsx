@@ -85,24 +85,22 @@ export default function VideoModalClient({
         ) : (
           <div className="absolute inset-0 bg-gray-200" />
         )}
-        <div className="absolute inset-0 bg-[#0E233C] opacity-35" />
+        <div className="pointer-events-none absolute inset-0 bg-black/25" aria-hidden />
 
         <span className="absolute inset-0 flex items-center justify-center">
-          <span className="">
-            <span className="">
-              <Image
-                src="/play_icon_image.png"
-                alt=""
-                width={100}
-                height={100}
-                className="w-[70px] h-[70px]"
-                aria-hidden
-              />
-            </span>
+          <span className="group flex cursor-pointer items-center justify-center rounded-full bg-white/40 p-4 transition md:p-5">
+            <Image
+              src="/arrow_icon.png"
+              alt=""
+              width={72}
+              height={72}
+              className="h-6 w-6 transition-transform group-hover:scale-110 md:h-8 md:w-8"
+              aria-hidden
+            />
           </span>
         </span>
 
-        <span className="sr-only">Play video</span>
+        <span className="sr-only">Play video{modalTitle ? `: ${modalTitle}` : ''}</span>
       </button>
 
       {open && (
@@ -111,7 +109,7 @@ export default function VideoModalClient({
           role="dialog"
           aria-modal="true"
           aria-labelledby={titleId}
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/20 p-4 backdrop-blur-[2px]"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/65 p-4 backdrop-blur-[5px]"
         >
           <button
             type="button"
@@ -120,49 +118,52 @@ export default function VideoModalClient({
             aria-label="Close video"
           />
 
-          <div className="relative z-[101] w-full max-w-5xl rounded-2xl bg-black overflow-hidden border border-white/20 shadow-[0_20px_80px_rgba(0,0,0,0.45)]">
-            <div className="flex items-center justify-between px-4 py-3 bg-[#0E233C]">
-              <p id={titleId} className="text-white text-sm font-semibold">
-                {modalTitle}
-              </p>
+          <div className="relative z-[101] flex w-full max-w-5xl flex-col gap-3">
+            <p id={titleId} className="sr-only">
+              {modalTitle}
+            </p>
+            <div className="flex justify-end">
               <button
                 type="button"
-                onClick={() => setOpen(false)}
-                className="text-white/80 hover:text-white transition-colors cursor-pointer"
-                aria-label="Close"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setOpen(false);
+                }}
+                className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/35 bg-[#0E233C]/95 text-white shadow-[0_8px_30px_rgba(0,0,0,0.35)] backdrop-blur-sm transition hover:border-[#009FE8] hover:bg-[#009FE8]"
+                aria-label="Close video"
               >
-                ✕
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
             </div>
 
-            <div className="relative w-full bg-black">
-              <div className="w-full aspect-video">
-                {!playerReady && (
-                  <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/60">
-                    <div className="h-10 w-10 rounded-full border-2 border-white/40 border-t-white animate-spin" />
-                  </div>
-                )}
-                {isFileVideo ? (
-                  <video
-                    src={videoUrl}
-                    controls
-                    autoPlay
-                    preload="auto"
-                    className="w-full h-full"
-                    onCanPlay={() => setPlayerReady(true)}
-                  />
-                ) : (
-                  <iframe
-                    src={videoUrl}
-                    className="w-full h-full"
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    allowFullScreen
-                    title="Video"
-                    loading="eager"
-                    onLoad={() => setPlayerReady(true)}
-                  />
-                )}
-              </div>
+            <div className="relative aspect-video w-full overflow-hidden rounded-[18px] border border-white/20 bg-black shadow-[0_20px_80px_rgba(0,0,0,0.45)]">
+              {!playerReady && (
+                <div className="absolute inset-0 z-[5] flex items-center justify-center bg-black/60">
+                  <div className="h-10 w-10 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                </div>
+              )}
+              {isFileVideo ? (
+                <video
+                  src={videoUrl}
+                  controls
+                  autoPlay
+                  preload="auto"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  onCanPlay={() => setPlayerReady(true)}
+                />
+              ) : (
+                <iframe
+                  src={videoUrl}
+                  className="absolute inset-0 h-full w-full"
+                  allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                  allowFullScreen
+                  title={modalTitle}
+                  loading="eager"
+                  onLoad={() => setPlayerReady(true)}
+                />
+              )}
             </div>
           </div>
         </div>
