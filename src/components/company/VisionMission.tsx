@@ -41,7 +41,7 @@ export default function VisionMission({ data }: VisionMissionProps) {
   };
 
   return (
-    <section className="relative w-full lg:min-h-[800px] min-h-[400px] md:min-h-[900px] overflow-hidden">
+    <section className="relative w-full h-full overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 lg:block hidden">
         {data.backgroundImage ? (
@@ -58,7 +58,7 @@ export default function VisionMission({ data }: VisionMissionProps) {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 h-full lg:pt-[800px] pt-[00px] flex flex-col">
+      <div className="relative z-10 h-full lg:py-[40px] py-[20px] flex flex-col">
         {/* Upper Section - Empty space for image visibility */}
         <div className="flex-1" />
 
