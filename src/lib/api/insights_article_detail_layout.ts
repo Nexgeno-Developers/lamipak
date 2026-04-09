@@ -154,6 +154,19 @@ function normalizeSlugPath(slug?: string | null): string {
   return (slug || '').replace(/^\/+|\/+$/g, '');
 }
 
+function parentSlugPath(slug: string): string | null {
+  const parts = normalizeSlugPath(slug).split('/').filter(Boolean);
+  if (parts.length <= 1) return null;
+  return parts.slice(0, -1).join('/');
+}
+
+function titleFromSegment(segment: string): string {
+  return segment
+    .replace(/[-_]+/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+    .trim();
+}
+
 function slugToHref(slug?: string | null): string | undefined {
   const clean = normalizeSlugPath(slug);
   return clean ? `/${clean}` : undefined;
@@ -342,6 +355,18 @@ function mapPostToPage(
     }
   }
 
+  const parentPath = parentSlugPath(cleanSlug);
+  if (parentPath) {
+    const parentHref = slugToHref(parentPath);
+    if (
+      !base.breadcrumbParentHref ||
+      normalizeSlugPath(base.breadcrumbParentHref) !== normalizeSlugPath(parentPath)
+    ) {
+      base.breadcrumbParentHref = parentHref;
+      base.breadcrumbParentLabel = titleFromSegment(parentPath.split('/').pop() || parentPath);
+    }
+  }
+
   const rightBlocks = toArray(data.meta?.right_side_blocks as PostRightSideBlockApi[] | null);
   if (rightBlocks.length) {
     base.rightSideBlocks = rightBlocks
@@ -360,9 +385,11 @@ function mapPostToPage(
 
   const related = toArray(data.related_posts);
   if (related.length) {
-    const baseSlug = normalizeSlugPath(
-      (categories.find((c) => c.parent_id == null)?.slug || 'insights/articles') as string,
-    );
+    const baseSlug =
+      parentPath ||
+      normalizeSlugPath(
+        (categories.find((c) => c.parent_id == null)?.slug || 'insights/articles') as string,
+      );
     const mapped = related
       .map((item, idx) => {
         const relTitle = clean(item.title);
