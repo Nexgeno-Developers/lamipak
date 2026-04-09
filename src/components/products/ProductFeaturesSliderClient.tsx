@@ -63,7 +63,7 @@ export default function ProductFeaturesSliderClient({
           <SwiperSlide key={feature.id}>
             <div className="bg-[#EDF0F1] rounded-[50px] overflow-hidden flex flex-col p-[15px] h-full">
               {/* Feature Image */}
-              <div className="relative w-full overflow-hidden bg-gray-100 rounded-[50px] h-[350px]">
+              <div className="relative w-full overflow-hidden bg-gray-100 rounded-[50px] lg:h-[350px] h-[250px]">
                 <Image
                   src={feature.image}
                   alt={feature.imageAlt}
@@ -77,7 +77,7 @@ export default function ProductFeaturesSliderClient({
               {/* Feature Content */}
               <div className="p-4 md:p-6 flex-1 flex flex-col">
                 {/* Title */}
-                <h3 className="text-2xl md:text-[24px] font-bold text-black mb-1 mt-3">
+                <h3 className="text-[18px] md:text-[24px] font-bold text-black mb-1 mt-3">
                   {feature.title}
                 </h3>
 

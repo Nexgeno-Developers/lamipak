@@ -123,4 +123,14 @@ body {
   body .product-sustainability-series-swiper {
     padding-bottom: 0rem !important;
 }
+body .product-features-swiper {
+  padding-bottom: 0rem;
+}
+body .swiper-button-prev-similar {
+  right: 2rem !important;
+  top: -2.6rem !important;
+}
+body .swiper-button-prev-similar, body .swiper-button-next-similar {
+  top: -2.6rem !important;
+}
 }

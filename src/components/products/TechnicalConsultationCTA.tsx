@@ -49,7 +49,7 @@ export default function TechnicalConsultationCTA({ data }: TechnicalConsultation
           </div>
           
           {/* Content - Centered in one row */}
-          <div className="relative z-10 lg:py-[180px] py-[30px]">
+          <div className="relative z-10 lg:py-[180px] py-[30px] lg:px-4 px-8">
             <div className="max-w-5xl mx-auto text-center ">
               {/* Optional Top Label */}
               {label && (
@@ -59,14 +59,14 @@ export default function TechnicalConsultationCTA({ data }: TechnicalConsultation
               )}
 
               {/* Main Heading/Question Text */}
-              <h2 className="text-[22px] md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight text-center whitespace-pre-line lg:pb-[50px] pb-[20px] tracking-tight">
+              <h2 className="capitalize text-[22px] md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight text-center whitespace-pre-line lg:pb-[50px] pb-[20px] tracking-tight">
                 {mainText}
               </h2>
 
               {/* CTA Link */}
               <Link
                 href={data.ctaLink}
-                className="inline-flex items-center text-white text-base md:text-lg lg:text-xl font-bold tracking-wider hover:text-[#009FE8] transition-colors group whitespace-nowrap"
+                className="lg:inline-flex items-center text-white text-base md:text-lg lg:text-xl font-bold tracking-wider hover:text-[#009FE8] transition-colors group whitespace-nowrap"
               >
                 {data.ctaText}
                 <svg

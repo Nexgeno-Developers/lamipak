@@ -110,7 +110,7 @@ export default function ProductDetailLayout({
         <ProductSpecifications product={product} />
 
         {productVideoUrl ? (
-          <div className="container mx-auto px-4 pb-4 pt-4 md:pb-12 md:pt-8">
+          <div className="container mx-auto px-4 pb-0 pt-0 md:pb-12 md:pt-8">
          
             <div className="overflow-hidden rounded-[50px]">
               <VideoBanner

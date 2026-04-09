@@ -81,7 +81,7 @@ export default function ProductSpecificationsClient({ product }: ProductSpecific
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start">
           {/* Left Side - Product Visualization */}
-          <div className="flex flex-col items-center lg:items-start bg-white rounded-[50px] p-8">
+          <div className="flex flex-col items-center lg:items-start bg-white rounded-[50px] p-4 sm:p-6 md:p-8">
             <div className="relative w-full max-w-md mx-auto">
               <Swiper
                 modules={[Pagination, Navigation]}
@@ -163,23 +163,23 @@ export default function ProductSpecificationsClient({ product }: ProductSpecific
 
           {/* Right Side - Product Information */}
           <div>
-            <h2 className="text-[24px] md:text-[30px] lg:text-[36px] font-bold text-black pb-2">
+            <h2 className="text-[22px] sm:text-[24px] md:text-[30px] lg:text-[36px] font-bold text-black pb-2">
               {product.title}
             </h2>
 
             {product.description && (
-              <p className="text-base md:text-base text-black mb-8 leading-relaxed">
+              <p className="text-sm sm:text-base md:text-base text-black mb-6 md:mb-8 leading-relaxed">
                 {product.description}
               </p>
             )}
 
             {/* Size & Formats (clickable) */}
             {variants.length > 0 && (
-              <div className="mb-12">
-                <h3 className="text-xl md:text-2xl font-semibold text-black mb-4">
+              <div className="mb-8 md:mb-12">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-black mb-3 md:mb-4">
                   Size & Formats
                 </h3>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-2 sm:gap-3">
                   {variants.map((size) => {
                     const isActive = activeVariant === size;
                     const hasImage = !!imagesByVariant[size];
@@ -189,7 +189,7 @@ export default function ProductSpecificationsClient({ product }: ProductSpecific
                         type="button"
                         onClick={() => onSelectVariant(size)}
                         className={[
-                          'cursor-pointer px-12 py-2 rounded-full text-base md:text-lg font-medium transition-colors',
+                          'cursor-pointer px-5 sm:px-8 md:px-12 py-2 rounded-full text-sm sm:text-base md:text-lg font-medium transition-colors',
                           isActive
                             ? 'bg-[#009FE8] text-white border border-[#009FE8]'
                             : 'border border-[#009FE8] text-[#000] hover:bg-[#009FE8]/10',
@@ -234,7 +234,7 @@ export default function ProductSpecificationsClient({ product }: ProductSpecific
                 <h3 className="text-xl md:text-2xl font-semibold text-black mb-4">
                   Compatible With
                 </h3>
-                <p className="text-base md:text-base text-black mb-4 leading-relaxed">
+                <p className="text-sm md:text-base text-black mb-4 leading-relaxed">
                   {product.compatibilityDescription}
                 </p>
               </div>
