@@ -72,3 +72,49 @@ body {
 body {
   background-color: #f9fafb !important;
 }
+
+.articals_detials h1
+{
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+.articals_detials h2
+{
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.articals_detials h3
+{
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+
+.articals_detials h4
+{
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.articals_detials h1,
+.articals_detials h2,
+.articals_detials h3,
+.articals_detials h4,
+.articals_detials h5,
+.articals_detials h6
+{
+  margin-bottom: 7px;
+}
+.articals_detials p,
+.articals_detials ul,
+.articals_detials li,
+.articals_detials ol
+{
+  margin-bottom: 15px;
+}

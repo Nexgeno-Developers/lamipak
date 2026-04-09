@@ -53,7 +53,7 @@ export default function InsightsArticleDetailPage({ data }: { data: InsightsArti
         </div>
       </section>
 
-<div className="bg-gray-50 lg:py-24 py-12">
+<div className="bg-gray-50 lg:py-20 py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
           <article className="lg:col-span-9">
@@ -137,7 +137,7 @@ export default function InsightsArticleDetailPage({ data }: { data: InsightsArti
 
               <RichText
                 html={data.bodyHtml}
-                className="prose prose-lg max-w-none text-gray-800 prose-headings:font-bold prose-headings:text-black prose-p:leading-relaxed prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-3 leading-[30px]"
+                className="articals_detials prose prose-lg max-w-none text-black prose-headings:font-bold prose-headings:text-black prose-p:leading-relaxed prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-3 leading-[28px]"
               />
             </div>
           </article>

@@ -12,7 +12,7 @@ export function RelatedArticleCard({ item }: { item: RelatedArticleItem }) {
             alt={item.imageAlt}
             height={1000}
             width={1000}
-            className="object-cover rounded-[50px] h-[160px] object-top"
+            className="object-cover rounded-[50px] h-[220px] object-top"
           />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-[#B7D7EA]/50 to-[#009FE8]/15" />
@@ -23,21 +23,19 @@ export function RelatedArticleCard({ item }: { item: RelatedArticleItem }) {
           <p className="text-xs font-bold uppercase tracking-wide text-black">{item.category}</p>
         ) : null}
         <h3
-          className="mt-1 text-sm font-bold leading-snug text-[#009FE8] line-clamp-2"
+          className="text-base md:text-[20px] font-bold text-[#009FE8] leading-snug line-clamp-2"
           dangerouslySetInnerHTML={{ __html: item.title }}
         />
         <p
-          className="mt-2 text-xs leading-relaxed text-black/80 line-clamp-3"
+          className="mt-2 text-sm md:text-[15px] text-black leading-relaxed flex-1 line-clamp-3"
           dangerouslySetInnerHTML={{ __html: item.excerpt }}
         />
         <Link
           href={item.href}
-          className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-black hover:text-[#009FE8] transition-colors"
+          className="mt-2 text-sm md:text-[15px] capitalize font-bold text-black hover:text-[#009FE8] transition-colors inline-flex items-center gap-1"
         >
           Read more
-          <span className="text-[#009FE8]" aria-hidden>
-            →
-          </span>
+         
         </Link>
       </div>
     </article>

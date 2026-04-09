@@ -40,11 +40,11 @@ export function InsightCard({
 
       <div className="mt-4 flex flex-1 flex-col pt-4 pb-4 px-3">
         <h3
-          className="text-base md:text-[20px] font-bold text-[#009FE8] leading-snug"
+          className="text-base md:text-[20px] font-bold text-[#009FE8] leading-snug line-clamp-2"
           dangerouslySetInnerHTML={{ __html: item.title }}
         />
         <p
-          className="mt-2 text-sm md:text-[15px] text-black leading-relaxed flex-1 line-clamp-4"
+          className="mt-2 text-sm md:text-[15px] text-black leading-relaxed flex-1 line-clamp-3"
           dangerouslySetInnerHTML={{ __html: item.description }}
         />
         <div className="mt-2 pt-1">
