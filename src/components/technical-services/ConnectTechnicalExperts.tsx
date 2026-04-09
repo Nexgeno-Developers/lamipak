@@ -94,7 +94,7 @@ export default function ConnectTechnicalExperts({
   };
 
   return (
-    <section className="bg-gray-50 py-4 md:py-8 lg:py-12">
+    <section className="bg-gray-50 py-4 md:py-8 lg:py-24">
       <div className="container mx-auto px-4">
         {/* Section Heading */}
         {heading ? (

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import type { OnePackOneCodeLandingSectionData } from '@/lib/api/product_category_layout_4';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -170,7 +170,7 @@ export default function OnePackOneCodeLandingSectionClient({
           <HeroBreadcrumbs items={data.breadcrumbs} />
         </div>
 
-      <section className="bg-gray-50 pb-12">
+      <section className="bg-gray-50 pb-0 pt-12">
         <div className="container mx-auto px-4">
           <div className="mt-10 pb-6 grid grid-cols-2 sm:grid-cols-5 gap-3 md:gap-4">
             {data.tabs.map((tab) => (
@@ -195,17 +195,23 @@ export default function OnePackOneCodeLandingSectionClient({
             ))}
           </div>
         </div>
-
-        <div className="container w-full px-4 mx-auto">
-          <div className="lg:mt-12 mt-8 lg:space-y-20 space-y-10 w-full">
-            {data.features.map((f, idx) => (
-              <FeatureBlock key={f.id} feature={f} reverse={idx % 2 === 1} />
-            ))}
-          </div>
-        </div>
       </section>
 
-<div className="pb-4 md:pb-12 md:pt-12 pt-4">
+
+      {data.features.map((f, idx) => {
+        const isSecondBg = idx % 2 === 1;
+        return (
+          <Fragment key={f.id}>
+            <section className={isSecondBg ? 'bg-[#009de61a]' : 'bg-gray-50'}>
+              <div className="container w-full px-4 mx-auto py-10 md:py-14 lg:py-24">
+                <FeatureBlock feature={f} reverse={idx % 2 === 1} />
+              </div>
+            </section>
+          </Fragment>
+        );
+      })}
+
+<div className="">
 {videoUrl ? (
         <VideoBanner
           prefetchedData={{
