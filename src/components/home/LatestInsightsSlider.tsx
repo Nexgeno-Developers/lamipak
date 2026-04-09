@@ -153,7 +153,7 @@ function InsightCard({ card }: { card: InsightCard }) {
         </div>
 
         {/* Content - Blue Background */}
-        <div className="bg-[#009FE8] p-4 md:p-6">
+        <div className="bg-[#009FE8] p-4 md:p-6 flex flex-col">
           {/* Category and Date */}
           <div className="flex items-center justify-between mb-3">
             <span className="text-white text-sm md:text-base font-medium uppercase tracking-wide">
@@ -165,7 +165,7 @@ function InsightCard({ card }: { card: InsightCard }) {
           </div>
 
           {/* Title */}
-          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white leading-tight">
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white leading-snug line-clamp-2 min-h-[56px] md:min-h-[64px] lg:min-h-[76px]">
             {card.title}
           </h3>
         </div>
