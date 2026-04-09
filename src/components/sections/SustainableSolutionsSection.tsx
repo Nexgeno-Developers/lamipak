@@ -48,6 +48,11 @@ export function SustainableSolutionsSection({
             </>
           )}
 
+        </div>
+      </section>
+
+      <section className="bg-gray-50 py-12 md:py-20">
+        <div className="container mx-auto px-4">
           {data.items.length > 0 && (
             <div className="space-y-12 md:space-y-16">
               {data.items.map((item, idx) => {
