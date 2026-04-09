@@ -51,6 +51,7 @@ type InsightsHubApiResponse = {
     content?: string;
     layout?: string;
     meta?: {
+      breadcrumb_image?: Media;
       banner_images?: Media;
       page_intro?: string;
       articles_heading?: string;
@@ -66,6 +67,7 @@ type InsightsHubApiResponse = {
       articles_items?: unknown;
       webinars_items?: unknown;
       newsletter_items?: unknown;
+      post_block_categories?: PostBlockCategoryApi[] | PostBlockCategoryApi | null;
     };
     seo?: Record<string, unknown>;
     autofetch?: {
@@ -76,6 +78,22 @@ type InsightsHubApiResponse = {
   };
 };
 
+type PostBlockPostApi = {
+  id?: number | string;
+  title?: string;
+  slug?: string;
+  featured_image?: Media;
+  summary?: string | null;
+};
+
+type PostBlockCategoryApi = {
+  id?: number | string;
+  name?: string;
+  slug?: string;
+  description?: string | null;
+  posts?: PostBlockPostApi[] | PostBlockPostApi | null;
+};
+
 function mediaUrl(media?: Media) {
   const url = media?.url;
   return typeof url === 'string' && url.trim() ? url : undefined;
@@ -83,6 +101,10 @@ function mediaUrl(media?: Media) {
 
 function clean(s?: string | null) {
   return (s ?? '').trim();
+}
+
+function normalizeSlugPath(value?: string | null): string {
+  return clean(value).replace(/^\/+|\/+$/g, '');
 }
 
 function toArray<T>(v: T | T[] | null | undefined): T[] {
@@ -136,6 +158,66 @@ function mapItem(
     imageAlt: title,
     href,
     subcategory: sub,
+  };
+}
+
+function buildCategoryHref(slug: string | null | undefined, fallback: string): string {
+  const raw = clean(slug);
+  if (!raw) return fallback;
+  if (/^https?:\/\//i.test(raw)) return raw;
+  if (raw.startsWith('/')) return raw;
+  return `/${raw.replace(/^\/+/, '')}`;
+}
+
+function buildPostHref(
+  categorySlug: string | null | undefined,
+  postSlug: string | null | undefined,
+  fallbackBase: string,
+): string {
+  const post = clean(postSlug);
+  if (!post) return fallbackBase;
+  if (/^https?:\/\//i.test(post)) return post;
+  if (post.startsWith('/')) return post;
+
+  const base = normalizeSlugPath(categorySlug);
+  if (base) {
+    if (post.startsWith(base)) return `/${post}`;
+    return `/${base}/${post}`;
+  }
+
+  const basePath = fallbackBase.replace(/\/+$/, '');
+  return `${basePath}/${post}`;
+}
+
+function classifyCategory(
+  category: PostBlockCategoryApi,
+): 'articles' | 'webinars' | 'newsletter' | null {
+  const slug = normalizeSlugPath(category.slug).toLowerCase();
+  const name = clean(category.name).toLowerCase();
+
+  if (slug.includes('article') || name.includes('article')) return 'articles';
+  if (slug.includes('webinar') || name.includes('webinar')) return 'webinars';
+  if (slug.includes('newsletter') || name.includes('newsletter')) return 'newsletter';
+  return null;
+}
+
+function mapPostBlockItem(
+  post: PostBlockPostApi,
+  idx: number,
+  categorySlug: string | null | undefined,
+  fallbackBase: string,
+): InsightItem | null {
+  const title = clean(post.title);
+  if (!title) return null;
+  const id = String(post.id ?? `post-${idx}`);
+  const description = clean(post.summary);
+  return {
+    id,
+    title: formatBoldText(title),
+    description: formatBoldText(description) || formatBoldText(title),
+    image: mediaUrl(post.featured_image),
+    imageAlt: title,
+    href: buildPostHref(categorySlug, post.slug, fallbackBase),
   };
 }
 
@@ -269,11 +351,18 @@ function mapApiToHub(data: NonNullable<InsightsHubApiResponse['data']>): Insight
   const meta = data.meta || {};
   const base: InsightsHubData = { ...DEFAULT_HUB };
 
-  const heroBg = mediaUrl(meta.banner_images);
+  const heroBg = mediaUrl(meta.breadcrumb_image) || mediaUrl(meta.banner_images);
   if (heroBg) base.heroBackgroundImage = heroBg;
 
   base.title = formatBoldText(clean(data.title) || base.title);
   base.pageIntro = clean(meta.page_intro) || clean(data.content) || base.pageIntro;
+
+  const hasArticlesHeading = Boolean(clean(meta.articles_heading));
+  const hasWebinarsHeading = Boolean(clean(meta.webinars_heading));
+  const hasNewsletterHeading = Boolean(clean(meta.newsletter_heading));
+  const hasArticlesViewAll = Boolean(clean(meta.articles_view_all_path));
+  const hasWebinarsViewAll = Boolean(clean(meta.webinars_view_all_path));
+  const hasNewsletterViewAll = Boolean(clean(meta.newsletter_view_all_path));
 
   base.articlesSectionTitle = formatBoldText(clean(meta.articles_heading) || base.articlesSectionTitle);
   base.articlesSectionSubtitle = clean(meta.articles_subheading) || base.articlesSectionSubtitle;
@@ -289,6 +378,75 @@ function mapApiToHub(data: NonNullable<InsightsHubApiResponse['data']>): Insight
   const nv = clean(meta.newsletter_view_all_path);
   if (nv) base.newsletterViewAllHref = nv.startsWith('/') ? nv : `/${nv}`;
 
+  const postCategories = toArray(meta.post_block_categories);
+  const hasPostCategories = postCategories.length > 0;
+  if (hasPostCategories) {
+    base.articles = [];
+    base.webinars = [];
+    base.newsletter = [];
+  }
+
+  if (hasPostCategories) {
+    postCategories.forEach((category) => {
+      const kind = classifyCategory(category);
+      if (!kind) return;
+
+      const name = clean(category.name);
+      const description = clean(category.description);
+      const categoryHref = buildCategoryHref(
+        category.slug,
+        kind === 'articles'
+          ? base.articlesViewAllHref
+          : kind === 'webinars'
+            ? base.webinarsViewAllHref
+            : base.newsletterViewAllHref,
+      );
+
+      const posts = toArray(category.posts)
+        .map((post, idx) => mapPostBlockItem(post, idx, category.slug, categoryHref))
+        .filter(Boolean) as InsightItem[];
+
+      if (kind === 'articles') {
+        if (!hasArticlesHeading && name) {
+          base.articlesSectionTitle = formatBoldText(name);
+        }
+        if (!base.articlesSectionSubtitle && description) {
+          base.articlesSectionSubtitle = description;
+        }
+        if (!hasArticlesViewAll && category.slug) {
+          base.articlesViewAllHref = categoryHref;
+        }
+        base.articles = posts;
+      }
+
+      if (kind === 'webinars') {
+        if (!hasWebinarsHeading && name) {
+          base.webinarsSectionTitle = formatBoldText(name);
+        }
+        if (!base.webinarsSectionSubtitle && description) {
+          base.webinarsSectionSubtitle = description;
+        }
+        if (!hasWebinarsViewAll && category.slug) {
+          base.webinarsViewAllHref = categoryHref;
+        }
+        base.webinars = posts;
+      }
+
+      if (kind === 'newsletter') {
+        if (!hasNewsletterHeading && name) {
+          base.newsletterSectionTitle = formatBoldText(name);
+        }
+        if (!base.newsletterSectionSubtitle && description) {
+          base.newsletterSectionSubtitle = description;
+        }
+        if (!hasNewsletterViewAll && category.slug) {
+          base.newsletterViewAllHref = categoryHref;
+        }
+        base.newsletter = posts;
+      }
+    });
+  }
+
   const fromArticles =
     toArray(data.autofetch?.articles).length > 0
       ? toArray(data.autofetch?.articles)
@@ -302,9 +460,11 @@ function mapApiToHub(data: NonNullable<InsightsHubApiResponse['data']>): Insight
       ? toArray(data.autofetch?.newsletter)
       : parseMetaItems(meta.newsletter_items);
 
-  if (fromArticles.length) base.articles = mapItems(fromArticles, 'article', '/insights/articles', 3);
-  if (fromWebinars.length) base.webinars = mapItems(fromWebinars, 'webinar', '/insights/webinars', 3);
-  if (fromNews.length) base.newsletter = mapItems(fromNews, 'news', '/insights/newsletter', 3);
+  if (!hasPostCategories) {
+    if (fromArticles.length) base.articles = mapItems(fromArticles, 'article', '/insights/articles', 3);
+    if (fromWebinars.length) base.webinars = mapItems(fromWebinars, 'webinar', '/insights/webinars', 3);
+    if (fromNews.length) base.newsletter = mapItems(fromNews, 'news', '/insights/newsletter', 3);
+  }
 
   return base;
 }
@@ -329,7 +489,8 @@ export const fetchInsightsHubPage = cache(async (slug: string) => {
       if (res.ok) {
         const payload = (await res.json()) as InsightsHubApiResponse;
         const data = payload.data;
-        if (data && data.layout === 'insights') {
+        const layout = data?.layout;
+        if (data && (layout === 'insights' || layout === 'insights_n_media')) {
           return {
             slug: data.slug || 'insights',
             title: data.title || 'Insights',
@@ -339,8 +500,9 @@ export const fetchInsightsHubPage = cache(async (slug: string) => {
         }
       }
     } catch {
-      /* fall through to defaults */
+      /* fall through */
     }
+    return null;
   }
 
   return {

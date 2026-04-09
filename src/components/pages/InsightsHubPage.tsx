@@ -39,67 +39,73 @@ export default function InsightsHubPage({ data }: { data: InsightsHubData }) {
    
 
       {/* Articles */}
-      <section className="bg-gray-50 py-12 md:py-16">
-        <div className="container mx-auto px-4">
-          <h2
-            className="text-center text-2xl md:text-5xl font-bold text-black"
-            dangerouslySetInnerHTML={{ __html: data.articlesSectionTitle }}
-          />
-          {data.articlesSectionSubtitle ? (
-            <p className="mx-auto mt-3 max-w-2xl text-center text-sm md:text-base text-black">
-              {data.articlesSectionSubtitle}
-            </p>
-          ) : null}
-          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
-            {data.articles.map((item) => (
-              <InsightCard key={item.id} item={item} variant="articles" />
-            ))}
+      {data.articles.length > 0 ? (
+        <section className="bg-gray-50 py-12 md:py-16">
+          <div className="container mx-auto px-4">
+            <h2
+              className="text-center text-2xl md:text-5xl font-bold text-black"
+              dangerouslySetInnerHTML={{ __html: data.articlesSectionTitle }}
+            />
+            {data.articlesSectionSubtitle ? (
+              <p className="mx-auto mt-3 max-w-2xl text-center text-sm md:text-base text-black">
+                {data.articlesSectionSubtitle}
+              </p>
+            ) : null}
+            <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
+              {data.articles.map((item) => (
+                <InsightCard key={item.id} item={item} variant="articles" />
+              ))}
+            </div>
+            <ViewAllButton href={data.articlesViewAllHref} label="View all articles" />
           </div>
-          <ViewAllButton href={data.articlesViewAllHref} label="View all articles" />
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       {/* Webinars */}
-      <section className="bg-[#C5E3F4] py-12 md:py-16">
-        <div className="container mx-auto px-4">
-          <h2
-            className="text-center text-2xl md:text-5xl font-bold text-black"
-            dangerouslySetInnerHTML={{ __html: data.webinarsSectionTitle }}
-          />
-          {data.webinarsSectionSubtitle ? (
-            <p className="mx-auto mt-3 max-w-2xl text-center text-sm md:text-base text-black/70">
-              {data.webinarsSectionSubtitle}
-            </p>
-          ) : null}
-          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
-            {data.webinars.map((item) => (
-              <InsightCard key={item.id} item={item} variant="webinar" />
-            ))}
+      {data.webinars.length > 0 ? (
+        <section className="bg-[#C5E3F4] py-12 md:py-16">
+          <div className="container mx-auto px-4">
+            <h2
+              className="text-center text-2xl md:text-5xl font-bold text-black"
+              dangerouslySetInnerHTML={{ __html: data.webinarsSectionTitle }}
+            />
+            {data.webinarsSectionSubtitle ? (
+              <p className="mx-auto mt-3 max-w-2xl text-center text-sm md:text-base text-black/70">
+                {data.webinarsSectionSubtitle}
+              </p>
+            ) : null}
+            <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
+              {data.webinars.map((item) => (
+                <InsightCard key={item.id} item={item} variant="webinar" />
+              ))}
+            </div>
+            <ViewAllButton href={data.webinarsViewAllHref} label="View all webinars" />
           </div>
-          <ViewAllButton href={data.webinarsViewAllHref} label="View all webinars" />
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       {/* Newsletter */}
-      <section className="bg-gray-50 py-12 md:py-16">
-        <div className="container mx-auto px-4">
-          <h2
-            className="text-center text-2xl md:text-5xl font-bold text-black"
-            dangerouslySetInnerHTML={{ __html: data.newsletterSectionTitle }}
-          />
-          {data.newsletterSectionSubtitle ? (
-            <p className="mx-auto mt-3 max-w-2xl text-center text-sm md:text-base text-black">
-              {data.newsletterSectionSubtitle}
-            </p>
-          ) : null}
-          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
-            {data.newsletter.map((item) => (
-              <InsightCard key={item.id} item={item} variant="newsletter" />
-            ))}
+      {data.newsletter.length > 0 ? (
+        <section className="bg-gray-50 py-12 md:py-16">
+          <div className="container mx-auto px-4">
+            <h2
+              className="text-center text-2xl md:text-5xl font-bold text-black"
+              dangerouslySetInnerHTML={{ __html: data.newsletterSectionTitle }}
+            />
+            {data.newsletterSectionSubtitle ? (
+              <p className="mx-auto mt-3 max-w-2xl text-center text-sm md:text-base text-black">
+                {data.newsletterSectionSubtitle}
+              </p>
+            ) : null}
+            <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
+              {data.newsletter.map((item) => (
+                <InsightCard key={item.id} item={item} variant="newsletter" />
+              ))}
+            </div>
+            <ViewAllButton href={data.newsletterViewAllHref} label="View all newsletters" />
           </div>
-          <ViewAllButton href={data.newsletterViewAllHref} label="View all newsletters" />
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       <CallToAction />
       <NewsletterSubscription />

@@ -117,12 +117,14 @@ const PLACEHOLDER_IMG = '/about_banner.jpg';
 const LISTING_ROUTES: Record<string, InsightsListingKind> = {
   'insights/articles': 'articles',
   'insights/webinars': 'webinars',
+  'insights/webinar': 'webinars',
   'insights/newsletter': 'newsletter',
 };
 
 function inferKindFromSlug(cleanSlug: string): InsightsListingKind | null {
   if (cleanSlug.startsWith('insights/articles')) return 'articles';
   if (cleanSlug.startsWith('insights/webinars')) return 'webinars';
+  if (cleanSlug.startsWith('insights/webinar')) return 'webinars';
   if (cleanSlug.startsWith('insights/newsletter')) return 'newsletter';
   return null;
 }

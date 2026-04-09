@@ -118,6 +118,7 @@ function isInsightsListingPath(cleanSlug: string): boolean {
   return (
     cleanSlug.startsWith('insights/articles') ||
     cleanSlug.startsWith('insights/webinars') ||
+    cleanSlug.startsWith('insights/webinar') ||
     cleanSlug.startsWith('insights/newsletter')
   );
 }
@@ -353,6 +354,16 @@ async function resolveApiLayout(
       return {
         kind: 'api-layout',
         layout,
+        payload: page,
+        metadata: buildApiLayoutMetadata(page),
+      };
+    }
+    case 'insights_n_media': {
+      const page = await fetchInsightsHubPage(fullSlug);
+      if (!page) return null;
+      return {
+        kind: 'api-layout',
+        layout: 'insights',
         payload: page,
         metadata: buildApiLayoutMetadata(page),
       };
