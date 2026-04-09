@@ -108,7 +108,7 @@ export function SustainableSolutionsSection({
                     </div>
                   </div>
                 </section>
-                <div className="h-[50px] w-full bg-white" aria-hidden />
+                <div className="h-[70px] w-full bg-white" aria-hidden />
               </Fragment>
             );
           })}
