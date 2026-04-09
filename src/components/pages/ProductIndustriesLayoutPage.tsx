@@ -4,6 +4,7 @@ import type { ProductIndustriesPageData } from '@/lib/api/product_industries_lay
 import { RichText } from '@/components/common/RichText';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import IndustriesFeaturedCarousel from '@/components/industries/IndustriesFeaturedCarousel';
+import { formatBoldText } from '@/lib/htmlText';
 
 export default function ProductIndustriesLayoutPage({ data }: { data: ProductIndustriesPageData }) {
   return (
@@ -45,9 +46,12 @@ export default function ProductIndustriesLayoutPage({ data }: { data: ProductInd
       {data.industries.length > 0 ? (
         <section className="bg-[#f8f8f8] py-8 md:py-16 lg:py-20">
           <div className="container mx-auto px-4">
-            <h2 className="lg:mb-10 mb-6 text-center text-[22px] font-bold md:mb-14 md:text-4xl lg:text-5xl text-black">
-              <span className="text-[#009FE8]">Industrial</span> Segments
-            </h2>
+            <h2
+              className="lg:mb-10 mb-6 text-center text-[22px] font-bold md:mb-14 md:text-4xl lg:text-5xl text-black"
+              dangerouslySetInnerHTML={{
+                __html: formatBoldText(data.industriesTitle || '*Industrial* Segments'),
+              }}
+            />
             <div className="grid grid-cols-1 gap-6 md:gap-10 sm:grid-cols-2 lg:grid-cols-3">
               {data.industries.map((item) => (
                 <Link

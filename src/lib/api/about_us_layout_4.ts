@@ -35,6 +35,7 @@ type AboutUsLayout4ApiResponse = {
         description?: string[];
       };
       ethical_title?: string;
+      ethical_subtitle?: string;
       ethical_banner?: Media;
       ethical_tagline?: string;
       ethical_url?: string;
@@ -229,7 +230,7 @@ export async function fetchAboutUsLayout4Page(slug: string) {
     if (meta.ethical_title) {
       detailSections.push({
         layout: 'centerPanel',
-        eyebrow: meta.ethical_title,
+        subtitle: meta.ethical_subtitle || '',
         title: meta.ethical_title,
         imageSrc: mediaUrl(meta.ethical_banner) || '',
         imageAlt: meta.ethical_title,

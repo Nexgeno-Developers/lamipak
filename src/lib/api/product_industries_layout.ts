@@ -17,6 +17,7 @@ type ProductIndustriesApiResponse = {
       insights_image?: Media;
       insights_navigation_url?: string;
       insights_description?: string;
+      industries_segments_title?: string;
     };
     seo?: Record<string, unknown>;
     autofetch?: {
@@ -76,6 +77,7 @@ export type ProductIndustriesPageData = {
   title: string;
   heroBackgroundImage?: string;
   heroSubtitle?: string;
+  industriesTitle?: string;
   insights: ProductIndustriesInsights | null;
   industries: ProductIndustriesIndustry[];
   featuredProducts: ProductIndustriesFeaturedProduct[];
@@ -143,6 +145,8 @@ export const fetchProductIndustriesLayoutPage = cache(async (slug: string) => {
       const meta = data.meta || {};
       const heroBg = mediaUrl(meta.breadcrumb_image);
       const heroSubtitle = cleanMeta(meta.breadcrumb_subtitle);
+      const industriesTitle =
+        cleanMeta(meta.industries_segments_title) || '*Industrial* Segments';
 
       const insightsImage = mediaUrl(meta.insights_image);
       const insightsTitle = cleanMeta(meta.insights_title);
@@ -216,6 +220,7 @@ export const fetchProductIndustriesLayoutPage = cache(async (slug: string) => {
         title: data.title,
         heroBackgroundImage: heroBg,
         heroSubtitle,
+        industriesTitle,
         insights,
         industries,
         featuredProducts,
