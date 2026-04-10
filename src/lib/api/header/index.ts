@@ -32,6 +32,8 @@ type CompanyProfileApiResponse = {
 
 const HEADER_MENU_GROUP_ID = process.env.HEADER_MENU_GROUP_ID || '1';
 const HEADER_MENU_ENDPOINT = `/v1/menus/groups/${HEADER_MENU_GROUP_ID}`;
+const TOP_BAR_MENU_GROUP_ID = process.env.TOP_BAR_MENU_GROUP_ID || '6';
+const TOP_BAR_MENU_ENDPOINT = `/v1/menus/groups/${TOP_BAR_MENU_GROUP_ID}`;
 const COMPANY_PROFILE_ENDPOINT = process.env.COMPANY_PROFILE_ENDPOINT || '/v1/companies/1';
 const HEADER_REVALIDATE_SECONDS = 300;
 const COMPANY_API_DOMAIN =
@@ -73,6 +75,13 @@ function toRoutePath(path: string): string {
   return cleaned ? `/${cleaned}` : '/';
 }
 
+function toHref(path: string): string {
+  const raw = path.trim();
+  if (raw === '#' || raw === '') return '#';
+  if (/^https?:\/\//i.test(raw)) return raw;
+  return toRoutePath(raw);
+}
+
 function mapMenuItems(items: HeaderMenuItemApi[]): NavigationItem[] {
   return items
     .filter((item) => item.status)
@@ -80,7 +89,7 @@ function mapMenuItems(items: HeaderMenuItemApi[]): NavigationItem[] {
     .map((item) => ({
       id: String(item.id),
       label: item.name,
-      href: toRoutePath(item.url),
+      href: toHref(item.url),
       children: item.children?.length ? mapMenuItems(item.children) : undefined,
     }));
 }
@@ -154,6 +163,29 @@ export async function fetchHeaderData(): Promise<HeaderData> {
       image: branding?.logo || DEFAULT_HEADER_DATA.logo.image,
     },
   };
+}
+
+export async function fetchTopBarMenu(): Promise<NavigationItem[] | null> {
+  const url = buildCompanyApiUrl(TOP_BAR_MENU_ENDPOINT);
+  if (!url) return null;
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: { Accept: 'application/json' },
+      next: { revalidate: HEADER_REVALIDATE_SECONDS },
+    });
+
+    if (!response.ok) return null;
+
+    const payload = (await response.json()) as HeaderMenuApiResponse;
+    const items = payload?.data?.items;
+    if (!Array.isArray(items) || items.length === 0) return [];
+
+    return mapMenuItems(items);
+  } catch {
+    return null;
+  }
 }
 
 export type { HeaderData, NavigationItem };

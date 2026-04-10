@@ -80,11 +80,11 @@ export default function Hero({ data }: HeroProps) {
     const activeButton = categoryButtonRefs.current[currentSlide];
     if (!container || !activeButton) return;
 
-    // Keep active pill visible with safe left padding (avoid clipping on edge).
-    const nextLeft = activeButton.offsetLeft - 19;
-    container.scrollTo({
-      left: Math.max(0, nextLeft),
+    // Keep active pill fully visible in the horizontal rail.
+    activeButton.scrollIntoView({
       behavior: 'smooth',
+      inline: 'nearest',
+      block: 'nearest',
     });
   }, [currentSlide]);
 
@@ -173,7 +173,7 @@ export default function Hero({ data }: HeroProps) {
             <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 min-w-0">
               <div
                 ref={categoryScrollerRef}
-                className="flex items-center gap-3 sm:gap-2 md:gap-3 overflow-x-auto pb-2 scrollbar-hide flex-1 min-w-0 pl-1 pr-2"
+                className="flex items-center gap-3 sm:gap-2 md:gap-3 overflow-x-auto pb-2 scrollbar-hide flex-1 min-w-0 pl-2 pr-2"
               >
                 {data.categories.map((category) => (
                   <button
@@ -182,7 +182,7 @@ export default function Hero({ data }: HeroProps) {
                       categoryButtonRefs.current[category.slideIndex] = el;
                     }}
                     onClick={(e) => handleCategoryClick(category.slideIndex, e)}
-                    className={`flex-shrink-0 px-3 py-[6px] rounded-full border text-sm md:text-[14px] font-light transition-all whitespace-nowrap cursor-pointer ${
+                    className={`flex-shrink-0 w-max px-3 py-[6px] rounded-full border text-sm md:text-[14px] font-light transition-all whitespace-nowrap cursor-pointer ${
                       currentSlide === category.slideIndex
                         ? 'border border-[#009FE8] text-white bg-[#009FE8] font-semibold'
                         : 'text-white/90 hover:text-white '
