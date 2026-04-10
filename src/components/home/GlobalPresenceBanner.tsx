@@ -13,7 +13,7 @@ export default async function GlobalPresenceBanner() {
   if (!title && !description) return null;
 
   return (
-    <section className="relative overflow-hidden lg:my-24 mb-12 bg-gray-50 py-6">
+    <section className="relative overflow-hidden bg-gray-50 py-6">
       <div className="absolute inset-0">
         <Image
           src={backgroundImage}
@@ -25,7 +25,7 @@ export default async function GlobalPresenceBanner() {
         />
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 py-4 text-center md:py-16 lg:py-20">
+      <div className="relative z-10 container mx-auto px-4 py-4 text-center md:py-16 lg:py-[150px]">
         <h2 className="text-xl font-bold uppercase tracking-wide text-white md:text-4xl lg:text-5xl">
           {title}
         </h2>

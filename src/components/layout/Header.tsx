@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { fetchHeaderData } from '@/lib/api/header';
+import { fetchHeaderData, fetchTopBarMenu } from '@/lib/api/header';
 import MobileMenu from './MobileMenu';
 import NavigationDropdown from './NavigationDropdown';
 
@@ -10,43 +10,23 @@ import NavigationDropdown from './NavigationDropdown';
  * Server Component that fetches header data from API
  */
 export default async function Header() {
-  const headerData = await fetchHeaderData();
+  const [headerData, topBarMenu] = await Promise.all([fetchHeaderData(), fetchTopBarMenu()]);
 
   return (
     <header className="absolute w-full top-3 sm:top-5 md:top-[30px] z-50 left-0 right-0">
       <div className="container mx-auto px-4 flex flex-col items-end">
         {/* Desktop submenu strip (top-right) */}
         <div className="hidden lg:flex items-center justify-end gap-6 pr-1 mb-2 text-white">
-          {/* <Link
-            href="/marketing-services"
-            className="text-[12px] font-semibold hover:text-white transition-colors"
-          >
-            Press Releases
-          </Link> */}
-          {/* <Link
-            href="/marketing-services"
-            className="text-[12px] font-semibold hover:text-white transition-colors"
-          >
-            Events
-          </Link> */}
-          {/* <Link
-            href="/"
-            className="text-[13px] font-semibold text-white"
-          >
-            B2B Portal
-          </Link>
-          <Link
-            href="/"
-            className="text-[13px] font-semibold text-white"
-          >
-            Supplier Portal
-          </Link> */}
-          {/* <Link
-            href="/career"
-            className="text-[12px] font-semibold hover:text-white transition-colors"
-          >
-            Careers
-          </Link> */}
+          {(topBarMenu ?? []).map((item) => (
+            <Link
+              key={item.id}
+              href={item.href}
+              className="text-[12px] font-semibold hover:text-white transition-colors"
+            >
+              {item.label}
+            </Link>
+          ))}
+          
         </div>
 
         <div className="flex items-center justify-between gap-3 h-14 sm:h-16 md:h-20 relative min-w-0 w-full">

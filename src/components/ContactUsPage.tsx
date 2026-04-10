@@ -36,11 +36,9 @@ export default function ContactUsPage({ data }: ContactUsPageProps) {
 
       <ContactUsMessageSection />
 
-      <div className="bg-gray-50 pt-12">
-        <CallToAction />
-      </div>
-
-      <NewsletterSubscription />
+      
+      <div className="pt-12"><NewsletterSubscription /> </div>
+      
     </main>
   );
 }
