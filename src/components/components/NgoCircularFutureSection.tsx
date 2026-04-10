@@ -10,18 +10,18 @@ export interface NgoCircularFutureSectionProps {
 export default function NgoCircularFutureSection({ data }: NgoCircularFutureSectionProps) {
 
   return (
-    <section className="py-16 md:py-12 bg-gray-50">
+    <section className="py-8 md:py-12 bg-gray-50">
       <div className="container mx-auto px-4">
     
-          <h2 className="text-center text-3xl font-bold leading-tight tracking-tight text-black md:text-4xl lg:text-5xl lg:leading-snug" dangerouslySetInnerHTML={{ __html: data.heroHeading }} />
-          <p className="mt-6 text-base leading-relaxed text-black md:mt-8 mb-12 md:text-base text-center">
+          <h2 className="text-center text-[22px] font-bold leading-tight tracking-tight text-black md:text-4xl lg:text-5xl lg:leading-snug" dangerouslySetInnerHTML={{ __html: data.heroHeading }} />
+          <p className="lg:mt-6 mt-4 text-sm leading-relaxed text-black md:mt-8 mb-6 md:text-base text-center">
             {data.heroIntro}
           </p>
 
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14 xl:gap-16">
+        <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-14 xl:gap-16">
           <div className="order-2 lg:order-1">
             <h3 className="text-xl font-bold leading-snug tracking-tight text-black md:text-2xl lg:text-[32px]" dangerouslySetInnerHTML={{ __html: data.featureHeading }} />
-            <p className="mt-1 text-left text-base leading-relaxed text-black md:mt-2 md:text-base">
+            <p className="mt-1 text-left text-sm leading-relaxed text-black md:mt-2 md:text-base">
               {data.featureBody}
             </p>
           </div>

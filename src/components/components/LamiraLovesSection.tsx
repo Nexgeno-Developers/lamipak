@@ -20,14 +20,14 @@ interface LamiraLovesSectionProps {
 
 export default function LamiraLovesSection({ data }: LamiraLovesSectionProps) {
   return (
-    <section className="bg-gray-50 py-10 md:py-12">
+    <section className="bg-gray-50 pb-8 md:py-12">
       <div className="mx-auto container px-4 ">
         <div className="text-center max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-bold text-black leading-tight" dangerouslySetInnerHTML={{ __html: formatBoldText(data.heading) }} />
+          <h2 className="text-[22px] md:text-5xl font-bold text-black leading-tight" dangerouslySetInnerHTML={{ __html: formatBoldText(data.heading) }} />
           <p className="mt-3 text-sm md:text-base text-black">{data.subtitle}</p>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="lg:mt-10 mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 gap-4">
           {data.items.map((item) => (
             <article
               key={item.id}

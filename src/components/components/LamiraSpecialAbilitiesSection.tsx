@@ -26,14 +26,14 @@ export default function LamiraSpecialAbilitiesSection({
   const videoCardContent = abilities[0];
 
   return (
-    <section className="bg-gray-50 py-10 md:py-12">
+    <section className="bg-gray-50 pb-8 md:py-12">
       <div className="mx-auto px-4 container">
         <div className="text-center max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-bold text-black leading-tight" dangerouslySetInnerHTML={{ __html: data.heading }} />
+          <h2 className="text-[22px] md:text-5xl font-bold text-black leading-tight" dangerouslySetInnerHTML={{ __html: data.heading }} />
           <p className="mt-3 text-sm md:text-base text-black">{data.subtitle}</p>
         </div>
 
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-[1fr_1fr_1fr] gap-6 items-start">
+        <div className="lg:mt-8 mt-4 grid grid-cols-1 lg:grid-cols-[1fr_1fr_1fr] lg:gap-6 gap-4 items-start">
           {/* Hover swap: show content first, then image + play button */}
           <div className="group relative overflow-hidden rounded-[50px] bg-[#EDF0F1] min-h-[250px]">
             {/* Content layer */}

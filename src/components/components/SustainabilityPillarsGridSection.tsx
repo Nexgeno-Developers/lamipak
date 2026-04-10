@@ -132,9 +132,9 @@ export default function SustainabilityPillarsGridSection({ data }: Sustainabilit
   return (
     <section className="py-8 md:py-12 bg-gray-50">
       <div className="container mx-auto px-4">
-        <h2 className="mb-12 text-center text-3xl font-bold tracking-tight text-black md:mb-16 md:text-4xl lg:text-[2.5rem]" dangerouslySetInnerHTML={{ __html: data.heading }} />
+        <h2 className="mb-4 text-center text-[22px] font-bold tracking-tight text-black md:mb-16 md:text-4xl lg:text-[2.5rem]" dangerouslySetInnerHTML={{ __html: data.heading }} />
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {data.items.map((item) => {
             const iconKey: IconKey = item.icon ?? 'carbon_verification';
             const Icon = ICON_MAP[iconKey];

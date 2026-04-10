@@ -135,7 +135,7 @@ export default async function MarketingServicesLayoutPage({
       {data.services.length > 0 && (
         <section className="bg-gray-50 pb-8 md:pb-14">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 text-black text-center">
+            <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold mb-2 md:mb-8 text-black text-center">
               Are You Looking For?
             </h2>
           </div>

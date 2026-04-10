@@ -39,13 +39,13 @@ export default function PickCartoonPage({ data }: PickCartoonPageProps) {
       {sections.map((section, idx) => {
         if (section.type === 'sustainability_footprint') {
           return (
-            <section key={idx} className="bg-gray-50 py-12 md:pt-20">
+            <section key={idx} className="bg-gray-50 py-8 md:pt-20">
               <div className="container mx-auto px-4">
                 <div className="text-center">
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 text-black" dangerouslySetInnerHTML={{ __html: formatBoldText(section.heading) }} />
+                  <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold mb-2 md:mb-8 text-black" dangerouslySetInnerHTML={{ __html: formatBoldText(section.heading) }} />
                 </div>
 
-                <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
+                <div className="lg:mt-8 mt-4 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
                   {section.items.map((item) => (
                     <div key={item.id}>
                       <div className="relative overflow-hidden rounded-3xl md:rounded-[50px] bg-gray-100">
@@ -78,7 +78,7 @@ export default function PickCartoonPage({ data }: PickCartoonPageProps) {
 
         if (section.type === 'image_quote_banner') {
           return (
-            <section key={idx} className="bg-gray-50 py-10 md:py-12">
+            <section key={idx} className="bg-gray-50 py-0 md:py-12">
               <div className="container mx-auto px-4">
                 <div className="relative overflow-hidden rounded-3xl md:rounded-[50px]">
                   {section.backgroundImage && (
@@ -107,10 +107,10 @@ export default function PickCartoonPage({ data }: PickCartoonPageProps) {
 
         if (section.type === 'why_cartons_matter') {
           return (
-            <section key={idx} className="bg-gray-50 py-12 md:py-12">
+            <section key={idx} className="bg-gray-50 py-8 md:py-12">
               <div className="container mx-auto px-4">
                 <div className="text-center max-w-4xl mx-auto">
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-2 text-black" dangerouslySetInnerHTML={{ __html: formatBoldText(section.heading) }} />
+                  <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold mb-2 md:mb-2 text-black" dangerouslySetInnerHTML={{ __html: formatBoldText(section.heading) }} />
                   {section.description ? (
                     <RichText
                       as="div"
@@ -120,7 +120,7 @@ export default function PickCartoonPage({ data }: PickCartoonPageProps) {
                   ) : null}
                 </div>
 
-                <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="lg:mt-8 mt-4 grid grid-cols-1 md:grid-cols-3 gap-6">
                   {section.items.map((item) => (
                     <div
                       key={item.id}
@@ -159,7 +159,7 @@ export default function PickCartoonPage({ data }: PickCartoonPageProps) {
 
         if (section.type === 'impact_product_banner') {
           return (
-            <section key={idx} className="bg-gray-50 py-10 md:py-12">
+            <section key={idx} className="bg-gray-50 py-0 md:py-12">
               <div className="container mx-auto px-4">
                 <div className="relative px-6 py-12 md:px-12 md:pt-[120px] md:pb-[120px] rounded-3xl md:rounded-[50px]">
                   <div className="absolute inset-0 rounded-3xl md:rounded-[50px]">
@@ -195,10 +195,10 @@ export default function PickCartoonPage({ data }: PickCartoonPageProps) {
 
         if (section.type === 'power_of_carton_packaging') {
           return (
-            <section key={idx} className="bg-gray-50 py-12 md:py-12">
+            <section key={idx} className="bg-gray-50 py-8 md:py-12">
               <div className="container mx-auto px-4">
                 <div className="text-center max-w-4xl mx-auto">
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-2 text-black" dangerouslySetInnerHTML={{ __html: section.heading }} />
+                  <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold mb-2 md:mb-2 text-black" dangerouslySetInnerHTML={{ __html: section.heading }} />
 
                   {(section.introText) && (
                     <p className="mt-3 text-sm sm:text-base text-black mb-6 leading-relaxed">
@@ -207,7 +207,7 @@ export default function PickCartoonPage({ data }: PickCartoonPageProps) {
                   )}
                 </div>
 
-                <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12">
+                <div className="lg:mt-10 mt-4 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12">
                   {section.cards.map((card) => (
                     <div
                       key={card.id}
@@ -226,7 +226,7 @@ export default function PickCartoonPage({ data }: PickCartoonPageProps) {
                 </div>
 
                 {section.footnote ? (
-                  <p className="mt-10 text-center text-sm md:text-base text-black">
+                  <p className="lg:mt-10 mt-6 text-center text-sm md:text-base text-black">
                     {section.footnote}
                   </p>
                 ) : null}
@@ -237,14 +237,14 @@ export default function PickCartoonPage({ data }: PickCartoonPageProps) {
 
         if (section.type === 'journey_recycling_section') {
           return (
-            <section key={idx} className="bg-gray-50 py-12 md:py-12">
+            <section key={idx} className="bg-gray-50 pb-8 md:py-12">
               <div className="container mx-auto px-4">
                 <h2
-                  className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-10 text-black text-center"
+                  className="text-[22px] md:text-4xl lg:text-5xl font-bold mb-0 md:mb-10 text-black text-center"
                   dangerouslySetInnerHTML={{ __html: section.heading }}
                 />
 
-                <div className="mt-6 overflow-hidden rounded-3xl md:rounded-[50px] border border-gray-100 bg-gray-50">
+                <div className="lg:mt-6 mt-4 overflow-hidden rounded-3xl md:rounded-[50px] border border-gray-100 bg-gray-50">
                   <div className="relative w-full overflow-hidden">
                     {section.image && (
                       <Image
