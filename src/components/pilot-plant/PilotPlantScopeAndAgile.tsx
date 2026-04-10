@@ -34,7 +34,7 @@ export default function PilotPlantScopeAndAgile({
             <p className="text-xs font-semibold uppercase text-[#009FE8] md:text-sm">
               {scopeTitleBlue || scopeLabel}
             </p>
-            <h2 className="mt-3 text-3xl font-bold leading-tight md:text-4xl lg:text-5xl"
+            <h2 className="mt-3 text-3xl font-bold leading-tight md:text-4xl lg:text-5xl text-black"
               
               dangerouslySetInnerHTML={{ __html: formatBoldText(scopeTitleBlack) }} />
          

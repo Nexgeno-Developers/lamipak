@@ -446,7 +446,12 @@ export const fetchPilotPlantLayoutPage = cache(async (slug: string) => {
   if (baseUrl) {
     try {
       const apiSlug = (process.env.PILOT_PLANT_PAGE_SLUG || cleanSlug).trim();
-      const res = await fetch(`${baseUrl}/v1/page/${encodeURIComponent(apiSlug)}`, { cache: 'no-store' });
+      const apiSlugPath = apiSlug
+        .split('/')
+        .filter(Boolean)
+        .map((part) => encodeURIComponent(part))
+        .join('/');
+      const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
       if (res.ok) {
         const payload = (await res.json()) as PilotPlantApiResponse;
         const data = payload.data;
