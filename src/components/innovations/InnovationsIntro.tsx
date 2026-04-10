@@ -3,17 +3,28 @@ import Image from 'next/image';
 
 type Props = Pick<InnovationsPageData, 'introHeadingBlack' | 'introHeadingBlue' | 'introBody'>;
 
+function needsSeparatorBetweenHeadings(black: string, blue: string): boolean {
+  const b = black.trimEnd();
+  const bl = blue.trimStart();
+  if (!b || !bl) return false;
+  if (b.endsWith(' ') || bl.startsWith(' ')) return false;
+  return true;
+}
+
 export default function InnovationsIntro({ introHeadingBlack, introHeadingBlue, introBody }: Props) {
+  const gap = needsSeparatorBetweenHeadings(introHeadingBlack, introHeadingBlue);
+
   return (
-    <section className="bg-gray-50 py-14 md:py-20 lg:py-24">
+    <section className="bg-gray-50 py-8 md:py-20 lg:py-24">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-20">
+        <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-16 xl:gap-20">
           <div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl text-black font-bold mb-6 md:mb-6 leading-[70px]">
+            <h2 className="text-[22px] md:text-4xl lg:text-5xl text-black font-bold mb-2 md:mb-6 lg:leading-[70px] leading-[30px]">
               <span className="text-black">{introHeadingBlack}</span>
+              {gap ? ' ' : null}
               <span className="text-[#009FE8]">{introHeadingBlue}</span>
             </h2>
-            <p className="mt-8 text-base leading-relaxed text-black md:text-base">{introBody}</p>
+            <p className="lg:mt-8 mt-4 text-sm leading-relaxed text-black md:text-base">{introBody}</p>
           </div>
           <div>
             <div className="">
