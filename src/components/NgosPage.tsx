@@ -42,7 +42,7 @@ export default function NgosPage({ data }: NgosPageProps) {
         <NgoCircularFutureSection data={data.ngosCircularFutureSection} />
       ) : null}
 
-      <div className="bg-gray-50 pt-12">
+      <div className="bg-gray-50 lg:pt-12">
         <CallToAction />
       </div>
 

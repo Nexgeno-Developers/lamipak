@@ -35,16 +35,16 @@ export default function GreenBuildingCertificationsSection({ data }: GreenBuildi
   return (
     <section className="bg-gray-50 py-8 md:py-12">
       <div className="container mx-auto px-4">
-        <header className="mb-10 text-center md:mb-14">
+        <header className="mb-4 text-center md:mb-14">
           <p
             className="text-xs font-semibold uppercase tracking-[0.2em] md:text-sm text-[#009FE8]"
           >
             {data.eyebrow}
           </p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl text-black" dangerouslySetInnerHTML={{ __html: data.heading }} />
+          <h2 className="lg:mt-3 mt-2 text-[22px] font-bold tracking-tight md:text-4xl lg:text-5xl text-black" dangerouslySetInnerHTML={{ __html: data.heading }} />
         </header>
 
-        <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
+        <div className="grid gap-4 lg:grid-cols-2 lg:gap-10">
           {data.cards.map((card) => (
             <article
               key={card.id}

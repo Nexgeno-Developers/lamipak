@@ -12,13 +12,13 @@ export default function GreenSustainabilityJourneySection({ data }: GreenSustain
   const bg = data.backgroundColor ?? '#f8f9fa';
 
   return (
-    <section className="py-8 lg:py-12" style={{ backgroundColor: bg }}>
+    <section className="py-0 lg:py-12" style={{ backgroundColor: bg }}>
       <div className="container mx-auto px-4">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14 xl:gap-16">
+        <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-14 xl:gap-16">
           <div>
-            <h2 className="text-3xl font-bold leading-tight tracking-tight md:text-4xl lg:text-5xl text-black" dangerouslySetInnerHTML={{ __html: formatBoldText(data.heading) }} />
+            <h2 className="text-[22px] font-bold leading-tight tracking-tight md:text-4xl lg:text-5xl text-black" dangerouslySetInnerHTML={{ __html: formatBoldText(data.heading) }} />
 
-            <p className="mt-8 max-w-xl text-base leading-relaxed text-black md:mt-10 md:text-lg">
+            <p className="lg:mt-8 mt-4 max-w-xl text-sm leading-relaxed text-black md:mt-10 md:text-lg">
               {data.body}
             </p>
           </div>

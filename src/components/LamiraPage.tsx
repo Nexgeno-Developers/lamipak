@@ -52,7 +52,7 @@ export default function LamiraPage({ data }: LamiraPageProps) {
         <LamiraSocialWorldMomentsSection data={data.lamiraSocialWorldMomentsSection} />
       ) : null}
 
-<div className="bg-gray-50 pt-12">
+<div className="bg-gray-50 lg:pt-12">
 <CallToAction />
 </div>
       

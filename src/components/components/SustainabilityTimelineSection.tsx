@@ -32,18 +32,18 @@ export default function SustainabilityTimelineSection({ data }: SustainabilityTi
   return (
     <section style={{ backgroundColor: bg }}>
       <div className="container mx-auto px-4 ">
-        <header className="mb-12 md:mb-16">
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-[2.5rem] text-black" dangerouslySetInnerHTML={{ __html: data.heading }} />
-          <p className="mt-4 max-w-2xl text-base text-black md:text-lg">{data.subtitle}</p>
+        <header className="mb-6 md:mb-16">
+          <h2 className="text-[22px] font-bold tracking-tight md:text-4xl lg:text-[2.5rem] text-black" dangerouslySetInnerHTML={{ __html: data.heading }} />
+          <p className="lg:mt-4 mt-2 max-w-2xl text-base text-black md:text-lg">{data.subtitle}</p>
         </header>
 
         <ul className="list-none space-y-0 p-0">
           {data.items.map((item, index) => (
             <li key={item.id}>
               {index > 0 ? <div className="border-t border-gray-200/90" aria-hidden /> : null}
-              <div className="flex gap-5 py-10 md:gap-8 md:py-6">
+              <div className="flex gap-5 lg:py-10 py-6 md:gap-8 md:py-6">
                 <div
-                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full md:h-14 md:w-14"
+                  className="flex lg:h-12 h-10 w-10 lg:w-12 shrink-0 items-center justify-center rounded-full md:h-14 md:w-14"
                   style={{ backgroundColor: accent }}
                 >
                   <CheckCircleIcon />

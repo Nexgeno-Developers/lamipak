@@ -14,15 +14,15 @@ export default function NgoMembershipMapSection({ data }: NgoMembershipMapSectio
   const mapAlt = data.mapImageAlt?.trim() || 'NGO membership map';
 
   return (
-    <section className="py-14 md:pt-20 md:pb-12 bg-gray-50">
+    <section className="py-8 md:pt-20 md:pb-12 bg-gray-50">
       <div className="container mx-auto px-4 ">
-        <h2 className="mb-10 text-center text-3xl font-bold tracking-tight md:mb-14 md:text-4xl lg:text-5xl text-black" dangerouslySetInnerHTML={{ __html: data.heading }} />
+        <h2 className="lg:mb-10 mb-4 text-center text-[22px] font-bold tracking-tight md:mb-14 md:text-4xl lg:text-5xl text-black" dangerouslySetInnerHTML={{ __html: data.heading }} />
 
         <div>
           <Image
             src={mapSrc}
             alt={mapAlt}
-            className="mx-auto h-full w-[50%] object-cover"
+            className="mx-auto h-full lg:w-[50%] w-full object-cover"
             width={1000}
             height={520}
           />

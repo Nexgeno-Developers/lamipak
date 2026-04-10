@@ -36,12 +36,12 @@ function renderAsteriskBold(text?: string | null): React.ReactNode {
 
 export default function LamiraMeetSection({ data }: LamiraMeetSectionProps) {
   return (
-    <section className="bg-gray-50 py-10 md:py-12">
+    <section className="bg-gray-50 py-8 md:py-12">
       <div className="mx-auto w-full container px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-10 md:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.15fr] gap-5 md:gap-12 items-center">
           <div className="max-w-xl">
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#111827] leading-tight">
+            <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold text-[#111827] leading-tight">
               <span
                 className="text-black"
                 dangerouslySetInnerHTML={{ __html: data.titleHighlight }}

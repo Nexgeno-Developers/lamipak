@@ -54,9 +54,9 @@ export default function CarbonNeutralityRoadmapSection({ data }: CarbonNeutralit
   const barBg = data.summaryBarBackground ?? accent;
 
   return (
-    <section className="py-12 md:pt-24 md:pb-12 bg-gray-50">
+    <section className="pt-0 md:pt-24 md:pb-12 bg-gray-50">
       <div className="container mx-auto px-4">
-        <h2 className="mb-14 text-center text-3xl font-bold tracking-tight text-black md:mb-20 md:text-4xl lg:text-5xl" dangerouslySetInnerHTML={{ __html: data.heading }} />
+        <h2 className="mb-14 text-center text-[22px] font-bold tracking-tight text-black md:mb-20 md:text-4xl lg:text-5xl" dangerouslySetInnerHTML={{ __html: data.heading }} />
 
         <div className="relative">
           <div
@@ -65,7 +65,7 @@ export default function CarbonNeutralityRoadmapSection({ data }: CarbonNeutralit
             aria-hidden
           />
 
-          <div className="relative z-10 grid gap-14 md:grid-cols-3 md:gap-8 lg:gap-10">
+          <div className="relative z-10 grid gap-8 md:grid-cols-3 md:gap-8 lg:gap-10">
             {data.milestones.map((m) => {
               const iconKey = m.icon ?? 'target';
               const Icon = ICONS[iconKey];
@@ -93,10 +93,10 @@ export default function CarbonNeutralityRoadmapSection({ data }: CarbonNeutralit
                   {m.descriptionHtml ? (
                     <RichText
                       html={m.descriptionHtml}
-                      className="mt-4 w-full max-w-[280px] text-left text-sm leading-snug text-black md:text-[0.9375rem]"
+                      className="lg:mt-4 mt-0 w-full lg:max-w-[280px] max-w-full text-left text-sm leading-snug text-black md:text-[0.9375rem]"
                     />
                   ) : (
-                    <ul className="mt-4 max-w-[280px] space-y-2.5 text-left text-sm leading-snug text-black md:text-[0.9375rem]">
+                    <ul className="mt-4 lg:max-w-[280px] max-w-full space-y-2.5 text-left text-sm leading-snug text-black md:text-[0.9375rem]">
                       {(m.bullets ?? []).map((line, idx) => (
                         <li key={idx} className="flex gap-2.5">
                           <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-900" aria-hidden />
