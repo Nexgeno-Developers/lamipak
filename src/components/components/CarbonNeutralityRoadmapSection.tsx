@@ -54,7 +54,7 @@ export default function CarbonNeutralityRoadmapSection({ data }: CarbonNeutralit
   const barBg = data.summaryBarBackground ?? accent;
 
   return (
-    <section className="pt-0 md:pt-24 md:pb-12 bg-gray-50">
+    <section className="pt-8 md:pt-24 md:pb-12 bg-gray-50">
       <div className="container mx-auto px-4">
         <h2 className="mb-14 text-center text-[22px] font-bold tracking-tight text-black md:mb-20 md:text-4xl lg:text-5xl" dangerouslySetInnerHTML={{ __html: data.heading }} />
 
