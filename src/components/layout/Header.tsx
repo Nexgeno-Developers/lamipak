@@ -62,7 +62,7 @@ export default async function Header() {
             {headerData.cta && (
               <Link
                 href={headerData.cta.href}
-                className="capitalize border border-[#00d4ff] text-white px-6 py-2 rounded-full hover:bg-[#00d4ff] hover:text-[#0a1a3a] transition-all font-medium text-[18px] tracking-wider"
+                className="capitalize border border-[#00d4ff] text-white px-6 py-2 rounded-full hover:bg-[#00d4ff] hover:text-[#0a1a3a] transition-all font-medium text-[16px] tracking-wider"
               >
                 {headerData.cta.text}
               </Link>

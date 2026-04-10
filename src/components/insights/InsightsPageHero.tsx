@@ -31,12 +31,12 @@ export function InsightsPageHero({
         <div className="container mx-auto text-center">
           {titleTag === 'div' ? (
             <div
-              className="text-[24px] font-bold leading-tight tracking-tight text-white md:text-5xl lg:text-6xl xl:text-6xl"
+              className="text-[24px] font-bold leading-tight tracking-tight text-white md:text-5xl lg:text-6xl xl:text-6xl capitalize"
               dangerouslySetInnerHTML={{ __html: titleHtml }}
             />
           ) : (
             <h1
-              className="text-[24px] font-bold leading-tight tracking-tight text-white md:text-5xl lg:text-6xl xl:text-6xl"
+              className="text-[24px] font-bold leading-tight tracking-tight text-white md:text-5xl lg:text-6xl xl:text-6xl capitalize"
               dangerouslySetInnerHTML={{ __html: titleHtml }}
             />
           )}

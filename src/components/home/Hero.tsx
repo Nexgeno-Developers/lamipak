@@ -80,11 +80,12 @@ export default function Hero({ data }: HeroProps) {
     const activeButton = categoryButtonRefs.current[currentSlide];
     if (!container || !activeButton) return;
 
-    // Keep active pill fully visible in the horizontal rail.
-    activeButton.scrollIntoView({
+    // Scroll only inside the pill rail (avoid page jump on home).
+    const safeLeftPadding = 8;
+    const targetLeft = Math.max(0, activeButton.offsetLeft - safeLeftPadding);
+    container.scrollTo({
+      left: targetLeft,
       behavior: 'smooth',
-      inline: 'nearest',
-      block: 'nearest',
     });
   }, [currentSlide]);
 
