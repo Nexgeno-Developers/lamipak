@@ -60,7 +60,7 @@ export default async function TechnicalServicesLayoutPage({
   return (
     <main className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="relative lg:pt-[220px] pt-[150px] lg:pb-[150px] pb-[50px] overflow-hidden">
+      <section className="relative lg:pt-[220px] pt-[110px] lg:pb-[150px] pb-[30px] overflow-hidden">
         <div className="absolute inset-0">
           {data.heroBackgroundImage ? (
             // eslint-disable-next-line @next/next/no-img-element
@@ -78,7 +78,7 @@ export default async function TechnicalServicesLayoutPage({
         <div className="relative z-10 h-full flex flex-col">
           <div className="container mx-auto flex-1 flex flex-col justify-center px-4">
             <div className="text-center">
-              <h1 className="text-[30px] md:text-5xl lg:text-6xl xl:text-6xl font-bold text-white tracking-tight">
+              <h1 className="text-[22px] md:text-5xl lg:text-6xl xl:text-6xl font-bold text-white tracking-tight leading-tight md:leading-normal">
                 {data.heroTitle}
               </h1>
             </div>
@@ -95,15 +95,15 @@ export default async function TechnicalServicesLayoutPage({
       </section>
 
       {/* Technical Support Service Section */}
-      <section className="bg-gray-50 py-20">
+      <section className="bg-gray-50 py-8 md:py-20">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-center">
-            <div className="pr-[40px]">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-6" dangerouslySetInnerHTML={{ __html: formatBoldText(data.introSection.heading) }} />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-0 items-center">
+            <div className="pr-0 lg:pr-[40px]">
+              <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold text-black lg:mb-6 mb-2 leading-tight md:leading-normal" dangerouslySetInnerHTML={{ __html: formatBoldText(data.introSection.heading) }} />
               {data.introSection.paragraphs.map((paragraph, index) => (
                 <p
                   key={index}
-                  className={`text-base md:text-base text-black leading-relaxed ${
+                  className={`text-sm md:text-base text-black leading-relaxed ${
                     index < data.introSection.paragraphs.length - 1 ? 'mb-4' : ''
                   }`}
                 >
@@ -119,12 +119,12 @@ export default async function TechnicalServicesLayoutPage({
                   alt={data.introSection.imageAlt}
                   width={600}
                   height={600}
-                  className="object-cover rounded-[50px] w-full"
+                  className="object-cover rounded-3xl md:rounded-[50px] w-full"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   priority={false}
                 />
               ) : (
-                <div className="w-full h-[360px] rounded-[50px] bg-gradient-to-br from-[#B7D7EA]/40 to-[#009FE8]/20" />
+                <div className="w-full h-[280px] md:h-[360px] rounded-3xl md:rounded-[50px] bg-gradient-to-br from-[#B7D7EA]/40 to-[#009FE8]/20" />
               )}
             </div>
           </div>
@@ -133,10 +133,10 @@ export default async function TechnicalServicesLayoutPage({
 
       {/* Upgrade & Expand Section */}
       {data.upgradeSection.cards.length > 0 ? (
-        <section className="bg-gray-50 py-4 md:py-8 lg:py-12">
-          <div className="bg-[#EDF0F1] rounded-[50px] p-8 md:p-12 lg:p-16  container mx-auto px-4">
-            <div className="text-center mb-8 md:mb-12">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black lg:leading-[65px]" dangerouslySetInnerHTML={{ __html: formatBoldText(data.upgradeSection.heading) }} />
+        <section className="bg-gray-50 py-0 md:py-8 lg:py-12">
+          <div className="bg-[#EDF0F1] rounded-3xl md:rounded-[50px] p-6 md:p-12 lg:p-16  container mx-auto px-4">
+            <div className="text-center mb-4 lg:mb-8 md:mb-12">
+              <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold text-black leading-tight md:leading-normal lg:leading-[65px]" dangerouslySetInnerHTML={{ __html: formatBoldText(data.upgradeSection.heading) }} />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
@@ -151,9 +151,9 @@ export default async function TechnicalServicesLayoutPage({
                 return (
                   <div
                     key={card.id}
-                    className="bg-white rounded-[50px] overflow-hidden transition-all duration-300 flex flex-col p-[15px]"
+                    className="bg-white rounded-3xl md:rounded-[50px] overflow-hidden transition-all duration-300 flex flex-col p-[15px]"
                   >
-                    <div className="rounded-[50px] relative aspect-video bg-gray-100 overflow-hidden">
+                    <div className="rounded-3xl md:rounded-[50px] relative aspect-video bg-gray-100 overflow-hidden">
                       {hasVideo ? (
                         <VideoModalClient
                           videoUrl={toYouTubeEmbedUrl(card.videoUrl)}
@@ -175,15 +175,15 @@ export default async function TechnicalServicesLayoutPage({
                     </div>
 
                     <div className="pl-[15px] pr-[15px] pt-[25px] pb-[15px] flex-1 flex flex-col">
-                      <h3 className="text-2xl md:text-3xl font-bold text-[#009FE8] mb-4">
+                      <h3 className="text-[20px] md:text-3xl font-bold text-[#009FE8] lg:mb-4 mb-2">
                         {card.title}
                       </h3>
-                      <p className="text-black mb-6 flex-1 leading-relaxed line-clamp-4">
+                      <p className="text-black lg:mb-6 mb-2 flex-1 leading-relaxed line-clamp-4 lg:text-base text-sm">
                         {card.description}
                       </p>
                       <Link
                         href={card.ctaLink}
-                        className="inline-flex items-center text-[#009FE8] font-medium hover:text-[#0077B6] transition-colors group"
+                        className="lg:text-base text-sm inline-flex items-center text-[#009FE8] font-medium hover:text-[#0077B6] transition-colors group"
                       >
                         {card.ctaText}
                         <svg
@@ -211,22 +211,22 @@ export default async function TechnicalServicesLayoutPage({
 
       {/* Service Differentiation Section */}
       {data.serviceDifferentiation.rows.length > 0 ? (
-        <section className="bg-gray-50 py-4 md:py-8 lg:pt-12">
+        <section className="bg-gray-50 py-8 md:py-8 lg:pt-12">
           <div className="container mx-auto px-4">
-            <div className="bg-white rounded-[50px] p-6 md:p-16 lg:p-20">
-              <h2 className="text-center text-3xl md:text-4xl lg:text-5xl font-bold mb-8 md:mb-10 text-black" dangerouslySetInnerHTML={{ __html: formatBoldText(data.serviceDifferentiation.heading) }} />
+            <div className="bg-white rounded-3xl md:rounded-[50px] p-6 md:p-16 lg:p-20">
+              <h2 className="text-center text-[22px] md:text-4xl lg:text-5xl font-bold mb-8 md:mb-10 text-black leading-tight md:leading-normal" dangerouslySetInnerHTML={{ __html: formatBoldText(data.serviceDifferentiation.heading) }} />
               
 
-              <div className="overflow-x-auto">
+              <div className="overflow-x-auto max-md:-mx-4 max-md:px-4 pb-2 md:pb-0 touch-pan-x">
                 <div className="min-w-[940px] grid grid-cols-[170px_1fr_1fr_1fr] gap-4 items-stretch">
-                  <div className="flex flex-col justify-start pt-[62px]">
-                    <div className="h-[56px] flex items-center text-black font-bold text-xl">
+                  <div className="flex flex-col justify-start lg:pt-[62px] pt-[80px]">
+                    <div className="lg:h-[56px] h-[40px] flex items-center text-black font-bold lg:text-xl text-base">
                       {data.serviceDifferentiation.headerRow2.focus}
                     </div>
                     {data.serviceDifferentiation.rows.map((row) => (
                       <div
                         key={`label-${row.category}`}
-                        className="h-[62px] flex items-center text-black font-bold text-xl"
+                        className="lg:h-[62px] h-[40px] flex items-center text-black font-bold lg:text-xl text-base"
                       >
                         {row.category.charAt(0) + row.category.slice(1).toLowerCase()}
                       </div>
@@ -243,14 +243,14 @@ export default async function TechnicalServicesLayoutPage({
                     {data.serviceDifferentiation.rows.map((row) => (
                       <div
                         key={`care-${row.category}`}
-                        className="h-[62px] flex items-center text-lg"
+                        className="lg:h-[62px] h-[40px] flex items-center lg:text-lg text-base"
                       >
                         {row.lamiCare}
                       </div>
                     ))}
                   </div>
 
-                  <div className="rounded-[16px] bg-white text-black px-6 py-5 border border-[#E5E7EB]">
+                  <div className="rounded-[16px] bg-white text-black lg:px-6 px-3 py-5 border border-[#E5E7EB]">
                     <h3 className="text-2xl font-extrabold uppercase text-[#E0262D] mb-5">
                       {data.serviceDifferentiation.headerRow1.lamiPremium}
                     </h3>
@@ -260,15 +260,15 @@ export default async function TechnicalServicesLayoutPage({
                     {data.serviceDifferentiation.rows.map((row) => (
                       <div
                         key={`premium-${row.category}`}
-                        className="h-[62px] flex items-center text-lg"
+                        className="lg:h-[62px] h-[40px] flex items-center lg:text-lg text-base"
                       >
                         {row.lamiPremium}
                       </div>
                     ))}
                   </div>
 
-                  <div className="rounded-[16px] bg-white text-black px-6 py-5 border border-[#E5E7EB]">
-                    <h3 className="text-2xl font-extrabold uppercase text-[#4338CA] mb-5">
+                  <div className="rounded-[16px] bg-white text-black lg:px-6 px-3 py-5 border border-[#E5E7EB]">
+                    <h3 className="lg:text-2xl text-[20px] font-extrabold uppercase text-[#4338CA] mb-5"> 
                       {data.serviceDifferentiation.headerRow1.lamiPartner}
                     </h3>
                     <div className="h-[56px] flex items-center text-lg">
@@ -277,7 +277,7 @@ export default async function TechnicalServicesLayoutPage({
                     {data.serviceDifferentiation.rows.map((row) => (
                       <div
                         key={`partner-${row.category}`}
-                        className="h-[62px] flex items-center text-lg"
+                        className="lg:h-[62px] h-[40px] flex items-center lg:text-lg text-base"
                       >
                         {row.lamiPartner}
                       </div>
@@ -292,19 +292,19 @@ export default async function TechnicalServicesLayoutPage({
 
       {/* Driving Operational Success Section */}
       {data.operationalSuccess.cards.length > 0 ? (
-        <section className="bg-gray-50 py-4 md:py-8 lg:py-12">
+        <section className="bg-gray-50 py-0 md:py-8 lg:py-12">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-8 md:mb-12">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black" dangerouslySetInnerHTML={{ __html: formatBoldText(data.operationalSuccess.heading) }} />
+            <div className="text-center mb-4 md:mb-12">
+              <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold text-black leading-tight md:leading-normal" dangerouslySetInnerHTML={{ __html: formatBoldText(data.operationalSuccess.heading) }} />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
               {data.operationalSuccess.cards.map((card) => (
                 <div
                   key={card.id}
-                  className="bg-white rounded-[50px] overflow-hidden transition-all duration-300 flex flex-col h-full p-[15px]"
+                  className="bg-white rounded-3xl md:rounded-[50px] overflow-hidden transition-all duration-300 flex flex-col h-full p-[15px]"
                 >
-                  <div className="relative w-full h-auto overflow-hidden bg-gray-100 rounded-[50px]">
+                  <div className="relative w-full h-auto overflow-hidden bg-gray-100 rounded-3xl md:rounded-[50px]">
                     {card.image ? (
                       <Image
                         src={card.image}
@@ -320,17 +320,17 @@ export default async function TechnicalServicesLayoutPage({
                   </div>
 
                   <div className="pl-[15px] pr-[15px] pt-[25px] pb-[15px] flex-1 flex flex-col">
-                    <h3 className="text-xl md:text-2xl font-bold text-[#009FE8] mb-4">
+                    <h3 className="text-[20px] md:text-2xl font-bold text-[#009FE8] lg:mb-4 mb-2">
                       {card.title}
                     </h3>
                     <RichText
                       as="div"
                       html={card.description}
-                      className="text-black mb-2 flex-1 leading-relaxed line-clamp-3"
+                      className="text-black mb-2 flex-1 leading-relaxed line-clamp-3 lg:text-base text-sm"
                     />
                     <Link
                       href={card.ctaLink}
-                      className="inline-flex items-center text-[#009FE8] font-medium hover:text-[#0077B6] transition-colors group"
+                      className="lg:text-base text-sm inline-flex items-center text-[#009FE8] font-medium hover:text-[#0077B6] transition-colors group"
                     >
                       {card.ctaText}
                       <svg
