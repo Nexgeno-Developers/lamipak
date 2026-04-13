@@ -44,7 +44,7 @@ export default function InsightsListingPage({ data }: { data: InsightsListingDat
         </div>
       </section>
 
-      <section className="py-12 md:py-16">
+      <section className="py-8 md:py-16">
         <div className="container mx-auto px-4">
           
           {isArticles ? (
