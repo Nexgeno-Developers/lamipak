@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import Image from 'next/image';
+import CircularImage from '@/components/common/CircularImage';
 import { formatBoldText } from '@/lib/htmlText';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
@@ -95,7 +95,7 @@ export default function ProductSpecificationsClient({ product }: ProductSpecific
                 {slides.map((url, idx) => (
                   <SwiperSlide key={`${url}-${idx}`}>
                     <div className="relative w-full aspect-[3/4]">
-                      <Image
+                      <CircularImage
                         src={url}
                         alt={product.imageAlt}
                         fill

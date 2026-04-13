@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import CircularImage from '@/components/common/CircularImage';
 import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
@@ -67,13 +67,13 @@ export default function ProductAccessoriesSliderClient({
             <div className="bg-[#009FE8] rounded-[50px] overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col h-full p-[15px]">
               {/* Accessory Image */}
               <div className="relative w-full overflow-hidden rounded-[50px] h-[350px]">
-                <Image
+                <CircularImage
                   src={accessory.image}
                   alt={accessory.imageAlt}
                   width={800}
                   height={800}
                   className="object-contain w-full h-full object-top rounded-[50px]"
-                  sizes=""
+                  sizes="(max-width: 768px) 90vw, 33vw"
                 />
               </div>
 

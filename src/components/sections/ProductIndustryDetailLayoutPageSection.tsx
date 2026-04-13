@@ -1,9 +1,9 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import LatestInsights from '@/components/home/LatestInsights';
 import ContactSustainability from '@/components/products/ContactSustainability';
 import IndustryConsultationCTA from '@/components/products/IndustryConsultationCTA';
 import CategoryGlobalImpact from '@/components/products/CategoryGlobalImpact';
+import CircularImage from '@/components/common/CircularImage';
 import type { ProductIndustryDetailPageData } from '@/lib/api/product_industry_detail_layout';
 import { RichText } from '@/components/common/RichText';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
@@ -86,7 +86,7 @@ export default function ProductIndustryDetailLayoutPageSection({
                 >
                   <div className="relative w-full aspect-square overflow-hidden bg-white rounded-[50px] mb-4">
                     {item.image ? (
-                      <Image
+                      <CircularImage
                         src={item.image}
                         alt={item.title}
                         fill
@@ -152,7 +152,7 @@ export default function ProductIndustryDetailLayoutPageSection({
                 >
                   <div className="relative w-full aspect-square overflow-hidden bg-white rounded-[50px] mb-4">
                     {p.image ? (
-                      <Image
+                      <CircularImage
                         src={p.image}
                         alt={p.title}
                         fill
