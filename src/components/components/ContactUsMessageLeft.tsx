@@ -363,8 +363,8 @@ function SearchableSelect({
               {filtered.length === 0 ? (
                 <li className="px-4 py-2 text-gray-500">No results found</li>
               ) : (
-                filtered.map((opt) => (
-                  <li key={opt}>
+                filtered.map((opt, idx) => (
+                  <li key={`${opt}-${idx}`}>
                     <button
                       type="button"
                       onMouseDown={(e) => e.preventDefault()}
