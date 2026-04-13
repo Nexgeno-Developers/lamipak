@@ -1,4 +1,4 @@
-import { cache } from 'react';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 type CompanyApiResponse = {
   data?: {
@@ -96,13 +96,11 @@ async function fetchCompanyCommonData(): Promise<CompanyCommonData | null> {
   if (!url) return null;
 
   try {
-    const res = await fetch(url, {
-      cache: 'no-store',
-      headers: { Accept: 'application/json' },
+    const payload = await fetchJsonCached<CompanyApiResponse>(url, {
+      tags: ['company-common'],
+      init: { headers: { Accept: 'application/json' } },
     });
-    if (!res.ok) return null;
-
-    const payload = (await res.json()) as CompanyApiResponse;
+    if (!payload) return null;
     const company = payload?.data;
     if (!company || company.is_active === false) return null;
 
@@ -132,4 +130,4 @@ async function fetchCompanyCommonData(): Promise<CompanyCommonData | null> {
   }
 }
 
-export const getCompanyCommonData = cache(fetchCompanyCommonData);
+export const getCompanyCommonData = fetchCompanyCommonData;

@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { fetchHomepageData } from '@/lib/api/home';
 import type { VideoBannerData } from '@/lib/api/home';
 import { formatBoldText } from '@/lib/htmlText';
 
@@ -115,8 +114,17 @@ export default function VideoBanner({
         });
         return;
       }
-      const homepageData = await fetchHomepageData();
-      setData(homepageData?.videoBanner ?? null);
+      try {
+        const res = await fetch('/api/home');
+        if (!res.ok) {
+          setData(null);
+          return;
+        }
+        const payload = (await res.json()) as { videoBanner?: VideoBannerData | null };
+        setData(payload?.videoBanner ?? null);
+      } catch {
+        setData(null);
+      }
     }
     loadData();
   }, [videoUrl, prefetchedData]);

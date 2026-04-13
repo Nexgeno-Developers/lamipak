@@ -126,6 +126,7 @@ export type TechnicalServicesLayoutPageData = {
 };
 
 import { decodeHtmlEntities, normalizeText, formatBoldText } from '@/lib/htmlText';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 function buildPageApiPath(slug: string) {
   return slug
@@ -202,12 +203,11 @@ export async function fetchTechnicalServicesLayoutPage(slug: string) {
   for (const candidate of slugCandidates(slug)) {
     try {
       const apiSlugPath = buildPageApiPath(candidate);
-      const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}?autofetch=technical_services`, {
-        cache: 'no-store',
-      });
-      if (!res.ok) continue;
-
-      const { data } = (await res.json()) as TechnicalServicesApiResponse;
+      const payload = await fetchJsonCached<TechnicalServicesApiResponse>(
+        `${baseUrl}/v1/page/${apiSlugPath}?autofetch=technical_services`,
+        { tags: [`page:${apiSlugPath}`] },
+      );
+      const data = payload?.data;
       if (!data || data.layout !== 'technical_services') continue;
 
       const meta = data.meta || {};

@@ -1,4 +1,5 @@
 import { formatBoldText } from '@/lib/htmlText';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 import { getYouTubeEmbedUrl } from '@/lib/youtubeEmbed';
 
 type LamiraMeetSectionData = {
@@ -237,10 +238,11 @@ export async function fetchSustainabilityLayout2Page(slug: string): Promise<{
 
   try {
     const apiSlugPath = buildPageApiPath(slug);
-    const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
-    if (!res.ok) return null;
-
-    const { data } = (await res.json()) as Sustainability2ApiResponse;
+    const payload = await fetchJsonCached<Sustainability2ApiResponse>(
+      `${baseUrl}/v1/page/${apiSlugPath}`,
+      { tags: [`page:${apiSlugPath}`] },
+    );
+    const data = payload?.data;
     if (!data || data.layout !== 'sustainability_2' || data.is_active === false) return null;
 
     const meta = data.meta || {};

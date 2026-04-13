@@ -2,6 +2,7 @@ import type { AboutUsQuadrantSection } from '@/fake-api/company';
 import { decodeHtmlEntities, normalizeText, formatBoldText } from '@/lib/htmlText';
 import { mapPageBlocksToNavigation, type AboutUsPageBlock } from '@/lib/api/about_us_navigation';
 import type { CompanyNavigationData } from '@/components/company/CompanyNavigation';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 type Media = { url?: string | null } | null | undefined;
 
@@ -112,9 +113,10 @@ async function resolveMediaIdToUrl(baseUrl: string, value: unknown): Promise<str
 
   try {
     for (const path of candidates) {
-      const res = await fetch(`${baseUrl}${path}`, { cache: 'no-store' });
-      if (!res.ok) continue;
-      const payload = (await res.json()) as any;
+      const payload = await fetchJsonCached<any>(`${baseUrl}${path}`, {
+        tags: [`media:${id}`],
+      });
+      if (!payload) continue;
       const url =
         payload?.data?.url ??
         payload?.data?.file?.url ??
@@ -156,10 +158,11 @@ export async function fetchAboutUsLayout2Page(slug: string) {
 
   try {
     const apiSlugPath = buildPageApiPath(slug);
-    const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
-    if (!res.ok) return null;
-
-    const { data } = (await res.json()) as AboutUsLayout2ApiResponse;
+    const payload = await fetchJsonCached<AboutUsLayout2ApiResponse>(
+      `${baseUrl}/v1/page/${apiSlugPath}`,
+      { tags: [`page:${apiSlugPath}`] },
+    );
+    const data = payload?.data;
     if (!data || data.layout !== 'about_2') return null;
 
     const meta = data.meta || {};

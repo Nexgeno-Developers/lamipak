@@ -1,4 +1,5 @@
 import type { HeaderData, NavigationItem } from './types';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 type HeaderMenuItemApi = {
   id: number;
@@ -35,7 +36,6 @@ const HEADER_MENU_ENDPOINT = `/v1/menus/groups/${HEADER_MENU_GROUP_ID}`;
 const TOP_BAR_MENU_GROUP_ID = process.env.TOP_BAR_MENU_GROUP_ID || '6';
 const TOP_BAR_MENU_ENDPOINT = `/v1/menus/groups/${TOP_BAR_MENU_GROUP_ID}`;
 const COMPANY_PROFILE_ENDPOINT = process.env.COMPANY_PROFILE_ENDPOINT || '/v1/companies/1';
-const HEADER_REVALIDATE_SECONDS = 300;
 const COMPANY_API_DOMAIN =
   process.env.COMPANY_API_DOMAIN || 'https://backend-lamipak.webtesting.pw';
 const DEFAULT_LOGO_IMAGE = '/header-logo.svg';
@@ -99,15 +99,11 @@ async function fetchHeaderNavigation(): Promise<NavigationItem[] | null> {
   if (!url) return null;
 
   try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: { Accept: 'application/json' },
-      next: { revalidate: HEADER_REVALIDATE_SECONDS },
+    const payload = await fetchJsonCached<HeaderMenuApiResponse>(url, {
+      tags: ['header-menu'],
+      init: { method: 'GET', headers: { Accept: 'application/json' } },
     });
-
-    if (!response.ok) return null;
-
-    const payload = (await response.json()) as HeaderMenuApiResponse;
+    if (!payload) return null;
     const items = payload?.data?.items;
     if (!Array.isArray(items) || items.length === 0) return [];
 
@@ -122,13 +118,11 @@ async function fetchHeaderBranding(): Promise<{ name?: string; logo?: string } |
   if (!url) return null;
 
   try {
-    const response = await fetch(url, {
-      cache: 'no-store',
-      headers: { Accept: 'application/json' },
+    const payload = await fetchJsonCached<CompanyProfileApiResponse>(url, {
+      tags: ['company-profile'],
+      init: { headers: { Accept: 'application/json' } },
     });
-    if (!response.ok) return null;
-
-    const payload = (await response.json()) as CompanyProfileApiResponse;
+    if (!payload) return null;
     const raw = payload?.data;
     if (!raw || raw.is_active === false) return null;
 
@@ -170,15 +164,11 @@ export async function fetchTopBarMenu(): Promise<NavigationItem[] | null> {
   if (!url) return null;
 
   try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: { Accept: 'application/json' },
-      next: { revalidate: HEADER_REVALIDATE_SECONDS },
+    const payload = await fetchJsonCached<HeaderMenuApiResponse>(url, {
+      tags: ['top-bar-menu'],
+      init: { method: 'GET', headers: { Accept: 'application/json' } },
     });
-
-    if (!response.ok) return null;
-
-    const payload = (await response.json()) as HeaderMenuApiResponse;
+    if (!payload) return null;
     const items = payload?.data?.items;
     if (!Array.isArray(items) || items.length === 0) return [];
 

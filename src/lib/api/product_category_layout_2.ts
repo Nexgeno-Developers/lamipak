@@ -16,6 +16,7 @@ export type SustainableSolutionsSectionData = {
 import { formatBoldText } from '@/lib/htmlText';
 import { breadcrumbsFromSlugPath } from '@/lib/breadcrumbsFromSlugPath';
 import { cleanVideoUrlFromApi } from '@/lib/cleanVideoUrl';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 type ProductCategoryLayout2ApiResponse = {
   data?: {
@@ -165,13 +166,11 @@ export async function fetcProductCategoryLayout2Page(slug: string) {
 
   try {
     const apiSlugPath = buildPageApiPath(slug);
-    const res = await fetch(
+    const payload = await fetchJsonCached<ProductCategoryLayout2ApiResponse>(
       `${baseUrl}/v1/page/${apiSlugPath}?autofetch=sustainable_products`,
-      { cache: 'no-store' },
+      { tags: [`page:${apiSlugPath}`] },
     );
-    if (!res.ok) return null;
-
-    const { data } = (await res.json()) as ProductCategoryLayout2ApiResponse;
+    const data = payload?.data;
     if (!data || data.layout !== 'product_category_detail_2' || data.is_active === false) {
       return null;
     }

@@ -8,6 +8,7 @@ import type { GovernanceWhistleblowingSectionData } from '@/components/governanc
 import type { GovernanceWhistleblowingCardsSectionData } from '@/components/governance/GovernanceWhistleblowingCardsSection';
 import { mapPageBlocksToNavigation, type AboutUsPageBlock } from '@/lib/api/about_us_navigation';
 import type { CompanyNavigationData } from '@/components/company/CompanyNavigation';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 type Media = { url?: string | null } | null | undefined;
 import { decodeHtmlEntities, normalizeText, formatBoldText } from '@/lib/htmlText';
@@ -152,10 +153,11 @@ export async function fetchAboutUsLayout4Page(slug: string) {
 
   try {
     const apiSlugPath = buildPageApiPath(slug);
-    const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
-    if (!res.ok) return null;
-
-    const { data } = (await res.json()) as AboutUsLayout4ApiResponse;
+    const payload = await fetchJsonCached<AboutUsLayout4ApiResponse>(
+      `${baseUrl}/v1/page/${apiSlugPath}`,
+      { tags: [`page:${apiSlugPath}`] },
+    );
+    const data = payload?.data;
     if (!data || data.layout !== 'about_4') return null;
 
     const meta = data.meta || {};

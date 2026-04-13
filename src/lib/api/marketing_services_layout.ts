@@ -61,6 +61,7 @@ type MarketingNewsApiItem = {
 };
 
 import { formatBoldText } from '@/lib/htmlText';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 function buildPageApiPath(slug: string) {
   return slug
@@ -126,12 +127,11 @@ export async function fetchMarketingServicesLayoutPage(slug: string) {
   for (const candidate of slugCandidates(slug)) {
     try {
       const apiSlugPath = buildPageApiPath(candidate);
-      const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}?autofetch=marketing_services,latest_insights,latest_news`, {
-        cache: 'no-store',
-      });
-      if (!res.ok) continue;
-
-      const { data } = (await res.json()) as MarketingServicesApiResponse;
+      const payload = await fetchJsonCached<MarketingServicesApiResponse>(
+        `${baseUrl}/v1/page/${apiSlugPath}?autofetch=marketing_services,latest_insights,latest_news`,
+        { tags: [`page:${apiSlugPath}`] },
+      );
+      const data = payload?.data;
       if (!data || data.layout !== 'marketing_services') continue;
 
       const meta = data.meta || {};

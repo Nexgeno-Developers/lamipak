@@ -1,4 +1,4 @@
-import { cache } from 'react';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 import { formatBoldText } from '@/lib/htmlText';
 
 type Media = { url?: string | null } | null | undefined;
@@ -426,7 +426,7 @@ export function isInsightsArticleDetailPath(slug: string): boolean {
   return parts.length >= 3 && parts[0] === 'insights' && parts[1] === 'articles';
 }
 
-export const fetchPostDetailPage = cache(async (slug: string) => {
+export const fetchPostDetailPage = async (slug: string) => {
   const cleanSlug = slug.replace(/^\/+|\/+$/g, '');
   const parts = cleanSlug.split('/').filter(Boolean);
   const postSlug = parts[parts.length - 1];
@@ -436,45 +436,43 @@ export const fetchPostDetailPage = cache(async (slug: string) => {
   if (!baseUrl) return null;
 
   try {
-    const res = await fetch(`${baseUrl}/v1/posts/${encodeURIComponent(postSlug)}`, {
-      cache: 'no-store',
-    });
-    if (res.ok) {
-      const payload = (await res.json()) as PostDetailApiResponse;
-      const data = payload.data;
-      if (data && data.layout === 'default_post_detail' && data.is_active !== false) {
-        const canonicalSlug = resolveCanonicalSlug(cleanSlug, data.auto_slug);
-        const page = mapPostToPage(data, canonicalSlug);
-        const seo = { ...(data.seo || {}) } as Record<string, any>;
-        if (!seo.description && page.summary) {
-          seo.description = page.summary;
-        }
-        if (!seo.title && data.title) {
-          seo.title = data.title;
-        }
-        const heroImage = mediaUrl(data.featured_image);
-        if (!seo.og_image && heroImage) {
-          seo.og_image = { url: heroImage };
-        }
-        if (!seo.twitter_image && heroImage) {
-          seo.twitter_image = { url: heroImage };
-        }
-        return {
-          slug: canonicalSlug,
-          title: stripHtml(clean(data.title)) || 'Article',
-          seo,
-          page,
-        };
+    const payload = await fetchJsonCached<PostDetailApiResponse>(
+      `${baseUrl}/v1/posts/${encodeURIComponent(postSlug)}`,
+      { tags: [`post:${postSlug}`] },
+    );
+    const data = payload?.data;
+    if (data && data.layout === 'default_post_detail' && data.is_active !== false) {
+      const canonicalSlug = resolveCanonicalSlug(cleanSlug, data.auto_slug);
+      const page = mapPostToPage(data, canonicalSlug);
+      const seo = { ...(data.seo || {}) } as Record<string, any>;
+      if (!seo.description && page.summary) {
+        seo.description = page.summary;
       }
+      if (!seo.title && data.title) {
+        seo.title = data.title;
+      }
+      const heroImage = mediaUrl(data.featured_image);
+      if (!seo.og_image && heroImage) {
+        seo.og_image = { url: heroImage };
+      }
+      if (!seo.twitter_image && heroImage) {
+        seo.twitter_image = { url: heroImage };
+      }
+      return {
+        slug: canonicalSlug,
+        title: stripHtml(clean(data.title)) || 'Article',
+        seo,
+        page,
+      };
     }
   } catch {
     /* fall through */
   }
 
   return null;
-});
+};
 
-export const fetchInsightsArticleDetailPage = cache(async (slug: string) => {
+export const fetchInsightsArticleDetailPage = async (slug: string) => {
   const cleanSlug = slug.replace(/^\/+|\/+$/g, '');
   if (!isInsightsArticleDetailPath(cleanSlug)) return null;
 
@@ -488,18 +486,18 @@ export const fetchInsightsArticleDetailPage = cache(async (slug: string) => {
 
     try {
       const apiSlugPath = buildPageApiPath(cleanSlug);
-      const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
-      if (res.ok) {
-        const payload = (await res.json()) as ArticleDetailApiResponse;
-        const data = payload.data;
-        if (data && data.layout === 'insights_article_detail') {
-          return {
-            slug: data.slug || cleanSlug,
-            title: stripHtml(clean(data.title)) || 'Article',
-            seo: data.seo || {},
-            page: mapApiToPage(data, articleSlug),
-          };
-        }
+      const payload = await fetchJsonCached<ArticleDetailApiResponse>(
+        `${baseUrl}/v1/page/${apiSlugPath}`,
+        { tags: [`page:${apiSlugPath}`] },
+      );
+      const data = payload?.data;
+      if (data && data.layout === 'insights_article_detail') {
+        return {
+          slug: data.slug || cleanSlug,
+          title: stripHtml(clean(data.title)) || 'Article',
+          seo: data.seo || {},
+          page: mapApiToPage(data, articleSlug),
+        };
       }
     } catch {
       /* defaults */
@@ -514,4 +512,4 @@ export const fetchInsightsArticleDetailPage = cache(async (slug: string) => {
     seo: {} as Record<string, unknown>,
     page: { ...DEFAULT_PAGE, breadcrumbLabel: articleSlug.replace(/-/g, ' ') },
   };
-});
+};

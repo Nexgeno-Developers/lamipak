@@ -1,4 +1,5 @@
 import { formatBoldText } from '@/lib/htmlText';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 export type NgoMembershipMapSectionData = {
   heading: string;
@@ -91,10 +92,11 @@ export async function fetchSustainabilityLayout5Page(slug: string): Promise<{
 
   try {
     const apiSlugPath = buildPageApiPath(slug);
-    const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
-    if (!res.ok) return null;
-
-    const { data } = (await res.json()) as Sustainability5ApiResponse;
+    const payload = await fetchJsonCached<Sustainability5ApiResponse>(
+      `${baseUrl}/v1/page/${apiSlugPath}`,
+      { tags: [`page:${apiSlugPath}`] },
+    );
+    const data = payload?.data;
     if (!data || data.layout !== 'sustainability_5' || data.is_active === false) return null;
 
     const meta = data.meta || {};

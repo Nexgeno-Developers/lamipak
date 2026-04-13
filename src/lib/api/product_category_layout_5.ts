@@ -73,6 +73,7 @@ import { formatBoldText } from '@/lib/htmlText';
 import { breadcrumbsFromSlugPath } from '@/lib/breadcrumbsFromSlugPath';
 import { fetchHomepageData } from '@/lib/api/home';
 import type { VideoBannerData } from '@/fake-api/homepage';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 function stripHtml(value?: string) {
   if (!value) return '';
@@ -101,13 +102,11 @@ export async function fetcProductCategoryLayout5Page(slug: string) {
 
   try {
     const apiSlugPath = buildPageApiPath(slug);
-    const res = await fetch(
+    const payload = await fetchJsonCached<ProductCategoryLayout5ApiResponse>(
       `${baseUrl}/v1/page/${apiSlugPath}?autofetch=product_categories`,
-      { cache: 'no-store' }
+      { tags: [`page:${apiSlugPath}`] },
     );
-    if (!res.ok) return null;
-
-    const { data } = (await res.json()) as ProductCategoryLayout5ApiResponse;
+    const data = payload?.data;
     if (!data || data.layout !== 'product_category_detail_5') {
       return null;
     }

@@ -1,4 +1,4 @@
-import { cache } from 'react';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 import { formatBoldText } from '@/lib/htmlText';
 
 type MediaRef = { id?: number; filename?: string; url?: string | null };
@@ -181,16 +181,17 @@ function parseKeyPoints(raw?: string): string[] {
     .filter(Boolean);
 }
 
-export const fetchRAndDCentreLayoutPage = cache(async (slug: string) => {
+export const fetchRAndDCentreLayoutPage = async (slug: string) => {
   const baseUrl = process.env.COMPANY_API_BASE_URL;
   if (!baseUrl) return null;
 
   try {
     const apiSlugPath = buildPageApiPath(slug);
-    const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
-    if (!res.ok) return null;
-
-    const { data } = (await res.json()) as RAndDCentreApiResponse;
+    const payload = await fetchJsonCached<RAndDCentreApiResponse>(
+      `${baseUrl}/v1/page/${apiSlugPath}`,
+      { tags: [`page:${apiSlugPath}`] },
+    );
+    const data = payload?.data;
     if (!data || data.layout !== 'rnd_center' || data.is_active === false) return null;
 
     const meta = data.meta || {};
@@ -324,4 +325,4 @@ export const fetchRAndDCentreLayoutPage = cache(async (slug: string) => {
   } catch {
     return null;
   }
-});
+};

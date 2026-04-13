@@ -1,4 +1,4 @@
-import { cache } from 'react';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 import { formatBoldText } from '@/lib/htmlText';
 
 type Media = { url?: string | null } | null | undefined;
@@ -126,7 +126,7 @@ function subtitleFromDescription(raw: string): string {
   return first.length > 120 ? `${first.slice(0, 117)}…` : first;
 }
 
-export const fetchProductIndustriesLayoutPage = cache(async (slug: string) => {
+export const fetchProductIndustriesLayoutPage = async (slug: string) => {
   const baseUrl = process.env.COMPANY_API_BASE_URL;
   if (!baseUrl) return null;
 
@@ -134,12 +134,11 @@ export const fetchProductIndustriesLayoutPage = cache(async (slug: string) => {
     try {
       const apiSlugPath = buildPageApiPath(candidate);
       const autofetch = encodeURIComponent('industries,featured_products');
-      const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}?autofetch=${autofetch}`, {
-        cache: 'no-store',
-      });
-      if (!res.ok) continue;
-
-      const { data } = (await res.json()) as ProductIndustriesApiResponse;
+      const payload = await fetchJsonCached<ProductIndustriesApiResponse>(
+        `${baseUrl}/v1/page/${apiSlugPath}?autofetch=${autofetch}`,
+        { tags: [`page:${apiSlugPath}`] },
+      );
+      const data = payload?.data;
       if (!data || data.layout !== 'product_industries') continue;
 
       const meta = data.meta || {};
@@ -238,4 +237,4 @@ export const fetchProductIndustriesLayoutPage = cache(async (slug: string) => {
   }
 
   return null;
-});
+};

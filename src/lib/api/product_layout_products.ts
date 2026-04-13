@@ -1,6 +1,7 @@
 import type { ProductData, ProductSEO } from '@/fake-api/products';
 import { normalizeText, formatBoldText } from '@/lib/htmlText';
 import { cleanVideoUrlFromApi } from '@/lib/cleanVideoUrl';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 type Media = { url?: string | null } | null | undefined;
 
@@ -311,12 +312,11 @@ export async function fetchProductLayoutPage(slug: string): Promise<ProductData 
   for (const candidate of candidates) {
     try {
       const apiSlugPath = buildPageApiPath(candidate);
-      const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}?autofetch=related_products`, {
-        cache: 'no-store',
-      });
-      if (!res.ok) continue;
-
-      const payload = (await res.json()) as ProductLayoutApiResponse;
+      const payload = await fetchJsonCached<ProductLayoutApiResponse>(
+        `${baseUrl}/v1/page/${apiSlugPath}?autofetch=related_products`,
+        { tags: [`page:${apiSlugPath}`] },
+      );
+      if (!payload) continue;
       const data = payload?.data;
       if (!data || data.layout !== 'products') continue;
 

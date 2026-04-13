@@ -79,6 +79,7 @@ export type OnePackOneCodeLandingSectionData = {
 import { formatBoldText } from '@/lib/htmlText';
 import { breadcrumbsFromSlugPath } from '@/lib/breadcrumbsFromSlugPath';
 import { cleanVideoUrlFromApi } from '@/lib/cleanVideoUrl';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 function stripHtml(value?: string) {
   if (!value) return '';
@@ -115,10 +116,11 @@ export async function fetcProductCategoryLayout4Page(slug: string) {
 
   try {
     const apiSlugPath = buildPageApiPath(slug);
-    const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
-    if (!res.ok) return null;
-
-    const { data } = (await res.json()) as ProductCategoryLayout4ApiResponse;
+    const payload = await fetchJsonCached<ProductCategoryLayout4ApiResponse>(
+      `${baseUrl}/v1/page/${apiSlugPath}`,
+      { tags: [`page:${apiSlugPath}`] },
+    );
+    const data = payload?.data;
     if (!data || data.layout !== 'product_category_detail_4') return null;
 
     const meta = data.meta || {};

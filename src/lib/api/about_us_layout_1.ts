@@ -2,6 +2,7 @@ import type { CompanyHero, CompanyStatistic, JourneyData } from '@/fake-api/comp
 import { normalizeText, formatBoldText } from '@/lib/htmlText';
 import { mapPageBlocksToNavigation, type AboutUsPageBlock } from '@/lib/api/about_us_navigation';
 import type { CompanyNavigationData } from '@/components/company/CompanyNavigation';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 type Media = { url?: string | null } | null | undefined;
 
@@ -95,10 +96,11 @@ export async function fetchAboutUsLayout1Page(slug: string) {
 
   try {
     const apiSlugPath = buildPageApiPath(slug);
-    const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
-    if (!res.ok) return null;
-
-    const { data } = (await res.json()) as AboutUsLayout1ApiResponse;
+    const payload = await fetchJsonCached<AboutUsLayout1ApiResponse>(
+      `${baseUrl}/v1/page/${apiSlugPath}`,
+      { tags: [`page:${apiSlugPath}`] },
+    );
+    const data = payload?.data;
     if (!data || data.layout !== 'about_1') return null;
 
     const meta = data.meta || {};
