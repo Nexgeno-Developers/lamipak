@@ -34,6 +34,7 @@ type MarketingServiceDetailApiResponse = {
 
 import { formatBoldText } from '@/lib/htmlText';
 import { cleanVideoUrlFromApi } from '@/lib/cleanVideoUrl';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 function buildPageApiPath(slug: string) {
   return slug
@@ -91,10 +92,11 @@ export async function fetchMarketingServiceDetailLayoutPage(slug: string) {
   for (const candidate of slugCandidates(slug)) {
     try {
       const apiSlugPath = buildPageApiPath(candidate);
-      const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
-      if (!res.ok) continue;
-
-      const { data } = (await res.json()) as MarketingServiceDetailApiResponse;
+      const payload = await fetchJsonCached<MarketingServiceDetailApiResponse>(
+        `${baseUrl}/v1/page/${apiSlugPath}`,
+        { tags: [`page:${apiSlugPath}`] },
+      );
+      const data = payload?.data;
       if (!data || data.layout !== 'marketing_service_detail') continue;
 
       const meta = data.meta || {};

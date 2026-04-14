@@ -13,6 +13,35 @@ function cardVariant(kind: InsightsListingData['kind']): 'articles' | 'webinar' 
   return 'articles';
 }
 
+type PageItem = number | 'ellipsis';
+
+function buildPageItems(currentPage: number, lastPage: number): PageItem[] {
+  if (lastPage <= 7) {
+    return Array.from({ length: lastPage }, (_, i) => i + 1);
+  }
+
+  const items: PageItem[] = [];
+  const windowSize = 2;
+  let start = Math.max(2, currentPage - windowSize);
+  let end = Math.min(lastPage - 1, currentPage + windowSize);
+
+  if (currentPage <= 4) {
+    start = 2;
+    end = 5;
+  } else if (currentPage >= lastPage - 3) {
+    start = lastPage - 4;
+    end = lastPage - 1;
+  }
+
+  items.push(1);
+  if (start > 2) items.push('ellipsis');
+  for (let i = start; i <= end; i += 1) items.push(i);
+  if (end < lastPage - 1) items.push('ellipsis');
+  items.push(lastPage);
+
+  return items;
+}
+
 export default function InsightsListingPage({ data }: { data: InsightsListingData }) {
   const variant = cardVariant(data.kind);
   const isArticles = data.kind === 'articles';
@@ -33,6 +62,7 @@ export default function InsightsListingPage({ data }: { data: InsightsListingDat
   const prevPage = currentPage > 1 ? currentPage - 1 : null;
   const nextPage = currentPage < lastPage ? currentPage + 1 : null;
   const pageHref = (page: number) => (page <= 1 ? basePath : `${basePath}?page=${page}`);
+  const pageItems = hasPaginationLinks && lastPage > 1 ? buildPageItems(currentPage, lastPage) : [];
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -71,24 +101,61 @@ export default function InsightsListingPage({ data }: { data: InsightsListingDat
             )
           )}
 
-          {hasPaginationLinks && (prevPage || nextPage) ? (
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-              {prevPage ? (
-                <Link
-                  href={pageHref(prevPage)}
-                  className="rounded-full border-2 border-[#009FE8] px-6 py-3 text-sm font-semibold text-[#009FE8] transition-colors hover:bg-[#009FE8]/10"
-                >
-                  View less
-                </Link>
-              ) : null}
-              {nextPage ? (
-                <Link
-                  href={pageHref(nextPage)}
-                  className="rounded-full bg-[#009FE8] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#007db5]"
-                >
-                  View more
-                </Link>
-              ) : null}
+          {hasPaginationLinks && pageItems.length > 0 ? (
+            <div className="mt-10 flex items-center justify-center sm:justify-end">
+              <nav
+                aria-label="Pagination"
+                className="flex flex-wrap items-center gap-2 rounded-full bg-white px-3 py-2 shadow-sm ring-1 ring-black/5"
+              >
+                {prevPage ? (
+                  <Link
+                    href={pageHref(prevPage)}
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-[#B7D7EA] text-[#009FE8] transition-colors hover:bg-[#009FE8]/10"
+                    aria-label="Previous page"
+                  >
+                    <span aria-hidden>‹</span>
+                  </Link>
+                ) : (
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#E5F2FA] text-[#A8C7DA]">
+                    <span aria-hidden>‹</span>
+                  </span>
+                )}
+
+                {pageItems.map((item, idx) =>
+                  item === 'ellipsis' ? (
+                    <span key={`ellipsis-${idx}`} className="px-2 text-sm text-[#7A97A9]">
+                      …
+                    </span>
+                  ) : (
+                    <Link
+                      key={item}
+                      href={pageHref(item)}
+                      aria-current={item === currentPage ? 'page' : undefined}
+                      className={`flex h-9 min-w-[36px] items-center justify-center rounded-full px-3 text-sm font-semibold transition-colors ${
+                        item === currentPage
+                          ? 'bg-[#009FE8] text-white'
+                          : 'text-[#0E233C] hover:bg-[#E5F2FA]'
+                      }`}
+                    >
+                      {item}
+                    </Link>
+                  ),
+                )}
+
+                {nextPage ? (
+                  <Link
+                    href={pageHref(nextPage)}
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-[#B7D7EA] text-[#009FE8] transition-colors hover:bg-[#009FE8]/10"
+                    aria-label="Next page"
+                  >
+                    <span aria-hidden>›</span>
+                  </Link>
+                ) : (
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#E5F2FA] text-[#A8C7DA]">
+                    <span aria-hidden>›</span>
+                  </span>
+                )}
+              </nav>
             </div>
           ) : null}
         </div>

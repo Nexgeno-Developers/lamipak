@@ -126,6 +126,7 @@ type CareerApiResponse = {
 };
 
 import { formatBoldText } from '@/lib/htmlText';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 function stripHtml(value?: string | null): string {
   if (!value) return '';
@@ -189,10 +190,11 @@ export async function fetchCareerLayoutPage(slug: string): Promise<{
 
   try {
     const apiSlugPath = buildPageApiPath(slug);
-    const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
-    if (!res.ok) return null;
-
-    const { data } = (await res.json()) as CareerApiResponse;
+    const payload = await fetchJsonCached<CareerApiResponse>(
+      `${baseUrl}/v1/page/${apiSlugPath}`,
+      { tags: [`page:${apiSlugPath}`] },
+    );
+    const data = payload?.data;
     if (!data || data.layout !== 'career' || data.is_active === false) return null;
 
     const meta = data.meta || {};

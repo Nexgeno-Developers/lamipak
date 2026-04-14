@@ -1,4 +1,5 @@
 import type { FooterData, FooterColumn, SocialLink } from './types';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 type CompanyApiResponse = {
   data?: {
@@ -87,24 +88,14 @@ function findMetaValue(meta: unknown, key: string): string | undefined {
   return undefined;
 }
 
-async function fetchJson<T>(url: string): Promise<T | null> {
-  try {
-    const res = await fetch(url, {
-      cache: 'no-store',
-      headers: { Accept: 'application/json' },
-    });
-    if (!res.ok) return null;
-    return (await res.json()) as T;
-  } catch {
-    return null;
-  }
-}
-
 async function fetchMenuGroup(groupId: number): Promise<MenuGroupItem[]> {
   const url = buildCompanyApiUrl(`/v1/menus/groups/${groupId}`);
   if (!url) return [];
 
-  const payload = await fetchJson<MenuGroupApiResponse>(url);
+  const payload = await fetchJsonCached<MenuGroupApiResponse>(url, {
+    tags: [`menu-group:${groupId}`],
+    init: { headers: { Accept: 'application/json' } },
+  });
   return payload?.data?.items?.filter((i) => i.status !== false) || [];
 }
 
@@ -131,7 +122,10 @@ async function fetchCompanyData(): Promise<CompanyApiResponse['data'] | null> {
   const url = buildCompanyApiUrl('/v1/companies/1');
   if (!url) return null;
 
-  const payload = await fetchJson<CompanyApiResponse>(url);
+  const payload = await fetchJsonCached<CompanyApiResponse>(url, {
+    tags: ['company-profile'],
+    init: { headers: { Accept: 'application/json' } },
+  });
   const company = payload?.data;
   if (!company || company.is_active === false) return null;
   return company;

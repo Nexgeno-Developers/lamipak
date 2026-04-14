@@ -1,4 +1,3 @@
-import { cache } from 'react';
 import type { Metadata } from 'next';
 
 import { buildApiMetadata } from '@/components/seo/buildApiMetadata';
@@ -625,8 +624,10 @@ async function resolveApiLayout(
   }
 }
 
-export const resolveDynamicPage = cache(
-  async (fullSlug: string, page: number = 1): Promise<ResolvedDynamicPage> => {
+export const resolveDynamicPage = async (
+  fullSlug: string,
+  page: number = 1,
+): Promise<ResolvedDynamicPage> => {
     const cleanSlug = fullSlug.replace(/^\/+|\/+$/g, '');
     const segments = cleanSlug ? cleanSlug.split('/').filter(Boolean) : [];
 
@@ -766,5 +767,4 @@ export const resolveDynamicPage = cache(
     }
 
     return { kind: 'not-found', metadata: NOT_FOUND_METADATA };
-  },
-);
+  };

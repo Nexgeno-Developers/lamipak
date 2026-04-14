@@ -1,5 +1,6 @@
 type Media = { url?: string | null } | null | undefined;
 import { normalizeText, formatBoldText } from '@/lib/htmlText';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 type ProductIndustryDetailApiResponse = {
   data?: {
@@ -132,9 +133,11 @@ async function resolveMediaIdToUrl(baseUrl: string, id: string): Promise<string 
 
   for (const url of candidates) {
     try {
-      const res = await fetch(url, { cache: 'no-store' });
-      if (!res.ok) continue;
-      const payload = (await res.json()) as { data?: { url?: string | null } } | { url?: string | null };
+      const payload = await fetchJsonCached<{ data?: { url?: string | null } } | { url?: string | null }>(
+        url,
+        { tags: [`media:${cleanId}`] },
+      );
+      if (!payload) continue;
       const found =
         'data' in payload
           ? (payload as any)?.data?.url
@@ -158,10 +161,11 @@ export async function fetchProductIndustryDetailLayoutPage(slug: string) {
 
   try {
     const apiSlugPath = buildPageApiPath(clean);
-    const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
-    if (!res.ok) return null;
-
-    const { data } = (await res.json()) as ProductIndustryDetailApiResponse;
+    const payload = await fetchJsonCached<ProductIndustryDetailApiResponse>(
+      `${baseUrl}/v1/page/${apiSlugPath}`,
+      { tags: [`page:${apiSlugPath}`] },
+    );
+    const data = payload?.data;
     if (!data || data.layout !== 'product_industry_detail') return null;
 
     const meta = data.meta || {};

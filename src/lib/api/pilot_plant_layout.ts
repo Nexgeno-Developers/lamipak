@@ -1,4 +1,4 @@
-import { cache } from 'react';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 import { normalizeText } from '@/lib/htmlText';
 
 type Media = { url?: string | null } | null | undefined;
@@ -438,7 +438,7 @@ function mapApiToPage(api: NonNullable<PilotPlantApiResponse['data']>): PilotPla
   return base;
 }
 
-export const fetchPilotPlantLayoutPage = cache(async (slug: string) => {
+export const fetchPilotPlantLayoutPage = async (slug: string) => {
   const cleanSlug = slug.replace(/^\/+|\/+$/g, '');
   if (!cleanSlug) return null;
 
@@ -451,18 +451,18 @@ export const fetchPilotPlantLayoutPage = cache(async (slug: string) => {
         .filter(Boolean)
         .map((part) => encodeURIComponent(part))
         .join('/');
-      const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
-      if (res.ok) {
-        const payload = (await res.json()) as PilotPlantApiResponse;
-        const data = payload.data;
-        if (data && (data.layout === 'pilot_plant' || data.layout === 'innovation_detail_2')) {
-          return {
-            slug: data.slug,
-            title: data.title,
-            seo: data.seo || {},
-            page: mapApiToPage(data),
-          };
-        }
+      const payload = await fetchJsonCached<PilotPlantApiResponse>(
+        `${baseUrl}/v1/page/${apiSlugPath}`,
+        { tags: [`page:${apiSlugPath}`] },
+      );
+      const data = payload?.data;
+      if (data && (data.layout === 'pilot_plant' || data.layout === 'innovation_detail_2')) {
+        return {
+          slug: data.slug,
+          title: data.title,
+          seo: data.seo || {},
+          page: mapApiToPage(data),
+        };
       }
     } catch {
       /* fall through */
@@ -470,4 +470,4 @@ export const fetchPilotPlantLayoutPage = cache(async (slug: string) => {
   }
 
   return null;
-});
+};

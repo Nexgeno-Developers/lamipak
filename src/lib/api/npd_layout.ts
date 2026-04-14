@@ -1,4 +1,4 @@
-import { cache } from 'react';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 import { normalizeText } from '@/lib/htmlText';
 
 type Media = { url?: string | null } | null | undefined;
@@ -264,7 +264,7 @@ const ACCEPTED_LAYOUTS = new Set(['npd', 'innovation_detail_1']);
  * Resolves any URL path whose CMS page uses layout `npd` or `innovation_detail_1`.
  * Calls `GET /v1/page/{slug}` — the public URL and API slug stay in sync when you change the slug in the CMS (e.g. `npd` → `npd2`).
  */
-export const fetchNpdLayoutPage = cache(async (slug: string) => {
+export const fetchNpdLayoutPage = async (slug: string) => {
   const cleanSlug = slug.replace(/^\/+|\/+$/g, '');
   if (!cleanSlug) return null;
 
@@ -273,11 +273,11 @@ export const fetchNpdLayoutPage = cache(async (slug: string) => {
 
   try {
     const apiSlugPath = buildPageApiPath(cleanSlug);
-    const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
-    if (!res.ok) return null;
-
-    const payload = (await res.json()) as NpdApiResponse;
-    const data = payload.data;
+    const payload = await fetchJsonCached<NpdApiResponse>(
+      `${baseUrl}/v1/page/${apiSlugPath}`,
+      { tags: [`page:${apiSlugPath}`] },
+    );
+    const data = payload?.data;
     if (!data || !ACCEPTED_LAYOUTS.has(data.layout || '')) return null;
 
     return {
@@ -289,4 +289,4 @@ export const fetchNpdLayoutPage = cache(async (slug: string) => {
   } catch {
     return null;
   }
-});
+};

@@ -1,4 +1,4 @@
-import { cache } from 'react';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 import { formatBoldText } from '@/lib/htmlText';
 
 type Media = { url?: string | null } | null | undefined;
@@ -531,25 +531,25 @@ function buildPageApiPath(slug: string) {
     .join('/');
 }
 
-export const fetchInsightsHubPage = cache(async (slug: string) => {
+export const fetchInsightsHubPage = async (slug: string) => {
   const cleanSlug = slug.replace(/^\/+|\/+$/g, '');
   const baseUrl = process.env.COMPANY_API_BASE_URL;
   if (baseUrl) {
     try {
       const apiSlugPath = buildPageApiPath(cleanSlug);
-      const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
-      if (res.ok) {
-        const payload = (await res.json()) as InsightsHubApiResponse;
-        const data = payload.data;
-        const layout = data?.layout;
-        if (data && (layout === 'insights' || layout === 'insights_n_media')) {
-          return {
-            slug: data.slug || 'insights',
-            title: data.title || 'Insights',
-            seo: data.seo || {},
-            page: mapApiToHub(data),
-          };
-        }
+      const payload = await fetchJsonCached<InsightsHubApiResponse>(
+        `${baseUrl}/v1/page/${apiSlugPath}`,
+        { tags: [`page:${apiSlugPath}`] },
+      );
+      const data = payload?.data;
+      const layout = data?.layout;
+      if (data && (layout === 'insights' || layout === 'insights_n_media')) {
+        return {
+          slug: data.slug || 'insights',
+          title: data.title || 'Insights',
+          seo: data.seo || {},
+          page: mapApiToHub(data),
+        };
       }
     } catch {
       /* fall through */
@@ -565,4 +565,4 @@ export const fetchInsightsHubPage = cache(async (slug: string) => {
     seo: {} as Record<string, unknown>,
     page: { ...DEFAULT_HUB },
   };
-});
+};

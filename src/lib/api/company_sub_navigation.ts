@@ -1,4 +1,5 @@
 import type { CompanyNavigation } from '@/fake-api/company';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 type MenuItemApi = {
   id: number;
@@ -15,7 +16,6 @@ type MenuGroupApiResponse = {
   };
 };
 
-const SUB_NAV_REVALIDATE_SECONDS = 300;
 
 function buildCompanyApiUrl(endpoint: string): string | null {
   const baseUrl = process.env.COMPANY_API_BASE_URL?.trim();
@@ -103,14 +103,11 @@ export async function fetchCompanySubNavigation(): Promise<CompanyNavigation | n
       if (!built) return null;
 
       try {
-        const response = await fetch(built, {
-          method: 'GET',
-          headers: { Accept: 'application/json' },
-          next: { revalidate: SUB_NAV_REVALIDATE_SECONDS },
+        const payload = await fetchJsonCached<MenuGroupApiResponse>(built, {
+          tags: [`menu-group:${groupId}`],
+          init: { method: 'GET', headers: { Accept: 'application/json' } },
         });
-        if (!response.ok) continue;
-
-        const payload = (await response.json()) as MenuGroupApiResponse;
+        if (!payload) continue;
         const items = payload?.data?.items;
         if (!Array.isArray(items) || items.length === 0) continue;
 

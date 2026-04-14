@@ -1,4 +1,4 @@
-import { cache } from 'react';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 import { formatBoldText } from '@/lib/htmlText';
 
 // ==================== Types ====================
@@ -330,7 +330,6 @@ type HomePageApiResponse = {
 
 const COMPANY_API_BASE_URL = process.env.COMPANY_API_BASE_URL || 'https://backend-lamipak.webtesting.pw/api';
 const HOME_AUTOFETCH = 'services,sustainable_products,sustainabilities,latest_insights,latest_news';
-const HOME_REVALIDATE_SECONDS = 300;
 
 function buildApiUrl(path: string): string {
   const base = COMPANY_API_BASE_URL.replace(/\/+$/, '');
@@ -791,16 +790,15 @@ function mapVideoBanner(meta: HomeMetaApi | undefined): VideoBannerData | null {
 
 // ==================== Main Fetch ====================
 
-export const fetchHomepageData = cache(async (): Promise<HomepageData | null> => {
+export const fetchHomepageData = async (): Promise<HomepageData | null> => {
   try {
     const url = buildApiUrl(
       `/v1/page/home?autofetch=${encodeURIComponent(HOME_AUTOFETCH)}`,
     );
-    const response = await fetch(url, { next: { revalidate: HOME_REVALIDATE_SECONDS } });
-
-    if (!response.ok) return null;
-
-    const payload = (await response.json()) as HomePageApiResponse;
+    const payload = await fetchJsonCached<HomePageApiResponse>(url, {
+      tags: ['home'],
+    });
+    if (!payload) return null;
     const data = payload.data;
     if (!data || data.layout !== 'home') return null;
 
@@ -862,4 +860,4 @@ export const fetchHomepageData = cache(async (): Promise<HomepageData | null> =>
   } catch {
     return null;
   }
-});
+};

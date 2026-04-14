@@ -1,4 +1,5 @@
 import { decodeHtmlEntities, formatBoldText } from '@/lib/htmlText';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 export type GreenSustainabilityVisionCardData = {
   id: string;
@@ -166,10 +167,11 @@ export async function fetchSustainabilityLayout3Page(slug: string): Promise<{
 
   try {
     const apiSlugPath = buildPageApiPath(slug);
-    const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
-    if (!res.ok) return null;
-
-    const { data } = (await res.json()) as Sustainability3ApiResponse;
+    const payload = await fetchJsonCached<Sustainability3ApiResponse>(
+      `${baseUrl}/v1/page/${apiSlugPath}`,
+      { tags: [`page:${apiSlugPath}`] },
+    );
+    const data = payload?.data;
     if (!data || data.layout !== 'sustainability_3' || data.is_active === false) return null;
 
     const meta = data.meta || {};

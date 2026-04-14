@@ -95,7 +95,7 @@ export default function Hero({ data }: HeroProps) {
       <div className="absolute inset-0">
         {slides.map((slide, index) => (
           <div
-            key={slide.id}
+            key={`${slide.id}-${index}`}
             className={`absolute inset-0 transition-opacity duration-1000 ${
               index === currentSlide ? 'opacity-100 z-0' : 'opacity-0 z-[-1] pointer-events-none'
             }`}

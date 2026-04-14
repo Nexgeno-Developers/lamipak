@@ -1,6 +1,7 @@
 import { decodeHtmlEntities, formatBoldText } from '@/lib/htmlText';
 import { breadcrumbsFromSlugPath } from '@/lib/breadcrumbsFromSlugPath';
 import { cleanVideoUrlFromApi } from '@/lib/cleanVideoUrl';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 export type LamiStrawIconId = 'u' | 'telescope' | 'i' | 'flow';
 
@@ -114,13 +115,11 @@ export async function fetcProductCategoryLayout3Page(slug: string) {
 
   try {
     const apiSlugPath = buildPageApiPath(slug);
-    const res = await fetch(
+    const payload = await fetchJsonCached<ProductCategoryLayout3ApiResponse>(
       `${baseUrl}/v1/page/${apiSlugPath}?autofetch=lamistraw_products`,
-      { cache: 'no-store' },
+      { tags: [`page:${apiSlugPath}`] },
     );
-    if (!res.ok) return null;
-
-    const { data } = (await res.json()) as ProductCategoryLayout3ApiResponse;
+    const data = payload?.data;
     if (!data || data.layout !== 'product_category_detail_3' || data.is_active === false) {
       return null;
     }

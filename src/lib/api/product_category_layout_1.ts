@@ -41,6 +41,7 @@ type ProductCategoryLayout1ApiResponse = {
 import { formatBoldText } from '@/lib/htmlText';
 import { breadcrumbsFromSlugPath } from '@/lib/breadcrumbsFromSlugPath';
 import { cleanVideoUrlFromApi } from '@/lib/cleanVideoUrl';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 function stripHtml(value?: string) {
   if (!value) return '';
@@ -66,13 +67,11 @@ export async function fetcProductCategoryLayout1Page(slug: string) {
 
   try {
     const apiSlugPath = buildPageApiPath(slug);
-    const res = await fetch(
+    const payload = await fetchJsonCached<ProductCategoryLayout1ApiResponse>(
       `${baseUrl}/v1/page/${apiSlugPath}?autofetch=premium_products,standard_products`,
-      { cache: 'no-store' },
+      { tags: [`page:${apiSlugPath}`] },
     );
-    if (!res.ok) return null;
-
-    const { data } = (await res.json()) as ProductCategoryLayout1ApiResponse;
+    const data = payload?.data;
     if (!data || data.layout !== 'product_category_detail_1') return null;
 
     const standard = toArray(data.autofetch?.standard_products);

@@ -1,4 +1,4 @@
-import { cache } from 'react';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 import { formatBoldText } from '@/lib/htmlText';
 import type { InsightItem } from '@/lib/api/insights_layout';
 
@@ -469,7 +469,7 @@ function buildPageApiPath(slug: string) {
     .join('/');
 }
 
-export const fetchInsightsListingPage = cache(async (slug: string, page: number = 1) => {
+export const fetchInsightsListingPage = async (slug: string, page: number = 1) => {
   const cleanSlug = slug.replace(/^\/+|\/+$/g, '');
   const kindFromSlug = inferKindFromSlug(cleanSlug) || LISTING_ROUTES[cleanSlug];
 
@@ -478,22 +478,20 @@ export const fetchInsightsListingPage = cache(async (slug: string, page: number 
     try {
       const apiSlugPath = buildPageApiPath(cleanSlug);
       const pageParam = page && page > 1 ? `?page=${page}` : '';
-      const res = await fetch(`${baseUrl}/v1/categories/${apiSlugPath}${pageParam}`, {
-        cache: 'no-store',
-      });
-      if (res.ok) {
-        const payload = (await res.json()) as CategoryListingApiResponse;
-        if (payload.layout === 'default_category_listing') {
-          const kind = kindFromSlug ?? inferKindFromCategoryNode(payload.category);
-          const listing = mapCategoryToListing(payload, kind, cleanSlug, page);
-          if (listing) {
-            return {
-              slug: payload.category?.slug || cleanSlug,
-              title: categoryLabel(payload.category) || TITLES[kind],
-              seo: payload.seo || {},
-              page: listing,
-            };
-          }
+      const payload = await fetchJsonCached<CategoryListingApiResponse>(
+        `${baseUrl}/v1/categories/${apiSlugPath}${pageParam}`,
+        { tags: [`category:${apiSlugPath}`] },
+      );
+      if (payload?.layout === 'default_category_listing') {
+        const kind = kindFromSlug ?? inferKindFromCategoryNode(payload.category);
+        const listing = mapCategoryToListing(payload, kind, cleanSlug, page);
+        if (listing) {
+          return {
+            slug: payload.category?.slug || cleanSlug,
+            title: categoryLabel(payload.category) || TITLES[kind],
+            seo: payload.seo || {},
+            page: listing,
+          };
         }
       }
     } catch {
@@ -502,19 +500,19 @@ export const fetchInsightsListingPage = cache(async (slug: string, page: number 
 
     try {
       const apiSlugPath = buildPageApiPath(cleanSlug);
-      const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
-      if (res.ok) {
-        const payload = (await res.json()) as ListingApiResponse;
-        const data = payload.data;
-        if (data && data.layout === 'insights_listing') {
-          const kind = kindFromSlug || 'articles';
-          return {
-            slug: data.slug || cleanSlug,
-            title: data.title || TITLES[kind],
-            seo: data.seo || {},
-            page: mapApiToListing(data, kind),
-          };
-        }
+      const payload = await fetchJsonCached<ListingApiResponse>(
+        `${baseUrl}/v1/page/${apiSlugPath}`,
+        { tags: [`page:${apiSlugPath}`] },
+      );
+      const data = payload?.data;
+      if (data && data.layout === 'insights_listing') {
+        const kind = kindFromSlug || 'articles';
+        return {
+          slug: data.slug || cleanSlug,
+          title: data.title || TITLES[kind],
+          seo: data.seo || {},
+          page: mapApiToListing(data, kind),
+        };
       }
     } catch {
       /* defaults */
@@ -531,4 +529,4 @@ export const fetchInsightsListingPage = cache(async (slug: string, page: number 
     seo: {} as Record<string, unknown>,
     page: { ...def },
   };
-});
+};

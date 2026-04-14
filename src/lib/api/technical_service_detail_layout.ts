@@ -83,6 +83,7 @@ export type TechnicalServiceDetailPageData = {
 };
 
 import { formatBoldText } from '@/lib/htmlText';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 function buildPageApiPath(slug: string) {
   return slug
@@ -129,10 +130,11 @@ export async function fetchTechnicalServiceDetailLayoutPage(slug: string) {
   for (const candidate of slugCandidates(slug)) {
     try {
       const apiSlugPath = buildPageApiPath(candidate);
-      const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
-      if (!res.ok) continue;
-
-      const { data } = (await res.json()) as TechnicalServiceDetailApiResponse;
+      const payload = await fetchJsonCached<TechnicalServiceDetailApiResponse>(
+        `${baseUrl}/v1/page/${apiSlugPath}`,
+        { tags: [`page:${apiSlugPath}`] },
+      );
+      const data = payload?.data;
       const layout = data?.layout?.trim?.() || data?.layout;
       if (!data || !layout || !layout.toString().startsWith('technical_service_detail')) continue;
 

@@ -1,4 +1,4 @@
-import { cache } from 'react';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 import { normalizeText } from '@/lib/htmlText';
 import type { MarketingNewsItem } from '@/components/marketing/LatestNewsClient';
 
@@ -221,7 +221,7 @@ function mapApiToPage(api: NonNullable<InnovationsApiResponse['data']>): Innovat
   return base;
 }
 
-export const fetchInnovationsLayoutPage = cache(async (slug: string) => {
+export const fetchInnovationsLayoutPage = async (slug: string) => {
   const cleanSlug = slug.replace(/^\/+|\/+$/g, '');
   if (!cleanSlug) return null;
 
@@ -229,13 +229,11 @@ export const fetchInnovationsLayoutPage = cache(async (slug: string) => {
   if (!baseUrl) return null;
 
   try {
-    const res = await fetch(
+    const payload = await fetchJsonCached<InnovationsApiResponse>(
       `${baseUrl}/v1/page/${encodeURIComponent(cleanSlug)}?autofetch=latest_insights,latest_news`,
-      { cache: 'no-store' },
+      { tags: [`page:${cleanSlug}`] },
     );
-    if (!res.ok) return null;
-    const payload = (await res.json()) as InnovationsApiResponse;
-    const data = payload.data;
+    const data = payload?.data;
     if (!data || data.layout !== 'innovation') return null;
     return {
       slug: data.slug,
@@ -246,4 +244,4 @@ export const fetchInnovationsLayoutPage = cache(async (slug: string) => {
   } catch {
     return null;
   }
-});
+};

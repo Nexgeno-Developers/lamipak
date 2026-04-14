@@ -12,6 +12,8 @@ export type ApiPageProbeResult = ApiPageProbeData & {
   matchedSlug: string;
 };
 
+import { fetchJsonCached } from '@/lib/api/apiCache';
+
 function buildPageApiPath(slug: string) {
   return slug
     .split('/')
@@ -50,10 +52,11 @@ export async function probePageLayout(fullSlug: string): Promise<ApiPageProbeRes
   for (const candidate of candidates) {
     try {
       const apiSlugPath = buildPageApiPath(candidate);
-      const res = await fetch(`${baseUrl}/v1/page/${apiSlugPath}`, { cache: 'no-store' });
-      if (!res.ok) continue;
-
-      const payload = (await res.json()) as { data?: ApiPageProbeData };
+      const payload = await fetchJsonCached<{ data?: ApiPageProbeData }>(
+        `${baseUrl}/v1/page/${apiSlugPath}`,
+        { tags: [`page:${apiSlugPath}`] },
+      );
+      if (!payload) continue;
       const data = payload?.data;
       if (!data) continue;
       if (data.is_active === false) continue;

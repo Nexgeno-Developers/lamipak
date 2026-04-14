@@ -62,6 +62,7 @@ import {
 } from '@/fake-api/packaging-pages';
 import { getDynamicPageBySlug as fakeGetDynamicPageBySlug } from '@/fake-api/dynamic-pages';
 import { getCanonicalUrl } from '@/config/site';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 // Re-export types for convenience
 export type {
@@ -187,13 +188,11 @@ const useRealAPI = (): boolean => {
 
 async function fetchCompanyProfile(): Promise<CompanyProfile | null> {
   try {
-    const response = await fetch(buildCompanyApiUrl(COMPANY_PROFILE_ENDPOINT), {
-      cache: 'no-store',
-    });
-
-    if (!response.ok) return null;
-
-    const payload = (await response.json()) as CompanyProfileApiResponse;
+    const payload = await fetchJsonCached<CompanyProfileApiResponse>(
+      buildCompanyApiUrl(COMPANY_PROFILE_ENDPOINT),
+      { tags: ['company-profile'], init: { headers: { Accept: 'application/json' } } },
+    );
+    if (!payload) return null;
     const raw = payload?.data;
     if (!raw || raw.is_active === false) return null;
 
@@ -805,4 +804,3 @@ export async function getAllMarketingServiceSlugs(): Promise<string[]> {
 
   return fakeGetAllMarketingServiceSlugs();
 }
-

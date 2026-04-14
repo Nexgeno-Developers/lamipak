@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import Image from 'next/image';
+import CircularImage from '@/components/common/CircularImage';
 import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
@@ -165,12 +165,12 @@ export default function SimilarProductsSliderClient({
               {/* Product Image Container */}
               <div className="mb-4 aspect-square flex items-center justify-center">
                 <div className="relative w-full h-full rounded-[50px] lg:h-[350px] h-[250px]">
-                  <Image
+                  <CircularImage
                     src={product.image}
                     alt={product.imageAlt}
                     fill
                     className="object-contain rounded-[50px] w-full h-full object-top"
-                    sizes=""
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 25vw"
                   />
                 </div>
               </div>

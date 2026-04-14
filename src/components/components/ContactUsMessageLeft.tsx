@@ -258,6 +258,146 @@ const COUNTRY_OPTIONS = [
   'Zimbabwe',
 ];
 
+type SearchableSelectProps = {
+  id: string;
+  name: keyof FormState;
+  label: string;
+  options: string[];
+  value: string;
+  disabled?: boolean;
+  required?: boolean;
+  error?: string;
+  onChange: (name: keyof FormState, value: string) => void;
+};
+
+function SearchableSelect({
+  id,
+  name,
+  label,
+  options,
+  value,
+  disabled,
+  required,
+  error,
+  onChange,
+}: SearchableSelectProps) {
+  const placeholder = options[0] || 'Select option';
+  const selectable = useMemo(() => options.filter((opt) => opt !== placeholder), [options, placeholder]);
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState('');
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return selectable;
+    return selectable.filter((opt) => opt.toLowerCase().includes(q));
+  }, [selectable, query]);
+
+  const displayValue = value && value !== placeholder ? value : '';
+
+  const handleSelect = (opt: string) => {
+    onChange(name, opt);
+    setQuery('');
+    setOpen(false);
+  };
+
+  const handleBlur = () => {
+    window.setTimeout(() => setOpen(false), 120);
+  };
+
+  return (
+    <div>
+      <label className="block text-sm font-medium text-black mb-2" htmlFor={id}>
+        {label} {required ? <span className="text-[#333]">*</span> : null}
+      </label>
+      <div className="relative">
+        <input
+          id={id}
+          name={String(name)}
+          type="text"
+          autoComplete="off"
+          disabled={disabled}
+          required={required}
+          value={open ? query : displayValue}
+          placeholder={placeholder}
+          onFocus={() => {
+            setOpen(true);
+            setQuery(displayValue);
+          }}
+          onBlur={handleBlur}
+          onChange={(e) => {
+            setOpen(true);
+            setQuery(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') {
+              setOpen(false);
+              return;
+            }
+            if (e.key === 'Enter') {
+              if (filtered[0]) {
+                e.preventDefault();
+                handleSelect(filtered[0]);
+              }
+            }
+          }}
+          className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base disabled:opacity-70"
+          role="combobox"
+          aria-haspopup="listbox"
+          aria-expanded={open}
+          aria-controls={`${id}-listbox`}
+          aria-autocomplete="list"
+        />
+        <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[#7A97A9]">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </span>
+
+        {open ? (
+          <div className="absolute z-20 mt-2 w-full rounded-[15px] border border-[#E5F2FA] bg-white shadow-lg">
+            <ul
+              id={`${id}-listbox`}
+              role="listbox"
+              className="max-h-56 overflow-auto py-2 text-sm text-black"
+            >
+              {filtered.length === 0 ? (
+                <li className="px-4 py-2 text-gray-500">No results found</li>
+              ) : (
+                filtered.map((opt, idx) => (
+                  <li key={`${opt}-${idx}`}>
+                    <button
+                      type="button"
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => handleSelect(opt)}
+                      className={`flex w-full items-center justify-between px-4 py-2 text-left hover:bg-[#F1FAFF] ${
+                        opt === value ? 'bg-[#E5F2FA] font-semibold' : ''
+                      }`}
+                    >
+                      <span>{opt}</span>
+                      {opt === value ? (
+                        <svg
+                          className="h-4 w-4 text-[#009FE8]"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                        >
+                          <path d="M5 13l4 4L19 7" />
+                        </svg>
+                      ) : null}
+                    </button>
+                  </li>
+                ))
+              )}
+            </ul>
+          </div>
+        ) : null}
+      </div>
+      {error ? <p className="mt-2 text-sm text-[#B42318]">{error}</p> : null}
+    </div>
+  );
+}
+
 export default function ContactUsMessageLeft() {
   const router = useRouter();
   const [formData, setFormData] = useState<FormState>({
@@ -282,18 +422,22 @@ export default function ContactUsMessageLeft() {
 
   const selectedProductsSet = useMemo(() => new Set(formData.products), [formData.products]);
 
+  const updateField = (name: keyof FormState, value: string) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errorMessage) setErrorMessage(null);
+    setFieldErrors((prev) => {
+      if (!prev[name]) return prev;
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errorMessage) setErrorMessage(null);
-    setFieldErrors((prev) => {
-      if (!prev[name as keyof FormState]) return prev;
-      const next = { ...prev };
-      delete next[name as keyof FormState];
-      return next;
-    });
+    updateField(name as keyof FormState, value);
   };
 
   const toggleProduct = (product: InterestedProduct) => {
@@ -525,29 +669,17 @@ export default function ContactUsMessageLeft() {
 
         {/* Fourth row */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-black mb-2" htmlFor="jobFunction">
-              Job Function <span className="text-[#333]">*</span>
-            </label>
-            <select
-              id="jobFunction"
-              name="jobFunction"
-              value={formData.jobFunction}
-              onChange={handleChange}
-              disabled={isSubmitting}
-              required
-              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base disabled:opacity-70"
-            >
-              {JOB_FUNCTION_OPTIONS.map((opt) => (
-                <option key={opt} value={opt}>
-                  {opt}
-                </option>
-              ))}
-            </select>
-            {fieldErrors.jobFunction ? (
-              <p className="mt-2 text-sm text-[#B42318]">{fieldErrors.jobFunction}</p>
-            ) : null}
-          </div>
+          <SearchableSelect
+            id="jobFunction"
+            name="jobFunction"
+            label="Job Function"
+            options={JOB_FUNCTION_OPTIONS}
+            value={formData.jobFunction}
+            disabled={isSubmitting}
+            required
+            error={fieldErrors.jobFunction}
+            onChange={updateField}
+          />
 
           <div>
             <label className="block text-sm font-medium text-black mb-2" htmlFor="jobTitle">
@@ -573,53 +705,29 @@ export default function ContactUsMessageLeft() {
 
         {/* Fifth row */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-black mb-2" htmlFor="countryRegion">
-              Country/Region <span className="text-[#333]">*</span>
-            </label>
-            <select
-              id="countryRegion"
-              name="countryRegion"
-              value={formData.countryRegion}
-              onChange={handleChange}
-              disabled={isSubmitting}
-              required
-              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base disabled:opacity-70"
-            >
-              {COUNTRY_OPTIONS.map((opt, index) => (
-                <option key={`${opt}-${index}`} value={opt}>
-                  {opt}
-                </option>
-              ))}
-            </select>
-            {fieldErrors.countryRegion ? (
-              <p className="mt-2 text-sm text-[#B42318]">{fieldErrors.countryRegion}</p>
-            ) : null}
-          </div>
+          <SearchableSelect
+            id="countryRegion"
+            name="countryRegion"
+            label="Country/Region"
+            options={COUNTRY_OPTIONS}
+            value={formData.countryRegion}
+            disabled={isSubmitting}
+            required
+            error={fieldErrors.countryRegion}
+            onChange={updateField}
+          />
 
-          <div>
-            <label className="block text-sm font-medium text-black mb-2" htmlFor="interestedIn">
-              What are you interested in? <span className="text-[#333]">*</span>
-            </label>
-            <select
-              id="interestedIn"
-              name="interestedIn"
-              value={formData.interestedIn}
-              onChange={handleChange}
-              disabled={isSubmitting}
-              required
-              className="w-full px-6 py-4 rounded-[15px] border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base disabled:opacity-70"
-            >
-              {INTEREST_OPTIONS.map((opt) => (
-                <option key={opt} value={opt}>
-                  {opt}
-                </option>
-              ))}
-            </select>
-            {fieldErrors.interestedIn ? (
-              <p className="mt-2 text-sm text-[#B42318]">{fieldErrors.interestedIn}</p>
-            ) : null}
-          </div>
+          <SearchableSelect
+            id="interestedIn"
+            name="interestedIn"
+            label="What are you interested in?"
+            options={INTEREST_OPTIONS}
+            value={formData.interestedIn}
+            disabled={isSubmitting}
+            required
+            error={fieldErrors.interestedIn}
+            onChange={updateField}
+          />
         </div>
 
         {/* Products */}

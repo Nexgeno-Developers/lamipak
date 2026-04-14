@@ -1,6 +1,7 @@
 import { formatBoldText } from '@/lib/htmlText';
 import { breadcrumbsFromSlugPath } from '@/lib/breadcrumbsFromSlugPath';
 import { cleanVideoUrlFromApi } from '@/lib/cleanVideoUrl';
+import { fetchJsonCached } from '@/lib/api/apiCache';
 
 type ProductCategoryItem = {
   id: number;
@@ -47,14 +48,11 @@ export async function fetchProductCategoriesPage(slug: string) {
   if (!baseUrl) return null;
 
   try {
-    const res = await fetch(
+    const payload = await fetchJsonCached<ProductCategoriesApiResponse>(
       `${baseUrl}/v1/page/${encodeURIComponent(slug)}?autofetch=product_categories`,
-      { cache: 'no-store' }
+      { tags: [`page:${slug}`] },
     );
-
-    if (!res.ok) return null;
-
-    const { data } = (await res.json()) as ProductCategoriesApiResponse;
+    const data = payload?.data;
     if (!data || data.layout !== 'product_categories') return null;
 
     const clean = slug.replace(/^\/+|\/+$/g, '');

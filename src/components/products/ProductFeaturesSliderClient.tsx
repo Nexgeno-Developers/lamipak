@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import CircularImage from '@/components/common/CircularImage';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 import type { ProductData } from '@/fake-api/products';
@@ -64,13 +64,13 @@ export default function ProductFeaturesSliderClient({
             <div className="bg-[#EDF0F1] rounded-[50px] overflow-hidden flex flex-col p-[15px] h-full">
               {/* Feature Image */}
               <div className="relative w-full overflow-hidden bg-gray-100 rounded-[50px] lg:h-[350px] h-[250px]">
-                <Image
+                <CircularImage
                   src={feature.image}
                   alt={feature.imageAlt}
                   width={400}
                   height={400}
                   className="rounded-[50px] object-contain w-full h-full object-top"
-                  sizes=""
+                  sizes="(max-width: 768px) 90vw, 33vw"
                 />
               </div>
 
