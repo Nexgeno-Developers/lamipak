@@ -90,7 +90,7 @@ export default function Hero({ data }: HeroProps) {
   }, [currentSlide]);
 
   return (
-    <section className="relative h-auto md:h-screen md:min-h-[max(100dvh,600px)] overflow-hidden">
+    <section className="relative  md:h-screen md:min-h-[max(100dvh,600px)] banner_heights overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         {slides.map((slide, index) => (
