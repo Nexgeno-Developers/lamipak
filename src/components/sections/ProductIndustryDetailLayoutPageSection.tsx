@@ -78,11 +78,11 @@ export default function ProductIndustryDetailLayoutPageSection({
               />
             ) : null}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-8 justify-items-center">
+            <div className="flex flex-wrap justify-center gap-6 md:gap-8">
               {data.support.items.map((item) => (
                 <div
                   key={item.id}
-                  className="text-start group bg-[#EDF0F1] rounded-[50px] overflow-hidden transition-all duration-300 flex flex-col h-full p-[15px] w-full"
+                  className="w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.333%-1.5rem)] lg:w-[calc(25%-1.5rem)] xl:w-[calc(20%-2rem)] flex justify-center text-start group bg-[#EDF0F1] rounded-[50px] overflow-hidden transition-all duration-300 flex flex-col h-full p-[15px] w-full"
                 >
                   <div className="relative w-full aspect-square overflow-hidden bg-white rounded-[50px] mb-4">
                     {item.image ? (

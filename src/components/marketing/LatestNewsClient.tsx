@@ -109,7 +109,12 @@ export default function LatestNewsClient({ trendItems, pressItems }: LatestNewsC
             768: {
               slidesPerView: 2,
               slidesPerGroup: 1,
-              spaceBetween: 24,
+              spaceBetween: 32,
+            },
+            992: {
+              slidesPerView: 3,
+              slidesPerGroup: 1,
+              spaceBetween: 32,
             },
           }}
           speed={500}
