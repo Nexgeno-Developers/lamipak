@@ -2,13 +2,19 @@ import type { NpdPageData } from '@/lib/api/npd_layout';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import CallToAction from '@/components/home/CallToAction';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
+import LatestNewsClient from '@/components/marketing/LatestNewsClient';
 import VideoBanner from '@/components/home/VideoBanner';
 import NpdHero from '@/components/npd/NpdHero';
 import NpdInnovationEcosystem from '@/components/npd/NpdInnovationEcosystem';
 import NpdIntroSection from '@/components/npd/NpdIntroSection';
 import { NPD_STATIC_VIDEO_BANNER } from '@/components/npd/npdVideoBannerData';
+import { fetchInnovationsLayoutPage } from '@/lib/api/innovations_layout';
 
-export default function NpdLayoutPage({ data }: { data: NpdPageData }) {
+export default async function NpdLayoutPage({ data }: { data: NpdPageData }) {
+  const innovationsData = await fetchInnovationsLayoutPage('innovations');
+  const trendItems = innovationsData?.page.latestInsights || [];
+  const pressItems = innovationsData?.page.latestNews || [];
+
   const videoBannerPrefetched = {
     ...NPD_STATIC_VIDEO_BANNER,
     preTitle: data.title,
@@ -40,8 +46,9 @@ export default function NpdLayoutPage({ data }: { data: NpdPageData }) {
         ecosystemCards={data.ecosystemCards}
       />
       <VideoBanner prefetchedData={videoBannerPrefetched} />
+      <LatestNewsClient trendItems={trendItems} pressItems={pressItems} />
 
-      <div className="bg-gray-50 pt-8 lg:pt-24">
+      <div className="bg-gray-50 pt-0 lg:pt-0">
         <CallToAction />
       </div>
 
