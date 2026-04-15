@@ -54,6 +54,8 @@ type InsightItemApi = {
   slug?: string;
   subcategory?: string;
   category?: string;
+  date?: string | null;
+  time?: string | null;
 };
 
 type ListingApiResponse = {
@@ -94,6 +96,8 @@ type CategoryPost = {
   slug?: string;
   featured_image?: CategoryMedia;
   summary?: string | null;
+  date?: string | null;
+  time?: string | null;
 };
 
 type CategoryPostsPayload = {
@@ -180,6 +184,8 @@ function mapItem(raw: InsightItemApi, idx: number, kind: InsightsListingKind): I
   const description = clean(raw.description);
   if (!title) return null;
   const id = String(raw.id ?? `${kind}-${idx}`);
+  const date = clean(raw.date) || undefined;
+  const time = clean(raw.time) || undefined;
   const hrefRaw = clean(raw.link) || clean(raw.slug);
   const href = hrefRaw
     ? hrefRaw.startsWith('http')
@@ -202,6 +208,8 @@ function mapItem(raw: InsightItemApi, idx: number, kind: InsightsListingKind): I
     imageAlt: title,
     href,
     subcategory: sub,
+    date,
+    time,
   };
 }
 
@@ -439,6 +447,8 @@ function mapCategoryToListing(
         imageAlt: title || 'Post',
         href,
         subcategory: undefined,
+        date: clean(post.date) || undefined,
+        time: clean(post.time) || undefined,
       } as InsightItem;
     })
     .filter(Boolean) as InsightItem[];

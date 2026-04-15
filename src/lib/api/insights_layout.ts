@@ -10,6 +10,9 @@ export type InsightItem = {
   image?: string;
   imageAlt: string;
   href: string;
+  /** Optional metadata for post-like cards (e.g. Media / Events / Webinars). */
+  date?: string;
+  time?: string;
   /** Subcategory / vertical for listing filters (e.g. Dairy, Beverage). */
   subcategory?: string;
 };
@@ -56,6 +59,8 @@ type InsightItemApi = {
   slug?: string;
   subcategory?: string;
   category?: string;
+  date?: string | null;
+  time?: string | null;
 };
 
 type InsightsHubApiResponse = {
@@ -98,6 +103,8 @@ type PostBlockPostApi = {
   slug?: string;
   featured_image?: Media;
   summary?: string | null;
+  date?: string | null;
+  time?: string | null;
 };
 
 type PostBlockCategoryApi = {
@@ -155,6 +162,8 @@ function mapItem(
   const description = clean(raw.description);
   if (!title) return null;
   const id = String(raw.id ?? `${prefix}-${idx}`);
+  const date = clean(raw.date) || undefined;
+  const time = clean(raw.time) || undefined;
   const hrefRaw = clean(raw.link) || clean(raw.slug);
   const href = hrefRaw
     ? hrefRaw.startsWith('http')
@@ -176,6 +185,8 @@ function mapItem(
     image: mediaUrl(raw.image),
     imageAlt: title,
     href,
+    date,
+    time,
     subcategory: sub,
   };
 }
@@ -244,6 +255,8 @@ function mapPostBlockItem(
     image: mediaUrl(post.featured_image),
     imageAlt: title,
     href: buildPostHref(categorySlug, post.slug, fallbackBase),
+    date: clean(post.date) || undefined,
+    time: clean(post.time) || undefined,
   };
 }
 
