@@ -4,6 +4,7 @@ import type { ProductIndustriesPageData } from '@/lib/api/product_industries_lay
 import { RichText } from '@/components/common/RichText';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import IndustriesFeaturedCarousel from '@/components/industries/IndustriesFeaturedCarousel';
+import NewsletterSubscription from '@/components/home/NewsletterSubscription';
 import { formatBoldText } from '@/lib/htmlText';
 
 export default function ProductIndustriesLayoutPage({ data }: { data: ProductIndustriesPageData }) {
@@ -154,6 +155,8 @@ export default function ProductIndustriesLayoutPage({ data }: { data: ProductInd
           </div>
         </section>
       ) : null}
+
+      <NewsletterSubscription />
     </main>
   );
 }

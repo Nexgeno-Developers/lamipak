@@ -5,6 +5,7 @@ import { formatBoldText } from '@/lib/htmlText';
 import VideoModalClient from '@/components/common/VideoModalClient';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import CallToAction from '@/components/home/CallToAction';
+import NewsletterSubscription from '@/components/home/NewsletterSubscription';
 import ConnectTechnicalExperts from '@/components/technical-services/ConnectTechnicalExperts';
 import type { TechnicalServicesLayoutPageData } from '@/lib/api/technical_services_layout';
 import { RichText } from '@/components/common/RichText';
@@ -358,6 +359,7 @@ export default async function TechnicalServicesLayoutPage({
       <ConnectTechnicalExperts />
 
       <CallToAction />
+      <NewsletterSubscription />
     </main>
   );
 }

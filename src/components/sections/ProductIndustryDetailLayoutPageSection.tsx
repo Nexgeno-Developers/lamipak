@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import LatestInsights from '@/components/home/LatestInsights';
+import NewsletterSubscription from '@/components/home/NewsletterSubscription';
 import ContactSustainability from '@/components/products/ContactSustainability';
 import IndustryConsultationCTA from '@/components/products/IndustryConsultationCTA';
 import CategoryGlobalImpact from '@/components/products/CategoryGlobalImpact';
@@ -189,6 +190,10 @@ export default function ProductIndustryDetailLayoutPageSection({
 
       <LatestInsights />
       <ContactSustainability />
+      <div className="bg-gray-50 lg:pt-12 md:pt-12 pt-8">
+      <NewsletterSubscription />
+      </div>
+      
     </main>
   );
 }
