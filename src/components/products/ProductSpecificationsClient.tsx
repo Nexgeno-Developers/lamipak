@@ -35,6 +35,8 @@ export default function ProductSpecificationsClient({ product }: ProductSpecific
       ? variants.find((v) => !!imagesByVariant[v]) || variants[0]
       : '';
   const [activeVariant, setActiveVariant] = useState<string>(initialVariant);
+  const [isBeginning, setIsBeginning] = useState(true);
+  const [isEnd, setIsEnd] = useState(slides.length <= 1);
 
   const swiperRef = useRef<SwiperType | null>(null);
   const prevElRef = useRef<HTMLButtonElement | null>(null);
@@ -76,6 +78,11 @@ export default function ProductSpecificationsClient({ product }: ProductSpecific
     swiper.navigation?.update?.();
   }, [slides.length]);
 
+  useEffect(() => {
+    setIsBeginning(true);
+    setIsEnd(slides.length <= 1);
+  }, [slides.length]);
+
   return (
     <section className="bg-gray-50 py-8 md:py-12">
       <div className="container mx-auto px-4">
@@ -89,6 +96,12 @@ export default function ProductSpecificationsClient({ product }: ProductSpecific
                 navigation
                 onSwiper={(s) => {
                   swiperRef.current = s;
+                  setIsBeginning(s.isBeginning);
+                  setIsEnd(s.isEnd);
+                }}
+                onSlideChange={(s) => {
+                  setIsBeginning(s.isBeginning);
+                  setIsEnd(s.isEnd);
                 }}
                 className="w-full product-image-swiper"
               >
@@ -124,7 +137,10 @@ export default function ProductSpecificationsClient({ product }: ProductSpecific
                 ref={prevElRef}
                 type="button"
                 aria-label="Previous image"
-                className="cursor-pointer absolute left-[-50px] top-1/2 -translate-y-1/2 z-10 h-11 w-11 rounded-full bg-white/90 ring-1 ring-black/10 grid place-items-center text-black/70 hover:text-black hover:bg-white transition"
+                className={[
+                  'cursor-pointer absolute left-[-50px] top-1/2 -translate-y-1/2 z-10 h-11 w-11 rounded-full bg-white/90 ring-1 ring-black/10 place-items-center text-black/70 hover:text-black hover:bg-white transition',
+                  isBeginning ? 'hidden' : 'grid',
+                ].join(' ')}
               >
                 <svg
                   width="18"
@@ -143,7 +159,10 @@ export default function ProductSpecificationsClient({ product }: ProductSpecific
                 ref={nextElRef}
                 type="button"
                 aria-label="Next image"
-                className="cursor-pointer absolute right-[-50px] top-1/2 -translate-y-1/2 z-10 h-11 w-11 rounded-full bg-white/90 ring-1 ring-black/10 grid place-items-center text-black/70 hover:text-black hover:bg-white transition"
+                className={[
+                  'cursor-pointer absolute right-[-50px] top-1/2 -translate-y-1/2 z-10 h-11 w-11 rounded-full bg-white/90 ring-1 ring-black/10 place-items-center text-black/70 hover:text-black hover:bg-white transition',
+                  isEnd ? 'hidden' : 'grid',
+                ].join(' ')}
               >
                 <svg
                   width="18"
