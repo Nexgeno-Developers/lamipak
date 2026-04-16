@@ -282,7 +282,7 @@ export default async function RAndDCentreLayoutPage({ data }: { data: RAndDCentr
                     →
                   </span>
                 </Link>
-                <Link
+                {/* <Link
                   href={data.secondaryCta.href}
                   className="inline-flex items-center text-sm font-semibold uppercase tracking-wide text-black/70 transition hover:text-black"
                 >
@@ -290,7 +290,7 @@ export default async function RAndDCentreLayoutPage({ data }: { data: RAndDCentr
                   <span className="ml-2 text-black/40" aria-hidden>
                     →
                   </span>
-                </Link>
+                </Link> */}
               </div>
             </div>
 
