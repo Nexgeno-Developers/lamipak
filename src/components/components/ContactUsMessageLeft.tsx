@@ -4,8 +4,6 @@ import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { submitForm } from '@/lib/forms/client';
 
-type InterestedProduct = 'Aseptic Bricks' | 'Aseptic Pillows' | 'Eco-Friendly Board' | 'U Straws';
-
 type FormState = {
   firstName: string;
   lastName: string;
@@ -17,15 +15,37 @@ type FormState = {
   jobTitle: string;
   countryRegion: string;
   interestedIn: string;
-  products: InterestedProduct[];
+  interestedProduct: string;
+  interestedMarketingSupportService: string;
+  interestedTechnicalSupportService: string;
   message: string;
 };
 
-const PRODUCT_OPTIONS: InterestedProduct[] = [
-  'Aseptic Bricks',
-  'Aseptic Pillows',
-  'Eco-Friendly Board',
-  'U Straws',
+const INTERESTED_PRODUCT_OPTIONS = [
+  'Select product',
+  'Roll Fed Packaging (Standard Products)',
+  'Sleeve Packaging (LamiSleeve)',
+  'LamiCap (Laminated Cap)',
+  'LamiStraw (Laminated Straw)',
+  'One Pack One Code',
+  'Other',
+];
+
+const INTERESTED_MARKETING_SUPPORT_OPTIONS = [
+  'Select marketing support service',
+  'Business Intelligence',
+  'Recipe Support',
+  'Creative Consultancy',
+  'Sales Distribution',
+  'Other',
+];
+
+const INTERESTED_TECHNICAL_SUPPORT_OPTIONS = [
+  'Select technical support service',
+  'LamiCare - Maintenance, Support, Parts & Training',
+  'LamiPremium - Commitment, Conversion, Installation & Maintenance',
+  'LamiPartner - Automation, Startup & Digital',
+  'Other',
 ];
 
 const JOB_FUNCTION_OPTIONS = [
@@ -380,9 +400,8 @@ function SearchableSelect({
                       type="button"
                       onMouseDown={(e) => e.preventDefault()}
                       onClick={() => handleSelect(opt)}
-                      className={`flex w-full items-center justify-between px-4 py-2 text-left hover:bg-[#F1FAFF] ${
-                        opt === value ? 'bg-[#E5F2FA] font-semibold' : ''
-                      }`}
+                      className={`flex w-full items-center justify-between px-4 py-2 text-left hover:bg-[#F1FAFF] ${opt === value ? 'bg-[#E5F2FA] font-semibold' : ''
+                        }`}
                     >
                       <span>{opt}</span>
                       {opt === value ? (
@@ -422,7 +441,9 @@ export default function ContactUsMessageLeft() {
     jobTitle: 'Select title',
     countryRegion: 'Select country',
     interestedIn: 'Select option',
-    products: [],
+    interestedProduct: 'Select product',
+    interestedMarketingSupportService: 'Select marketing support service',
+    interestedTechnicalSupportService: 'Select technical support service',
     message: '',
   });
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof FormState, string>>>(
@@ -430,16 +451,27 @@ export default function ContactUsMessageLeft() {
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  const selectedProductsSet = useMemo(() => new Set(formData.products), [formData.products]);
+  const wantsProductsAndServices = formData.interestedIn.trim() === 'Products & Services';
 
   const updateField = (name: keyof FormState, value: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => {
+      const next: FormState = { ...prev, [name]: value } as FormState;
+      if (name === 'interestedIn' && value.trim() !== 'Products & Services') {
+        next.interestedProduct = 'Select product';
+        next.interestedMarketingSupportService = 'Select marketing support service';
+        next.interestedTechnicalSupportService = 'Select technical support service';
+      }
+      return next;
+    });
     if (errorMessage) setErrorMessage(null);
     setFieldErrors((prev) => {
-      if (!prev[name]) return prev;
       const next = { ...prev };
       delete next[name];
+      if (name === 'interestedIn' && value.trim() !== 'Products & Services') {
+        delete next.interestedProduct;
+        delete next.interestedMarketingSupportService;
+        delete next.interestedTechnicalSupportService;
+      }
       return next;
     });
   };
@@ -449,20 +481,6 @@ export default function ContactUsMessageLeft() {
   ) => {
     const { name, value } = e.target;
     updateField(name as keyof FormState, value);
-  };
-
-  const toggleProduct = (product: InterestedProduct) => {
-    setFormData((prev) => {
-      const has = prev.products.includes(product);
-      const products = has ? prev.products.filter((p) => p !== product) : [...prev.products, product];
-      return { ...prev, products };
-    });
-    setFieldErrors((prev) => {
-      if (!prev.products) return prev;
-      const next = { ...prev };
-      delete next.products;
-      return next;
-    });
   };
 
   const validateForm = () => {
@@ -484,11 +502,16 @@ export default function ContactUsMessageLeft() {
       errors.jobTitle = 'Please select a job title.';
     }
 
-    const selectedProducts = formData.products.join(', ');
-    if (!selectedProducts) {
-      errors.products = 'Please select at least one product.';
-    } else if (selectedProducts.length > 50) {
-      errors.products = 'Please select fewer products (max 50 characters).';
+    if (wantsProductsAndServices) {
+      if (formData.interestedProduct === 'Select product') {
+        errors.interestedProduct = 'Please select an interested product.';
+      }
+      if (formData.interestedMarketingSupportService === 'Select marketing support service') {
+        errors.interestedMarketingSupportService = 'Please select a marketing support service.';
+      }
+      if (formData.interestedTechnicalSupportService === 'Select technical support service') {
+        errors.interestedTechnicalSupportService = 'Please select a technical support service.';
+      }
     }
 
     setFieldErrors(errors);
@@ -504,6 +527,9 @@ export default function ContactUsMessageLeft() {
     setIsSubmitting(true);
     setErrorMessage(null);
 
+    const interestedIn = formData.interestedIn.trim();
+    const includeServiceFields = interestedIn === 'Products & Services';
+
     const result = await submitForm('contact', {
       firstName: formData.firstName.trim(),
       lastName: formData.lastName.trim(),
@@ -514,8 +540,14 @@ export default function ContactUsMessageLeft() {
       jobFunction: formData.jobFunction.trim(),
       jobTitle: formData.jobTitle.trim(),
       countryRegion: formData.countryRegion.trim(),
-      interestedIn: formData.interestedIn.trim(),
-      products: formData.products,
+      interestedIn,
+      interestedProduct: includeServiceFields ? formData.interestedProduct.trim() : '',
+      interestedMarketingSupportService: includeServiceFields
+        ? formData.interestedMarketingSupportService.trim()
+        : '',
+      interestedTechnicalSupportService: includeServiceFields
+        ? formData.interestedTechnicalSupportService.trim()
+        : '',
       message: formData.message.trim(),
     });
 
@@ -732,30 +764,47 @@ export default function ContactUsMessageLeft() {
           />
         </div>
 
-        {/* Products */}
-        <div>
-          <p className="text-sm font-medium text-black mb-3">Interested Products</p>
-          <div className="flex flex-wrap gap-4">
-            {PRODUCT_OPTIONS.map((product) => {
-              const checked = selectedProductsSet.has(product);
-              return (
-                <label key={product} className="inline-flex items-center gap-2 text-sm text-black">
-                  <input
-                    type="checkbox"
-                    checked={checked}
-                    onChange={() => toggleProduct(product)}
-                    disabled={isSubmitting}
-                    className="h-4 w-4 accent-[#009FE8]"
-                  />
-                  <span className="select-none">{product}</span>
-                </label>
-              );
-            })}
+        {wantsProductsAndServices ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <SearchableSelect
+              id="interestedProduct"
+              name="interestedProduct"
+              label="Interested Products"
+              options={INTERESTED_PRODUCT_OPTIONS}
+              value={formData.interestedProduct}
+              disabled={isSubmitting}
+              required
+              error={fieldErrors.interestedProduct}
+              onChange={updateField}
+            />
+
+            <SearchableSelect
+              id="interestedMarketingSupportService"
+              name="interestedMarketingSupportService"
+              label="Interested Marketing Support Service"
+              options={INTERESTED_MARKETING_SUPPORT_OPTIONS}
+              value={formData.interestedMarketingSupportService}
+              disabled={isSubmitting}
+              required
+              error={fieldErrors.interestedMarketingSupportService}
+              onChange={updateField}
+            />
+
+            <div className="md:col-span-2">
+              <SearchableSelect
+                id="interestedTechnicalSupportService"
+                name="interestedTechnicalSupportService"
+                label="Interested Technical Support Service"
+                options={INTERESTED_TECHNICAL_SUPPORT_OPTIONS}
+                value={formData.interestedTechnicalSupportService}
+                disabled={isSubmitting}
+                required
+                error={fieldErrors.interestedTechnicalSupportService}
+                onChange={updateField}
+              />
+            </div>
           </div>
-          {fieldErrors.products ? (
-            <p className="mt-2 text-sm text-[#B42318]">{fieldErrors.products}</p>
-          ) : null}
-        </div>
+        ) : null}
 
         {/* Message */}
         <div>
@@ -779,16 +828,16 @@ export default function ContactUsMessageLeft() {
         </div>
 
 
-<div className="flex justify-center">
-<button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-[250px] mx-auto cursor-pointer justify-center inline-flex items-center bg-[#009FE8] text-white text-base md:text-lg font-bold uppercase tracking-wider hover:bg-[#0077B6] transition-colors group py-4 rounded-[50px] disabled:cursor-not-allowed disabled:opacity-70"
-        >
-          {isSubmitting ? 'Sending...' : 'Send Inquiry'}
-        </button>
-</div>
-        
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-[250px] mx-auto cursor-pointer justify-center inline-flex items-center bg-[#009FE8] text-white text-base md:text-lg font-bold uppercase tracking-wider hover:bg-[#0077B6] transition-colors group py-4 rounded-[50px] disabled:cursor-not-allowed disabled:opacity-70"
+          >
+            {isSubmitting ? 'Sending...' : 'Send Inquiry'}
+          </button>
+        </div>
+
 
         {errorMessage ? (
           <p className="text-sm text-[#B42318]" role="alert">

@@ -10,7 +10,15 @@ const FORM_TYPE_MAP: Record<FormType, string> = {
   contact: 'contact',
 };
 
-const PLACEHOLDER_VALUES = new Set(['select function', 'select option', 'select country', 'select title']);
+const PLACEHOLDER_VALUES = new Set([
+  'select function',
+  'select option',
+  'select country',
+  'select title',
+  'select product',
+  'select marketing support service',
+  'select technical support service',
+]);
 const MAX_FIELD_LENGTH = 50;
 const MAX_MESSAGE_LENGTH = 200;
 
@@ -44,7 +52,9 @@ const BACKEND_FIELD_MAP: Record<FormType, Record<string, string>> = {
     job_title: 'jobTitle',
     country: 'countryRegion',
     interests: 'interestedIn',
-    interested_products: 'products',
+    interested_products: 'interestedProduct',
+    interested_marketing_support_service: 'interestedMarketingSupportService',
+    interested_technical_support_service: 'interestedTechnicalSupportService',
     message: 'message',
   },
 };
@@ -253,10 +263,10 @@ function buildPayload(
   const countryRegion = normalizeString(typed.countryRegion);
   const interestedIn = normalizeString(typed.interestedIn);
   const message = normalizeString(typed.message);
-  const products = Array.isArray(typed.products)
-    ? typed.products.map((product) => product.trim()).filter(Boolean)
-    : [];
-  const productsText = products.join(', ');
+  const interestedProduct = normalizeString(typed.interestedProduct);
+  const interestedMarketingSupportService = normalizeString(typed.interestedMarketingSupportService);
+  const interestedTechnicalSupportService = normalizeString(typed.interestedTechnicalSupportService);
+  const wantsProductsAndServices = interestedIn.trim().toLowerCase() === 'products & services';
 
   if (!firstName) fieldErrors.firstName = 'First name is required.';
   if (!lastName) fieldErrors.lastName = 'Last name is required.';
@@ -281,9 +291,64 @@ function buildPayload(
     fieldErrors.interestedIn = 'Please select an option.';
   else addMaxLengthError(fieldErrors, 'interestedIn', 'Interest', interestedIn, MAX_FIELD_LENGTH);
 
-  if (!productsText) fieldErrors.products = 'Please select at least one product.';
-  else if (productsText.length > MAX_FIELD_LENGTH) {
-    fieldErrors.products = 'Please select fewer products (max 50 characters).';
+  if (wantsProductsAndServices) {
+    if (!interestedProduct || isPlaceholder(interestedProduct)) {
+      fieldErrors.interestedProduct = 'Please select an interested product.';
+    } else {
+      addMaxLengthError(
+        fieldErrors,
+        'interestedProduct',
+        'Interested product',
+        interestedProduct,
+        MAX_FIELD_LENGTH,
+      );
+    }
+
+    if (!interestedMarketingSupportService || isPlaceholder(interestedMarketingSupportService)) {
+      fieldErrors.interestedMarketingSupportService = 'Please select a marketing support service.';
+    } else {
+      addMaxLengthError(
+        fieldErrors,
+        'interestedMarketingSupportService',
+        'Interested marketing support service',
+        interestedMarketingSupportService,
+        MAX_FIELD_LENGTH,
+      );
+    }
+
+    if (!interestedTechnicalSupportService || isPlaceholder(interestedTechnicalSupportService)) {
+      fieldErrors.interestedTechnicalSupportService = 'Please select a technical support service.';
+    } else {
+      addMaxLengthError(
+        fieldErrors,
+        'interestedTechnicalSupportService',
+        'Interested technical support service',
+        interestedTechnicalSupportService,
+        MAX_FIELD_LENGTH,
+      );
+    }
+  } else {
+    if (interestedProduct && !isPlaceholder(interestedProduct)) {
+      addMaxLengthError(fieldErrors, 'interestedProduct', 'Interested product', interestedProduct, MAX_FIELD_LENGTH);
+    }
+    if (interestedMarketingSupportService && !isPlaceholder(interestedMarketingSupportService)) {
+      addMaxLengthError(
+        fieldErrors,
+        'interestedMarketingSupportService',
+        'Interested marketing support service',
+        interestedMarketingSupportService,
+        MAX_FIELD_LENGTH,
+      );
+    }
+    if (interestedTechnicalSupportService && !isPlaceholder(interestedTechnicalSupportService)) {
+      addMaxLengthError(
+        fieldErrors,
+        'interestedTechnicalSupportService',
+        'Interested technical support service',
+        interestedTechnicalSupportService,
+        MAX_FIELD_LENGTH,
+      );
+    }
   }
 
   if (phoneRaw && (phoneDigits.length < 10 || phoneDigits.length > 15)) {
@@ -304,11 +369,16 @@ function buildPayload(
     job_title: jobTitle,
     country: countryRegion,
     interests: interestedIn,
-    interested_products: productsText,
   };
 
   if (websiteUrl) {
     payload.company_url = websiteUrl;
+  }
+
+  if (wantsProductsAndServices) {
+    payload.interested_products = interestedProduct;
+    payload.interested_marketing_support_service = interestedMarketingSupportService;
+    payload.interested_technical_support_service = interestedTechnicalSupportService;
   }
 
   if (phoneDigits) {

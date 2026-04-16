@@ -31,7 +31,9 @@ export type ContactFormData = {
   jobTitle: string;
   countryRegion: string;
   interestedIn: string;
-  products: string[];
+  interestedProduct: string;
+  interestedMarketingSupportService: string;
+  interestedTechnicalSupportService: string;
   message: string;
 };
 
