@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { formatBoldText } from '@/lib/htmlText';
+import { decodeHtmlEntities, formatBoldText } from '@/lib/htmlText';
 import CompanyHero from '@/components/company/CompanyHero';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import CallToAction from '@/components/home/CallToAction';
@@ -200,9 +200,15 @@ export default function PickCartoonPage({ data }: PickCartoonPageProps) {
                 <div className="text-center max-w-4xl mx-auto">
                   <h2 className="text-[22px] md:text-4xl lg:text-5xl font-bold mb-2 md:mb-2 text-black" dangerouslySetInnerHTML={{ __html: section.heading }} />
 
-                  {(section.introText) && (
+                  {(section.introBold || section.introText) && (
                     <p className="mt-3 text-sm sm:text-base text-black mb-6 leading-relaxed">
-                      {section.introText}
+                      {section.introBold ? (
+                        <span className="font-semibold">
+                          {decodeHtmlEntities(section.introBold)}
+                        </span>
+                      ) : null}
+                      {section.introBold && section.introText ? ' ' : ''}
+                      {section.introText ? decodeHtmlEntities(section.introText) : ''}
                     </p>
                   )}
                 </div>
