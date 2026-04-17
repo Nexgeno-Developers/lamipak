@@ -119,19 +119,20 @@ export default function Hero({ data }: HeroProps) {
           >
             {/* Background Image */}
             {!failedSlideIds[slide.id] && (
-              <Image
-                src={slide.backgroundImage}
-                alt={slide.category}
-                fill
-                className="object-cover"
-                sizes=""
-                priority={index === 0}
-                onError={() => {
-                  console.error('Image failed to load:', slide.backgroundImage);
-                  setFailedSlideIds((prev) => ({ ...prev, [slide.id]: true }));
-                }}
-              />
-            )}
+  <Image
+    src={slide.backgroundImage}
+    alt={slide.category || "Slide Image"}
+    fill
+    className="object-cover"
+    sizes="100vw"
+    priority={index === 0}
+    fetchPriority={index === 0 ? "high" : "auto"}
+    onError={() => {
+      console.error("Image failed to load:", slide.backgroundImage);
+      setFailedSlideIds((prev) => ({ ...prev, [slide.id]: true }));
+    }}
+  />
+)}
             {/* Gradient Overlay */}
             {/* <div
               className="absolute inset-0 bg-gradient-to-r from-[#0E233C]/50 via-[#0C2F56]/50 to-[#087BFF]/10"
