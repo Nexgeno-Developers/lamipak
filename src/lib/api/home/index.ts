@@ -530,13 +530,13 @@ const FALLBACK_APPROACH: ApproachData = {
 type JsonOptionValue = { value?: string } | string;
 
 const INDUSTRY_LABEL_BY_ID: Record<string, string> = {
-  '16': 'Dairy',
-  '21': 'Juices Nectar & Still Drinks',
-  '22': 'Plant Based',
-  '23': 'Ready To Drink',
-  '24': 'Alcohol',
-  '25': 'Culinary',
-  '26': 'Functional',
+  // '16': 'Dairy',
+  // '21': 'Juices Nectar & Still Drinks',
+  // '22': 'Plant Based',
+  // '23': 'Ready To Drink',
+  // '24': 'Alcohol',
+  // '25': 'Culinary',
+  // '26': 'Functional',
 };
 
 function parseJsonArray(raw?: string | unknown[] | null): unknown[] {
