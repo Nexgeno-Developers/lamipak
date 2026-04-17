@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { formatBoldText } from '@/lib/htmlText';
 import { RichText } from '@/components/common/RichText';
 import type { GreenSustainabilityVisionSectionData } from '@/lib/api/sustainability_layout_3';
@@ -136,10 +137,11 @@ export default function GreenSustainabilityVisionSection({ data }: GreenSustaina
                 >
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center text-white">
                     {card.iconImageUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      <Image
                         src={card.iconImageUrl}
                         alt=""
+                        width={36}
+                        height={36}
                         className="h-9 w-9 object-contain brightness-0 invert"
                       />
                     ) : (

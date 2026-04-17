@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { RichText } from '@/components/common/RichText';
 import type { CarbonNetZeroRoadmapSectionData } from '@/lib/api/sustainability_layout_6';
 
@@ -76,10 +77,11 @@ export default function CarbonNeutralityRoadmapSection({ data }: CarbonNeutralit
                     style={{ backgroundColor: circleBg }}
                   >
                     {m.iconImageUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      <Image
                         src={m.iconImageUrl}
                         alt=""
+                        width={36}
+                        height={36}
                         className="h-8 w-8 object-contain md:h-9 md:w-9"
                       />
                     ) : (

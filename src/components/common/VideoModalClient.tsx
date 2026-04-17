@@ -83,10 +83,11 @@ export default function VideoModalClient({
         aria-controls={open ? modalId : undefined}
       >
         {posterUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={posterUrl}
             alt={posterAlt}
+            fill
+            sizes="100vw"
             className="absolute inset-0 w-full h-full object-cover"
           />
         ) : (

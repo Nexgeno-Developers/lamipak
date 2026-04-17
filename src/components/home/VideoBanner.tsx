@@ -189,8 +189,7 @@ export default function VideoBanner({
       );
     }
     if (data.videoUrl.endsWith('.gif')) {
-      /* eslint-disable-next-line @next/next/no-img-element -- GIF `src` may be any origin; not all hosts are in `images.remotePatterns`. */
-      return <img src={data.videoUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />;
+      return <Image src={data.videoUrl} alt="" fill sizes="100vw" unoptimized className="absolute inset-0 w-full h-full object-cover" />;
     }
 
     return (

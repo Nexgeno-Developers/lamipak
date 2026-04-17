@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { formatBoldText } from '@/lib/htmlText';
 import { RichText } from '@/components/common/RichText';
 import type { ComponentType } from 'react';
@@ -145,10 +146,11 @@ export default function SustainabilityPillarsGridSection({ data }: Sustainabilit
               >
                 <div className="mb-4 flex h-12 items-center">
                   {item.iconImageUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <Image
                       src={item.iconImageUrl}
                       alt=""
+                      width={48}
+                      height={48}
                       className="h-12 w-12 object-contain"
                     />
                   ) : (

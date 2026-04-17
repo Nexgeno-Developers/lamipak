@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import type { NpdPageData } from '@/lib/api/npd_layout';
 import { formatBoldText } from '@/lib/htmlText';
 
@@ -8,10 +9,11 @@ export default function NpdHero({ heroBackgroundImage, title }: Props) {
     <section className="relative overflow-hidden pt-[110px] md:pt-[150px] pb-12 md:pb-12 lg:pt-[220px] lg:pb-32">
       <div className="absolute inset-0">
         {heroBackgroundImage ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={heroBackgroundImage}
             alt=""
+            fill
+            sizes="100vw"
             className="absolute inset-0 h-full w-full object-cover"
           />
         ) : (

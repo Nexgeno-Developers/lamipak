@@ -14,10 +14,11 @@ export default function ProductIndustriesLayoutPage({ data }: { data: ProductInd
       <section className="relative overflow-hidden pt-[110px] pb-8 md:pt-[150px] md:pb-12 lg:pt-[200px] lg:pb-28">
         <div className="absolute inset-0">
           {data.heroBackgroundImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={data.heroBackgroundImage}
               alt=""
+              fill
+              sizes="100vw"
               className="absolute inset-0 h-full w-full object-cover"
             />
           ) : (
@@ -62,10 +63,11 @@ export default function ProductIndustriesLayoutPage({ data }: { data: ProductInd
                 >
                   {item.iconUrl ? (
                     <div className="mb-4 flex h-[100px] w-[100px] items-center justify-center md:h-[200px] md:w-[200px]">
-                      {/* eslint-disable-next-line @next/next/no-img-element -- CMS icons may be SVG/webp */}
-                      <img
+                      <Image
                         src={item.iconUrl}
                         alt=""
+                        width={200}
+                        height={200}
                         className="max-h-full max-w-full object-contain"
                         aria-hidden
                       />

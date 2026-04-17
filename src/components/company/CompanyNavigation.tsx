@@ -92,22 +92,14 @@ export default function CompanyNavigation({ data, activePath }: CompanyNavigatio
                 }`}>
                   <div className={`transition-all ${isActive ? 'brightness-0 invert-[1]' : ''}`}>
                     {iconUrl ? (
-                      isSvgIcon ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={iconUrl}
-                          alt={iconAlt}
-                          className="lg:w-14 md:w-14 w-8 md:h-14 lg:h-14 h-8"
-                        />
-                      ) : (
-                        <Image
-                          src={iconUrl}
-                          alt={iconAlt}
-                          className="lg:w-14 w-8 lg:h-14 h-8"
-                          width={80}
-                          height={80}
-                        />
-                      )
+                      <Image
+                        src={iconUrl}
+                        alt={iconAlt}
+                        className="lg:w-14 md:w-14 w-8 md:h-14 lg:h-14 h-8"
+                        width={80}
+                        height={80}
+                        unoptimized={isSvgIcon}
+                      />
                     ) : (
                       getIcon(item.icon)
                     )}

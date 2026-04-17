@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 /**
  * Full-width hero (About Us–style): background image, dark overlay, centered white title.
  * Use `titleTag="div"` when the real `<h1>` lives in the page body (e.g. article detail).
@@ -15,10 +17,11 @@ export function InsightsPageHero({
     <section className="relative overflow-hidden lg:pt-[200px] md:pt-[150px] pt-[110px] lg:pb-[80px] md:pb-[50px] pb-[30px]">
       <div className="absolute inset-0">
         {backgroundImage ? (
-          // eslint-disable-next-line @next/next/no-img-element -- CMS URLs may be remote
-          <img
+          <Image
             src={backgroundImage}
             alt=""
+            fill
+            sizes="100vw"
             className="absolute inset-0 h-full w-full object-cover"
           />
         ) : (

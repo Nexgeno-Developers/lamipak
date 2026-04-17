@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { formatBoldText } from '@/lib/htmlText';
 import type { CareerLandingPageData } from '@/lib/api/career_layout';
@@ -77,10 +78,11 @@ export default function CareerLandingPage({ data }: CareerLandingPageProps) {
                   className="absolute inset-0"
                 />
               ) : (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <Image
                   src={data.heroSplit.mediaImage}
                   alt={data.heroSplit.mediaAlt}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="absolute inset-0 h-full w-full object-cover"
                 />
               )}
@@ -99,10 +101,11 @@ export default function CareerLandingPage({ data }: CareerLandingPageProps) {
                 <div>
                   <div className="">
                     <div className="relative w-full overflow-hidden rounded-[50px]">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
+                      <Image
                         src={data.leadershipMessage.image}
                         alt={data.leadershipMessage.imageAlt}
+                        width={900}
+                        height={1200}
                         className="h-auto w-full object-cover"
                       />
                     </div>

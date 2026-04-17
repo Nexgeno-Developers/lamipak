@@ -50,7 +50,7 @@ export default function GreenBuildingCertificationsSection({ data }: GreenBuildi
               key={card.id}
               className="overflow-hidden rounded-[50px] bg-white"
             >
-              {/* Height auto: remove forced aspect ratio + use normal <img>. */}
+              {/* Height auto: remove forced aspect ratio and keep natural image ratio. */}
               <div className="w-full overflow-hidden p-3 md:p-4">
                 <div className="overflow-hidden rounded-[50px]">
                   <Image

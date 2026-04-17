@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import type { PilotPlantPageData } from '@/lib/api/pilot_plant_layout';
 
 type Props = Pick<PilotPlantPageData, 'heroBackgroundImage' | 'heroTitle'>;
@@ -7,10 +8,11 @@ export default function PilotPlantHero({ heroBackgroundImage, heroTitle }: Props
     <section className="relative lg:pt-[200px] md:pt-[150px] pt-[120px] lg:pb-[80px] md:pb-[50px] pb-[44px] overflow-hidden">
       <div className="absolute inset-0 bottom-[3px]">
         {heroBackgroundImage ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={heroBackgroundImage}
             alt=""
+            fill
+            sizes="100vw"
             className="absolute inset-0 h-full w-full object-cover"
           />
         ) : (

@@ -64,10 +64,11 @@ export default function MarketingServiceDetailLayoutPage({
 
           <div className="relative w-full overflow-hidden min-h-[320px] md:min-h-[520px]">
             {data.introImage ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <Image
                 src={data.introImage}
                 alt={data.introImageAlt || data.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="absolute inset-0 w-full h-full object-cover rounded-[50px]"
               />
             ) : (

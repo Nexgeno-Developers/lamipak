@@ -64,10 +64,11 @@ export default async function TechnicalServicesLayoutPage({
       <section className="relative lg:pt-[220px] md:pt-[150px] pt-[110px] lg:pb-[150px] md:pb-[50px] pb-[30px] overflow-hidden">
         <div className="absolute inset-0">
           {data.heroBackgroundImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={data.heroBackgroundImage}
               alt=""
+              fill
+              sizes="100vw"
               className="absolute inset-0 w-full h-full object-cover"
             />
           ) : (
@@ -164,10 +165,11 @@ export default async function TechnicalServicesLayoutPage({
                           className="absolute inset-0"
                         />
                       ) : poster ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
+                        <Image
                           src={poster}
                           alt={posterAlt}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
                           className="absolute inset-0 w-full h-full object-cover"
                         />
                       ) : (

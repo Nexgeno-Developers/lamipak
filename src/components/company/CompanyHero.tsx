@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import type { CompanyHero as CompanyHeroType } from '@/fake-api/company';
 
 interface CompanyHeroProps {
@@ -16,9 +17,11 @@ export default function CompanyHero({ data }: CompanyHeroProps) {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         {data.backgroundImage ? (
-          <img
+          <Image
             src={data.backgroundImage}
             alt=""
+            fill
+            sizes="100vw"
             className="absolute inset-0 w-full h-full object-cover"
           />
         ) : (

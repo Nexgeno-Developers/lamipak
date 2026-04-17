@@ -1,4 +1,5 @@
 import { formatBoldText } from '@/lib/htmlText';
+import Image from 'next/image';
 import Link from 'next/link';
 import type { SubCategoryGridSectionData } from '@/fake-api/page-builder';
 import type { PageBuilderContext } from '@/components/pageBuilder/PageBuilder';
@@ -31,7 +32,7 @@ export function SubCategoryGridSection({
             >
               <div className="relative w-full aspect-[16/10] bg-gray-100">
                 {item.image ? (
-                  <img src={item.image} alt={item.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-300" />
+                  <Image src={item.image} alt={item.title} fill sizes="(max-width: 1024px) 100vw, 25vw" className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-300" />
                 ) : (
                   <div className="absolute inset-0 bg-gray-200" />
                 )}

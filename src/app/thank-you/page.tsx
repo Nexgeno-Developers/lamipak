@@ -47,9 +47,11 @@ export default async function ThankYouPage() {
     <main className="min-h-screen bg-gray-50">
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
-          <img
+          <Image
             src={breadcrumbImage}
             alt=""
+            fill
+            sizes="100vw"
             className="absolute inset-0 h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-[#0E233C]/50" />

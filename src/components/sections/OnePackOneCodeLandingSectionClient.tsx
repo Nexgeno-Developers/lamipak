@@ -149,8 +149,7 @@ export default function OnePackOneCodeLandingSectionClient({
       <section className="relative lg:pt-[200px] md:pt-[150px] pt-[120px] lg:pb-[80px] md:pb-[50px] pb-[44px] overflow-hidden">
         <div className="absolute inset-0">
           {data.hero.backgroundImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={data.hero.backgroundImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
+            <Image src={data.hero.backgroundImage} alt="" fill sizes="100vw" className="absolute inset-0 w-full h-full object-cover" />
           ) : (
             <div className="absolute inset-0 w-full h-full bg-gray-800" />
           )}

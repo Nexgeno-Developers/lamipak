@@ -231,10 +231,11 @@ export default async function RAndDCentreLayoutPage({ data }: { data: RAndDCentr
       <section className="relative overflow-hidden pt-[110px] md:pt-[150px] pb-8 md:pt-[200px] md:pb-16 lg:pt-[220px] lg:pb-32">
         <div className="absolute inset-0">
           {data.heroBackgroundImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={data.heroBackgroundImage}
               alt=""
+              fill
+              sizes="100vw"
               className="absolute inset-0 h-full w-full object-cover"
             />
           ) : (

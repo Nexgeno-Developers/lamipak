@@ -27,8 +27,7 @@ export default function NpdEcosystemCard({ card }: Props) {
       <div className="flex flex-1 flex-col px-5 pb-8 pt-6 text-center md:px-6">
         <div className="mb-4 flex justify-center text-[#009FE8]">
           {card.iconUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element -- CMS icons
-            <img src={card.iconUrl} alt="" className="h-10 w-10 object-contain" aria-hidden />
+            <Image src={card.iconUrl} alt="" width={40} height={40} className="h-10 w-10 object-contain" aria-hidden />
           ) : (
             <NpdEcosystemIcon variant={card.iconVariant} />
           )}

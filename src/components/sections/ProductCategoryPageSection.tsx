@@ -33,10 +33,11 @@ export default function ProductCategoryPageSection({
           {/* Background Image with Overlay */}
           <div className="absolute inset-0">
             {(category as any).heroBackgroundImage ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <Image
                 src={(category as any).heroBackgroundImage}
                 alt=""
+                fill
+                sizes="100vw"
                 className="absolute inset-0 w-full h-full object-cover"
               />
             ) : (

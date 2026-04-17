@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import type { ProductDetailsSectionData } from '@/fake-api/page-builder';
 import { RichText } from '@/components/common/RichText';
 
@@ -9,7 +10,7 @@ export function ProductDetailsSection({ data }: { data: ProductDetailsSectionDat
           <div className="rounded-[25px] overflow-hidden bg-white border border-gray-200">
             {data.image ? (
               <div className="relative w-full aspect-[16/11] bg-gray-100">
-                <img src={data.image} alt={data.title} className="absolute inset-0 w-full h-full object-cover" />
+                <Image src={data.image} alt={data.title} fill sizes="(max-width: 1024px) 100vw, 45vw" className="absolute inset-0 w-full h-full object-cover" />
               </div>
             ) : (
               <div className="w-full aspect-[16/11] bg-gray-200" />

@@ -61,10 +61,11 @@ export default async function MarketingServicesLayoutPage({
           <div className="grid grid-cols-1 lg:grid-cols-[40%_50%] gap-4 md:gap-[80px] items-center">
             <div className="w-full order-2 lg:order-1">
               {data.introImage ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <Image
                   src={data.introImage}
                   alt={data.introImageAlt || data.heroTitle}
+                  width={1200}
+                  height={900}
                   className="w-full h-auto object-cover rounded-2xl md:rounded-[32px]"
                 />
               ) : null}
@@ -175,10 +176,11 @@ export default async function MarketingServicesLayoutPage({
 
                     <div className="relative min-h-[240px] md:min-h-[520px]">
                       {item.image ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
+                        <Image
                           src={item.image}
                           alt={item.imageAlt || item.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
                           className="absolute inset-0 w-full h-full object-cover"
                         />
                       ) : (

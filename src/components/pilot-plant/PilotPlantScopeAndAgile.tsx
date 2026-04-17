@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import type { PilotPlantPageData } from '@/lib/api/pilot_plant_layout';
 import { PilotPlantScopeIcon } from '@/components/pilot-plant/scopeIcons';
 import { formatBoldText } from '@/lib/htmlText';
@@ -48,10 +49,11 @@ export default function PilotPlantScopeAndAgile({
                 const cardContent = (
                   <>
                     {item.iconUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element -- CMS icons (SVG/PNG)
-                      <img
+                      <Image
                         src={item.iconUrl}
                         alt=""
+                        width={100}
+                        height={100}
                         className="h-[100px] w-[100px] object-contain"
                         aria-hidden
                       />
