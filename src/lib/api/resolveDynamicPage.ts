@@ -137,6 +137,19 @@ function buildApiLayoutMetadata(payload: {
   });
 }
 
+/** CMS `default` layout: `meta.banner_images` is a media object with `url`. */
+function heroImageUrlFromDefaultLayoutMeta(meta: unknown): string | undefined {
+  if (!meta || typeof meta !== 'object' || Array.isArray(meta)) return undefined;
+  const bannerImages = (meta as Record<string, unknown>).banner_images;
+  if (!bannerImages || typeof bannerImages !== 'object' || Array.isArray(bannerImages)) {
+    return undefined;
+  }
+  const url = (bannerImages as { url?: string | null }).url;
+  if (typeof url !== 'string') return undefined;
+  const t = url.trim();
+  return t || undefined;
+}
+
 function buildCategoryMetadata(category: ProductCategory, categorySlug: string): Metadata {
   const seo = (category as any).seo as any;
   const name = (category as any).name || categorySlug;
@@ -668,6 +681,35 @@ export const resolveDynamicPage = async (
     }
 
     const probe = await probePageLayout(cleanSlug);
+    if (probe?.layout === 'default') {
+      const seoRaw = probe.seo;
+      const seo =
+        seoRaw && typeof seoRaw === 'object' && !Array.isArray(seoRaw)
+          ? (seoRaw as Record<string, unknown>)
+          : {};
+      const metaRaw = probe.meta;
+      const meta =
+        metaRaw && typeof metaRaw === 'object' && !Array.isArray(metaRaw)
+          ? metaRaw
+          : undefined;
+      const heroBackgroundImage = heroImageUrlFromDefaultLayoutMeta(meta);
+      return {
+        kind: 'api-layout',
+        layout: 'default',
+        payload: {
+          slug: probe.matchedSlug,
+          title: (probe.title || '').trim(),
+          content: typeof probe.content === 'string' ? probe.content : '',
+          seo,
+          heroBackgroundImage,
+        },
+        metadata: buildApiLayoutMetadata({
+          slug: probe.matchedSlug,
+          title: (probe.title || '').trim(),
+          seo: seo as any,
+        }),
+      };
+    }
     if (probe?.layout) {
       const resolved = await resolveApiLayout(probe.layout, cleanSlug, page);
       if (resolved) return resolved;

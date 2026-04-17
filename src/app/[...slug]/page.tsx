@@ -30,6 +30,7 @@ import NpdLayoutPage from '@/components/pages/NpdLayoutPage';
 import PilotPlantLayoutPage from '@/components/pages/PilotPlantLayoutPage';
 import InnovationsLayoutPage from '@/components/pages/InnovationsLayoutPage';
 import InsightsHubPage from '@/components/pages/InsightsHubPage';
+import DefaultLayoutPage from '@/components/pages/DefaultLayoutPage';
 import InsightsListingPage from '@/components/pages/InsightsListingPage';
 import InsightsArticleDetailPage from '@/components/pages/InsightsArticleDetailPage';
 import CareerLandingPage from '@/components/CareerLandingPage';
@@ -95,6 +96,20 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
           return <InsightsListingPage data={payload.page} />;
         case 'insights':
           return <InsightsHubPage data={payload.page} />;
+        case 'default':
+          return (
+            <DefaultLayoutPage
+              data={{
+                slug: payload.slug as string,
+                title: (payload.title as string) || '',
+                content: (payload.content as string) || '',
+                heroBackgroundImage:
+                  typeof payload.heroBackgroundImage === 'string'
+                    ? payload.heroBackgroundImage
+                    : undefined,
+              }}
+            />
+          );
         case 'rnd_center':
           return <RAndDCentreLayoutPage data={payload.page} />;
         case 'product_industries':
