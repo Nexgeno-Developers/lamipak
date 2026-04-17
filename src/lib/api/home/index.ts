@@ -142,6 +142,8 @@ export type QuestionOption = {
   id: string;
   label: string;
   value: string;
+  /** CMS industry icons (step 1) */
+  iconUrl?: string;
 };
 
 export type Question = {
@@ -550,6 +552,58 @@ function parseJsonArray(raw?: string | unknown[] | null): unknown[] {
   }
 }
 
+/**
+ * Home meta `approach_product_industries`: array of industry objects (or legacy string ids).
+ * Labels use API `title` so the first step matches CMS copy (e.g. "Dairy Products").
+ */
+function buildApproachIndustryOptions(raw?: string | unknown[] | null): QuestionOption[] {
+  const arr = parseJsonArray(raw);
+  const out: QuestionOption[] = [];
+  let fallbackKey = 0;
+
+  for (const entry of arr) {
+    if (typeof entry === 'string') {
+      const id = entry.trim();
+      const label = INDUSTRY_LABEL_BY_ID[id] || id;
+      if (!label) continue;
+      out.push({
+        id: `1-${id || ++fallbackKey}`,
+        label,
+        value: slugifyValue(label),
+      });
+      continue;
+    }
+
+    if (!entry || typeof entry !== 'object') continue;
+    const o = entry as Record<string, unknown>;
+    const idNum = o.id != null ? String(o.id) : '';
+    const label =
+      cleanText(typeof o.title === 'string' ? o.title : '') ||
+      cleanText(typeof o.short_summary_title === 'string' ? o.short_summary_title : '') ||
+      (idNum ? INDUSTRY_LABEL_BY_ID[idNum] : '');
+    if (!label) continue;
+
+    const slugRaw = typeof o.slug === 'string' ? o.slug.trim() : '';
+    const value = slugRaw ? slugifyValue(slugRaw) : slugifyValue(label);
+
+    const icon = o.short_summary_icon;
+    let iconUrl: string | undefined;
+    if (icon && typeof icon === 'object' && icon !== null) {
+      iconUrl = mediaUrlFromRef(icon as MediaRef);
+    }
+
+    const row: QuestionOption = {
+      id: `1-${idNum || ++fallbackKey}`,
+      label,
+      value,
+    };
+    if (iconUrl) row.iconUrl = iconUrl;
+    out.push(row);
+  }
+
+  return out;
+}
+
 function slugifyValue(input: string): string {
   return input.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 }
@@ -659,17 +713,9 @@ function mapApproach(meta: HomeMetaApi | undefined): ApproachData | null {
   const q2 = cleanText(meta.approach_question_2);
   const q3 = cleanText(meta.approach_question_3);
 
-  const industries = parseJsonArray(meta.approach_product_industries).map(String);
+  const q1Options = buildApproachIndustryOptions(meta.approach_product_industries);
   const scales = parseJsonArray(meta.approach_production_scale) as JsonOptionValue[];
   const regions = parseJsonArray(meta.approach_market_region) as JsonOptionValue[];
-
-  const q1Options: QuestionOption[] = industries
-    .map((id, i) => {
-      const label = INDUSTRY_LABEL_BY_ID[id] || '';
-      if (!label) return null;
-      return { id: `1-${i + 1}`, label, value: slugifyValue(label) };
-    })
-    .filter(Boolean) as QuestionOption[];
 
   const q2Options: QuestionOption[] = scales
     .map((entry, i) => {
