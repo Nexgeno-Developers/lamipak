@@ -33,6 +33,19 @@ type MenuGroupApiResponse = {
   };
 };
 
+/** When CMS omits `menu_group.name`, keep stable labels per known group id. */
+const MENU_GROUP_FALLBACK_TITLE: Record<number, string> = {
+  2: 'Quick Links',
+  3: 'Legal',
+  4: 'Connect',
+  5: 'Contact',
+};
+
+type MenuGroupBundle = {
+  title: string;
+  items: MenuGroupItem[];
+};
+
 const COMPANY_API_DOMAIN =
   process.env.COMPANY_API_BASE_URL;
 
@@ -88,15 +101,20 @@ function findMetaValue(meta: unknown, key: string): string | undefined {
   return undefined;
 }
 
-async function fetchMenuGroup(groupId: number): Promise<MenuGroupItem[]> {
+async function fetchMenuGroup(groupId: number): Promise<MenuGroupBundle> {
+  const fallbackTitle = MENU_GROUP_FALLBACK_TITLE[groupId] || 'Links';
   const url = buildCompanyApiUrl(`/v1/menus/groups/${groupId}`);
-  if (!url) return [];
+  if (!url) return { title: fallbackTitle, items: [] };
 
   const payload = await fetchJsonCached<MenuGroupApiResponse>(url, {
     tags: [`menu-group:${groupId}`],
     init: { headers: { Accept: 'application/json' } },
   });
-  return payload?.data?.items?.filter((i) => i.status !== false) || [];
+  const data = payload?.data;
+  const groupName = data?.menu_group?.name?.trim();
+  const title = groupName || fallbackTitle;
+  const items = data?.items?.filter((i) => i.status !== false) || [];
+  return { title, items };
 }
 
 const SOCIAL_KEYS = [
@@ -110,12 +128,29 @@ const SOCIAL_KEYS = [
   { metaKey: 'vimeo_url', icon: 'vimeo', platform: 'Vimeo' },
 ] as const;
 
-function mapMenuItems(items: MenuGroupItem[]): FooterData['columns'][number]['links'] {
-  return items.map((item) => ({
-    id: String(item.id),
-    label: item.name || '',
-    href: item.url || '/',
-  }));
+/**
+ * Footer lists are flat; CMS may nest items (e.g. Products → Roll Fed). Walk the tree in order.
+ */
+function flattenFooterLinks(items: MenuGroupItem[]): FooterData['columns'][number]['links'] {
+  const out: FooterData['columns'][number]['links'] = [];
+  let syntheticId = 0;
+  const walk = (list: MenuGroupItem[]) => {
+    for (const item of list) {
+      if (item.status === false) continue;
+      const label = (item.name || '').trim();
+      const rawHref = (item.url || '').trim();
+      if (label && rawHref) {
+        out.push({
+          id: String(item.id ?? `footer-${syntheticId++}`),
+          label,
+          href: rawHref,
+        });
+      }
+      if (item.children?.length) walk(item.children);
+    }
+  };
+  walk(items);
+  return out;
 }
 
 async function fetchCompanyData(): Promise<CompanyApiResponse['data'] | null> {
@@ -132,7 +167,7 @@ async function fetchCompanyData(): Promise<CompanyApiResponse['data'] | null> {
 }
 
 export async function fetchFooterData(): Promise<FooterData> {
-  const [company, quickLinks, legal, connect, contact] = await Promise.all([
+  const [company, quickBundle, legalBundle, connectBundle, contactBundle] = await Promise.all([
     fetchCompanyData(),
     fetchMenuGroup(2),
     fetchMenuGroup(3),
@@ -151,18 +186,16 @@ export async function fetchFooterData(): Promise<FooterData> {
 
   const columns: FooterData['columns'] = [];
 
-  if (quickLinks.length) {
-    columns.push({ id: 'quick-links', title: 'Quick Links', links: mapMenuItems(quickLinks) });
-  }
-  if (legal.length) {
-    columns.push({ id: 'legal', title: 'Legal', links: mapMenuItems(legal) });
-  }
-  if (connect.length) {
-    columns.push({ id: 'connect', title: 'Connect', links: mapMenuItems(connect) });
-  }
-  if (contact.length) {
-    columns.push({ id: 'contact', title: 'Contact', links: mapMenuItems(contact) });
-  }
+  const pushColumn = (id: string, bundle: MenuGroupBundle) => {
+    const links = flattenFooterLinks(bundle.items);
+    if (!links.length) return;
+    columns.push({ id, title: bundle.title, links });
+  };
+
+  pushColumn('footer-menu-2', quickBundle);
+  pushColumn('footer-menu-3', legalBundle);
+  pushColumn('footer-menu-4', connectBundle);
+  pushColumn('footer-menu-5', contactBundle);
 
   const socialLinks: SocialLink[] = [];
   for (const { metaKey, icon, platform } of SOCIAL_KEYS) {
