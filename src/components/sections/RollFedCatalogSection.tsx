@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import VideoBanner from '@/components/home/VideoBanner';
+import { ImageWithLoader } from '@/components/common/ImageWithLoader';
 import CallToAction from '../home/CallToAction';
 import NewsletterSubscription from '../home/NewsletterSubscription';
 import { RichText } from '@/components/common/RichText';
@@ -32,15 +32,16 @@ function ProductCard({ product }: { product: RollFedCatalogProduct }) {
       href={href}
       className="rounded-[50px] bg-[#EDF0F1] p-5 md:p-[20px] flex flex-col transition-all"
     >
-      <div className="relative rounded-[50px] flex items-center justify-center">
+      <div className="relative min-h-[220px] overflow-hidden rounded-[50px] bg-gray-100 flex items-center justify-center">
         {product.image ? (
-          <Image
+          <ImageWithLoader
             src={product.image}
             alt={product.title}
             width={800}
             height={800}
             className="object-contain lg:w-[70%] w-[100%] mx-auto rounded-[50px]"
-            priority={false}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            loading="lazy"
           />
         ) : (
           <div className="" />
