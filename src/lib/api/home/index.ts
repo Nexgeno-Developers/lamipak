@@ -537,7 +537,6 @@ const INDUSTRY_LABEL_BY_ID: Record<string, string> = {
   '24': 'Alcohol',
   '25': 'Culinary',
   '26': 'Functional',
-  '27': 'Nutraceutical',
 };
 
 function parseJsonArray(raw?: string | unknown[] | null): unknown[] {
