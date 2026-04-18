@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import NavigationProgressProvider from "@/components/common/NavigationProgressProvider";
+import { getPublicSiteUrl } from "@/config/site";
 
 const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700', '800', '900'],
@@ -18,7 +19,10 @@ export const viewport: Viewport = {
 
 const GTM_ID = "GTM-TZNFVFFC";
 
+const publicSiteUrl = getPublicSiteUrl();
+
 export const metadata: Metadata = {
+  ...(publicSiteUrl ? { metadataBase: new URL(publicSiteUrl) } : {}),
   title: "Lamipak - Your Platform",
   description: "Building the future with innovative solutions",
   robots: {
