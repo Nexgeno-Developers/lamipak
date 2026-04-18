@@ -29,7 +29,7 @@ export default function PilotPlantScopeAndAgile({
   agileHighlights,
 }: Props) {
   const gridClassName = `lg:mt-10 mt-6 grid gap-4 md:gap-5 ${
-    scopeGrid.length > 4 ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-2'
+    scopeGrid.length > 4 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-2'
   }`;
 
   return (

@@ -95,10 +95,10 @@ export default function CarbonNeutralityRoadmapSection({ data }: CarbonNeutralit
                   {m.descriptionHtml ? (
                     <RichText
                       html={m.descriptionHtml}
-                      className="lg:mt-4 mt-0 w-full lg:max-w-[280px] max-w-full text-left text-sm leading-snug text-black md:text-[0.9375rem]"
+                      className="lg:mt-4 mt-0 w-full max-w-full text-center text-sm leading-snug text-black md:text-[0.9375rem]"
                     />
                   ) : (
-                    <ul className="mt-4 lg:max-w-[280px] max-w-full space-y-2.5 text-left text-sm leading-snug text-black md:text-[0.9375rem]">
+                    <ul className="mt-4  max-w-full space-y-2.5 text-center text-sm leading-snug text-black md:text-[0.9375rem]">
                       {(m.bullets ?? []).map((line, idx) => (
                         <li key={idx} className="flex gap-2.5">
                           <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-900" aria-hidden />
