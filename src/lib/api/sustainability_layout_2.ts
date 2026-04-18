@@ -12,7 +12,7 @@ type LamiraMeetSectionData = {
   bodyHtml?: string;
   image: string;
   imageAlt: string;
-};
+}; 
 
 export type LamiraSpecialAbilitiesSectionData = {
   heading: string;
