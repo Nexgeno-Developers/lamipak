@@ -1,6 +1,6 @@
 import { formatBoldText } from '@/lib/htmlText';
 import { fetchJsonCached } from '@/lib/api/apiCache';
-import { getYouTubeEmbedUrl } from '@/lib/youtubeEmbed';
+import { getYouTubeEmbedUrl, getYouTubeVideoId } from '@/lib/youtubeEmbed';
 
 type LamiraMeetSectionData = {
   titlePrefix?: string;
@@ -14,13 +14,17 @@ type LamiraMeetSectionData = {
   imageAlt: string;
 };
 
-type LamiraSpecialAbilitiesSectionData = {
+export type LamiraSpecialAbilitiesSectionData = {
   heading: string;
   headingSuffix: string;
   subtitle: string;
   image: string;
   imageAlt: string;
   videoUrl: string;
+  videoPosterUrl?: string;
+  layoutVariant?: 'three-column-html';
+  card1Html?: string;
+  card3Html?: string;
   abilities: Array<{ id: string; title: string; description: string }>;
 };
 
@@ -60,6 +64,9 @@ type Sustainability2ApiResponse = {
       special_ability_title?: string;
       special_ability_description?: string;
       special_ability_items?: string | object;
+      special_ability_card_1_description?: string;
+      special_ability_card_2_video_url?: string;
+      special_ability_card_3_description?: string;
       lamira_love_title?: string;
       lamira_love_description?: string;
       lamira_love_items?: string | object;
@@ -288,26 +295,58 @@ export async function fetchSustainabilityLayout2Page(slug: string): Promise<{
     const specialDescriptions = specialParsed?.description || [];
     const specialVideos = specialParsed?.video_url || [];
     const rawVideoUrl = specialVideos[0]?.trim();
-    const specialVideoUrl = (rawVideoUrl && getYouTubeEmbedUrl(rawVideoUrl)) || rawVideoUrl || '';
+    const legacyVideoEmbed =
+      (rawVideoUrl && getYouTubeEmbedUrl(rawVideoUrl)) || rawVideoUrl || '';
 
-    const special: LamiraSpecialAbilitiesSectionData | undefined =
-      meta.special_ability_title && specialTitles.length
-        ? {
-            heading: formatBoldText(meta.special_ability_title),
-            headingSuffix: '',
-            subtitle: formatBoldText(meta.special_ability_description?.trim() || ''),
-            image: heroImageUrl || '',
-            imageAlt: meta.special_ability_title,
-            videoUrl: specialVideoUrl,
-            abilities: specialTitles
-              .map((t, idx) => ({
-                id: `ability-${idx}`,
-                title: formatBoldText(t),
-                description: formatBoldText(specialDescriptions[idx] || ''),
-              }))
-              .filter((a) => Boolean(a.title || a.description)),
-          }
-        : undefined;
+    const card1Html = meta.special_ability_card_1_description?.trim();
+    const card3Html = meta.special_ability_card_3_description?.trim();
+    const card2WatchUrl = meta.special_ability_card_2_video_url?.trim();
+    const card2Embed = card2WatchUrl ? getYouTubeEmbedUrl(card2WatchUrl) || '' : '';
+    const card2YtId = card2WatchUrl ? getYouTubeVideoId(card2WatchUrl) : null;
+    const card2Poster = card2YtId ? `https://img.youtube.com/vi/${card2YtId}/hqdefault.jpg` : undefined;
+
+    const hasThreeColumnSpecial = Boolean(card1Html || card3Html || card2WatchUrl);
+    const specialSectionHeading =
+      meta.special_ability_title?.trim() || heroTitle || "Lamira's Special Abilities";
+
+    const threeColumnSpecial: LamiraSpecialAbilitiesSectionData | undefined = hasThreeColumnSpecial
+      ? {
+          heading: formatBoldText(specialSectionHeading),
+          headingSuffix: '',
+          subtitle: formatBoldText(meta.special_ability_description?.trim() || ''),
+          image: heroImageUrl || '',
+          imageAlt: meta.special_ability_title?.trim() || specialSectionHeading,
+          videoUrl: card2Embed,
+          videoPosterUrl: card2Poster || heroImageUrl || '',
+          layoutVariant: 'three-column-html',
+          card1Html: card1Html || '',
+          card3Html: card3Html || '',
+          abilities: [],
+        }
+      : undefined;
+
+    const hasLegacySpecial =
+      Boolean(meta.special_ability_title?.trim()) && specialTitles.length > 0 && !hasThreeColumnSpecial;
+
+    const legacySpecial: LamiraSpecialAbilitiesSectionData | undefined = hasLegacySpecial
+      ? {
+          heading: formatBoldText(meta.special_ability_title || ''),
+          headingSuffix: '',
+          subtitle: formatBoldText(meta.special_ability_description?.trim() || ''),
+          image: heroImageUrl || '',
+          imageAlt: meta.special_ability_title || '',
+          videoUrl: legacyVideoEmbed,
+          abilities: specialTitles
+            .map((t, idx) => ({
+              id: `ability-${idx}`,
+              title: formatBoldText(t),
+              description: formatBoldText(specialDescriptions[idx] || ''),
+            }))
+            .filter((a) => Boolean(a.title || a.description)),
+        }
+      : undefined;
+
+    const special = threeColumnSpecial ?? legacySpecial;
 
     const loveParsed = parseJsonOrObject<{
       itration?: string[];
