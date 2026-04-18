@@ -18,7 +18,7 @@ export interface CareerLandingPageProps {
 
 export default function CareerLandingPage({ data }: CareerLandingPageProps) {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen overflow-x-hidden bg-gray-50">
       <CompanyHero
         data={{
           title: data.heroTitle,
@@ -33,35 +33,38 @@ export default function CareerLandingPage({ data }: CareerLandingPageProps) {
       </section>
 
       {data.heroSplit && (
-        <section className="bg-gray-50 pt-8 md:pt-20">
+        <section className="bg-gray-50 pt-6 sm:pt-8 md:pt-20">
           <div className="grid grid-cols-1 items-stretch gap-0 lg:grid-cols-2">
-            <div className="flex items-center justify-center pl-8 pr-8 lg:pl-16 lg:pr-10">
-              <div className="max-w-xl">
-                <h2 className="mb-6 text-3xl font-bold leading-[1.15] text-black md:text-4xl lg:text-5xl" dangerouslySetInnerHTML={{ __html: formatBoldText(data.heroSplit.heading) }} />
+            <div className="flex items-center justify-center px-4 pb-8 pt-2 sm:px-6 sm:pb-10 lg:pb-0 lg:pl-16 lg:pr-10 lg:pt-0">
+              <div className="w-full max-w-xl">
+                <h2
+                  className="mb-4 text-[22px] font-bold leading-[1.2] text-black sm:mb-6 sm:text-3xl md:text-4xl lg:text-5xl"
+                  dangerouslySetInnerHTML={{ __html: formatBoldText(data.heroSplit.heading) }}
+                />
 
                 {data.heroSplit.bodyHtml ? (
                   <RichText
                     html={data.heroSplit.bodyHtml}
-                    className="mt-8 space-y-4 text-base font-normal leading-relaxed text-[#0E233C] md:text-lg [&_p]:mb-0 [&_p+_p]:mt-4"
+                    className="lg:mt-8 mt-4 space-y-4 text-sm font-normal leading-relaxed text-[#0E233C] md:text-lg [&_p]:mb-0 [&_p+_p]:mt-4"
                   />
                 ) : (
                   <>
                     {data.heroSplit.paragraphs.length > 0 ? (
-                      <div className="mt-8 space-y-4 text-base font-normal leading-relaxed text-[#0E233C] md:text-lg">
+                      <div className="lg:mt-8 mt-4 space-y-4 text-base font-normal leading-relaxed text-[#0E233C] md:text-lg">
                         {data.heroSplit.paragraphs.map((p, i) => (
                           <p key={i} dangerouslySetInnerHTML={{ __html: formatBoldText(p) }} />
                         ))}
                       </div>
                     ) : null}
                     {data.heroSplit.emphasis ? (
-                      <p className="mt-8 text-base font-semibold text-[#0E233C] md:text-lg">{data.heroSplit.emphasis}</p>
+                      <p className="lg:mt-8 mt-4 text-base font-semibold text-[#0E233C] md:text-lg">{data.heroSplit.emphasis}</p>
                     ) : null}
                   </>
                 )}
 
                 <Link
                   href={data.heroSplit.ctaLink}
-                  className="mt-10 inline-flex items-center text-sm font-bold uppercase text-[#009FE8] transition-colors hover:text-[#0077B6] md:text-base"
+                  className="lg:mt-8 mt-4 inline-flex min-h-[44px] items-center text-sm font-bold uppercase text-[#009FE8] transition-colors hover:text-[#0077B6] sm:mt-10 md:text-base"
                 >
                   {data.heroSplit.ctaText}
                   <span className="ml-2 text-lg leading-none">→</span>
@@ -69,7 +72,7 @@ export default function CareerLandingPage({ data }: CareerLandingPageProps) {
               </div>
             </div>
 
-            <div className="relative min-h-[320px] overflow-hidden lg:min-h-[460px]">
+            <div className="relative min-h-[220px] overflow-hidden sm:min-h-[280px] lg:min-h-[460px]">
               {data.heroSplit.mediaLink ? (
                 <VideoModalClient
                   videoUrl={data.heroSplit.mediaLink}
@@ -94,13 +97,13 @@ export default function CareerLandingPage({ data }: CareerLandingPageProps) {
       <CareerListingClient jobs={data.jobs} jobsSection={data.jobsSection} />
 
       {data.leadershipMessage && (
-        <section className="bg-gray-50 py-10 md:py-12">
-          <div className="container mx-auto px-4">
-            <div className="rounded-[50px] bg-white p-6 md:rounded-[50px] md:p-10 lg:p-12">
-              <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[380px_1fr] lg:gap-14">
-                <div>
+        <section className="bg-gray-50 py-8 md:py-12">
+          <div className="container mx-auto max-w-7xl px-4 sm:px-6">
+            <div className="rounded-3xl bg-white p-4 sm:p-6 md:rounded-[50px] md:p-10 lg:p-12">
+              <div className="grid grid-cols-1 items-start gap-8 sm:gap-10 lg:grid-cols-[minmax(0,380px)_1fr] lg:gap-14">
+                <div className="w-full min-w-0">
                   <div className="">
-                    <div className="relative w-full overflow-hidden rounded-[50px]">
+                    <div className="relative w-full overflow-hidden rounded-3xl md:rounded-[50px]">
                       <Image
                         src={data.leadershipMessage.image}
                         alt={data.leadershipMessage.imageAlt}
@@ -120,8 +123,11 @@ export default function CareerLandingPage({ data }: CareerLandingPageProps) {
                   </p>
                 </div>
 
-                <div className="max-w-3xl">
-                  <h2 className="mb-5 text-2xl font-bold text-black md:text-3xl lg:text-5xl" dangerouslySetInnerHTML={{ __html: formatBoldText(data.leadershipMessage.heading) }} />
+                <div className="min-w-0 max-w-3xl">
+                  <h2
+                    className="mb-4 text-xl font-bold leading-snug text-black sm:text-2xl md:mb-5 md:text-3xl lg:text-5xl"
+                    dangerouslySetInnerHTML={{ __html: formatBoldText(data.leadershipMessage.heading) }}
+                  />
                   {data.leadershipMessage.bodyHtml ? (
                     <RichText
                       html={data.leadershipMessage.bodyHtml}
@@ -144,10 +150,13 @@ export default function CareerLandingPage({ data }: CareerLandingPageProps) {
       {data.verticalFeatures && data.verticalFeatures.length > 0 && (
         <>
           {data.verticalFeaturesHeader && (
-            <section className="bg-gray-50">
-              <div className="container mx-auto px-4">
-                <div className="mx-auto max-w-3xl text-center">
-                  <h2 className="text-2xl font-bold text-black md:text-3xl lg:text-5xl" dangerouslySetInnerHTML={{ __html: formatBoldText(data.verticalFeaturesHeader.heading)}} />
+            <section className="bg-gray-50 pb-2 pt-4 sm:pt-6">
+              <div className="container mx-auto max-w-7xl px-4 sm:px-6">
+                <div className="mx-auto max-w-3xl px-1 text-center sm:px-0">
+                  <h2
+                    className="text-xl font-bold leading-snug text-black sm:text-2xl md:text-3xl lg:text-5xl"
+                    dangerouslySetInnerHTML={{ __html: formatBoldText(data.verticalFeaturesHeader.heading) }}
+                  />
                   {data.verticalFeaturesHeader.description ? (
                     /<[^>]+>/.test(data.verticalFeaturesHeader.description) ? (
                       <RichText
@@ -170,9 +179,12 @@ export default function CareerLandingPage({ data }: CareerLandingPageProps) {
 
       {data.expertsSection && data.expertsSection.videos.length > 0 && (
         <section className="bg-gray-50 py-8 md:py-12 lg:py-12">
-          <div className="container mx-auto px-4">
-            <div className="mx-auto mb-10 max-w-4xl text-center md:mb-12">
-              <h2 className="text-2xl font-bold leading-tight text-black md:text-3xl lg:text-5xl" dangerouslySetInnerHTML={{ __html: formatBoldText(data.expertsSection.heading) }} />
+          <div className="container mx-auto max-w-7xl px-4 sm:px-6">
+            <div className="mx-auto mb-8 max-w-4xl px-1 text-center md:mb-12 sm:px-0">
+              <h2
+                className="text-xl font-bold leading-tight text-black sm:text-2xl md:text-3xl lg:text-5xl"
+                dangerouslySetInnerHTML={{ __html: formatBoldText(data.expertsSection.heading) }}
+              />
               {data.expertsSection.description ? (
                 /<[^>]+>/.test(data.expertsSection.description) ? (
                   <RichText
@@ -185,10 +197,10 @@ export default function CareerLandingPage({ data }: CareerLandingPageProps) {
               ) : null}
             </div>
 
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
+            <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-3 md:gap-8">
               {data.expertsSection.videos.map((v) => (
-                <div key={v.id} className="">
-                  <div className="relative overflow-hidden rounded-[50px]">
+                <div key={v.id} className="min-w-0">
+                  <div className="relative overflow-hidden rounded-3xl md:rounded-[50px]">
                     <div className="relative w-full pt-[56.25%]">
                       <VideoModalClient
                         videoUrl={v.videoUrl}

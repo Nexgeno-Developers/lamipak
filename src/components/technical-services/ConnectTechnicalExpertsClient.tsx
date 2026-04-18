@@ -93,27 +93,27 @@ export default function ConnectTechnicalExpertsClient({
   };
 
   return (
-    <section className="bg-gray-50 py-4 md:py-8 lg:py-24">
-      <div className="container mx-auto px-4">
+    <section className="bg-gray-50 py-6 md:py-8 lg:py-24">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6">
         {/* Section Heading */}
         {headingHtml ? (
-          <div className="text-center mb-4 md:mb-8 lg:mb-12">
+          <div className="mb-6 text-center md:mb-8 lg:mb-12">
             <h2
-              className="text-[22px] md:text-4xl lg:text-5xl font-bold text-black"
+              className="text-xl font-bold leading-snug text-black sm:text-2xl md:text-4xl lg:text-5xl"
               dangerouslySetInnerHTML={{ __html: headingHtml }}
             />
           </div>
         ) : null}
 
         {/* Main Card */}
-        <div className="bg-white rounded-[50px] overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-[65%_35%] gap-0">
+        <div className="overflow-hidden rounded-3xl bg-white shadow-sm md:rounded-[50px]">
+          <div className="grid grid-cols-1 gap-0 lg:grid-cols-[65%_35%]">
             {/* Left Section - Contact Form */}
-            <div className="pt-8 pb-8 px-6 md:p-10 lg:p-12">
+            <div className="px-4 pb-8 pt-6 sm:px-6 md:p-10 lg:p-12">
               {/* Form Title */}
               {formTitleHtml ? (
                 <h3
-                  className="text-[18px] md:text-3xl font-bold text-black lg:mb-8 mb-4"
+                  className="mb-4 text-[17px] font-bold leading-snug text-black sm:text-lg md:mb-6 md:text-3xl lg:mb-8"
                   dangerouslySetInnerHTML={{ __html: formTitleHtml }}
                 />
               ) : null}
@@ -201,7 +201,7 @@ export default function ConnectTechnicalExpertsClient({
                     disabled={isSubmitting}
                     rows={5}
                     maxLength={200}
-                    className="w-full px-6 py-4 bg-gray-100 rounded-[25px] border-none focus:outline-none focus:ring-2 focus:ring-[#009FE8] text-black placeholder-gray-400 text-base resize-none disabled:opacity-70"
+                    className="w-full resize-none rounded-[25px] border-none bg-gray-100 px-4 py-3 text-base text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#009FE8] disabled:opacity-70 sm:px-6 sm:py-4"
                   />
                   {fieldErrors.message ? (
                     <p className="mt-2 text-sm text-[#B42318]">{fieldErrors.message}</p>
@@ -239,13 +239,13 @@ export default function ConnectTechnicalExpertsClient({
             </div>
 
             {/* Right Section - Illustration */}
-            <div className="relative bg-[#fff] flex items-center justify-center p-8 pt-0 lg:p-8 lg:pt-8 rounded-[50px]">
+            <div className="relative flex items-center justify-center bg-white px-4 pb-6 pt-0 sm:px-6 sm:pb-8 lg:p-8 lg:pt-8">
               <Image
                 src={illustrationImage}
                 alt={illustrationAlt}
                 width={600}
                 height={600}
-                className="w-full lg:h-[500px] h-[300px] object-cover rounded-[50px]"
+                className="h-[220px] w-full rounded-2xl object-cover sm:h-[280px] md:h-[320px] lg:h-[500px] lg:rounded-[50px]"
                 sizes="(max-width: 1024px) 100vw, 35vw"
               />
             </div>

@@ -33,11 +33,11 @@ export default function VerticalTabsFeatures({ features }: VerticalTabsFeaturesP
     <section className="bg-gray-50 pt-8 md:pt-12 lg:pt-20">
       <div className="container mx-auto px-4">
         {/* Mobile: full-width stacked cards (hover % widths are unusable on narrow viewports) */}
-        <div className="flex flex-col gap-4 md:hidden">
+        <div className="flex flex-col gap-4 pb-2 md:hidden">
           {features.map((feature) => (
             <article
               key={feature.id}
-              className="rounded-[25px] overflow-hidden bg-[#EDF0F1] p-4 shadow-sm"
+              className="overflow-hidden rounded-[22px] bg-[#EDF0F1] p-4 sm:rounded-[25px] sm:p-5"
             >
               <div className="relative w-full aspect-[4/3] rounded-[18px] overflow-hidden bg-gray-200">
                 <Image
