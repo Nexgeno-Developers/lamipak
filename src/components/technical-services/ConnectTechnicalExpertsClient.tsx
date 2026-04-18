@@ -106,7 +106,7 @@ export default function ConnectTechnicalExpertsClient({
         ) : null}
 
         {/* Main Card */}
-        <div className="overflow-hidden rounded-3xl bg-white shadow-sm md:rounded-[50px]">
+        <div className="overflow-hidden rounded-3xl bg-white md:rounded-[50px]">
           <div className="grid grid-cols-1 gap-0 lg:grid-cols-[65%_35%]">
             {/* Left Section - Contact Form */}
             <div className="px-4 pb-8 pt-6 sm:px-6 md:p-10 lg:p-12">
