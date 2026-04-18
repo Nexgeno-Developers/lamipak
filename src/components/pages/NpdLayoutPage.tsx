@@ -66,7 +66,8 @@ export default async function NpdLayoutPage({ data }: { data: NpdPageData }) {
         </section>
       )}
       <VideoBanner prefetchedData={videoBannerPrefetched} />
-      <LatestNewsClient trendItems={trendItems} pressItems={pressItems} />
+      
+      <div className='lg:pt-0 pt-8 bg-gray-50'><LatestNewsClient trendItems={trendItems} pressItems={pressItems} /></div>
 
       <div className="bg-gray-50 pt-0 lg:pt-0">
         <CallToAction />

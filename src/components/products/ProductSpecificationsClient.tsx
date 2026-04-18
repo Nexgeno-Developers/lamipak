@@ -138,7 +138,7 @@ export default function ProductSpecificationsClient({ product }: ProductSpecific
                 type="button"
                 aria-label="Previous image"
                 className={[
-                  'cursor-pointer absolute left-[-50px] top-1/2 -translate-y-1/2 z-10 h-11 w-11 rounded-full bg-white/90 ring-1 ring-black/10 place-items-center text-black/70 hover:text-black hover:bg-white transition',
+                  'cursor-pointer absolute lg:left-[-50px] left-[0px] top-1/2 -translate-y-1/2 z-10 h-11 w-11 rounded-full bg-white/90 ring-1 ring-black/10 place-items-center text-black/70 hover:text-black hover:bg-white transition',
                   isBeginning ? 'hidden' : 'grid',
                 ].join(' ')}
               >
@@ -160,7 +160,7 @@ export default function ProductSpecificationsClient({ product }: ProductSpecific
                 type="button"
                 aria-label="Next image"
                 className={[
-                  'cursor-pointer absolute right-[-50px] top-1/2 -translate-y-1/2 z-10 h-11 w-11 rounded-full bg-white/90 ring-1 ring-black/10 place-items-center text-black/70 hover:text-black hover:bg-white transition',
+                  'cursor-pointer absolute lg:right-[-50px] right-[0px] top-1/2 -translate-y-1/2 z-10 h-11 w-11 rounded-full bg-white/90 ring-1 ring-black/10 place-items-center text-black/70 hover:text-black hover:bg-white transition',
                   isEnd ? 'hidden' : 'grid',
                 ].join(' ')}
               >

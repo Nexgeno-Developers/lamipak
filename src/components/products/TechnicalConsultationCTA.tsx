@@ -46,7 +46,7 @@ export default async function TechnicalConsultationCTA() {
               {ctaLink ? (
                 <Link
                   href={ctaLink}
-                  className="lg:inline-flex items-center text-white text-base md:text-lg lg:text-xl font-bold tracking-wider hover:text-[#009FE8] transition-colors group whitespace-nowrap"
+                  className="lg:inline-flex items-center text-white text-base md:text-lg lg:text-xl font-bold tracking-wider hover:text-[#009FE8] transition-colors group"
                 >
                   REQUEST TECHNICAL CONSULTATION →
                  
