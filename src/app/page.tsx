@@ -14,6 +14,7 @@ import LatestPressRelease from '@/components/home/LatestPressRelease';
 import CallToAction from '@/components/home/CallToAction';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
 import FAQ from '@/components/home/FAQ';
+import ApiSeoJsonLd from '@/components/seo/ApiSeoJsonLd';
 
 /**
  * Generate metadata for homepage
@@ -50,21 +51,12 @@ export default async function HomePage() {
   const homepageData = await fetchHomepageData();
   if (!homepageData) return null;
 
-  const schemaData = homepageData.seo?.schema ? {
-    ...homepageData.seo.schema,
-    url: homepageData.seo.canonical_url 
-      ? getCanonicalUrl(homepageData.seo.canonical_url)
-      : getCanonicalUrl('/'),
-  } : null;
-
   return (
     <>
-      {schemaData && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
-        />
-      )}
+      <ApiSeoJsonLd
+        pathname="/"
+        seo={(homepageData.seo as Record<string, unknown> | null | undefined) ?? null}
+      />
       <main>
         <Hero data={homepageData.hero} />
         

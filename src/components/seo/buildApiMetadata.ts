@@ -33,6 +33,39 @@ function unwrapLdJsonScriptSnippet(raw: string): string {
   return t;
 }
 
+function stripTrailingScriptClose(jsonish: string): string {
+  return jsonish.replace(/<\/script>\s*$/i, '').trim();
+}
+
+/** Keep only `{` … `}` so trailing `</script>` or noise after the object does not break `JSON.parse`. */
+function trimToBalancedObject(jsonish: string): string {
+  const last = jsonish.lastIndexOf('}');
+  if (last === -1) return jsonish;
+  return jsonish.slice(0, last + 1).trim();
+}
+
+/**
+ * CMS paste errors: `"name": "foo,` newline `"url":` without closing `"` before the comma-newline.
+ */
+function repairUnclosedStringBeforeNextKey(jsonish: string): string {
+  return jsonish.replace(
+    /"([\w-]+)"(\s*:\s*")([^"]*),(\r?\n\s*")([\w-]+"\s*:)/g,
+    '"$1"$2$3",$4$5',
+  );
+}
+
+function tryParseLdObject(raw: string): Record<string, unknown> | null {
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    if (typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed)) {
+      return parsed as Record<string, unknown>;
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
 /** Normalize API `seo.schema`: object, JSON string, or script-wrapped JSON. */
 export function parseLdJsonSchema(schema: unknown): Record<string, unknown> | null {
   if (schema == null) return null;
@@ -43,13 +76,16 @@ export function parseLdJsonSchema(schema: unknown): Record<string, unknown> | nu
     let t = schema.trim();
     if (!t) return null;
     t = unwrapLdJsonScriptSnippet(t);
-    try {
-      const parsed = JSON.parse(t) as unknown;
-      if (typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed)) {
-        return parsed as Record<string, unknown>;
-      }
-    } catch {
-      return null;
+    t = stripTrailingScriptClose(t);
+    t = trimToBalancedObject(t);
+
+    const direct = tryParseLdObject(t);
+    if (direct) return direct;
+
+    const repaired = repairUnclosedStringBeforeNextKey(t);
+    if (repaired !== t) {
+      const again = tryParseLdObject(repaired);
+      if (again) return again;
     }
   }
   return null;

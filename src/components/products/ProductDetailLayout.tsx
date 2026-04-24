@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import type { ProductData } from '@/fake-api/products';
-import { getCanonicalUrl } from '@/config/site';
 import Breadcrumbs from '@/components/common/Breadcrumbs';
 import ProductSpecifications from './ProductSpecifications';
 import ProductFeatures from './ProductFeatures';
@@ -18,28 +17,12 @@ interface ProductDetailLayoutProps {
 
 export default function ProductDetailLayout({
   product,
-  slugPath,
+  slugPath: _slugPath,
 }: ProductDetailLayoutProps) {
   const productVideoUrl = cleanVideoUrlFromApi(product.productVideo);
 
-  const schemaData = product.seo.schema
-    ? {
-        ...product.seo.schema,
-        url: product.seo.canonical_url
-          ? getCanonicalUrl(product.seo.canonical_url)
-          : getCanonicalUrl(`/${slugPath}`),
-      }
-    : null;
-
   return (
     <>
-      {schemaData && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
-        />
-      )}
-
       <main className="min-h-screen bg-gray-50">
         <section className="relative lg:pt-[220px] md:pt-[150px] pt-[150px] lg:pb-[150px] md:pb-[50px] pb-[50px] overflow-hidden">
           <div className="absolute inset-0">

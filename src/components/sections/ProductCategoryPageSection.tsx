@@ -17,16 +17,6 @@ export default function ProductCategoryPageSection({
   // Keep the existing design/structure from the previous dedicated route.
   return (
     <>
-      {/* JSON-LD Schema */}
-      {(category as any).seo?.schema && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify((category as any).seo.schema),
-          }}
-        />
-      )}
-
       <main className="min-h-screen bg-gray-50">
         {/* Hero Section */}
         <section className="relative lg:pt-[220px] pt-[150px] lg:pb-[150px] pb-[50px] overflow-hidden">
