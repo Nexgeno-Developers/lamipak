@@ -6,6 +6,8 @@ import CallToAction from '@/components/home/CallToAction';
 import NewsletterSubscription from '@/components/home/NewsletterSubscription';
 import VideoBanner from '@/components/home/VideoBanner';
 import JourneyClient from '@/components/company/JourneyClient';
+import { parseLdJsonSchema } from '@/components/seo/buildApiMetadata';
+import { getCanonicalUrl } from '@/config/site';
 import type { CompanyHero as CompanyHeroData, CompanyStatistic, JourneyData } from '@/fake-api/company';
 import type { CompanyNavigationData } from '@/components/company/CompanyNavigation';
 
@@ -16,6 +18,7 @@ export function AboutUsPageSection({
   videoUrl,
   activePath,
   navigation,
+  seo,
 }: {
   hero: CompanyHeroData;
   statistics: CompanyStatistic[];
@@ -23,8 +26,30 @@ export function AboutUsPageSection({
   videoUrl?: string;
   activePath?: string;
   navigation?: CompanyNavigationData | null;
+  /** From API `data.seo` (about_1 layout includes `schema`). */
+  seo?: Record<string, unknown> | null;
 }) {
+  const parsedSchema = parseLdJsonSchema(seo?.schema);
+  const rawCanonical = seo?.canonical_url;
+  const path = (activePath || '/').replace(/\/$/, '') || '/';
+  const canonicalUrl =
+    typeof rawCanonical === 'string' && /^https?:\/\//i.test(rawCanonical)
+      ? rawCanonical
+      : getCanonicalUrl(
+          typeof rawCanonical === 'string' && rawCanonical.trim()
+            ? rawCanonical
+            : `${path}/`,
+        );
+  const schemaData = parsedSchema != null ? { ...parsedSchema, url: canonicalUrl } : null;
+
   return (
+    <>
+      {schemaData ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        />
+      ) : null}
     <main className="min-h-screen bg-gray-50">
       <CompanyHero data={hero} />
       <section className="bg-gray-50">
@@ -41,6 +66,7 @@ export function AboutUsPageSection({
       </div>
       <NewsletterSubscription />
     </main>
+    </>
   );
 }
 

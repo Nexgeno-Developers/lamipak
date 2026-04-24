@@ -23,6 +23,38 @@ type ApiPage = {
   seo?: ApiSeo | null;
 };
 
+/** CMS may store `<script type="application/ld+json">…</script>` instead of raw JSON. */
+function unwrapLdJsonScriptSnippet(raw: string): string {
+  const t = raw.trim();
+  const re =
+    /<script\b[^>]*\btype\s*=\s*["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/i;
+  const m = t.match(re);
+  if (m?.[1]) return m[1].trim();
+  return t;
+}
+
+/** Normalize API `seo.schema`: object, JSON string, or script-wrapped JSON. */
+export function parseLdJsonSchema(schema: unknown): Record<string, unknown> | null {
+  if (schema == null) return null;
+  if (typeof schema === 'object' && !Array.isArray(schema)) {
+    return schema as Record<string, unknown>;
+  }
+  if (typeof schema === 'string') {
+    let t = schema.trim();
+    if (!t) return null;
+    t = unwrapLdJsonScriptSnippet(t);
+    try {
+      const parsed = JSON.parse(t) as unknown;
+      if (typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed)) {
+        return parsed as Record<string, unknown>;
+      }
+    } catch {
+      return null;
+    }
+  }
+  return null;
+}
+
 /** Default index,follow; only block when CMS explicitly sends noindex / nofollow. */
 function robotsAllows(value: string | null | undefined, blockLower: 'noindex' | 'nofollow'): boolean {
   if (value == null) return true;

@@ -139,6 +139,7 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
               videoUrl={payload.page.videoUrl}
               navigation={payload.page.navigation}
               activePath={`/${fullSlug}`}
+              seo={(payload.seo as Record<string, unknown> | null | undefined) ?? null}
             />
           );
         case 'about_2':
