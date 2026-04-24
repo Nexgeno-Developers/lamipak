@@ -121,12 +121,12 @@ export default function LatestInsightsClient({ data }: LatestInsightsClientProps
           className="latest-insights-swiper"
         >
           {data.cards.map((card) => (
-            <SwiperSlide key={card.id}>
+            <SwiperSlide key={card.id} className="h-auto">
               <Link
                 href={card.link}
                 className="block group h-full"
               >
-                <div className="rounded-[50px] overflow-hidden transition-shadow duration-300 h-full bg-[#009FE8] p-[15px]">
+                <div className="rounded-[50px] overflow-hidden transition-shadow duration-300 h-full bg-[#009FE8] p-[15px] flex flex-col">
                   {/* Image */}
                   <div className="relative aspect-[16/10] md:h-72 md:aspect-auto overflow-hidden rounded-t-[50px]">
                     <Image
@@ -139,7 +139,7 @@ export default function LatestInsightsClient({ data }: LatestInsightsClientProps
                   </div>
 
                   {/* Content - Blue Background */}
-                  <div className="bg-[#009FE8] p-4 md:p-6 h-full flex flex-col">
+                  <div className="bg-[#009FE8] p-4 md:p-6 flex-1 flex flex-col">
                     {(() => {
                       const metaTime = formatCardTime(card.time);
                       const metaDate = formatCardDate(card.date);
@@ -234,6 +234,14 @@ export default function LatestInsightsClient({ data }: LatestInsightsClientProps
           __html: `
             .latest-insights-swiper {
               padding-bottom: 2rem;
+            }
+
+            .latest-insights-swiper .swiper-wrapper {
+              align-items: stretch;
+            }
+
+            .latest-insights-swiper .swiper-slide {
+              height: auto;
             }
 
             .latest-insights-swiper .swiper-pagination {
