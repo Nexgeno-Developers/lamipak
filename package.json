@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "generate:sitemap": "node scripts/generate-sitemap.mjs"
+    "generate:sitemap": "node scripts/generate-sitemap.mjs",
+    "generate:robots": "node scripts/generate-robots.mjs"
   },
   "dependencies": {
     "next": "16.1.6",
