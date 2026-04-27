@@ -1084,14 +1084,16 @@ export const fetchHomepageData = async (): Promise<HomepageData | null> => {
       }
     }
 
-    const seoMerged = data.seo?.title || data.seo?.description
-      ? {
-          meta_title: data.seo?.title ?? '',
-          meta_description: data.seo?.description ?? '',
-          canonical_url: data.seo?.canonical_url ?? '/',
-          schema: data.seo?.schema,
-        }
-      : undefined;
+    const apiSeo = data.seo;
+    const seoMerged =
+      apiSeo && typeof apiSeo === 'object' && !Array.isArray(apiSeo)
+        ? {
+            meta_title: apiSeo.title ?? '',
+            meta_description: apiSeo.description ?? '',
+            canonical_url: apiSeo.canonical_url ?? '/',
+            schema: apiSeo.schema,
+          }
+        : undefined;
 
     return {
       hero: heroMapped ?? { slides: [], categories: [] },

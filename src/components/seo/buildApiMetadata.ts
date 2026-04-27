@@ -23,6 +23,74 @@ type ApiPage = {
   seo?: ApiSeo | null;
 };
 
+/** CMS may store `<script type="application/ld+json">…</script>` instead of raw JSON. */
+function unwrapLdJsonScriptSnippet(raw: string): string {
+  const t = raw.trim();
+  const re =
+    /<script\b[^>]*\btype\s*=\s*["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/i;
+  const m = t.match(re);
+  if (m?.[1]) return m[1].trim();
+  return t;
+}
+
+function stripTrailingScriptClose(jsonish: string): string {
+  return jsonish.replace(/<\/script>\s*$/i, '').trim();
+}
+
+/** Keep only `{` … `}` so trailing `</script>` or noise after the object does not break `JSON.parse`. */
+function trimToBalancedObject(jsonish: string): string {
+  const last = jsonish.lastIndexOf('}');
+  if (last === -1) return jsonish;
+  return jsonish.slice(0, last + 1).trim();
+}
+
+/**
+ * CMS paste errors: `"name": "foo,` newline `"url":` without closing `"` before the comma-newline.
+ */
+function repairUnclosedStringBeforeNextKey(jsonish: string): string {
+  return jsonish.replace(
+    /"([\w-]+)"(\s*:\s*")([^"]*),(\r?\n\s*")([\w-]+"\s*:)/g,
+    '"$1"$2$3",$4$5',
+  );
+}
+
+function tryParseLdObject(raw: string): Record<string, unknown> | null {
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    if (typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed)) {
+      return parsed as Record<string, unknown>;
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
+/** Normalize API `seo.schema`: object, JSON string, or script-wrapped JSON. */
+export function parseLdJsonSchema(schema: unknown): Record<string, unknown> | null {
+  if (schema == null) return null;
+  if (typeof schema === 'object' && !Array.isArray(schema)) {
+    return schema as Record<string, unknown>;
+  }
+  if (typeof schema === 'string') {
+    let t = schema.trim();
+    if (!t) return null;
+    t = unwrapLdJsonScriptSnippet(t);
+    t = stripTrailingScriptClose(t);
+    t = trimToBalancedObject(t);
+
+    const direct = tryParseLdObject(t);
+    if (direct) return direct;
+
+    const repaired = repairUnclosedStringBeforeNextKey(t);
+    if (repaired !== t) {
+      const again = tryParseLdObject(repaired);
+      if (again) return again;
+    }
+  }
+  return null;
+}
+
 /** Default index,follow; only block when CMS explicitly sends noindex / nofollow. */
 function robotsAllows(value: string | null | undefined, blockLower: 'noindex' | 'nofollow'): boolean {
   if (value == null) return true;

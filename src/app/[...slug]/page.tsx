@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import type { ComponentType } from 'react';
+import type { ComponentType, ReactNode } from 'react';
 
 import { resolveDynamicPage } from '@/lib/api/resolveDynamicPage';
 
@@ -38,6 +38,8 @@ import MarketingServicesLayoutPage from '@/components/pages/MarketingServicesLay
 import MarketingServiceDetailLayoutPage from '@/components/pages/MarketingServiceDetailLayoutPage';
 import TechnicalServicesLayoutPage from '@/components/pages/TechnicalServicesLayoutPage';
 import TechnicalServiceDetailLayoutPage from '@/components/pages/TechnicalServiceDetailLayoutPage';
+import ApiSeoJsonLd from '@/components/seo/ApiSeoJsonLd';
+import type { DynamicPageData } from '@/fake-api/dynamic-pages';
 
 interface PageProps {
   params: Promise<{
@@ -47,6 +49,30 @@ interface PageProps {
 }
 
 const PACKAGING_MAIN = 'packaging' as const;
+
+function withApiSeoJsonLd(pathname: string, seo: unknown, children: ReactNode) {
+  return (
+    <>
+      <ApiSeoJsonLd pathname={pathname} seo={seo as Record<string, unknown> | null | undefined} />
+      {children}
+    </>
+  );
+}
+
+function seoForDynamicPage(data: DynamicPageData): Record<string, unknown> | null {
+  if (data.ourCompanyData?.seo) {
+    const c = data.ourCompanyData.seo;
+    const top = data.seo as { canonical_path?: string } | undefined;
+    return {
+      schema: c.schema as unknown,
+      canonical_url: c.canonical_url ?? top?.canonical_path ?? null,
+    } as Record<string, unknown>;
+  }
+  if (data.seo && typeof data.seo === 'object') {
+    return data.seo as Record<string, unknown>;
+  }
+  return null;
+}
 
 const componentMap: Record<string, ComponentType<any>> = {
   lamira: LamiraPage,
@@ -80,24 +106,27 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
   switch (resolved.kind) {
     case 'api-layout': {
       const { layout, payload } = resolved;
+      const pathPrefix = fullSlug ? `/${fullSlug.replace(/^\/+/, '')}` : '/';
+      const wrap = (ui: ReactNode) =>
+        withApiSeoJsonLd(pathPrefix, (payload.seo as Record<string, unknown> | null | undefined) ?? null, ui);
 
       switch (layout) {
         case 'npd':
         case 'innovation_detail_1':
-          return <NpdLayoutPage data={payload.page} />;
+          return wrap(<NpdLayoutPage data={payload.page} />);
         case 'pilot_plant':
         case 'innovation_detail_2':
-          return <PilotPlantLayoutPage data={payload.page} />;
+          return wrap(<PilotPlantLayoutPage data={payload.page} />);
         case 'innovation':
-          return <InnovationsLayoutPage data={payload.page} />;
+          return wrap(<InnovationsLayoutPage data={payload.page} />);
         case 'insights_article_detail':
-          return <InsightsArticleDetailPage data={payload.page} />;
+          return wrap(<InsightsArticleDetailPage data={payload.page} />);
         case 'insights_listing':
-          return <InsightsListingPage data={payload.page} />;
+          return wrap(<InsightsListingPage data={payload.page} />);
         case 'insights':
-          return <InsightsHubPage data={payload.page} />;
+          return wrap(<InsightsHubPage data={payload.page} />);
         case 'default':
-          return (
+          return wrap(
             <DefaultLayoutPage
               data={{
                 slug: payload.slug as string,
@@ -108,30 +137,30 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
                     ? payload.heroBackgroundImage
                     : undefined,
               }}
-            />
+            />,
           );
         case 'rnd_center':
-          return <RAndDCentreLayoutPage data={payload.page} />;
+          return wrap(<RAndDCentreLayoutPage data={payload.page} />);
         case 'product_industries':
-          return <ProductIndustriesLayoutPage data={payload.page} />;
+          return wrap(<ProductIndustriesLayoutPage data={payload.page} />);
         case 'product_industry_detail':
-          return <ProductIndustryDetailLayoutPageSection data={payload.page} />;
+          return wrap(<ProductIndustryDetailLayoutPageSection data={payload.page} />);
         case 'about_4':
-          return (
+          return wrap(
             <GovernanceManagementLayoutPageSection
               data={payload.page}
               activePath={`/${fullSlug}`}
-            />
+            />,
           );
         case 'about_3':
-          return (
+          return wrap(
             <VisionMissionLayoutPageSection
               data={payload.page}
               activePath={`/${fullSlug}`}
-            />
+            />,
           );
         case 'about_1':
-          return (
+          return wrap(
             <AboutUsPageSection
               hero={payload.page.hero}
               statistics={payload.page.statistics}
@@ -139,82 +168,84 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
               videoUrl={payload.page.videoUrl}
               navigation={payload.page.navigation}
               activePath={`/${fullSlug}`}
-            />
+            />,
           );
         case 'about_2':
-          return (
+          return wrap(
             <IntroductionPageSection
               data={payload.page}
               activePath={`/${fullSlug}`}
-            />
+            />,
           );
         case 'product_categories':
-          return (
+          return wrap(
             <ProductCategoriesHubPage
               pageData={payload.pageData as any}
               videoUrl={payload.videoUrl}
               pageContext={{
                 mainCategory: payload.slug,
               }}
-            />
+            />,
           );
         case 'product_category_detail_5':
         case 'product_category_detail_1':
         case 'product_category_detail_4':
         case 'product_category_detail_2':
         case 'product_category_detail_3':
-          return (
+          return wrap(
             <PageBuilder
               pageData={payload.pageData as any}
               pageContext={{
                 mainCategory: PACKAGING_MAIN,
                 subCategory: payload.slug,
               }}
-            />
+            />,
           );
         case 'sustainability_1':
-          return <PickCartoonPage data={payload.pageData} />;
+          return wrap(<PickCartoonPage data={payload.pageData} />);
         case 'sustainability_2':
-          return <LamiraPage data={payload.pageData} />;
+          return wrap(<LamiraPage data={payload.pageData} />);
         case 'sustainability_3':
-          return <GreenEffortsPage data={payload.pageData} />;
+          return wrap(<GreenEffortsPage data={payload.pageData} />);
         case 'sustainability_4':
-          return <CertificationsAchievementsPage data={payload.pageData} />;
+          return wrap(<CertificationsAchievementsPage data={payload.pageData} />);
         case 'sustainability_5':
-          return <NgosPage data={payload.pageData} />;
+          return wrap(<NgosPage data={payload.pageData} />);
         case 'sustainability_6':
-          return <CarbonNetZeroRoadmapPage data={payload.pageData} />;
+          return wrap(<CarbonNetZeroRoadmapPage data={payload.pageData} />);
         case 'career':
-          return <CareerLandingPage data={payload.pageData} />;
+          return wrap(<CareerLandingPage data={payload.pageData} />);
         case 'marketing_services':
-          return <MarketingServicesLayoutPage data={payload.page} />;
+          return wrap(<MarketingServicesLayoutPage data={payload.page} />);
         case 'marketing_service_detail':
-          return <MarketingServiceDetailLayoutPage data={payload.page} />;
+          return wrap(<MarketingServiceDetailLayoutPage data={payload.page} />);
         case 'technical_services':
-          return <TechnicalServicesLayoutPage data={payload.page} />;
+          return wrap(<TechnicalServicesLayoutPage data={payload.page} />);
         case 'technical_service_detail':
-          return <TechnicalServiceDetailLayoutPage data={payload.page} />;
+          return wrap(<TechnicalServiceDetailLayoutPage data={payload.page} />);
         case 'contact_us':
-          return <ContactUsPage data={payload.page} />;
+          return wrap(<ContactUsPage data={payload.page} />);
         default:
           break;
       }
       break;
     }
-    case 'product-category':
-      return (
-        <ProductCategoryPageSection
-          category={resolved.category}
-          products={resolved.products}
-        />
+    case 'product-category': {
+      const pathPrefix = fullSlug ? `/${fullSlug.replace(/^\/+/, '')}` : '/';
+      return withApiSeoJsonLd(
+        pathPrefix,
+        (resolved.category as { seo?: Record<string, unknown> }).seo ?? null,
+        <ProductCategoryPageSection category={resolved.category} products={resolved.products} />,
       );
-    case 'product':
-      return (
-        <ProductDetailLayout
-          product={resolved.product}
-          slugPath={resolved.slugPath}
-        />
+    }
+    case 'product': {
+      const pathPrefix = fullSlug ? `/${fullSlug.replace(/^\/+/, '')}` : '/';
+      return withApiSeoJsonLd(
+        pathPrefix,
+        resolved.product.seo as unknown as Record<string, unknown>,
+        <ProductDetailLayout product={resolved.product} slugPath={resolved.slugPath} />,
       );
+    }
     case 'sub-category':
       return (
         <PageBuilder
@@ -225,13 +256,21 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
           }}
         />
       );
-    case 'legacy-vision-mission':
-      return <VisionMissionPageSection data={resolved.page} />;
+    case 'legacy-vision-mission': {
+      const pathPrefix = fullSlug ? `/${fullSlug.replace(/^\/+/, '')}` : '/';
+      return withApiSeoJsonLd(
+        pathPrefix,
+        (resolved.page as { seo?: Record<string, unknown> }).seo ?? null,
+        <VisionMissionPageSection data={resolved.page} />,
+      );
+    }
     case 'dynamic': {
       const data = resolved.page;
+      const pathPrefix = fullSlug ? `/${fullSlug.replace(/^\/+/, '')}` : '/';
+      const wrapDyn = (ui: ReactNode) => withApiSeoJsonLd(pathPrefix, seoForDynamicPage(data), ui);
 
       if (data.type === 'green') {
-        return (
+        return wrapDyn(
           <GreenEffortsPage
             data={{
               title: data.title,
@@ -245,12 +284,12 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
                 : undefined,
               greenSustainabilityJourneySection: data.greenSustainabilityJourneySection as any,
             }}
-          />
+          />,
         );
       }
 
       if (data.type === 'certifications') {
-        return (
+        return wrapDyn(
           <CertificationsAchievementsPage
             data={{
               title: data.title,
@@ -264,12 +303,12 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
               certificationsCertificateTilesSection:
                 data.certificationsCertificateTilesSection as any,
             }}
-          />
+          />,
         );
       }
 
       if (data.type === 'carbon-roadmap') {
-        return (
+        return wrapDyn(
           <CarbonNetZeroRoadmapPage
             data={{
               title: data.title,
@@ -280,12 +319,12 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
               carbonNetZeroRoadmapSection: data.carbonNetZeroRoadmapSection as any,
               carbonNetZeroPillarsSection: data.carbonNetZeroPillarsSection as any,
             }}
-          />
+          />,
         );
       }
 
       const Component = componentMap[data.type] || CmsPage;
-      return <Component data={data} />;
+      return wrapDyn(<Component data={data} />);
     }
     case 'not-found':
       notFound();
