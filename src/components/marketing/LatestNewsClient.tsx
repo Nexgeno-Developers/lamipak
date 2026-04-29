@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { formatCardDate, formatCardTime } from '@/lib/dateTime';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
@@ -15,6 +16,7 @@ export interface MarketingNewsItem {
   title: string;
   image: string;
   imageAlt: string;
+  href?: string;
   date?: string;
   time?: string;
 }
@@ -122,8 +124,8 @@ export default function LatestNewsClient({ trendItems, pressItems }: LatestNewsC
             clickable: true,
           }}
         >
-          {items.map((item) => (
-            <SwiperSlide key={item.id}>
+          {items.map((item) => {
+            const card = (
               <article className="bg-[#EDF0F1] rounded-[50px] p-[15px] overflow-hidden flex flex-col h-full">
                 <div className="relative w-full pt-[70%] overflow-hidden">
                   <Image
@@ -206,8 +208,24 @@ export default function LatestNewsClient({ trendItems, pressItems }: LatestNewsC
                 
                 </div>
               </article>
-            </SwiperSlide>
-          ))}
+            );
+
+            return (
+              <SwiperSlide key={item.id}>
+                {item.href ? (
+                  <Link
+                    href={item.href}
+                    aria-label={item.title}
+                    className="block h-full rounded-[50px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#009FE8] focus-visible:ring-offset-4"
+                  >
+                    {card}
+                  </Link>
+                ) : (
+                  card
+                )}
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       </div>
     </section>

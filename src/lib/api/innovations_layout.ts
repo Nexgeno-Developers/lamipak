@@ -108,6 +108,13 @@ function toArray<T>(value: T | T[] | null | undefined): T[] {
   return Array.isArray(value) ? value : [value];
 }
 
+function slugToHref(slug: string) {
+  const s = slug.replace(/^\/+|\/+$/g, '');
+  if (/^https?:\/\//i.test(slug)) return slug;
+  if (slug.startsWith('/')) return slug;
+  return s ? `/${s}/` : '/';
+}
+
 function mapMarketingNewsItems(
   list: MarketingNewsApiItem[] | MarketingNewsApiItem | null | undefined,
 ): MarketingNewsItem[] {
@@ -126,6 +133,7 @@ function mapMarketingNewsItems(
         title,
         image,
         imageAlt: title,
+        href: item.slug ? slugToHref(item.slug.trim()) : undefined,
         date: rawDate || undefined,
         time: rawTime || undefined,
       } as MarketingNewsItem;

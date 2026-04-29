@@ -97,6 +97,8 @@ function toArray<T>(value: T | T[] | null | undefined): T[] {
 
 function slugToHref(slug: string) {
   const s = slug.replace(/^\/+|\/+$/g, '');
+  if (/^https?:\/\//i.test(slug)) return slug;
+  if (slug.startsWith('/')) return slug;
   return s ? `/${s}/` : '/';
 }
 
@@ -118,6 +120,7 @@ function mapMarketingNewsItems(
         title,
         image,
         imageAlt: title,
+        href: item.slug ? slugToHref(item.slug.trim()) : undefined,
         date: rawDate || undefined,
         time: rawTime || undefined,
       } as MarketingNewsItem;
@@ -183,7 +186,7 @@ export async function fetchMarketingServicesLayoutPage(slug: string) {
       return {
         slug: data.slug,
         title: formatBoldText(data.title),
-        seo: (data.seo || {}) as any,
+        seo: data.seo || {},
         page: {
           title: formatBoldText(data.title),
           heroBackgroundImage: heroImage,

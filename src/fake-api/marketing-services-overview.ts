@@ -35,6 +35,7 @@ export interface MarketingNewsItem {
   title: string;
   image: string;
   imageAlt: string;
+  href?: string;
   date: string;
   time: string;
 }
@@ -123,7 +124,7 @@ export async function getMarketingLatestNews(): Promise<MarketingNewsItem[]> {
       title: 'Circular Economy in Packaging',
       image: '/latest_insite_image_3.jpg',
       imageAlt: 'Person reviewing sustainable packaging design',
-      date: 'January 20, 2025',
+       date: 'January 20, 2025',
       time: '3:15 PM',
     },
     {
