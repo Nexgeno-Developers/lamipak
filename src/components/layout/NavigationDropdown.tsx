@@ -28,7 +28,7 @@ export default function NavigationDropdown({ item }: NavigationDropdownProps) {
     <div className="relative group">
       <Link
         href={item.href}
-        className="relative flex items-center space-x-1 py-2 text-[17px] font-medium tracking-wider text-white transition-colors hover:text-[#00d4ff] lg:max-xl:py-1 lg:max-xl:text-[14px] lg:max-xl:tracking-wide"
+        className="relative flex items-center space-x-1 py-2 text-[15px] font-medium tracking-wider text-white transition-colors hover:text-[#00d4ff] lg:max-xl:py-1 lg:max-xl:text-[14px] lg:max-xl:tracking-wide"
       >
         <span>{item.label}</span>
         <svg
