@@ -96,6 +96,15 @@ function normalizePhone(value: string): { raw: string; digits: string } {
   return { raw, digits };
 }
 
+function getBackendMessage(responseBody: unknown): string | undefined {
+  const record = asRecord(responseBody);
+  return typeof record?.message === 'string' ? record.message : undefined;
+}
+
+function sanitizePublicMessage(message: string): string {
+  return message.replace(/\s+/g, ' ').trim().slice(0, 200);
+}
+
 function addMaxLengthError(
   fieldErrors: Record<string, string>,
   fieldKey: string,
@@ -504,22 +513,32 @@ export async function POST(request: Request) {
       : await response.text();
 
     if (!response.ok) {
-      const message =
-        typeof responseBody === 'object' &&
-        responseBody !== null &&
-        'message' in responseBody &&
-        typeof responseBody.message === 'string'
-          ? responseBody.message
+      const backendMessage = getBackendMessage(responseBody);
+      const isServerError = response.status >= 500;
+      const message = isServerError
+        ? 'Failed to submit the form. Please try again later.'
+        : backendMessage
+          ? sanitizePublicMessage(backendMessage)
           : 'Failed to submit the form.';
 
       const backendFieldErrors = extractBackendFieldErrors(formType, responseBody);
+
+      try {
+        const debugBody =
+          typeof responseBody === 'string' ? responseBody : JSON.stringify(responseBody);
+        console.error('Form submit backend error', {
+          status: response.status,
+          body: debugBody.slice(0, 2000),
+        });
+      } catch {
+        console.error('Form submit backend error', { status: response.status });
+      }
 
       return NextResponse.json(
         {
           ok: false,
           message,
           fieldErrors: backendFieldErrors,
-          data: responseBody,
         },
         { status: response.status },
       );

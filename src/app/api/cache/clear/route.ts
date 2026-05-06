@@ -7,15 +7,28 @@ export async function GET(req: Request) {
   const token = url.searchParams.get('token') || '';
   const expected = (process.env.CACHE_CLEAR_TOKEN || '').trim();
 
-  if (expected && token !== expected) {
-    return new Response('Unauthorized', { status: 401 });
+  if (!expected) {
+    return new Response('CACHE_CLEAR_TOKEN is not configured', {
+      status: 503,
+      headers: { 'Cache-Control': 'no-store' },
+    });
+  }
+
+  if (!token || token !== expected) {
+    return new Response('Unauthorized', {
+      status: 401,
+      headers: { 'Cache-Control': 'no-store' },
+    });
   }
 
   revalidateApiCache();
 
-  return Response.json({
-    ok: true,
-    cleared: true,
-    at: new Date().toISOString(),
-  });
+  return Response.json(
+    {
+      ok: true,
+      cleared: true,
+      at: new Date().toISOString(),
+    },
+    { headers: { 'Cache-Control': 'no-store' } },
+  );
 }
